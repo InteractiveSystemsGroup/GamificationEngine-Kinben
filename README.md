@@ -3,6 +3,8 @@
 The Gamification Engine Kinben is a RESTful service meant to support engineers gamifying working processes.
 This project was initially started by Interactive Systems working group at University of Duisburg-Essen as an open source project.
 
+[![Kinben Video](http://img.youtube.com/vi/_26QIZMy14s/0.jpg)](https://www.youtube.com/watch?v=_26QIZMy14s)
+
 ### Learn More
 [Tutorial](https://rawgit.com/InteractiveSystemsGroup/GamificationEngine-Kinben/master/Tutorial.html)
 
