@@ -132,7 +132,7 @@ public class GoalApi {
 		List<Role> roles = new ArrayList<>();
 
 		for (String roleIdString : rolesList) {
-			Role role = roleDao.delete(ValidateUtils.requireGreaterThenZero(roleIdString), apiKey);
+			Role role = roleDao.getRole(ValidateUtils.requireGreaterThenZero(roleIdString), apiKey);
 			if (role != null) {
 				roles.add(role);
 			}
