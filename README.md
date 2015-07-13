@@ -8,6 +8,9 @@ This project was initially started by Interactive Systems working group at Unive
 ### Learn More
 [Tutorial](https://rawgit.com/InteractiveSystemsGroup/GamificationEngine-Kinben/master/Tutorial.html)
 
+### Requiments
+* Java 8
+* Wildfly 8.2
 
 ### Configuration
 * Configuration/DHC - Used to support developer using http requests
