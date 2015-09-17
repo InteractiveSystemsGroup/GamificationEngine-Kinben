@@ -93,6 +93,9 @@ local.properties
 # sbteclipse plugin
 .target
 
+# tern-eclipse addon
+.tern-project
+
 
 
 ## Intellij
