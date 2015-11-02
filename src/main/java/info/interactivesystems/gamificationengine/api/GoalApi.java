@@ -59,7 +59,7 @@ public class GoalApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Create a new Goal.
+	 * Creates a new Goal.
 	 * 
 	 * @param name
 	 *            required name of the goal
@@ -146,7 +146,7 @@ public class GoalApi {
 	}
 
 	/**
-	 * Returns all goals.
+	 * Returns all goals which can be tried to complete. These goals are specific for the organisation which has the same api key.
 	 * 
 	 * @param apiKey
 	 *            a valid query param api key affiliated to an organisation
@@ -161,7 +161,7 @@ public class GoalApi {
 	}
 
 	/**
-	 * Get the {@link GoalRule} object by id.
+	 * Gets the {@link GoalRule} object by id.
 	 * 
 	 * @param id
 	 *            required goal id
@@ -181,7 +181,7 @@ public class GoalApi {
 	}
 
 	/**
-	 * Change attributes of the goal.
+	 * Changes attributes of the goal.
 	 * 
 	 * @param goalId
 	 *            required id of the goal which should be modified
@@ -255,7 +255,7 @@ public class GoalApi {
 	}
 
 	/**
-	 * Delete a Goal.
+	 * Deletes a Goal.
 	 * 
 	 * @param id
 	 *            required id of the goal

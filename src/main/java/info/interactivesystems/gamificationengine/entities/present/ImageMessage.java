@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 
 /**
- * A present can be an imageMessage, an image icon with a positive message for
+ * A present can be an imageMessage in the form of an image icon with a positive message for
  * the receiver.
  */
 @Entity
@@ -18,7 +18,7 @@ public class ImageMessage extends Present {
 	private byte[] imageIcon;
 
 	/**
-	 * Get the image icon which is sent as a present to a player as a byte[].
+	 * Gets the image icon which is sent as a present to a player as a byte[].
 	 * 
 	 * @return byte[] of the sent image
 	 */
@@ -27,7 +27,7 @@ public class ImageMessage extends Present {
 	}
 
 	/**
-	 * Set the image icon which is sent as a present to a player as a byte[].
+	 * Sets the image icon which is sent as a present to a player as a byte[].
 	 * 
 	 * @param byte[] of the imageIcon, which should be sent
 	 */

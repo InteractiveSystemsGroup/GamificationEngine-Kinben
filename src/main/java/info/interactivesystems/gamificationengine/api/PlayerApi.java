@@ -56,7 +56,7 @@ public class PlayerApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Create new playerid for gamificated app. Developer organisation
+	 * Creates new player-id for gamificated app. Developer organisation
 	 * credentials are mandatory.
 	 * 
 	 * @param nickname
@@ -118,7 +118,7 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Return player-organisation as json.
+	 * Returns the player-organisation as json.
 	 *
 	 * @param id
 	 *            required integer uniquely identifying the {@link Player}
@@ -235,7 +235,7 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Adds a contact to tcurrent player.
+	 * Adds a contact to the current player's contact list.
 	 * 
 	 * @param id
 	 *            required valid player id
@@ -343,7 +343,7 @@ public class PlayerApi {
 
 	/**
 	 *
-	 * Returns a list of finished goals.
+	 * Returns a list of finished goals of a specific player.
 	 *
 	 * @param id
 	 *            required player id

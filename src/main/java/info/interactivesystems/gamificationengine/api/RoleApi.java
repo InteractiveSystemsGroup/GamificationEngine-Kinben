@@ -68,7 +68,7 @@ public class RoleApi {
 	}
 
 	/**
-	 * Get all roles.
+	 * Get all roles of a specific organisation.
 	 * 
 	 * @param apiKey
 	 *            a valid query param api key affiliated to an organisation
@@ -83,7 +83,7 @@ public class RoleApi {
 	}
 
 	/**
-	 * Get a specific role.
+	 * Get a specific role of an organisation.
 	 * 
 	 * @param id
 	 *            required id of the role
@@ -135,6 +135,8 @@ public class RoleApi {
 	}
 
 	/**
+	 * Deletes a role of an organisation.
+	 * 
 	 * @param id
 	 *            required id of the role
 	 * @param apiKey

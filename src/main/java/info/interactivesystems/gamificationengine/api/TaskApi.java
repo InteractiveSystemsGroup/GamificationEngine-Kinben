@@ -135,7 +135,7 @@ public class TaskApi {
 	}
 
 	/**
-	 * Returns a task for assigned id.
+	 * Returns the specific task which is assigned with the id.
 	 * 
 	 * @param id
 	 *            required task id
@@ -157,7 +157,7 @@ public class TaskApi {
 	}
 
 	/**
-	 * Removes a task from data base.
+	 * Removes a task from the data base.
 	 * 
 	 * @param id
 	 *            required task id
@@ -196,6 +196,7 @@ public class TaskApi {
 	public Response completeTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("finishedDate") String finishedDate, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("completeTask called");
 		log.debug("TaskId: " + id);
 

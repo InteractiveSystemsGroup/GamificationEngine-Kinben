@@ -45,7 +45,7 @@ public class OrganisationApi {
 	AccountDAO accountDao;
 
 	/**
-	 * Create a new developer organisation. Email and password are mandatory for
+	 * Creates a new developer organisation. Email and password are mandatory for
 	 * authentication.
 	 *
 	 * @param email
@@ -136,7 +136,7 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Returns a specific organisation which id is equal to transfered query
+	 * Returns a specific organisation which id is equal to the transfered query
 	 * param.
 	 * 
 	 * @param id
@@ -164,7 +164,7 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Generate apiKey for given organisation. Resets api-key field if already
+	 * Generates an apiKey for the given organisation. Resets the apiKey field if it is already
 	 * set.
 	 * 
 	 * @param id

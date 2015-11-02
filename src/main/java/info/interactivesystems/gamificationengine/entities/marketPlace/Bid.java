@@ -43,7 +43,7 @@ public class Bid {
 
 	// GETTER & SETTER
 	/**
-	 * Get the id of a bid.
+	 * Gets the id of a bid.
 	 * 
 	 * @return id of a bid
 	 */
@@ -52,7 +52,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the id of a bid.
+	 * Sets the id of a bid.
 	 * 
 	 * @param id
 	 *            a unique integer, usually will be generated automatically
@@ -62,7 +62,7 @@ public class Bid {
 	}
 
 	/**
-	 * Get the organisation a bid belongs to.
+	 * Gets the organisation a bid belongs to.
 	 * 
 	 * @return the organisation the bid belongs to
 	 */
@@ -71,7 +71,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the organisation a bid belongs to.
+	 * Sets the organisation a bid belongs to.
 	 * 
 	 * @param belongsTo
 	 *            a none null organisation
@@ -81,7 +81,7 @@ public class Bid {
 	}
 
 	/**
-	 * Get the amount of coins, by which the prize of coins is raised.
+	 * Gets the amount of coins, by which the prize of coins is raised.
 	 * 
 	 * @return prize the concrete bid
 	 */
@@ -90,7 +90,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the amount of coins, by which the prize is raised.
+	 * Sets the amount of coins, by which the prize is raised.
 	 * 
 	 * @param prize
 	 *            an amount of coins
@@ -100,7 +100,7 @@ public class Bid {
 	}
 
 	/**
-	 * Get the exact date and time, when the bid was given.
+	 * Gets the exact date and time, when the bid was given.
 	 * 
 	 * @return creationDate
 	 */
@@ -109,7 +109,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the exact date and time, when the bid was given.
+	 * Sets the exact date and time, when the bid was given.
 	 * 
 	 * @param creationDate
 	 *            local date time, usually now
@@ -119,7 +119,7 @@ public class Bid {
 	}
 
 	/**
-	 * Get the player, who gives a bid for an offer.
+	 * Gets the player, who gives a bid for an offer.
 	 * 
 	 * @return player who has bid
 	 */
@@ -128,7 +128,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the player, who gives a bid for an offer.
+	 * Sets the player, who gives a bid for an offer.
 	 * 
 	 * @param player
 	 * 
@@ -138,7 +138,7 @@ public class Bid {
 	}
 
 	/**
-	 * Get the offer for which the bid was given.
+	 * Gets the offer for which the bid was given.
 	 * 
 	 * @return offer
 	 */
@@ -147,7 +147,7 @@ public class Bid {
 	}
 
 	/**
-	 * Set the offer for which a bid was given.
+	 * Sets the offer for which a bid was given.
 	 * 
 	 * @param offer
 	 *            an instance of offer

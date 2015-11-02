@@ -20,7 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
- * Players can here create an offer with a task, for which another player can
+ * Players can create an offer with a task for the marketplace so another player can
  * bid to do this task and get its rewards.
  * 
  * <ul>
@@ -37,6 +37,9 @@ public class MarketPlace {
 	@ManyToOne
 	private Organisation belongsTo;
 
+	/**
+	 * All offers in one marketplace, which a player can bid for</li>
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Offer> offers;
 

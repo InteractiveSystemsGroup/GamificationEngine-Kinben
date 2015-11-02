@@ -59,7 +59,7 @@ public class RuleApi {
 
 	/**
 	 * 
-	 * Create a new rule with an expression term.
+	 * Creates a new rule with an expression term.
 	 * 
 	 * @param name
 	 *            required name of the new goal
@@ -111,7 +111,7 @@ public class RuleApi {
 	}
 
 	/**
-	 * Create a new task rule.
+	 * Creates a new task rule.
 	 * 
 	 * @param type
 	 *            required type of the task rule. "DoAllTasksRule" or
@@ -185,7 +185,7 @@ public class RuleApi {
 	}
 
 	/**
-	 * Create a new point rule.
+	 * Creates a new point rule.
 	 * 
 	 * @param name
 	 *            required name of the rule
@@ -218,7 +218,7 @@ public class RuleApi {
 	}
 
 	/**
-	 * Get a list of all available rules.
+	 * Gets a list of all available rules.
 	 * 
 	 * @param apiKey
 	 *            a valid query param api key affiliated to an organisation
@@ -251,7 +251,7 @@ public class RuleApi {
 	}
 
 	/**
-	 * Delete a specific rule.
+	 * Deletes a specific rule.
 	 * 
 	 * @param id
 	 *            required id of the rule
@@ -275,7 +275,7 @@ public class RuleApi {
 	}
 
 	/**
-	 * Change the attribute of a specific rule
+	 * Changes the attribute of a specific rule
 	 * 
 	 * @param id
 	 *            required id of the rule

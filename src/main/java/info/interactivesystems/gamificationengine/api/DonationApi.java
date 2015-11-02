@@ -12,6 +12,7 @@ import info.interactivesystems.gamificationengine.entities.Player;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -45,7 +46,7 @@ public class DonationApi {
 	PlayerDAO playerDao;
 
 	/**
-	 * Create a new call for a donation.
+	 * Creates a new call for a donation.
 	 * 
 	 * @param name
 	 *            the short name of the donation call
@@ -59,7 +60,7 @@ public class DonationApi {
 	 */
 	@POST
 	@Path("/")
-	public Response createDonationCall(@QueryParam("name") String name, @QueryParam("description") String description,
+	public Response createDonationCall(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("goal") @ValidPositiveDigit String goal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create New Donation Call ");
@@ -78,9 +79,11 @@ public class DonationApi {
 	}
 
 	/**
-	 * Donate a specific amount of coins.
+	 * With this method a player donates a specific amount of coins if she/he has enough. 
+	 * These coins are subtracted from the player’s current account and will be added 
+	 * to the Donation Call's current amount. 
 	 * 
-	 * @param dId
+	 * @param id
 	 *            the id of the call for donation
 	 * @param playerId
 	 *            the player who donates
@@ -120,7 +123,7 @@ public class DonationApi {
 	}
 
 	/**
-	 * Get the {@link DonationCall} object by id.
+	 * Gets the {@link DonationCall} object by id.
 	 * 
 	 * @param dId
 	 *            the id of the call for donation

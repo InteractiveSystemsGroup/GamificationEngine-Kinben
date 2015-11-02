@@ -72,7 +72,7 @@ public class MarketPlaceApi {
 	MarketPlaceDAO marketPlDao;
 
 	/**
-	 * Create a new market place.
+	 * Creates a new market place.
 	 * 
 	 * @param apiKey
 	 *            a valid query param api key affiliated to an organisation
@@ -99,7 +99,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Delete a market place.
+	 * Deletes a market place.
 	 * 
 	 * @param marketId
 	 *            required id of the market place
@@ -154,7 +154,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/offer")
-	public Response createNewOffer(@QueryParam("name") String name, @QueryParam("endDate") String endDate,
+	public Response createNewOffer(@QueryParam("name") @NotNull String name, @QueryParam("endDate") String endDate,
 			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
 			@QueryParam("roles") @DefaultValue("null") @ValidListOfDigits String allowedRoles, @QueryParam("deadLine") String deadLine,
@@ -222,7 +222,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Place a bid on an offer.
+	 * Places a bid on an offer.
 	 * 
 	 * @param playerId
 	 *            required player who adds the bid
@@ -313,7 +313,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Get all offers of from a specific player.
+	 * Gets all offers of from a specific player.
 	 * 
 	 * @param playerId
 	 *            required player id
@@ -344,7 +344,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Get the allowed offers for a player.
+	 * Gets the allowed offers for a player.
 	 * 
 	 * @param playerId
 	 *            required player id
@@ -379,7 +379,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Get all available offers for a player ordered by date, newest first.
+	 * Gets all available offers for a player ordered by date, newest first.
 	 * 
 	 * @param playerId
 	 *            required id of the player
@@ -419,7 +419,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Get all available offers for a player ordered by prize, highest prize
+	 * Gets all available offers for a player ordered by prize, highest prize
 	 * first.
 	 * 
 	 * @param playerId
@@ -460,7 +460,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Get a list of all bids placed on an offer.
+	 * Gets a list of all bids placed on an offer.
 	 * 
 	 * @param offerId
 	 *            required id of the offer
@@ -485,7 +485,7 @@ public class MarketPlaceApi {
 
 	// TODO testen
 	/**
-	 * Delete an offer.
+	 * Deletes an offer.
 	 * 
 	 * @param offerId
 	 *            required id of the offer
@@ -530,7 +530,8 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Complete offer.
+	 * If an offer is fulfilled with this request the offer is completed and the player who has done it gets the 
+	 * the prize as a reward.
 	 * 
 	 * @param offerId
 	 *            required id of the offer
@@ -543,7 +544,7 @@ public class MarketPlaceApi {
 	@POST
 	@Path("/{id}/compOffer")
 	public Response completedOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
-			@QueryParam("player") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		if (offerId == null) {

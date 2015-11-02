@@ -30,11 +30,11 @@ public class Achievement extends PermanentReward {
 
 	private String description;
 
+	private URL icon;
+	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] imageIcon;
-
-	private URL icon;
 
 	public Achievement() {
 	}

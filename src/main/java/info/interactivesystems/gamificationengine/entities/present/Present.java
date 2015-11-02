@@ -52,7 +52,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Get the if of the created present.
+	 * Gets the id of the created present.
 	 * 
 	 * @return id of the present as int
 	 */
@@ -61,7 +61,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Set the id of a present.
+	 * Sets the id of a present.
 	 * 
 	 * @param id
 	 *            of the present
@@ -90,7 +90,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Get the sender who send the present to one or more other players.
+	 * Gets the sender who send the present to one or more other players.
 	 * 
 	 * @return the sender of a present
 	 */
@@ -99,7 +99,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Set the sender of a present.
+	 * Sets the sender of a present.
 	 * 
 	 * @param sender
 	 *            who send the present
@@ -109,7 +109,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Get all receivers of a present.
+	 * Gets all receivers of a specific present.
 	 * 
 	 * @return List of all players who should receive the present
 	 */
@@ -118,7 +118,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Set all player who should receive the present.
+	 * Sets all player who should receive the present.
 	 * 
 	 * @param List
 	 *            of players who receive the present
@@ -128,7 +128,7 @@ public abstract class Present {
 	}
 
 	/**
-	 * Test if a group belongs to a specific organisation.
+	 * Tests if a group belongs to a specific organisation.
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());

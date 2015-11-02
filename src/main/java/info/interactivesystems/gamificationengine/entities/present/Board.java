@@ -21,8 +21,8 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
 /**
- * A Board serves a player to store presents in three lists: If a present is
- * sent to a player it first is added to the inBox-list. The player decides if
+ * A Board serves a player to store presents in three lists: When a present is
+ * sent to a player firstly it is added to the inBox-list. The player decides if
  * he accepts the present, then it is added to the list which holds the current
  * presents else if it is denied it is removed from the inbox. When the player
  * wants to archive a present it is added to the archive list.
@@ -38,14 +38,23 @@ public class Board {
 	@ManyToOne
 	private Organisation belongsTo;
 
+	/**
+	 * Received presents are stored in the inBox-list. The player can decide if she/he wants to accept or deny each present.
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "board_inBox")
 	private List<Present> inBox;
 
+	/**
+	 * If the player decides to accept a present it is stored in the list of current presents.
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "board_current")
 	private List<Present> currentPresents;
 
+	/**
+	 * If the player wants to archive a present it is stored in the list of archived presents.
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "board_archive")
 	private List<PresentArchived> archive;
@@ -61,7 +70,7 @@ public class Board {
 
 	// GETTER & SETTER
 	/**
-	 * Get the id of a created board.
+	 * Gets the id of a created board.
 	 * 
 	 * @return id of the board as an int
 	 */
@@ -70,7 +79,7 @@ public class Board {
 	}
 
 	/**
-	 * Set the id of a board.
+	 * Sets the id of a board.
 	 * 
 	 * @param id
 	 */
@@ -106,7 +115,7 @@ public class Board {
 	// }
 
 	/**
-	 * Get all current presents of a player. These are presents which were
+	 * Gets all current presents of a player. These are presents which were
 	 * accepted before.
 	 * 
 	 * @return List<Present>
@@ -133,7 +142,7 @@ public class Board {
 	}
 
 	/**
-	 * Get a List of all archived presents which belongs to one player.
+	 * Gets a List of all archived presents which belongs to one player.
 	 * 
 	 * @return List<PresentArchived>
 	 */
@@ -142,7 +151,7 @@ public class Board {
 	}
 
 	/**
-	 * Set a List of player's archived presents.
+	 * Sets a List of player's archived presents.
 	 * 
 	 * @param history
 	 */
@@ -151,7 +160,7 @@ public class Board {
 	}
 
 	/**
-	 * Get all Presents which were sent to a player.
+	 * Gets all Presents which were sent to a player.
 	 * 
 	 * @return List<Present>
 	 */
@@ -160,7 +169,7 @@ public class Board {
 	}
 
 	/**
-	 * Set List of Presents which are sent to a player's board.
+	 * Sets list of Presents which are sent to a player's board.
 	 * 
 	 * @param inBox
 	 */
@@ -169,8 +178,8 @@ public class Board {
 	}
 
 	/**
-	 * If a player accept a specific present of his in-box it will be added to
-	 * the List of current presents.
+	 * If a player accepts a specific present of her/his in-Box it will be added to
+	 * the list of current presents.
 	 * 
 	 * @param the
 	 *            present which should be accepted
@@ -189,8 +198,8 @@ public class Board {
 	}
 
 	/**
-	 * If a player denies specific present of his in-box it will be removed of
-	 * the List of the in-box.
+	 * If a player denies a specific present of her/his in-Box it will be removed of
+	 * the list of the in-box.
 	 * 
 	 * @param the
 	 *            present which should be denied
@@ -207,7 +216,7 @@ public class Board {
 
 	/**
 	 * If a player archives a specific present of current ones it will be added
-	 * of the List of archived presents.
+	 * to the list of archived presents.
 	 * 
 	 * @param the
 	 *            present which should be archived

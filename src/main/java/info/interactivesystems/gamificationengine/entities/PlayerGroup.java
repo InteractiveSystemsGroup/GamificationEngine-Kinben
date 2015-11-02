@@ -53,22 +53,6 @@ public class PlayerGroup {
 	private int levelIndex;
 	private String levelLabel;
 
-	public int getLevelIndex() {
-		return levelIndex;
-	}
-
-	public void setLevelIndex(int levelIndex) {
-		this.levelIndex = levelIndex;
-	}
-
-	public String getLevelLabel() {
-		return levelLabel;
-	}
-
-	public void setLevelLabel(String levelLabel) {
-		this.levelLabel = levelLabel;
-	}
-
 	@Lob
 	@Column(columnDefinition = "BLOB")
 	private byte[] groupLogo;
@@ -283,5 +267,21 @@ public class PlayerGroup {
 
 	public void setRewards(List<PermanentReward> rewards) {
 		this.rewards = rewards;
+	}
+	
+	public int getLevelIndex() {
+		return levelIndex;
+	}
+
+	public void setLevelIndex(int levelIndex) {
+		this.levelIndex = levelIndex;
+	}
+
+	public String getLevelLabel() {
+		return levelLabel;
+	}
+
+	public void setLevelLabel(String levelLabel) {
+		this.levelLabel = levelLabel;
 	}
 }

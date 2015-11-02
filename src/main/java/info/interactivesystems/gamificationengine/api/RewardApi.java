@@ -52,7 +52,7 @@ public class RewardApi {
 	RewardDAO rewardDao;
 
 	/**
-	 * Returns a list of all reward associated with api key.
+	 * Returns a list of all rewards associated with the given api key and so with one specific organisation.
 	 * 
 	 * @param apiKey
 	 *            a valid query param api key affiliated to an organisation
@@ -107,7 +107,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/")
-	public Response createNewReward(@QueryParam("type") @NotNull String type, @QueryParam("name") String name,
+	public Response createNewReward(@QueryParam("type") @NotNull String type, @QueryParam("name") @NotNull String name,
 			@QueryParam("amount") @ValidPositiveDigit String amount, @QueryParam("icon") String url, @QueryParam("description") String description,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("createNewReward called");

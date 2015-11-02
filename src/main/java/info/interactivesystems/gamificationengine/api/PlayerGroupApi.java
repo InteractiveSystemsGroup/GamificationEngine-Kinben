@@ -209,4 +209,6 @@ public class PlayerGroupApi {
 		return ResponseSurrogate.deleted(plGroup);
 	}
 
+	//TODO get all earned bages/achviements/points and coins of a group
+	
 }

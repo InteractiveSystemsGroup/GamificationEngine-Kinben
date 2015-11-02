@@ -66,7 +66,7 @@ public class Offer {
 
 	// GETTER & SETTER
 	/**
-	 * Get the id of an offer.
+	 * Gets the id of an offer.
 	 * 
 	 * @return int
 	 */
@@ -75,7 +75,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the id of an offer.
+	 * Sets the id of an offer.
 	 * 
 	 * @param id
 	 *            - the id of an offer.
@@ -85,7 +85,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the exact LocalDateTime when the offer was created.
+	 * Gets the exact LocalDateTime when the offer was created.
 	 * 
 	 * @return LocalDateTime
 	 */
@@ -94,7 +94,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the LocalDateTime when the offer was created.
+	 * Sets the LocalDateTime when the offer was created.
 	 * 
 	 * @param offerDate
 	 *            - the exact Date, when the offer was created
@@ -104,7 +104,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the LocalDateTime, when the offer end.
+	 * Gets the LocalDateTime, when the offer end.
 	 * 
 	 * @return LocalDateTime
 	 */
@@ -113,7 +113,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the LocalDateTime, when the offer ends.
+	 * Sets the LocalDateTime, when the offer ends.
 	 * 
 	 * @param endDate
 	 *            - the exact Date, when the offer ends
@@ -123,7 +123,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the exact Date and Time, when the task of an offer should be
+	 * Gets the exact Date and Time, when the task of an offer should be
 	 * finished.
 	 * 
 	 * @return LocalDateTime
@@ -133,7 +133,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the exact Date and Time, when the task of an offer should be
+	 * Sets the exact Date and Time, when the task of an offer should be
 	 * finished.
 	 * 
 	 * @param deadLine
@@ -144,7 +144,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the current prize of an offer, which can be awarded by fulfilling the
+	 * Gets the current prize of an offer, which can be awarded by fulfilling the
 	 * task.
 	 * 
 	 * @return int
@@ -154,7 +154,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the current prize of an offer, which can be awarded by fulfilling the
+	 * Sets the current prize of an offer, which can be awarded by fulfilling the
 	 * task.
 	 * 
 	 * @param prize
@@ -166,7 +166,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the organisation an offer belongs to.
+	 * Gets the organisation an offer belongs to.
 	 * 
 	 * @return organisation object
 	 */
@@ -175,7 +175,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the organisation an offer belongs to.
+	 * Sets the organisation an offer belongs to.
 	 * 
 	 * @param belongsTo
 	 *            - the organisation the offer belongs to.
@@ -185,7 +185,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the task of an offer, which can be fulfilled to award the prize.
+	 * Gets the task of an offer, which can be fulfilled to award the prize.
 	 * 
 	 * @return Task object
 	 */
@@ -194,7 +194,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the task
+	 * Sets the task which is connected with the offer.
 	 * 
 	 * @param task
 	 *            - the task which must be finished to comply the offer
@@ -204,7 +204,7 @@ public class Offer {
 	}
 
 	/**
-	 * Get the roles to check which player is allowed to fulfil this offer.
+	 * Gets the roles to check which player is allowed to fulfil this offer.
 	 * 
 	 * @return List<Role>
 	 */
@@ -213,8 +213,8 @@ public class Offer {
 	}
 
 	/**
-	 * Set a list of roles for the task. Players who have at least one of these
-	 * roles ist allwed to fulfil the task an award the prize.
+	 * Sets a list of roles for the task. Players who have at least one of these
+	 * roles is allowed to fulfil the task and award the prize.
 	 * 
 	 * @param allowedForRole
 	 *            - the roles of which a player must have at least one to
@@ -233,7 +233,7 @@ public class Offer {
 	// }
 
 	/**
-	 * Get the name of the offer, which can describe the task in a short way.
+	 * Gets the name of the offer, which can describe the task in a short way.
 	 * 
 	 * @return String
 	 */
@@ -242,7 +242,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set the name of an offer, which can describe the task in a short way.
+	 * Sets the name of an offer, which can describe the task in a short way.
 	 * 
 	 * @param name
 	 *            - the name of the offer.
@@ -267,7 +267,7 @@ public class Offer {
 	// }
 
 	/**
-	 * Get the player who has created the offer.
+	 * Gets the player who has created the offer.
 	 * 
 	 * @return Player object
 	 */
@@ -276,7 +276,7 @@ public class Offer {
 	}
 
 	/**
-	 * Set a player as a creator of an offer.
+	 * Sets a player as a creator of an offer.
 	 * 
 	 * @param player
 	 *            - the player who has created the offer.
