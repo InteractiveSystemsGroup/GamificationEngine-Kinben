@@ -7,9 +7,14 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 /**
- * An Account is identified by a unique email address. The password ensures the
+ * An Account has to be created for at least one manager or developer. It
+ * is identified by a unique email address. The password ensures the
  * identity. Optionally an account may have information about the user in form
- * of first name and last name.
+ * of her/his first name and last name.
+ * It is possible to change the password, the first name or last name 
+ * at a later point of time. In addition to creating an account another 
+ * possible request is to get the created account but only with the 
+ * correct credentials.
  */
 @Entity
 public class Account implements Serializable {
@@ -37,7 +42,8 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * Gets the email address of an Account.
+	 * Gets the email address of an Account. 
+	 * This email address is unique.
 	 * 
 	 * @return String representing the email address.
 	 */
@@ -47,6 +53,7 @@ public class Account implements Serializable {
 
 	/**
 	 * Set the email address for an Account.
+	 * This email address has to be unique.
 	 * 
 	 * @param email
 	 *            the email address for the Account

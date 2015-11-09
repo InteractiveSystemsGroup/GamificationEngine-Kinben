@@ -30,7 +30,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for organisation related services.
+ * An Organisation represents for example a specific company or an association which 
+ * represents a group of people belonging together and which are participating in the 
+ * gamification process.
+ * An Organisation possessed an generated API key which is needed for all further interactions
+ * because all database entries are associated with this unique key and so with the respective 
+ * organisation. The API key is uniquely in the whole application. It
+ * may be changed, for this reason it has no primary key. 
+ * When an Organisation is created it has to be connected with an account. Each organisation 
+ * may be managed by many people, but at least by one who is added to the list of the manager 
+ * of the respective organisation and so also the Account.  
  */
 @Path("/organisation")
 @Stateless
@@ -45,13 +54,16 @@ public class OrganisationApi {
 	AccountDAO accountDao;
 
 	/**
-	 * Creates a new developer organisation. Email and password are mandatory for
-	 * authentication.
+	 * Creates a new organisation. The email address and password of one Account are used 
+	 * to connect it with this organisation. So the email address and password are mandatory for
+	 * authentication otherwise a warning with the hint for wrong credentials is returned.
+	 * All further Accounts which should be associated to this organisation are added with the 
+	 * method addManager. 
 	 *
 	 * @param email
-	 *            required valid email
+	 *           The required valid email address.
 	 * @param password
-	 *            required query param
+	 *           Required query param associated with the email address. 
 	 * @return a {@link Response} of {@link Organisation} in JSON
 	 */
 	@POST
@@ -75,15 +87,17 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Adds a new developer to an organisation. Email and password are mandatory
-	 * for authentication.
+	 * Adds a new developer to the organisation's list of manager. The email address and 
+	 * password are mandatory for authentication otherwise a warning with the hint for 
+	 * wrong credentials is returned. If the manager who should be added is already in the 
+	 * list, a message is given with the hint that she/he is already added. 
 	 *
 	 * @param manager
-	 *            required valid email for new manager
+	 *            The required valid email address for the new manager.
 	 * @param email
-	 *            required valid email
+	 *            The required valid email.
 	 * @param password
-	 *            required query param
+	 *             Required query param associated with the email address. 
 	 * @return a {@link Response} of {@link Organisation} in JSON
 	 */
 	@POST
@@ -113,12 +127,14 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Returns all organisations which are assosiated with the query param.
+	 * Returns all organisations which are associated with the combination of the two 
+	 * query parameters. Otherwise an exception is sent that the given credentials are wrong.
 	 * 
 	 * @param email
-	 *            required valid email
+	 *            A required valid email address. 
 	 * @param password
-	 *            required query param
+	 *            Required query param to connect it with the given 
+	 *            email address.
 	 * @return {@link Response} of {@link List<Organisation>} in JSON
 	 */
 	@GET
@@ -136,15 +152,17 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Returns a specific organisation which id is equal to the transfered query
-	 * param.
+	 * Returns a specific organisation which id is equal to the transfered path parameter. 
+	 * Additionally the email address and the associated password are mandatory and have to be
+	 * correct otherwise an exception is returned that the given credentials are wrong.
 	 * 
 	 * @param id
-	 *            path param of an organisation
+	 *            The path parameter of the organisation, that should be returned.
 	 * @param email
-	 *            required valid email
+	 *            The valid email address.
 	 * @param password
-	 *            required query param
+	 *             Required query parameter to connect it with the given 
+	 *             email address.
 	 * @return {@link Response} of {@link Organisation} in JSON
 	 */
 	@GET
@@ -164,15 +182,18 @@ public class OrganisationApi {
 	}
 
 	/**
-	 * Generates an apiKey for the given organisation. Resets the apiKey field if it is already
-	 * set.
+	 * Generates an API key for the given organisation which matches the id, email address and the
+	 * associated password. Otherwise an exception is returned that the given credentials are wrong.
+	 * If the API key field is already set the method resets it and replaced it with the new generated
+	 * API key.  
 	 * 
 	 * @param id
-	 *            path param of an organisation
+	 *            The path parameter of the organisation, for which the API key should be generated.
 	 * @param email
-	 *            a valid email
+	 *           The valid email address. 
 	 * @param password
-	 *            required query param
+	 *            Required query parameter to connect it with the given 
+	 *            email address.
 	 * @return {@link Response} of {@link Organisation} in JSON
 	 */
 	@PUT

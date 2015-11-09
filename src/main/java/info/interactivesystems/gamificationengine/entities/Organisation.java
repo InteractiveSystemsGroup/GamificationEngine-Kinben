@@ -15,9 +15,16 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 /**
- * An Organisation holds an API key. Each organisation may be managed by many
- * people, but at least by one. The api key is uniquely in whole application. It
- * may be changed, for this reason it has no primary key.
+ * An Organisation represents for example a specific company or an association which 
+ * represents a group of people belonging together and which are participating in the 
+ * gamification process.
+ * An Organisation possessed an generated API key which is needed for all further interactions
+ * because all database entries are associated with this unique key and so with the respective 
+ * organisation. The API key is uniquely in the whole application. It
+ * may be changed, for this reason it has no primary key. 
+ * When an Organisation is created it has to be connected with an account. Each organisation 
+ * may be managed by many people, but at least by one who is added to the list of the manager 
+ * of the respective organisation and so also the Account. 
  */
 @Entity
 public class Organisation implements Serializable {
@@ -48,17 +55,17 @@ public class Organisation implements Serializable {
 	}
 
 	/**
-	 * Set the id of the organisation
+	 * Sets the id of the created organisation.
 	 * 
-	 * @param the
-	 *            new id of the organisation
+	 * @param id 
+	 *           The new id of the organisation
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Get the organisation's id.
+	 * Gets the organisation's id.
 	 * 
 	 * @return organisation's id as int
 	 */
@@ -67,7 +74,8 @@ public class Organisation implements Serializable {
 	}
 
 	/**
-	 * Get all accounts of the organisation. Each account belongs to a manager.
+	 * Gets all accounts of the organisation which are associated to this organisation. 
+	 * Each account belongs to a manager.
 	 * 
 	 * @return Collection of all organisation's manager accounts
 	 */
@@ -76,30 +84,30 @@ public class Organisation implements Serializable {
 	}
 
 	/**
-	 * The list of the organisation's accounts. Each account belongs to a
+	 * Sets the list of the organisation's accounts. Each account belongs to a
 	 * manager.
 	 * 
-	 * @param List
-	 *            of all organisation's accounts
+	 * @param managers
+	 *             List of all organisation's accounts
 	 */
 	public void setManagers(Collection<Account> managers) {
 		this.managers = managers;
 	}
 
 	/**
-	 * Get the organisation's name.
+	 * Gets the organisation's name and returns it as a String.
 	 * 
-	 * @return name of the organisation
+	 * @return name of the organisation as String.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Set the name of an organisation.
+	 * Sets the name of an organisation.
 	 * 
-	 * @param the
-	 *            name of the organisation
+	 * @param name
+	 *            The name of the organisation.
 	 * 
 	 */
 	public void setName(String name) {
@@ -107,7 +115,7 @@ public class Organisation implements Serializable {
 	}
 
 	/**
-	 * Get the organisation's unique apiKey.
+	 * Gets the organisation's unique API key and returns it.
 	 * 
 	 * @return the apiKey as a String
 	 */
@@ -116,21 +124,23 @@ public class Organisation implements Serializable {
 	}
 
 	/**
-	 * Set the organisation's apiKey.
+	 * Sets the organisation's API key.
 	 * 
 	 * @param apiKey
+	 *		 	 The API key which is unique and specific for one organisation.
 	 */
 	public void setApiKey(@NotNull String apiKey) {
 		this.apiKey = apiKey;
 	}
 
 	/**
-	 * Add a new manager's account to the organisation's list of mccounts.
+	 * Adds a new manager's account to the organisation's list of accounts.
 	 * 
 	 * @param account
 	 *            which should be added to the list
 	 */
 	public void addManager(@NotNull Account account) {
 		getManagers().add(account);
+		//this.managers.add(account);
 	}
 }

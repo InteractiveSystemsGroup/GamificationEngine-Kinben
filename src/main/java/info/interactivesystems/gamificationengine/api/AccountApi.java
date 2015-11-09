@@ -23,7 +23,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for account related services.
+ * API for account related services. 
+ * An Account has to be created for at least one manager or developer. It
+ * is identified by a unique email address. The password ensures the
+ * identity. Optionally an account may have information about the user in form
+ * of her/his first name and last name.
+ * It is possible to change the password, the first name or last name 
+ * at a later point of time. In addition to creating an account another 
+ * possible request is to get the created account but only with the 
+ * correct credentials.
  */
 @Path("/account")
 @Stateless
@@ -36,13 +44,16 @@ public class AccountApi {
 	AccountDAO accountDao;
 
 	/**
-	 * Returns an account corresponding to an email. Requires valid credentials.
+	 * Returns an account corresponding to the given email address but only
+	 * if the combination with password is correct. By the creation of an 
+	 * organisation this email address is connected with it. 
+	 * So the method requires valid credentials otherwise a warning with the 
+	 * hint for wrong credentials is returned.
 	 *
 	 * @param email
-	 *            A required valid email.
+	 *            A required valid unique email address.
 	 * @param password
-	 *            Required query param.
-	 *
+	 *            Required query param associated with the email address. 
 	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
 	 */
 	@GET
@@ -62,17 +73,20 @@ public class AccountApi {
 	}
 
 	/**
-	 * Create a new account. Email and password are mandatory.
+	 * Creates a new account. For this an unique email address and a 
+	 * password are mandatory. By the creation of an organisation this 
+	 * email address is connected with it. Optionally the first and last
+	 * name can also be set.
 	 *
 	 * @param email
-	 *            A required valid email.
+	 *            A required valid email address. 
 	 * @param password
-	 *            Required query param.
-	 * 
+	 *            Required query parameter to connect it with the given 
+	 *            email address.
 	 * @param firstName
-	 *            Optional first name.
+	 *            Optionally the first name of the Account's owner can be set.
 	 * @param lastName
-	 *            Optional last name.
+	 *            Optionally the last name of the Account's owner can be set.
 	 * 
 	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
 	 */
@@ -94,17 +108,19 @@ public class AccountApi {
 	}
 
 	/**
-	 * Updates an existing account. Email and password are mandatory.
+	 * Updates the first and last name of an existing account. For this the 
+	 * specific email address and associated password are mandatory.
+	 * Otherwise a warning with the hint for wrong credentials is returned.
 	 *
-	 * @param email
-	 *            A required valid email.
+	 *  @param email
+	 *            A required valid email address. 
 	 * @param password
-	 *            Required query param.
-	 * 
+	 *            Required query param to connect it with the given 
+	 *            email address.
 	 * @param firstName
-	 *            Optional first name.
+	 *            Optionally the first name of the Account's owner can be set.
 	 * @param lastName
-	 *            Optional last name.
+	 *            Optionally the last name of the Account's owner can be set.
 	 * 
 	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
 	 */
