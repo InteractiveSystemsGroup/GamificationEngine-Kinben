@@ -26,8 +26,15 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
- * A user in a gamificated app.
- *
+ * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
+ * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
+ * rewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised 
+ * by fulfilling tasks in the gamification application. Furthermore a player can have an avatar.
+ * A player can be set active or can be deactivated so that she/he cannot complete tasks. 
+ * Each player can also have a list of contacts which represent other players in the same organisation to send 
+ * little presents. 
+ * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
+ * player has.
  */
 @Entity
 public class Player {
@@ -92,7 +99,7 @@ public class Player {
 
 	}
 
-	// das (wiederholt) abgeschlossene finishedGoal wird übergeben
+	// The parameter is the (repeated) completed finishedGoal.
 	// public void grantReward(FinishedGoal fGoal) {
 	// List<Reward> rewards = fGoal.getGoal().getRewards();
 	//
@@ -114,43 +121,21 @@ public class Player {
 	//
 	// }
 
-	/**
-	 * The amount of points will be added to the player's current points and
-	 * raise them.
-	 * 
-	 * @param the
-	 *            points which are added to the player's points.
-	 */
-	public void awardPoints(int points) {
-		this.points += points;
-
-	}
 
 	/**
-	 * The amount of coins will be added to the player's current coins and raise
-	 * them.
+	 * Gets the nickname of a player.
 	 * 
-	 * @param the
-	 *            amount which is added to the player's coins.
-	 */
-	public void awardCoins(int amount) {
-		coins += amount;
-	}
-
-	/**
-	 * Get the nickname of a player.
-	 * 
-	 * @return nickname as String
+	 * @return nickname of the player as a String.
 	 */
 	public String getNickname() {
 		return nickname;
 	}
 
 	/**
-	 * Set the nickname of a player, that is displayer for the other players.
+	 * Sets the nickname of a player, that is displayed for the other players.
 	 * 
 	 * @param nickname
-	 *            the nickname of a user.
+	 *            The nickname of the player.
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
@@ -163,63 +148,108 @@ public class Player {
 	// }
 
 	/**
-	 * Add a new Achivement to the player's permanent rewards.
+	 * The amount of points the player has earned will be added to the player's current 
+	 * points and raise them.
 	 * 
-	 * @param the
-	 *            achievement that will be granted
+	 * @param points
+	 *            The amount of points which is transfered and so added to the player's 
+	 *            current points.
+	 */
+	public void awardPoints(int points) {
+		this.points += points;
+
+	}
+
+	/**
+	 * The amount of coins the player has earned will be added to the player's current 
+	 * coins and raise them.
+	 * 
+	 * @param coins
+	 *            The Amount of coins which is transfered and so added to the player's 
+	 *            current coins.
+	 */
+	public void awardCoins(int amount) {
+		coins += amount;
+	}
+	
+	/**
+	 * This method adds a new earned Achivement to the player's list of permanent rewards.
+	 * 
+	 * @param r 
+	 * 			The achievement that will be awarded to the player.
 	 */
 	private void awardAchievement(Achievement r) {
 		rewards.add(r);
 	}
 
 	/**
-	 * Add a new Badge to the player's permanent rewards.
+	 * This method adds a new earned Badge to the player's list of permanent rewards.
 	 * 
-	 * @param the
-	 *            badge that will be granted
+	 * @param r 
+	 * 			The badge that will be awarded to the player.
 	 */
 	private void awardBadge(Badge r) {
 		rewards.add(r);
 	}
 
 	/**
-	 * Get the real name of a player.
+	 * Gets the real name of a player.
 	 * 
-	 * @return player's real name as String
+	 * @return player's real name as String.
 	 */
 	public String getReference() {
 		return reference;
 	}
 
 	/**
-	 * Set the real name of a player.
+	 * Sets the real name of a player.
 	 * 
 	 * @param reference
-	 *            the real name of a player
+	 *            This field represents the real name of a player.
 	 */
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
 
 	/**
-	 * Get the current amount of coins a player has obtained.
+	 * Gets the current amount of coins a player has obtained.
 	 * 
-	 * @return the amount of obtained coins as int.
+	 * @return The amount of obtained coins as int.
 	 */
 	public int getCoins() {
 		return coins;
 	}
 
 	/**
-	 * Set the current amount of coins a player has obtained.
+	 * Sets the current amount of coins a player has obtained.
 	 * 
 	 * @param coins
-	 *            the amount of current coins
+	 *            The amount of current coins a player has.
 	 */
 	public void setCoins(int coins) {
 		this.coins = coins;
 	}
 
+	/**
+	 * Gets the current amount of points a player has obtained.
+	 * 
+	 * @return The amount of obtained points as int.
+	 */
+	public int getPoints() {
+		return points;
+	}
+
+	/**
+	 * Sets the current amount of points a player has obtained.
+	 * 
+	 * @param points
+	 *             The amount of current points a player has.
+	 */
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	
 	// public PlayerLevel getLevel() {
 	// return level;
 	// }
@@ -229,178 +259,160 @@ public class Player {
 	// }
 
 	/**
-	 * Get the current level index of a player.
+	 * Gets the current level index of a player.
 	 * 
-	 * @return level index as int
+	 * @return Level index returned as int.
 	 */
 	public int getLevelIndex() {
 		return levelIndex;
 	}
 
 	/**
-	 * Set the current level index a player has obtained.
+	 * Sets the current level index a player has obtained.
 	 * 
 	 * @param levelIndex
-	 *            player's current level
+	 *            The index of player's current level.
 	 */
 	public void setLevelIndex(int levelIndex) {
 		this.levelIndex = levelIndex;
 	}
 
 	/**
-	 * Get the label of a player's current level.
+	 * Gets the label of a player's current level.
 	 * 
-	 * @return name of the current level as String.
+	 * @return The name of the player's current level as String.
 	 */
 	public String getLevelLabel() {
 		return levelLabel;
 	}
 
 	/**
-	 * Set the label of a player's current level.
+	 * Sets the label of a player's current level.
 	 * 
 	 * @param levelLabel
-	 *            the name of the current level
+	 *            The name of the player's current level.
 	 */
 	public void setLevelLabel(String levelLabel) {
 		this.levelLabel = levelLabel;
 	}
 
 	/**
-	 * Get the id of a player.
+	 * Gets the id of a player.
 	 * 
-	 * @return player's id as int
+	 * @return The player's id as int.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * Set the id of a player.
+	 * Sets the id of a player.
 	 * 
 	 * @param id
-	 *            of the player
+	 *            The id of the player.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Get the organisaiton a player belongs to.
+	 * Gets the organisation a player belongs to.
 	 * 
-	 * @return the organisation of the player
+	 * @return The organisation of the player as an object.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
 	}
 
 	/**
-	 * Set the organisation a player belongs to.
+	 * Sets the organisation a player belongs to.
 	 * 
 	 * @param belongsTo
-	 *            player's organisation
+	 *            The player's organisation.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 
 	/**
-	 * Get the password of a player.
+	 * Gets the password of a player.
 	 * 
-	 * @return password as String
+	 * @return The player's password as String.
 	 */
 	public String getPassword() {
 		return password;
 	}
 
 	/**
-	 * Set the password of a player.
+	 * Sets the password of a player.
 	 * 
 	 * @param password
-	 *            the new password of the player
+	 *            The new password of the player.
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * Get player's current amount of points.
-	 * 
-	 * @return current amount of points.
-	 */
-	public int getPoints() {
-		return points;
-	}
 
 	/**
-	 * Set the player's current amount of points.
+	 * Gets the avatar of a player as byte[].
 	 * 
-	 * @param points
-	 *            the player's current amount of points
-	 */
-	public void setPoints(int points) {
-		this.points = points;
-	}
-
-	/**
-	 * Get the avatar of a player as byte[].
-	 * 
-	 * @return the avatar as byte[]
+	 * @return The player's avatar as byte[].
 	 */
 	public byte[] getAvatar() {
 		return avatar;
 	}
 
 	/**
-	 * Set player's avatar.
+	 * Sets player's transferred byte[] as the current avatar.
 	 * 
 	 * @param avatar
-	 *            the new avatar of the player
+	 *            The new avatar of the player
 	 */
 	public void setAvatar(byte[] avatar) {
 		this.avatar = avatar;
 	}
 
 	/**
-	 * Get all Tasks a player has finished.
+	 * Gets all Tasks a player has already finished.
 	 * 
-	 * @return List of all finished Tasks
+	 * @return List of all finished Tasks a player has completed.
 	 */
 	public List<FinishedTask> getFinishedTasks() {
 		return finishedTasks;
 	}
 
 	/**
-	 * Set the tasks a player has finished.
+	 * Sets the list of Tasks a player has already finished.
 	 * 
 	 * @param finishedTasks
-	 *            all tasks a player has finished
+	 *            All tasks a player has already finished.
 	 */
 	public void setFinishedTasks(List<FinishedTask> finishedTasks) {
 		this.finishedTasks = finishedTasks;
 	}
 
 	/**
-	 * Get all Goals a player has finished.
+	 * Gets all Goals a player has already completed.
 	 * 
-	 * @return List of all completed Goals
+	 * @return List of all completed Goals.
 	 */
 	public List<FinishedGoal> getFinishedGoals() {
 		return finishedGoals;
 	}
 
 	/**
-	 * Set the goals a player has completed.
+	 * Sets the List of Goals a player has completed.
 	 * 
 	 * @param finishedGoals
-	 *            all goals a player has completed
+	 *            All Goals a player has already completed.
 	 */
 	public void setFinishedGoals(List<FinishedGoal> finishedGoals) {
 		this.finishedGoals = finishedGoals;
 	}
 
 	/**
-	 * The roles a player has.
+	 * Gets all roles a player has.
 	 * 
 	 * @return List of all roles a player has.
 	 */
@@ -409,39 +421,40 @@ public class Player {
 	}
 
 	/**
-	 * Set the roles of a player.
+	 * Sets the list of roles a player has.
 	 * 
 	 * @param belongsToRoles
-	 *            all roles a player has
+	 *            All roles of a player.
 	 */
 	public void setBelongsToRoles(List<Role> belongsToRoles) {
 		this.belongsToRoles = belongsToRoles;
 	}
 
 	/**
-	 * Get all permanent rewards a player has obtained. These are for example a
-	 * badge or an achievement.
+	 * Gets all permanent rewards a player has already obtained. These are for example 
+	 * all badges and achievements.
 	 * 
-	 * @return List of obtained permanent rewards
+	 * @return List of all obtained permanent rewards
 	 */
 	public List<PermanentReward> getRewards() {
 		return rewards;
 	}
 
 	/**
-	 * Set the rewards a player has obtained.
+	 * Sets the list of all permanent rewards a player has obtained.
 	 * 
 	 * @param rewards
-	 *            permanent rewards a player has obtained
+	 *            All permanent rewards a player has obtained
 	 */
 	public void setRewards(List<PermanentReward> rewards) {
 		this.rewards = rewards;
 	}
 
 	/**
-	 * Get only all Badges a player has obtained.
+	 * Gets only all Badges a player has already obtained.
+	 * If the player has no Badge, null is returned. 
 	 * 
-	 * @return obtained Badges as List.
+	 * @return A List of all obtained Badges as List.
 	 */
 	public List<Badge> getOnlyBadges() {
 		// filter PermanentRewards for Badges
@@ -454,9 +467,10 @@ public class Player {
 	}
 
 	/**
-	 * Get only all Achievements a player has obtained.
+	 * Gets only all Achievements a player has already obtained.
+	 * If the player has no Achievement, null is returned. 
 	 * 
-	 * @return obtained Achievement as List.
+	 * @return A List of all obtained Achievements as List.
 	 */
 	public List<Achievement> getOnlyAchievement() {
 		// filter PermanantAchievements for Achievements
@@ -471,52 +485,58 @@ public class Player {
 	}
 
 	/**
-	 * Add a just completed task to the List of finished tasks.
+	 * Adds the just completed task that is transfered to the player's list 
+	 * of all finished tasks.
 	 * 
 	 * @param task
-	 *            the just finished task
+	 *           The just finished task that should be added to the list.
 	 */
 	public void addFinishedTask(FinishedTask task) {
 		finishedTasks.add(task);
 	}
 
 	/**
-	 * Add a just completed goal to the List of finished tasks.
+	 * Adds the just completed goal that is transfered to the player's list 
+	 * of all finished goals. 
 	 * 
 	 * @param goal
-	 *            the just finished goal
+	 *           The just finished goal that should be added to the list.
 	 */
 	public void addFinishedGoal(FinishedGoal goal) {
 		finishedGoals.add(goal);
 	}
 
 	/**
-	 * Add more than one finished goal to the List of finished goals.
+	 * Adds several finished goals to the player's list of finished goals.
 	 * 
 	 * @param fGoalsList
-	 *            List of finished goals
+	 *           The list of all already finished goals a player has completed that is
+	 *           added to the player's list of finished goals.
 	 */
 	public void addFinishedGoal(List<FinishedGoal> fGoalsList) {
 		finishedGoals.addAll(fGoalsList);
 	}
 
 	/**
-	 * Add a permanent reward like a Badge or Achievement to all obtained
-	 * rewards.
+	 * Adds the transfered permanent reward like a Badge or Achievement to all 
+	 * already obtained rewards.
 	 * 
 	 * @param reward
-	 *            the permanent reward that was just obtained.
+	 *            The permanent reward that was just obtained.
 	 */
 	public void addPermanentReward(PermanentReward reward) {
 		rewards.add(reward);
 	}
 
 	/**
-	 * Test if a goal was already finished and get all finished goals of it.
+	 * This method checks if one specific goal was already finished and gets all 
+	 * finished goals objects of this type in one list. If no goal of this type of
+	 * was completed an empty list is returned.
 	 * 
 	 * @param goal
-	 *            the goal that should be compared
-	 * @return List of all finished goals of the goal
+	 *            The goal that should be compared with all other already obtained
+	 *            goals.
+	 * @return The list of all finished goals that match the compared goal.
 	 */
 	public List<FinishedGoal> getFinishedGoalsByGoal(Goal goal) {
 		List<FinishedGoal> returnList = new ArrayList<>();
@@ -530,15 +550,17 @@ public class Player {
 
 	/**
 	 * If a player donates an amount of obtained coins to a specified
-	 * DonationCall, the amount will be subtracted of his current amount of
-	 * coins. Before that step it is checked if the player has enough coins for
-	 * the donation.
+	 * DonationCall, the amount will be subtracted of her/his current amount of
+	 * coins. Before this step it is checked if the player has enough coins for
+	 * the donation. It the player has enough coins true is returned otherwise
+	 * false.
 	 * 
 	 * @param dCall
-	 *            the DonationCall a player donate for
+	 *            The DonationCall a player donates for.
 	 * @param amount
-	 *            the specified amount of donated coins
-	 * @return boolean if a player has enough coins for a donation
+	 *            The specified amount of donated coins.
+	 * @return boolean that is true if a player has enough coins for a donation 
+	 * otherwise false.
 	 */
 	public boolean donate(DonationCall dCall, int amount) {
 		if (enoughPrize(amount)) {
@@ -549,30 +571,32 @@ public class Player {
 	}
 
 	/**
-	 * Get the List of a player's contacts.
+	 * Gets the List of all player's contacts.
 	 * 
-	 * @return List of other players
+	 * @return A list of other players who are contacts of the player. 
 	 */
 	public List<Player> getContactList() {
 		return contactList;
 	}
 
 	/**
-	 * Set the list of contacts a player has.
+	 * Sets the list of contacts a player has.
 	 * 
 	 * @param contactList
-	 *            all contacts of a player
+	 *            All contacts of a player who reprents other player in the 
+	 *            gamification application.
 	 */
 	public void setContactList(List<Player> contactList) {
 		this.contactList = contactList;
 	}
 
 	/**
-	 * Test if a player has enough coins for a specified prize.
+	 * This method checks if a player has enough coins for example to make a bid 
+	 * or donate.
 	 * 
 	 * @param prize
-	 *            the prize that should be spent or donated
-	 * @return boolean if a player has enough coins
+	 *            The prize that should be spent or donated.
+	 * @return boolean that is true if a player has enough coins otherwise false.
 	 */
 	public boolean enoughPrize(int prize) {
 		if (this.coins >= prize) {
@@ -582,10 +606,11 @@ public class Player {
 	}
 
 	/**
-	 * Add player to a player's list of contacts.
+	 * Adds one or more players to a player's list of contacts. If the player who is 
+	 * the owner of this list she/he is removed. 
 	 * 
 	 * @param contacts
-	 *            players who should be added
+	 *           List of one ore more player who should be added to the player's contact list.
 	 * @return boolean value
 	 */
 	public boolean addContacts(Collection<? extends Player> contacts) {
@@ -595,10 +620,10 @@ public class Player {
 	}
 
 	/**
-	 * Remove one or more contacts of the player's list of contacts
+	 * Removes one or more contacts of the player's list of contacts
 	 * 
 	 * @param contacts
-	 *            players that should be removed
+	 *            List of one ore more player who should be removed from the player's contact list.
 	 * @return boolean value
 	 */
 	public boolean removeContacts(Collection<Player> contacts) {
@@ -606,19 +631,20 @@ public class Player {
 	}
 
 	/**
-	 * Check if a player is active for the gamificated application.
+	 * Checks if a player is active in the gamificated application. This is needed for example 
+	 * to complete a task.
 	 * 
-	 * @return value if a player is active.
+	 * @return True if the player is active and false if not.
 	 */
 	public boolean isActive() {
 		return isActive;
 	}
 
 	/**
-	 * Set the value if a player is active.
+	 * Sets the value if a player is active or not.
 	 * 
 	 * @param isActive
-	 *            current value of a player is active
+	 *            The current value if a player is active (true) or not (false).
 	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;

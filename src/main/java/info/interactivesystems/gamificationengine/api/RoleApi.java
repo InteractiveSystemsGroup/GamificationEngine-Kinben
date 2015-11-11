@@ -28,7 +28,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for roles related services.
+ * A role describes which members of an organisation is allowed to do or see
+ * particular elements of the engine such as to fulfil a particular task and get
+ * its rewards. Each Player can have many different roles such as one for his
+ * occupation or the department in which she/he works. But the roles can also be a 
+ * part of an invented role system that isn’t oriented towards the work context. All 
+ * roles are specific to the respective created organisation. 
+ * Ancillary creating and deleting, either all roles of a specific organisation or with 
+ * a given id the associated role can be gotten. 
+ * The name of one role can also be changed at a later point of time.
  */
 @Path("/role")
 @Stateless
@@ -43,12 +51,15 @@ public class RoleApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Creates a new role.
+	 * Creates a new role for the organisation to which the API key belongs to. Because 
+	 * of this API key the created role is specific to this organisation. 
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param roleName
-	 *            required name of the new role
+	 *            The required name of the new role. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link Role} in JSON
 	 */
 	@POST
@@ -68,10 +79,12 @@ public class RoleApi {
 	}
 
 	/**
-	 * Get all roles of a specific organisation.
+	 * Gets all roles of a specific organisation that have been created. If the API key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to. This field must not be null.
 	 * @return {@link Response} of {@link List<Role>} in JSON
 	 */
 	@GET
@@ -83,12 +96,15 @@ public class RoleApi {
 	}
 
 	/**
-	 * Get a specific role of an organisation.
+	 * Gets a specific role of an organisation so the id of the organisation and its API key are needed.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required id of the role
+	 *            Required path parameter id of the role that should be gotten. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link Role} in JSON
 	 */
 	@GET
@@ -103,14 +119,20 @@ public class RoleApi {
 	}
 
 	/**
+	 * With this method the name field of one role can be changed. For this the id of the role, the API key of the
+	 * specific organisaiton, the name of the field and the new value are needed.
+	 * If the API key is not valid an analogous message is returned. 
+	 * 
+	 * 
 	 * @param id
-	 *            required id of the role
+	 *            The id of the role that should be changed. This parameter is required.
 	 * @param attribute
-	 *            required name of the attribute which should be changed
+	 *            The name of the attribute which should be changed.  This parameter is required. 
 	 * @param value
-	 *            required new value of the attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link Role} in JSON
 	 */
 	@PUT
@@ -135,12 +157,15 @@ public class RoleApi {
 	}
 
 	/**
-	 * Deletes a role of an organisation.
+	 * Deletes a specific role of an organisation so the id of the organisation and its API key are needed.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required id of the role
+	 *            Required path parameter id of the role that should be gotten. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link Role} in JSON
 	 */
 	@DELETE

@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for account related services. 
  * An Account has to be created for at least one manager or developer. It
  * is identified by a unique email address. The password ensures the
  * identity. Optionally an account may have information about the user in form
@@ -53,7 +52,7 @@ public class AccountApi {
 	 * @param email
 	 *            A required valid unique email address.
 	 * @param password
-	 *            Required query param associated with the email address. 
+	 *            Required query parameter associated with the email address. 
 	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
 	 */
 	@GET
@@ -115,7 +114,7 @@ public class AccountApi {
 	 *  @param email
 	 *            A required valid email address. 
 	 * @param password
-	 *            Required query param to connect it with the given 
+	 *            Required query parameter to connect it with the given 
 	 *            email address.
 	 * @param firstName
 	 *            Optionally the first name of the Account's owner can be set.

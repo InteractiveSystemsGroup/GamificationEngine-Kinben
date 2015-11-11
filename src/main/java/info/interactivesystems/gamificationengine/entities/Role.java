@@ -13,7 +13,9 @@ import javax.validation.constraints.NotNull;
  * A role describes which members of an organisation is allowed to do or see
  * particular elements of the engine such as to fulfil a particular task and get
  * its rewards. Each Player can have many different roles such as one for his
- * occupation or the department in which he works.
+ * occupation or the department in which she/he works. But the roles can also be a 
+ * part of an invented role system that isn’t oriented towards the work context. All 
+ * roles are specific to the respective created organisation. 
  */
 @Entity
 public class Role implements Serializable {
@@ -30,7 +32,7 @@ public class Role implements Serializable {
 
 	// GETTER & SETTER
 	/**
-	 * Get the id of a role.
+	 * Gets the id of a role.
 	 * 
 	 * @return int of the id
 	 */
@@ -39,17 +41,17 @@ public class Role implements Serializable {
 	}
 
 	/**
-	 * Set the id of a role.
+	 * Sets the id of a role.
 	 * 
 	 * @param id
-	 *            the id of the role.
+	 *            The id of the role.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Get the name of a role.
+	 * Gets the name of a role.
 	 * 
 	 * @return the name of the role as String.
 	 */
@@ -58,17 +60,17 @@ public class Role implements Serializable {
 	}
 
 	/**
-	 * Set the name of a role.
+	 * Sets the name of a role.
 	 * 
 	 * @param name
-	 *            the name for a role.
+	 *            The name for a role.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Get the organisation which the role belongs to and in which a player can
+	 * Gets the organisation which the role belongs to and in which a player can
 	 * have this role.
 	 * 
 	 * @return an organisation object.
@@ -78,23 +80,26 @@ public class Role implements Serializable {
 	}
 
 	/**
-	 * Set the organisation which the role belongs to and in which a player can
+	 * Sets the organisation which the role belongs to and in which a player can
 	 * have this role.
 	 * 
 	 * @param belongsTo
-	 *            the organisation object.
+	 *            The organisation object which is associated with the role.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 
 	/**
-	 * This method checks if the API key of a role is equal to the
-	 * organisation's one, which means the role belongs to this organisation.
+	 * This method checks if the API key of a role is equal to the organisation's one, which 
+	 * means the role belongs to this organisation. If the role's API key is equal to the organiton's one
+	 * it returns true otherwise false.
 	 * 
 	 * @param organisation
-	 *            an Organisation may not be null.
+	 *            The Organisation with thate the API key of the role should be compared. This Organisation 
+	 *            object may not be null.
 	 * @return boolean
+	 * 			  If both API keys are equal the mehtod return true otherwise false.
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());

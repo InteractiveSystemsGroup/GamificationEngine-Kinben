@@ -40,7 +40,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for player related services.
+ * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
+ * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
+ * rewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of 
+ * a level is set to “0”. These can be raised by fulfilling tasks in the gamification application. Furthermore 
+ * a player can have an avatar, by specifying the path of an image previously uploaded to a server. 
+ * A player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create 
+ * and to delete a player it is possible to get one particular player of one specific organisation by her/his 
+ * associated id or all players of the organisation. The avatar of one player can also be requested. To display 
+ * the status of a player ancillary the already finished goals and finished tasks it can be requested all earned 
+ * permanent rewards. If only one status element is needed, the current points, coins, badges or achievements 
+ * can be gotten instead. 
+ * Each player can also have a list of contacts which represent other players in the same organisation to send 
+ * little presents. 
+ * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
+ * player has.
  */
 @Path("/player")
 @Stateless
@@ -56,20 +70,26 @@ public class PlayerApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Creates new player-id for gamificated app. Developer organisation
-	 * credentials are mandatory.
+	 * Creates a new player and so the method generates the player-id. The organisation's API key 
+	 * are mandatory otherwise a warning with the hint for a non valid API key is returned.
+	 * The player can choose a password for her/his account. By the creation some initial
+	 * roles can be set which can also be changed at a later point of time. It is checked, if 
+	 * the id of the roles are positive numbers otherwise a message for the invalid number 
+	 * is returned.
 	 * 
 	 * @param nickname
-	 *            required query param of the player
+	 *            The query parameter of the player's nickname. This field must not be null.
 	 * @param password
-	 *            required query param for access
+	 *            The query parameter for the player's password. This field must not be null.
 	 * @param playerRoleIds
-	 *            optional list of role ids
+	 *            Optionally a list of role ids can be give that a player has. These ids are separated
+	 *            by commas.
 	 * @param reference
-	 *            optional player reference string maping customers user
-	 *            identifier
+	 *            Optionally the player's reference as string map to a customers user
+	 *            identifier.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this player should belong to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@POST
@@ -103,10 +123,12 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Collects all players associated with this api key.
+	 * This method collects all players associated with the given API key and so all players who 
+	 * belong to the associated organisation. If the API key is not valid an analogous message 
+	 * is returned.
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation.
 	 * @return {@link Response} of {@link List<Player>} in JSON
 	 */
 	@GET
@@ -118,12 +140,15 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns the player-organisation as json.
+	 * This method gets one specific player who is identified by the given id and the API key.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * id is a positive number otherwise a message for an invalid number is returned.
 	 *
 	 * @param id
-	 *            required integer uniquely identifying the {@link Player}
+	 *           Required integer as path parameter which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@GET
@@ -139,12 +164,15 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Removes a player from data base.
+	 * Removes a specific player from the data base who is identified by the given id and the 
+	 * API key. If the API key is not valid an analogous message is returned. It is also checked,
+	 * if the id is a positive number otherwise a message for an invalid number is returned. 
 	 * 
 	 * @param id
-	 *            required player id path param
+	 *           Required integer as path parameter which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link List<Player>} in JSON
 	 */
 	@DELETE
@@ -163,16 +191,28 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Changes value of a given attribute key.
+	 * With this method the fields of one specific player can be changed. For 
+	 * this the player id, the API key of the specific organisaiton, the 
+	 * name of the field and the new field's value are needed. 
+	 * To modify the password, the reference and the nickname the new string has 
+	 * to be transfered with the attribute field. For a new avatar the path of
+	 * new image is needed in the attribute parameter. The format of the image
+	 * has to be .jpg or .png. A new list of roles and contacts can be transfered 
+	 * when their ids are separated by commas. 
+	 * If the API key is not valid an analogous message is returned. It is 
+	 * also checked, if the id is a positive number otherwise a message for 
+	 * an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required valid player id
+	 *            Required integer which uniquely identify the {@link Player}.
 	 * @param attribute
-	 *            required key which should be modified
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. 
 	 * @param value
-	 *            required content corresponding to the attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this role belongs to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@PUT
@@ -186,7 +226,7 @@ public class PlayerApi {
 
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
-		// not: id -> generated & belongsTo ->
+		// not: id -> generated & belongsTo -> fixed
 		switch (attribute) {
 		case "password":
 			player.setPassword(value);
@@ -220,6 +260,22 @@ public class PlayerApi {
 		return ResponseSurrogate.updated(player);
 	}
 
+	/**
+	 * This method converts the string of role ids which are transfered to a list of roles.
+	 * These roles are then set as the new list of roles a player has. 
+	 * 
+	 * @param value
+	 * 		   	The new values of player roles as string separated by commas. This parameter is 
+	 * 		   	required.
+	 * @param player
+	 * 		  	The player which field of roles will be modified. This parameter should be not 
+	 * 		  	null because this method is called by a method which checks the given id if a player
+	 * 		  	exists. 
+	 * @param apiKey
+	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this player belongs to.
+	 * 	
+	 */
 	private void changePlayerRoles(@NotNull String value, Player player, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -227,6 +283,21 @@ public class PlayerApi {
 		player.setBelongsToRoles(roles);
 	}
 
+	/**
+	 * This method converts the string of contact ids which are transfered to a list of players.
+	 * These players are then set as the new list of contacts a player has. 
+	 * 
+	 * @param value
+	 * 			The new values of player contacts as string separated by commas. This parameter is 
+	 * 		   	required.
+	 * @param player
+	 * 			The player which field of roles will be modified. This parameter should be not 
+	 * 		  	null because this method is called by a method which checks the given id if a player
+	 * 		  	exists. 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this player belongs to.
+	 */
 	private void changeContacts(@NotNull String value, Player player, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -235,14 +306,19 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Adds a contact to the current player's contact list.
+	 * Adds one or more contacts to the current player's contact list. A contact represents another
+	 * player in the gamification application. All ids are checked, if they are positive numbers 
+	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous
+	 * message is returned.
 	 * 
 	 * @param id
-	 *            required valid player id
+	 *           Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param contactIds
-	 *            required list of contact ids
+	 *           The list of player ids which should be added to the contact list. These ids are 
+	 *           separated by commas.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@PUT
@@ -263,14 +339,19 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Removes one or many contacts from players contact list.
+	 * Removes one or more contacts from the currents player's contact list. A contact represents another
+	 * player in the gamification application. All ids are checked, if they are positive numbers 
+	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous
+	 * message is returned.
 	 * 
 	 * @param id
-	 *            required valid player id
+	 *           Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param contactIds
-	 *            required list of contact ids
+	 *           The list of player ids which should be added to the contact list. These ids are 
+	 *           separated by commas and must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@DELETE
@@ -291,13 +372,17 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns an avatar associated with a player.
+	 * Returns the avatar which is associated with a player. To identify the pplayer her/his id and 
+	 * the API key is needed to which the player belongs to. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required valid player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Object} with an image field in JOSN
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this player belongs to.
+	 * @return {@link Response} of {@link Object} with an byte[] in JOSN
 	 */
 	@GET
 	@Path("{id}/avatar")
@@ -319,12 +404,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Deactivates a player with associated id.
+	 * Deactivates a player with the associated id and API key. So this player cannot complete a task
+	 * until she/he is set active again.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required valid player id
+	 *         Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON
 	 */
 	@POST
@@ -342,14 +431,15 @@ public class PlayerApi {
 	}
 
 	/**
-	 *
-	 * Returns a list of finished goals of a specific player.
+	 * Returns a list of all already finished goals of a specific player. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * player id is a positive number otherwise a message for an invalid number is returned.
 	 *
 	 * @param id
-	 *            required player id
-	 *
+	 *         Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link List<FinishedGoal>} in JSON
 	 */
 	@GET
@@ -363,12 +453,15 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns a list of all rewards associated for player with assigned id.
+	 * Returns a list of all already awarded rewards associated with the player of the given id.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * player id is a positive number otherwise a message for an invalid number is returned.
 	 *
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link List<PermanentReward>} in JSON
 	 */
 	@GET
@@ -382,13 +475,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns a list of all finished tasks associated for player with assigned
-	 * id.
-	 *
+	 * Returns a list of all already finished tasks associated with the player of the passed 
+	 * id. If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the player id is a positive number otherwise a message for an invalid number is 
+	 * returned.
+	 * 
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link List<FinishedTask>} in JSON
 	 */
 	@GET
@@ -402,12 +498,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns a list of all badges associated for player with assigned id.
+	 * Returns a list of all awarded badges associated with the player of the passed id.
+	 * If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the player id is a positive number otherwise a message for an invalid number is 
+	 * returned.
 	 *
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
 	 * @return {@link Response} of {@link List<Badge>} in JSON
 	 */
 	@GET
@@ -422,13 +522,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns a list of all achievements associated for player with assigned
-	 * id.
+	 * Returns a list of all awarded achievements associated with the player of the passed 
+	 * id. If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the player id is a positive number otherwise a message for an invalid number is 
+	 * returned.
 	 *
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
 	 * @return {@link Response} of {@link List<Achievement>} in JSON
 	 */
 	@GET
@@ -443,12 +546,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns all points associated for player with assigned id.
+	 * Returns the current amount of points associated with the player of the passed id. If 
+	 * the API key is not valid an analogous message is returned. It is also checked, if
+	 * the player id is a positive number otherwise a message for an invalid number is 
+	 * returned.
 	 *
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
 	 * @return {@link Response} of {@link int} in JSON
 	 */
 	@GET
@@ -463,12 +570,16 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns all coins associated for player with assigned id.
-	 *
+	 * Returns the current amount of coins associated with the player of the passed id. If 
+	 * the API key is not valid an analogous message is returned. It is also checked, if
+	 * the player id is a positive number otherwise a message for an invalid number is 
+	 * returned.
+	 * 
 	 * @param id
-	 *            required player id
+	 *          Required path parameter as integer which uniquely identify the {@link Player}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
 	 * @return {@link Response} of {@link int} in JSON
 	 */
 	@GET
