@@ -10,8 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * After a Task is done it gets a finished Date.
- *
+ * When a player has completed a Task, it will be added to the player’s list of finished tasks. 
+ * At the same time the date is also stored when this request was sent and the task was 
+ * officially be done. If the task is the last one to fulfill a goal, the goal is also added 
+ * to the player’s list of finished goals and the player will obtain all its associated 
+ * rewards.
  */
 @Entity
 public class FinishedTask {
@@ -28,57 +31,57 @@ public class FinishedTask {
 	private Task task;
 
 	/**
-	 * Get the id of the finished task
+	 * Gets the id of the finished task.
 	 * 
-	 * @return int value of the id
+	 * @return The int value of finished task's id.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * Set the id of the finished task
+	 * Sets the id of the finished task.
 	 * 
 	 * @param id
-	 *            the id of the finished task
+	 *            Sets the generated id of the finished task.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * The date when a task was finished.
+	 * The date and time and when a task was finished.
 	 * 
-	 * @return the localDateTime when the task was finished.
+	 * @return The localDateTime when the task was finished.
 	 */
 	public LocalDateTime getFinishedDate() {
 		return finishedDate;
 	}
 
 	/**
-	 * Set the date when a task was finished.
+	 * Sets the date and time when a task was finished.
 	 * 
 	 * @param finishedDate
-	 *            the date when a task was finished.
+	 *            The date and time when a task was finished as LocalDateTime.
 	 */
 	public void setFinishedDate(LocalDateTime finishedDate) {
 		this.finishedDate = finishedDate;
 	}
 
 	/**
-	 * Get the task that was finished.
+	 * Gets the task which was finished.
 	 * 
-	 * @return the task object of the finished task
+	 * @return The task object of the finished task.
 	 */
 	public Task getTask() {
 		return task;
 	}
 
 	/**
-	 * Set the task that was finished.
+	 * Sets the task that was finished.
 	 * 
 	 * @param task
-	 *            the task that was finished.
+	 *            The task object which was finished.
 	 */
 	public void setTask(Task task) {
 		this.task = task;

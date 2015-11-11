@@ -34,7 +34,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for player group related services.
+ * Players can be assigned to a group by its creation or at a later point in time.
+ * For example depending on the respective organization, a group can be a 
+ * department, a work group or several employees with the same occupation. It is
+ * possible to create special tasks which can be done also or only as a group. 
+ * When a member of a group completed such a task the group obtains its rewards. 
+ * So a group can also have a list of already earned rewards and finished Goals. 
+ * Like a player, a group can be assigned an image as a logo. This can either be 
+ * done when creating the group or later through a PUT query. Later players can 
+ * also be added to a group or the group’s name can be changed.
  */
 @Path("/playerGroup")
 @Stateless
@@ -51,16 +59,24 @@ public class PlayerGroupApi {
 	PlayerDAO playerDao;
 
 	/**
-	 * Creates a new group of players.
-	 *
+	 * Creates a new group of players and so the method generates the PlayerGroup-id.
+	 * The organisation's API key is mandatory otherwise a warning with the hint for a 
+	 * non valid API key is returned. 
+	 * By the creation the player-ids of the players are passed who should be assigned 
+	 * to this group. A PlayerGroup can has a name and optional a logo which are query 
+	 * parameters. It is checked, if the ids of the players are positive numbers otherwise
+	 * a message for the invalid number is returned.
+	 * 
 	 * @param playerIds
-	 *            required list of player ids
+	 *            A list of player-ids can be passed that a group has. These ids are 
+	 *            separated by commas. This parameter is required.
 	 * @param groupName
-	 *            required name of the group
+	 *            The name of the group. This parameter is required.
 	 * @param logoPath
-	 *            optional a group logo as a HTTP reference
+	 *            Optionally a group logo as a HTTP reference can be passed.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
 	 * @return {@link Response} of {@link PlayerGroup} in JSON
 	 */
 	@POST
@@ -102,12 +118,15 @@ public class PlayerGroupApi {
 	}
 
 	/**
-	 * Returns a group for assigned id.
+	 * Returns the group of players associated with the passed id. If the API key is not 
+	 * valid an analogous message is returned. It is also checked, if the player id is a 
+	 * positive number otherwise a message for an invalid number is returned.
 	 *
 	 * @param id
-	 *            required group id
+	 *           Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group of players belongs to.
 	 * @return {@link Response} of {@link PlayerGroup} in JSON
 	 */
 	@GET
@@ -125,16 +144,26 @@ public class PlayerGroupApi {
 	}
 
 	/**
-	 * Changes values for assogned attribute keys.
-	 *
+	 * With this method the fields of a PlayerGroup can be changed. For this the id of the 
+	 * group, the API key of the specific organisaiton, the name of the field and the new 
+	 * value are needed.
+	 * To modify the name the new String has to be passed with the attribute field. For a
+	 * new logo the path of new image is needed in the attribute parameter. The format of 
+	 * the image has to be .jpg or .png. A new list of players can be passed when their ids
+	 * are separated by commas. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the ids are a positive number otherwise a message for an invalid number is returned.
+	 * 
 	 * @param id
-	 *            required group id
+	 *           Required integer which uniquely identify the {@link PlayerGroup}.
 	 * @param attribute
-	 *            required attribute key
+	 *           The name of the attribute which should be modified. This 
+	 *           parameter is required. 
 	 * @param value
-	 *            required value for the associated attribute
+	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this role belongs to.
 	 * @return {@link Response} of {@link PlayerGroup} in JSON
 	 */
 	@PUT
@@ -176,6 +205,21 @@ public class PlayerGroupApi {
 		return ResponseSurrogate.updated(plGroup);
 	}
 
+	/**
+	 * This method converts the string of player ids which are transfered to a list of players.
+	 * These players are then set as the new list of players of a group. 
+	 * 
+	 * @param value
+	 * 		   	The new values of players as string separated by commas. This parameter is 
+	 * 		   	required.
+	 * @param plGroup
+	 * 		  	The group whose field of players will be modified. This parameter should be not 
+	 * 		  	null because this method is called by a method which checks the given id if a 
+	 * 			group exists. 
+	 * @param apiKey
+	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this group and the players belong to.
+	 */
 	private void changePlayerIds(@NotNull String value, PlayerGroup plGroup, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -184,13 +228,16 @@ public class PlayerGroupApi {
 	}
 
 	/**
-	 * Removes a group with assigned id from data base.
-	 *
+	 * Removes the group with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
+	 * 
 	 * @param id
-	 *            required group id
+	 *           Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link PlayerGroup} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
+	 * @return {@link Response} of {@link PlayerGroup} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")

@@ -37,6 +37,13 @@ import org.slf4j.LoggerFactory;
 /**
  * The Super Class for different types of Task.
  * 
+ * A Task is the basic module and represents for example a specific activity. By its creation
+ * the roles were assigned which indicate who is allowed to fulfil this task. To complete the 
+ * task only one of these roles is needed. One or more tasks can be assigned to a goal, so 
+ * depending on the rule of the goal some additional tasks may also have to be completed to 
+ * fulfill the goal so the player can earn the associated rewards. If the task is tradeable 
+ * it can be offered in the marketplace, so that another player can do it and gets the reward
+ * of it.
  */
 @Entity
 public class Task implements Serializable {
@@ -64,7 +71,7 @@ public class Task implements Serializable {
 	private boolean tradeable;
 
 	/**
-	 * Get the id of the task.
+	 * Gets the id of the task.
 	 * 
 	 * @return int value of the id
 	 */
@@ -73,7 +80,7 @@ public class Task implements Serializable {
 	}
 
 	/**
-	 * Set the id of the Task
+	 * Sets the id of the task
 	 * 
 	 * @param id
 	 *            the id of the task
@@ -83,65 +90,65 @@ public class Task implements Serializable {
 	}
 
 	/**
-	 * Get the organisation a task belongs to and can completed by its
-	 * employees.
+	 * Gets the organisation a task belongs to.
 	 * 
-	 * @return the organisation object
+	 * @return The organisation object the task belongs to.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
 	}
 
 	/**
-	 * Set the organisation a task belongs to and can completed by its
-	 * employees.
+	 * Sets the organisation a task belongs to so it can be completed 
+	 * by its employees.
 	 * 
 	 * @param belongsTo
-	 *            the organisation a task belongs to
+	 *            The organisation a task belongs to.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 
 	/**
-	 * Get the name of a task.
+	 * Gets the name of a task.
 	 * 
-	 * @return the name of the task as String
+	 * @return The name of the task as String.
 	 */
 	public String getTaskName() {
 		return taskName;
 	}
 
 	/**
-	 * Set the name of the task.
+	 * Sets the name of the task.
 	 * 
 	 * @param taskName
-	 *            the name of the task as String.
+	 *            The name of the task as String.
 	 */
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
 
 	/**
-	 * Get the description of a task.
+	 * Gets the description of a task.
 	 * 
-	 * @return the task's description as String
+	 * @return The task's description as String.
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Set the description of a task.
+	 * Sets the description of a task.
 	 * 
 	 * @param description
+	 * 			The description of the task as a String.
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Get all roles for which the task is allowed. A player need only one role
+	 * Gets all roles for which the task is allowed. A player need only one role
 	 * to complete the task.
 	 * 
 	 * @return List of roles which are allowed to complete the task.
@@ -151,7 +158,7 @@ public class Task implements Serializable {
 	}
 
 	/**
-	 * Set all roles for which the task is allowed. A player need only one role
+	 * Sets all roles for which the task is allowed. A player need only one role
 	 * to complete the task.
 	 * 
 	 * @param allowedFor
@@ -162,55 +169,60 @@ public class Task implements Serializable {
 	}
 
 	/**
-	 * Check if a task is tradeable. This means if a player is allowed to offer
-	 * it on the market place.
+	 * Checks if a task is tradeable. This means if a player is allowed to offer
+	 * it on the marketplace.
 	 * 
-	 * @return value of task is tradeable as boolean
+	 * @return The value it the task is tradeable as boolean.
 	 */
 	public boolean isTradeable() {
 		return tradeable;
 	}
 
 	/**
-	 * Set a task as tradeable, so that it can be offered on the market place.
+	 * If the tradeable field is set true a task as tradeable, so that it can be
+	 * offered on the marketplace, if it is set to false the task cannot be traded.
 	 * 
 	 * @param tradable
-	 *            value if the task is tradeable as boolean.
+	 *            The value (true/false) if the task is tradeable as boolean.
 	 */
 	public void setTradeable(boolean tradable) {
 		this.tradeable = tradable;
 	}
 
 	/**
-	 * Check if a task belongs to a specific organisation.
+	 * Checks if a task belongs to a specific organisation. If the task has the 
+	 * same API key like the organisation the method returns true and the task 
+	 * belongs to this organisation otherwise false is returned.
 	 * 
 	 * @param organisation
-	 *            the organisation which is tested
-	 * @return value if a task belongs to the specific organisation (true) or
-	 *         not
+	 *            The organisation which is tested.
+	 * @return The value if a task belongs to the specific organisation (true) or
+	 *         not (false).
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
 	/**
-	 * 
-	 * This method adds the completed task to the finished tasks list if the
-	 * player is allowed to complete this task
+	 * If a player completed a task this method adds the task to the list of finished 
+	 * tasks if the player is allowed to complete this task. This is tested by the 
+	 * roles a player has and the roles which are assigned to the task.  
+	 * It is also tested if the player isn't deactivated because then is she/he isn't 
+	 * allowed to complete tasks.
 	 * 
 	 * @param organisation
-	 *            The owner of the task
+	 *            The organisation for that the task was created and belongs to.
 	 * @param player
 	 *            The player who completed the task
 	 * @param ruleDao
-	 *            The rule DAO is required to access rules
+	 *            The rule DAO is required to access the created rules.
 	 * @param goalDao
-	 *            The goal DAO is required to access goals
+	 *            The goal DAO is required to access created goals.
 	 * @param groupDao
-	 *            The group DAO is required to access groups
+	 *            The group DAO is required to access created groups.
 	 * @param finishedDate
-	 *            DateTime when the task has been finished. If null the date
-	 *            will be now.
+	 *            DateTime when the task has been finished the date time is stored. If 
+	 *            the value is null the date is set to now.
 	 */
 	public void completeTask(Organisation organisation, Player player, RuleDAO ruleDao, GoalDAO goalDao, PlayerGroupDAO groupDao,
 			LocalDateTime finishedDate) {

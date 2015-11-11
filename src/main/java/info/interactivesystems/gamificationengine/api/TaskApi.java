@@ -12,6 +12,7 @@ import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
@@ -40,7 +41,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for task related services.
+ * A Task is the basic module and represents for example a specific activity. For a creation 
+ * of a task, the roles are needed which indicate who is allowed to fulfil this task. To 
+ * complete the task only one of these roles is needed. One or more tasks can be assigned to 
+ * a goal, so depending on the rule of the goal some additional tasks may also have to be 
+ * completed to fulfill the goal so the player can earn the associated rewards. If the task 
+ * is tradeable it can be offered in the marketplace, so that another player can do it and 
+ * gets the reward of it.
+ * 
+ * When a player has completed a task, it will be added to the player’s list of finished 
+ * tasks. At the same time the date and time is also stored when this request was sent and the
+ * task was officially be done. If the task is the last one to fulfill a goal, the goal is also
+ * added to the player’s list of finished goals and the player will obtain all its associated 
+ * rewards.
+ * It is possible to query all tasks which are associated with a particular organisation or with 
+ * the help of the associated id one specific task. When a task was created it is possible to 
+ * change the task’s name, description and roles of players who are allowed to fulfil this task. 
+ * Furthermore a task can be set tradeable or not at a later point of time. 
  */
 @Path("/task")
 @Stateless
@@ -65,20 +82,28 @@ public class TaskApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Creates a new task.
+	 * Creates a new task and so the method generates the task-id. The organisation's API key 
+	 * is mandatory otherwise a warning with the hint for a non valid API key is returned.
+	 * By the creation values for its name, a short description what have to done and the roles
+	 * who are allowed to complete the task.  
+	 * It is checked, if the id of the roles are positive numbers otherwise a message for the 
+	 * invalid number is returned.
 	 * 
 	 * @param name
-	 *            required task name
+	 *            The name of the task. This parameter is required.
 	 * @param description
-	 *            optional short description
+	 *            Optional a short description can be set. This can be for example explain what 
+	 *            a player has to do to complete the task.
 	 * @param tradeable
-	 *            specifies whether the task is tradeable or not, default is not
-	 *            tradeable
+	 *            This field specifies whether the task is tradeable or not. The default value is
+	 *            set to not tradeable (false).
 	 * @param roleIds
-	 *            optional a list of role ids
+	 *            Optionally a list of role ids separated by commas who are allowed to fulfil the 
+	 *            task.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -113,11 +138,13 @@ public class TaskApi {
 	}
 
 	/**
-	 * Returns a list of all tasks associated with assigned api key.
+	 * Returns a list of all tasks associated with the passed API key. If the key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -135,13 +162,16 @@ public class TaskApi {
 	}
 
 	/**
-	 * Returns the specific task which is assigned with the id.
+	 * Returns the task associated with the passed id and API key. If the API key is not 
+	 * valid an analogous message is returned. It is also checked, if the player id is a 
+	 * positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required task id
+	 *          Required path parameter as integer which uniquely identify the {@link Task}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -157,13 +187,16 @@ public class TaskApi {
 	}
 
 	/**
-	 * Removes a task from the data base.
+	 * Removes the task with the assigned id and associated API key from data base. It is checked, 
+	 * if the passed id is a positive number otherwise a message for an invalid number is returned. 
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param id
-	 *            required task id
+	 *          Required integer which uniquely identify the {@link Task}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -179,17 +212,24 @@ public class TaskApi {
 	}
 
 	/**
-	 * Completes a task with an assigned id for a associated player.
+	 * This method completes a task with the assigned id and associated API key. The player-id
+	 * represents the player who has completed the task. The task is added to the list of 
+	 * finished tasks of this player. Thereby the task becomes a finished task object ant the 
+	 * time and date is also stored when the task was officially be done.
+	 * 
 	 * 
 	 * @param id
-	 *            required task id
+	 *          Required integer which uniquely identify the {@link Task}.
 	 * @param playerId
-	 *            required player id
+	 *           The if ot the player who has completed the task. This parameter is required.
 	 * @param finishedDate
-	 *            optional date time when the task were finished
+	 *           Optionally the local tate time can be passed when the task was finished. If the 
+	 *           value is null, the finshedDate is set to the time and date when the query was 
+	 *           sent. 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@POST
 	@Path("/{id}/complete/{playerId}")
@@ -226,17 +266,25 @@ public class TaskApi {
 	}
 
 	/**
-	 * Changes task attribute value for assigned id.
+	 * With this method the fields of a Task can be changed. For this the id of the 
+	 * task, the API key of the specific organisaiton, the name of the field and the new 
+	 * value are needed.
+	 * To modify the name or the description the new String has to be passed with the 
+	 * attribute field. A new list of roles can be passed when their ids are separated by 
+	 * commas. Also the task can be set tradeable or not by passing the value true or false. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the ids are a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required task id
+	 *           The id of the task that should be changed. This parameter is required.
 	 * @param attribute
-	 *            required attribute key
+	 *            The name of the attribute which should be modified. This parameter is required. 
 	 * @param value
-	 *            required content corresponding to the attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this task belongs to.
+	 * @return {@link Response} of {@link Task} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -277,6 +325,28 @@ public class TaskApi {
 		return ResponseSurrogate.updated(task);
 	}
 
+	/**
+	 * This method converts the string of role ids which are transfered to a list of roles.
+	 * These roles are then set as the new list of roles a player can have to fulfil this task. 
+	 * 
+	 * @param plGroup
+	 * 		  	
+	 * @param apiKey
+	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this group and the players belong to.
+	 * 
+	 * 
+	 * @param value
+	 * 			The new values of roles as String separated by commas. This parameter is 
+	 * 		   	required.
+	 * @param task
+	 * 			The task whose field of roles will be modified. This parameter should be not 
+	 * 		  	null because this method is called by a method which checks the given id if a 
+	 * 			group exists. 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this task belongs to.
+	 */
 	private void changeRoles(@NotNull String value, Task task, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
