@@ -35,9 +35,12 @@ public class ImageUtils {
 	// }
 
 	/**
-	 * Create a byte[] from image file by an URL
+	 * Creates a byte[] from an image file that was passed as an Stings that
+	 * represents an URL. The format of the image has be .jpg or .png. Otherwise 
+	 * an exception is thrown with the hint, that the URL was not valid.
 	 * 
 	 * @param fileLocation
+	 * 			The path an image can be located. This is an URL-
 	 * @return byte[] of the image content
 	 */
 	public static byte[] imageToByte(String fileLocation) {

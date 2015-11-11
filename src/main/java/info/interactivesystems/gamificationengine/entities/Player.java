@@ -434,7 +434,7 @@ public class Player {
 	 * Gets all permanent rewards a player has already obtained. These are for example 
 	 * all badges and achievements.
 	 * 
-	 * @return List of all obtained permanent rewards
+	 * @return List of all obtained permanent rewards.
 	 */
 	public List<PermanentReward> getRewards() {
 		return rewards;
@@ -444,7 +444,7 @@ public class Player {
 	 * Sets the list of all permanent rewards a player has obtained.
 	 * 
 	 * @param rewards
-	 *            All permanent rewards a player has obtained
+	 *            All permanent rewards a player has obtained.
 	 */
 	public void setRewards(List<PermanentReward> rewards) {
 		this.rewards = rewards;

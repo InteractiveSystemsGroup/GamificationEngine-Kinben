@@ -60,7 +60,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link Role} in JSON
+	 * @return {@link Response} of {@link Role} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -85,7 +85,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to. This field must not be null.
-	 * @return {@link Response} of {@link List<Role>} in JSON
+	 * @return {@link Response} of {@link List<Role>} in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -105,7 +105,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link Role} in JSON
+	 * @return {@link Response} of {@link Role} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -133,7 +133,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link Role} in JSON
+	 * @return {@link Response} of {@link Role} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -166,7 +166,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link Role} in JSON
+	 * @return {@link Response} of {@link Role} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
