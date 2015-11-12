@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * The badge class serves as a Reward-subclass that represents a distinct icon.
  * It should be used as a an instantly recognizable visual reference to an badge
  * a player was able to reach. A badge is a permanent reward, so a player can
- * get a specific badge only one.
+ * award a specific badge only once.
  */
 @Entity
 @DiscriminatorValue("RewBadge")
@@ -39,95 +39,115 @@ public class Badge extends PermanentReward {
 	}
 
 	/**
-	 * Get the name of the badge. The name should be meaningful and connected to
+	 * Gets the name of the badge. The name should be meaningful and connected to
 	 * the completed task(s).
 	 * 
-	 * @return the badge's name as String
+	 * @return The badge's name as String.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Set the name of a created badge. The name should be meaningful and
+	 * Sets the name of a created badge. The name should be meaningful and
 	 * connected to the completed task(s).
 	 * 
-	 * @return the badge's name as String
+	 * @return The badge's name as a String.
 	 * @param name
-	 *            of the badge as a String
+	 *            The new name of the badge as a String. 
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Get the description of a created badge. This could contain for example
-	 * the tasks which have to be completed to get this badge.
+	 * Gets the description of a created badge. This could contain for example
+	 * which tasks werde completed to get this badge.
 	 * 
-	 * @return the badge's description
+	 * @return The descirtopion of the badge. 
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Set the description of a badge. This contains further information how the
+	 * Sets the description of a badge. This can contain further information how the
 	 * badge can be earned, like the requirements to get the badge or the
 	 * process to award the badge.
 	 *
 	 * @param description
-	 *            of the badge
+	 *            The description of the badge as String.
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Get the URL of the badge's icon, when it was created.
+	 * Gets the URL of the badge's icon, when it was created.
 	 * 
-	 * @return the URL of the icon
+	 * @return The URL of the associated icon.
 	 */
 	public URL getIcon() {
 		return icon;
 	}
 
 	/**
-	 * Set the URL value of the badge's icon, when it was created.
+	 * Sets the URL value of the badge's icon, when it was created.
 	 * 
-	 * @param the
-	 *            URL of the icon
+	 * @param icon
+	 *            The URL of the associated icon.
 	 */
 	public void setIcon(URL icon) {
 		this.icon = icon;
 	}
 
 	/**
-	 * Get the badge's icon as byte[].
+	 * Gets the badge's icon as byte[].
 	 * 
-	 * @return byte[] of the badge's icon
+	 * @return Byte[] of the badge's icon that is stored in the database.
 	 */
 	public byte[] getImageIcon() {
 		return imageIcon;
 	}
 
 	/**
-	 * Set the byte[] as an icon of a badge.
+	 * Sets the byte[] as an icon of a badge that is stored in the database.
 	 * 
-	 * @param the
-	 *            icon that should be connected with the badge
+	 * @param icon
+	 *            The icon that should be connected with the badge as byte[].
 	 */
 	public void setImageIcon(byte[] icon) {
 		imageIcon = icon;
 	}
 
 	/**
-	 * Awards the player a badge and adds it to his list with permanent rewards.
+	 * With this method the player awards an badge. Therefore the badge is added
+	 * to her/his list of permanent rewards.
+	 * 
+	 * @param player
+	 *            The player who should award the badge. This parameter must
+	 *            not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
 		player.addPermanentReward(this);
 	}
 
+	/**
+	 * Awards a group a badge and adds it to the list with permanent rewards.
+	 * 
+	 * @param group
+	 *            The group of players which should award the badge. This 
+	 *            parameter must not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
+	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
 		group.addPermanentReward(this);

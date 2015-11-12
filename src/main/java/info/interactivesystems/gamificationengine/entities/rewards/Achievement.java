@@ -17,9 +17,9 @@ import javax.validation.constraints.NotNull;
 /**
  * The achievement class contains an image and a description for a documentary
  * use to track significant results or milestones the player was able to achieve
- * during his play. It's a more elaborate way to record the players achievements
+ * during her/his play. It's a more elaborate way to record the players achievements
  * than the badge class. An achievement is a permanent reward, so a player can
- * get a specific achievement only one.
+ * get a specific achievement only once.
  */
 @Entity
 @DiscriminatorValue("RewAchieve")
@@ -40,7 +40,7 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * Get the achievement's icon as byte[].
+	 * Gets the achievement's icon as byte[].
 	 * 
 	 * @return byte[] of the achievement's icon
 	 */
@@ -49,7 +49,7 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * Set the byte[] as an icon of an achievement.
+	 * Sets the byte[] as an icon of an achievement.
 	 * 
 	 * @param the
 	 *            icon that should be connected with the achievement
@@ -59,8 +59,8 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * Get the description of an achievement. This could contain for example the
-	 * tasks which have to be completed to get this achievement.
+	 * Gets the description of an achievement. This could contains for example the 
+	 * different tasks which have to be completed to get this achievement.
 	 * 
 	 * @return the achievement's description
 	 */
@@ -69,9 +69,9 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * Set the description of an achievement. This contains further information
-	 * how the achievement can be earned, like all requirements to get the
-	 * achievement or the process to award the achievement.
+	 * Sets the description of an achievement. This contains for example further 
+	 * information about how the achievement can be earned, like all requirements to 
+	 * get the achievement or the process to award the achievement.
 	 * 
 	 * @param description
 	 *            of the achievement
@@ -81,48 +81,56 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * Get the name of an achievement, which can describe the success in a short
+	 * Gets the name of an achievement which can describe the success in a short
 	 * way and can be displayed in the application.
 	 * 
-	 * @return the achievement's name as String
+	 * @return The achievement's name as String.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Set the name of an achievement, which can describe the success in a short
+	 * Sets the name of an achievement, which can describe the success in a short
 	 * way and can be displayed in the application.
 	 * 
 	 * @param name
-	 *            of the achievement as a String
+	 *            The name of the achievement as a String.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Get the URL of the achievement's icon, when it was created.
+	 * Gets the URL of the achievement's icon, but only when it was created.
 	 * 
-	 * @return the URL of the icon
+	 * @return The URL of the icon.
 	 */
 	public URL getIcon() {
 		return icon;
 	}
 
 	/**
-	 * Set the URL value of the achievement's icon, when it was created.
+	 * Sets the URL value of the achievement's icon, when it was created.
 	 * 
-	 * @param the
-	 *            URL of the icon
+	 * @param icon 
+	 *            The URL of the icon that should be set.
 	 */
 	public void setIcon(URL icon) {
 		this.icon = icon;
 	}
 
 	/**
-	 * Awards the player an achievement and adds it to his list with permanent
-	 * rewards.
+	 * With this method the player awards an achievement. Therefore the achievement
+	 * is added to her/his list of permanent rewards.
+	 * 
+	 * @param player
+	 *            The player who should award the achievement. This parameter must
+	 *            not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
@@ -132,6 +140,14 @@ public class Achievement extends PermanentReward {
 	/**
 	 * Awards a group an achievement and adds it to the list with permanent
 	 * rewards.
+	 * 
+	 * @param group
+	 *            The group of players which should award the achievement. This 
+	 *            parameter must not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {

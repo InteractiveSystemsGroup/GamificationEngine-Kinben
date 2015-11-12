@@ -6,6 +6,7 @@ import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDi
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RewardDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
 import info.interactivesystems.gamificationengine.entities.rewards.Badge;
 import info.interactivesystems.gamificationengine.entities.rewards.Coins;
@@ -37,7 +38,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for rewards related services.
+ * A Reward will be awarded in dependent of the goal for a group or one person after 
+ * a person fulfilled a task. A reward can be a permanent reward like a badge or achievement 
+ * which can be obtained only once or a volatile reward such as coins, points or a 
+ * particular level which can be earned several times and so can be changed by getting for 
+ * example more coins or decrease the coins by giving a bid for an offer in the marketplace. 
+ * Ancillary all possible types for creating a reward, all already created rewards for one 
+ * particular organisation or with the associated id only one specific reward can be 
+ * requested. 
+ * For all rewards the name and description can be changed after they have been created. 
+ * Dependent on the reward has an image or an amount of points respectively coins these 
+ * attributes also can be changed. 
  */
 @Path("/reward")
 @Stateless
@@ -52,10 +63,13 @@ public class RewardApi {
 	RewardDAO rewardDao;
 
 	/**
-	 * Returns a list of all rewards associated with the given api key and so with one specific organisation.
+	 * Returns a list of all rewards associated with the passed API key and so all rewards 
+	 * which belong to a specific organisation. If the API key is not valid an analogous 
+	 * message is returned. 
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
 	 * @return {@link Response} of {@link List<Reward>} in JSON
 	 */
 	@GET
@@ -67,13 +81,17 @@ public class RewardApi {
 	}
 
 	/**
-	 * Returns a reward for assigned id.
+	 * This method returns one specific player who is identified by the passed id and the 
+	 * API key. If the API key is not valid an analogous message is returned. It is also 
+	 * checked, if the id is a positive number otherwise a message for an invalid number 
+	 * is returned.
 	 * 
 	 * @param id
-	 *            required reward id
+	 *           Required integer which uniquely identify the {@link Reward}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -88,28 +106,36 @@ public class RewardApi {
 	}
 
 	/**
-	 * Create a new reward.
+	 * Creates a new reward and so the method generates the reward-id. The organisation's API
+	 * key is mandatory otherwise a warning with the hint for a non valid API key is returned.
+	 * It has to be defined which type of reward should be created, its name, description and
+	 * respectively it is a permanent or a volatile reward an URL for the icon or the amount 
+	 * of coins or points.
 	 * 
 	 * @param type
-	 *            required type of the reward. A list of available reward types
-	 *            can be received by {@link RewardApi#getRewardTypes}
+	 *          The required type of the reward. A list of available reward types
+	 *            can be received by {@link RewardApi#getRewardTypes}.
 	 * @param name
-	 *            a string that represents the name of the reward
+	 *           A string that represents the name of the reward.
 	 * @param amount
-	 *            if you use points or coins type add the amount of them
+	 *           If the type is a volatile reward like points or coins this parameter is used
+	 *           to represent their amount. 	 
 	 * @param url
-	 *            the url to an image if you use any kind of badge or award
+	 *           If the type is a permanent reward like a badge or achievement this parameter
+	 *           represents the URL of the associated image. 
 	 * @param description
-	 *            a text to describe your reward
+	 *           Optionally the description of the reward as String.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@POST
 	@Path("/")
 	public Response createNewReward(@QueryParam("type") @NotNull String type, @QueryParam("name") @NotNull String name,
 			@QueryParam("amount") @ValidPositiveDigit String amount, @QueryParam("icon") String url, @QueryParam("description") String description,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("createNewReward called");
 
 		log.debug("apiKey: " + apiKey);
@@ -147,14 +173,19 @@ public class RewardApi {
 	}
 
 	/**
-	 * Delete a specific reward.
+	 * Removes a specific reward from the data base which is identified by the passed id and 
+	 * the API key. If the API key is not valid an analogous message is returned. It is also 
+	 * checked, if the id is a positive number otherwise a message for an invalid number is 
+	 * returned. 
 	 * 
 	 * @param id
-	 *            required reward id which should be deleted
+	 *          Required integer which uniquely identify the {@link Reward} which sould be
+	 *          deleted.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
 	 * @return {@link Response} of {@link Reward} with 200 OK and JSON as
-	 *         response type
+	 *         response type.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -172,12 +203,14 @@ public class RewardApi {
 	}
 
 	/**
-	 * Retruns a list of all available reward types associated with an api key.
+	 * Returns a list of all available reward types associated with an API key that can
+	 * can created. If the API key is not valid an analogous message is returned. 
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this reward belongs to.
 	 * @return {@link Response} of {@link Reward} with 200 OK and JSON as
-	 *         response type
+	 *         response type.
 	 */
 	@GET
 	@Path("/types")
@@ -187,22 +220,28 @@ public class RewardApi {
 	}
 
 	/**
-	 * Create a reward of type achievement.
+	 * Creates a new reward of type achievement so the method generates its reward-id. The
+	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
+	 * API key is returned. Optionally the URL for an icon can be passed and a description for 
+	 * the achievement.
 	 * 
 	 * @param name
-	 *            rewuired name of the achievement
+	 *           The required name of the achievement.
 	 * @param description
-	 *            a short text that describes the achievement
+	 *            Optionally a short text can be set to describe the achievement.
 	 * @param url
-	 *            the url to an image that represents the achievement
+	 *            Optionally the URL of an image can be set that is associated with the 
+	 *            achievement.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Achievement} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Achievement} in JSON.
 	 */
 	@POST
 	@Path("/achievement")
 	public Response createAchievement(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("create Achievement called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -228,22 +267,27 @@ public class RewardApi {
 	}
 
 	/**
-	 * Create a reward of type badge.
+	 * Creates a new reward of type badge so the method generates its reward-id. The
+	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
+	 * API key is returned. Optionally the URL for an icon can be passed and a description for
+	 * the badge.
 	 * 
 	 * @param name
-	 *            required name of the badge
+	 *            The required name of the badge.
 	 * @param description
-	 *            a short text that describes the badge
+	 *           Optionally a short text can be set to describe the badge.
 	 * @param url
-	 *            the url to an image that represents the badge
+	 *           Optionally the URL of an image can be set that is associated with the badge.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Badge} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Badge} in JSON.
 	 */
 	@POST
 	@Path("/badge")
 	public Response createBadge(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("create Badge called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -269,18 +313,22 @@ public class RewardApi {
 	}
 
 	/**
-	 * Creates a new coins reward.
+	 * Creates a new reward of type coins so the method generates its reward-id. The
+	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
+	 * API key is returned.  
 	 * 
 	 * @param amount
-	 *            required amount of coins greater then zero
+	 *          The required amount of coins greater then zero that can be earned.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Coins} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this reward belongs to.
+	 * @return {@link Response} of {@link Coins} in JSON.
 	 */
 	@POST
 	@Path("/coins")
 	public Response createCoinsReward(@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("create Coins Reward called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -295,13 +343,16 @@ public class RewardApi {
 	}
 
 	/**
-	 * Created a new point reward.
+	 * Creates a new reward of type points so the method generates its reward-id. The
+	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
+	 * API key is returned. 
 	 * 
 	 * @param amount
-	 *            required amount of points greater then zero
+	 *           The required amount of points greater then zero that can be earned.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@POST
 	@Path("/points")
@@ -321,15 +372,19 @@ public class RewardApi {
 	}
 
 	/**
-	 * Creates a new level reward.
+	 * Creates a new reward of type level so the method generates its reward-id. A level can 
+	 * be a number or a status like novice or expert in the area of specific tasks. The
+	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
+	 * API key is returned. 
 	 * 
 	 * @param index
-	 *            required level index greater then zero
+	 *            The required level index greater then zero.
 	 * @param name
-	 *            optional name of the level
+	 *            Optionally a name of the level can be set.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link ReceiveLevel} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link ReceiveLevel} in JSON.
 	 */
 	@POST
 	@Path("/level")
@@ -350,13 +405,17 @@ public class RewardApi {
 	}
 
 	/**
-	 * Returns an achievement icon.
+	 * This method returns the icon of an specific achievement for example to show it the
+	 * player who has just earned it. If the API key is not valid an analogous message is 
+	 * returned. It is also checked, if the id is a positive number otherwise a message for 
+	 * an invalid number is returned. 
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            The required reward id.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Object} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Object} in JSON.
 	 */
 	@GET
 	@Path("/achievement/{id}")
@@ -381,13 +440,17 @@ public class RewardApi {
 	}
 
 	/**
-	 * Returns a badge icon.
+	 * This method returns the icon of an specific badge for example to show it the player 
+	 * who has just earned it. If the API key is not valid an analogous message is returned. 
+	 * It is also checked, if the id is a positive number otherwise a message for an invalid
+	 * number is returned. 
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            The required reward id.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@GET
 	@Path("/badge/{id}")
@@ -411,21 +474,27 @@ public class RewardApi {
 
 	}
 
-	// PUTs
-
 	/**
-	 * Changes attribute values of an achievement. Changeable attributes are
-	 * name, description, and icon.
+	 * With this method the fields of one specific achievement can be changed. For this the 
+	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * new field's value are needed.  
+	 * To modify the name and description the new string has to be transfered with the attribute 
+	 * field. For a new icon the path of the new image is needed in the attribute parameter. 
+	 * The format of the image has to be .jpg or .png. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            required key
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. 
 	 * @param value
-	 *            required value for the attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
 	@Path("/changeAchievement")
@@ -465,19 +534,29 @@ public class RewardApi {
 		return ResponseSurrogate.updated(reward);
 	}
 
+	
+	
 	/**
-	 * Changes badge attribute values. Changeable attributes are name,
-	 * description, and icon.
+	 * With this method the fields of one specific badge can be changed. For this the 
+	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * new field's value are needed.  
+	 * To modify the name and description the new string has to be transfered with the attribute 
+	 * field. For a new icon the path of the new image is needed in the attribute parameter. 
+	 * The format of the image has to be .jpg or .png. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            required attribute key
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. 
 	 * @param value
-	 *            required value for the associated attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
 	@Path("/changeBadge")
@@ -517,17 +596,25 @@ public class RewardApi {
 	}
 
 	/**
-	 * Changes points attribute values. Changeable attribute is amount.
+	 * With this method the fields of one specific point reward can be changed. For this the 
+	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * new field's value are needed.  
+	 * To modify the amount of points the new amount has to be transfered with the attribute
+	 * field. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            required attribute key
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. 
 	 * @param value
-	 *            required value for the associated attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *             The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
 	@Path("/Points")
@@ -560,18 +647,25 @@ public class RewardApi {
 	}
 
 	/**
-	 * Changes level attribute values. Changeable attributes are amount and
-	 * name.
+	 * With this method the fields of one specific level reward can be changed. For this the 
+	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * new field's value are needed.  
+	 * To modify the name and amount of the level the new name respectively amount has to be 
+	 * transfered with the attribute field. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param rewardId
-	 *            required reward id
+	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            required attribute key
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. 
 	 * @param value
-	 *            required value for the associated attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Reward} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
 	@Path("/ReceiveLevel")

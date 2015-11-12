@@ -22,7 +22,7 @@ public class ReceiveLevel extends VolatileReward {
 	private String levelLabel;
 
 	/**
-	 * Get the index of the level.
+	 * Gets the index of the level.
 	 * 
 	 * @return the level's index as an int.
 	 */
@@ -31,36 +31,44 @@ public class ReceiveLevel extends VolatileReward {
 	}
 
 	/**
-	 * Set the level's index which should be awarded.
+	 * Sets the level's index which should be awarded.
 	 * 
 	 * @param levelIndex
-	 *            of the level which should be awarded
+	 *            The index of the level which is awarded as int.
 	 */
 	public void setLevelIndex(int levelIndex) {
 		this.levelIndex = levelIndex;
 	}
 
 	/**
-	 * Get the level's label which should be awarded.
+	 * Gets the level's label which should be awarded.
 	 * 
-	 * @return String value of the level's label
+	 * @return The value of the level's label as String. 
 	 */
 	public String getLevelLabel() {
 		return levelLabel;
 	}
 
 	/**
-	 * Set the label of a level.
+	 * Sets the String label of a level.
 	 * 
 	 * @param levelLabel
-	 *            as String
+	 *            Label of the level as String.
 	 */
 	public void setLevelLabel(String levelLabel) {
 		this.levelLabel = levelLabel;
 	}
 
 	/**
-	 * Awards the player a specific level.
+	 * This method awards the player a specfic lavel.
+	 * 
+	 * @param player
+	 *            The player who should award the level. This parameter must
+	 *            not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
@@ -69,11 +77,19 @@ public class ReceiveLevel extends VolatileReward {
 	}
 
 	/**
-	 * Awards the group of players a specific level.
+	 * Awards a group of player a specific level.
+	 * 
+	 * @param group
+	 *            The group of players which should award the level. This parameter 
+	 *            must not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
+	 * 
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
-		// TODO Auto-generated method stub
 		group.setLevelIndex(levelIndex);
 		group.setLevelLabel(levelLabel);
 	}

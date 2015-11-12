@@ -9,9 +9,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Coins class serves as a Reward-subclass, that allocates coins to a player.
- * Coins are a volatile reward which can be earned more than one time. The
- * awarded coins are added to the current ones of a player.
+ * The Coins class serves as a Reward-subclass, that allocates coins to a player.
+ * Coins are a volatile reward which can be earned more than one time. These
+ * awarded coins are added to the current amount of coins a player owns.
  */
 @Entity
 @DiscriminatorValue("RewCoins")
@@ -21,27 +21,35 @@ public class Coins extends VolatileReward {
 	private int amount;
 
 	/**
-	 * Get the concrete amount of coins which can be earned as a reward.
+	 * Gets the concrete amount of coins which can be earned as a reward.
 	 * 
-	 * @return the current amount as int.
+	 * @return The current amount as int.
 	 */
 	public int getAmount() {
 		return amount;
 	}
 
 	/**
-	 * Set a specific amount of coins which can be earned as a reward.
+	 * Sets a specific amount of coins which can be earned as a reward.
 	 * 
 	 * @param amount
-	 *            of coins which can be earned.
+	 *            The amount of coins which can be earned by the reward.
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
 	/**
-	 * Awards the player the concrete amount of coins and adds it to the
-	 * player's current coins.
+	 * With this method the player awards the amount of coins. Therefore the coins
+	 * are added to her/his current amount of coins.
+	 * 
+	 * @param player
+	 *            The player who should award the coins. This parameter must
+	 *            not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
@@ -49,8 +57,15 @@ public class Coins extends VolatileReward {
 	}
 
 	/**
-	 * Awards the group the concrete amount of coins and adds it to the current
-	 * coins.
+	 * Awards a group the amount of coins and adds it to group's current amount.
+	 * 
+	 * @param group
+	 *            The group of players which should award the coins. This parameter 
+	 *            must not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {

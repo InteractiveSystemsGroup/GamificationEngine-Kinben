@@ -35,29 +35,37 @@ public class Points extends VolatileReward {
 	private int amount;
 
 	/**
-	 * Get the concrete amount of points which can a player can earn as a
+	 * Gets the concrete amount of points which a player can earn as a
 	 * reward.
 	 * 
-	 * @return the current amount as int.
+	 * @return The concrete amount as int.
 	 */
 	public int getAmount() {
 		return amount;
 	}
 
 	/**
-	 * * Set a specific amount of points which a player can earn as a reward.
+	 * Sets a specific amount of points which a player can earn as a reward.
 	 * 
 	 * @param amount
-	 *            of points which a player can earn
+	 *            The amount of points which a player can earn as int.
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
 	/**
-	 * Awards the player the concrete amount of points and add them to the
+	 * Awards the player the concrete amount of points and add it to the
 	 * player's current points. After that it's checked if a PointsRule is
 	 * fulfilled so that the player can also earn another reward.
+	 * 
+	 * @param player
+	 *            The player who should award the points. This parameter must
+	 *            not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
@@ -145,6 +153,14 @@ public class Points extends VolatileReward {
 	 * Awards the group of players the concrete amount of points and add them to
 	 * the group's current points. After that it is checked if a PointsRule is
 	 * fulfilled so that another reward can also be earned.
+	 * 
+	 * @param group
+	 *            The group of players which should award the points. This parameter 
+	 *            must not be null.
+	 * @param goalDao
+	 *            The goal DAO is required to access created goals. 
+	 * @param ruleDao
+	 *            The rule DAO is required to access the created rules. 
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
