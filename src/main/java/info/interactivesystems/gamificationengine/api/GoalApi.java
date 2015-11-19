@@ -38,7 +38,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for goal related services.
+ * A Goal comprises one or more tasks and has to be completed if the player wants to earn the connected awards.
+ * To create a goal some already created components are needed. So the condition when a goal is completed is 
+ * defined in the goal rule and the connected tasks. Who can complete a goal is defined by the role of a player
+ * and whether it can be done by a group. It is also possible to define whether a goal is repeatable so that the
+ * player can complete the tasks and obtains its coins and points as rewards again. All goals that are 
+ * associated with the organisation can be requested or like the elements before only one specific goal, if the
+ * correspondent id is used. The name, the associated rewards and also the rule for completion can be changed 
+ * as well as the indication if the goal is repeatable or a goal that can be reached by a group. It is also 
+ * possible to change the roles so different people can complete the goal. 
  */
 @Path("/goal")
 @Stateless
@@ -59,25 +67,38 @@ public class GoalApi {
 	RoleDAO roleDao;
 
 	/**
-	 * Creates a new Goal.
+	 * Creates a new goal and so the method generates the goal-id.
+	 * The organisation's API key is mandatory otherwise a warning with the hint for a 
+	 * non valid API key is returned. 
+	 * By the creation the name and the id of the associated rule are needed. It can also be defined if 
+	 * the goal is repeatable or if it can also be completed by a group. 
+	 * Optionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at 
+	 * least one of these roles she/he can complete the goal and earn its rewards. It is checked, if the ids of the 
+	 * players are positive numbers otherwise a message for the invalid number is returned.
+	 * Optionally the goal can be passed the id of rewards which can be earned. These ids are also checked if 
+	 * they are positive numbers.
+	 * If the API key is not valid an analogous message is returned. 
 	 * 
 	 * @param name
-	 *            required name of the goal
+	 *            The name of the goal. This parameter is required. 
 	 * @param repeatable
-	 *            optional switch. Is the goal repeatable? "1" or "0", "true" or
-	 *            "false". Default "true"
+	 *            Optionally a goal can be set as repeatable by "1" or "0", "true" or
+	 *            "false". The default value is "true".
 	 * @param ruleId
-	 *            required rule which completes your goal
+	 *            The rule which define when a goal is completed. This parameter is required. 
 	 * @param rewardIds
-	 *            required rewards that are awarded to the player
+	 *            All rewards that are awarded to the player who completes the goal. These ids are 
+	 *            separated by commas.
 	 * @param roleIds
-	 *            optional role ids which can complete this goal
+	 *            Optionally a list of role-ids can be passed which are separated by commas. These ids indicate
+	 *            who is allowed to fulfil the goal. This parameter is required.
 	 * @param isGroupGoal
-	 *            optional switch. Can this goal be completed by a group? "1" or
-	 *            "0", "true" or "false". Default "false"
+	 *            Optionally a goal can also be done by a group. Possible values are "1" or "0", "true" or 
+	 *            "false". The default value is "false". 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Goal} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return {@link Response} of {@link Goal} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -146,11 +167,14 @@ public class GoalApi {
 	}
 
 	/**
-	 * Returns all goals which can be tried to complete. These goals are specific for the organisation which has the same api key.
+	 * Returns all goals which are associated with the given API key and so are belonging to the organisation.
+	 * The players of one organisaiton can try to complete one these goals. 
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link javax.ws.rs.core.Response} of {@link List<Goal>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return {@link javax.ws.rs.core.Response} of {@link List<Goal>} in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -161,13 +185,16 @@ public class GoalApi {
 	}
 
 	/**
-	 * Gets the {@link GoalRule} object by id.
+	 * Gets the {@link GoalRule} object which is associated with the goal. It is identified by the passed id and 
+	 * the API key. If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * id is a positive number otherwise a message for an invalid number is returned..
 	 * 
 	 * @param id
-	 *            required goal id
+	 *            Required integer which uniquely identify the {@link Goal}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Goal} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return {@link Response} of {@link Goal} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -181,7 +208,15 @@ public class GoalApi {
 	}
 
 	/**
-	 * Changes attributes of the goal.
+	 * With this method the fields of one specific goal can be changed. For this the goal id, the API key of 
+	 * the specific organisaiton, the name of the field and the new field's value are needed. 
+	 * To modify the name of the goal the new string has to be transfered with the attribute field. 
+	 * A list with role-ids separated by commas can be passed to define new roles which a player has to be allowed
+	 * to complete the goal. By passing an id of another rule a new goal rule is associated with the goal.  
+	 * To modify if a goal is repeatable or can be completed as a group the values "1" or "0" or alternatively 
+	 * "true" and "false" can be passed. 
+	 * It is also checked, if all ids are a positive number otherwise a message for an invalid number is returned.
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param goalId
 	 *            required id of the goal which should be modified
@@ -240,6 +275,21 @@ public class GoalApi {
 		return ResponseSurrogate.created(goal);
 	}
 
+	/**
+	 * This method converts the string of reward ids which are transfered to a list of rewards.
+	 * These rewards are then set as the new list of rewards a player can earn by completing the goal. 
+	 * 
+	 * @param value
+	 * 			The new values of rewards as string separated by commas. This parameter is required.
+	 * @param organisation
+	 * 			 The organisation the goal belongs to and which is represented by the API key.. 
+	 * @param goal
+	 * 			The goal whose field of rewards will be modified. This parameter should be not 
+	 * 		  	null. 
+	 * @param apiKey
+	 * 			  The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 */
 	private void changeRewardIds(@NotNull String value, Organisation organisation, Goal goal, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -247,6 +297,19 @@ public class GoalApi {
 		goal.setRewards(rewards);
 	}
 
+	/**
+	 * This method converts the string of role-ids which are transfered to a list of roles.
+	 * These roles are then set as the new list of roles a player can have to be allowed to complete a goal. 
+	 * 
+	 * @param value
+	 * 			The new values of roles as string separated by commas. This parameter is required.
+	 * @param goal
+	 * 			The goal whose field of roles will be modified. This parameter should be not 
+	 * 		  	null. 
+	 * @param apiKey
+	 * 			  The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 */
 	private void changeRoles(@NotNull String value, Goal goal, @NotNull String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -255,13 +318,16 @@ public class GoalApi {
 	}
 
 	/**
-	 * Deletes a Goal.
+	 * Removes a specific goal from the data base which is identified by the given id and the 
+	 * API key. If the API key is not valid an analogous message is returned. It is also checked,
+	 * if the id is a positive number otherwise a message for an invalid number is returned. 
 	 * 
 	 * @param id
-	 *            required id of the goal
+	 *          Required integer which uniquely identify the {@link Goal}.	
 	 * @param apiKey
-	 *            your api key
-	 * @return {@link Response} of {@link Goal} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return {@link Response} of {@link Goal} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
