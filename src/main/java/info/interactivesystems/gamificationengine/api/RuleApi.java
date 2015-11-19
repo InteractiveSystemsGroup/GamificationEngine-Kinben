@@ -8,6 +8,7 @@ import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.goal.DoAllTasksRule;
 import info.interactivesystems.gamificationengine.entities.goal.DoAnyTaskRule;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
@@ -41,7 +42,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for rules related services.
+ * With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal.
+ * When a goal rule is fulfilled the goal is added to the player’s list of finished goals. If the goal can also
+ * be done by a group it is also added to its list of finished goals. There are two types of rules that can be 
+ * defined: a TaskRule or a PointsRule.
+ * All created rules which are created in the context of one specific organisation can be requested with the 
+ * appendant API key. With the given id also a particular rule can be requested, also for example to change some
+ * attributes like the name, the description or, if it is a PointsRule, the amount of points which has to be 
+ * reached. 
  */
 @Path("/rule")
 @Stateless
@@ -111,22 +119,26 @@ public class RuleApi {
 	}
 
 	/**
-	 * Creates a new task rule.
+	 * Creates a new task rule. By the creation the type of rule (DoAllTasksRule or DoAnyTaskRule) has to be defined, the rule's name, 
+	 * description and the ids which should be associated with this rule.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param type
-	 *            required type of the task rule. "DoAllTasksRule" or
-	 *            "DoAnyTasksRule"
+	 *            The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTasksRule". 
+	 *            This field must not be null.
 	 * @param name
-	 *            required name of the task rule
+	 *            The name of the task rule. This parameter is required.
 	 * @param description
-	 *            optional description of the rule
+	 *            Optionally the description of the rule can be passed. This can help the player to understand 
+	 *            which tasks she/he to fulfil.
 	 * @param taskIds
-	 *            required list of task ids that need to be completed to
-	 *            complete the goal
+	 *            The list of task ids that are have to be respective can be fulfilled to complete the goal. 
+	 *            These ids are separated by commas.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link DoAllTasksRule} or
-	 *         {@link DoAnyTaskRule} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this rule belongs to.
+	 * @return {@link Response} of {@link DoAllTasksRule} or {@link DoAnyTaskRule} in JSON.
 	 */
 	@POST
 	@Path("/task")
@@ -185,17 +197,22 @@ public class RuleApi {
 	}
 
 	/**
-	 * Creates a new point rule.
+	 * Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the 
+	 * goal and also its name are needed. A description can also be made. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param name
-	 *            required name of the rule
+	 *            The name of the task rule. This parameter is required.
 	 * @param description
-	 *            optional description of the rule
+	 *            Optionally the description of the rule can be passed. This can help the player to understand 
+	 *            which tasks she/he to fulfil.
 	 * @param points
-	 *            required amount of points
+	 *            The amount of points which should be reached.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GetPointsRule} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this rule belongs to.
+	 * @return {@link Response} of {@link GetPointsRule} in JSON.
 	 */
 	@POST
 	@Path("/point")
@@ -218,11 +235,14 @@ public class RuleApi {
 	}
 
 	/**
-	 * Gets a list of all available rules.
+	 * This method collects all available rules associated with the given API key and so all goal rules which 
+	 * belong to the associated organisation. If the API key is not valid an analogous message 
+	 * is returned.
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<GoalRule>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this rule belongs to.
+	 * @return {@link Response} of {@link List<GoalRule>} in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -232,13 +252,16 @@ public class RuleApi {
 	}
 
 	/**
-	 * Returns a specific rule
+	 * This method gets one specific goal rule which is identified by the given id and the API key.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required id of the requested rule
+	 *           Required integer as path parameter which uniquely identify the goal rule.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GoalRule} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this rule belongs to.
+	 * @return {@link Response} of {@link GoalRule} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -251,13 +274,16 @@ public class RuleApi {
 	}
 
 	/**
-	 * Deletes a specific rule.
+	 * Removes a specific goal rule from the data base which is identified by the given id and the 
+	 * API key. If the API key is not valid an analogous message is returned. It is also checked,
+	 * if the id is a positive number otherwise a message for an invalid number is returned. 
 	 * 
 	 * @param id
-	 *            required id of the rule
+	 *           Required integer as path parameter which uniquely identify the goal rule.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GoalRule} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this rule belongs to.
+	 * @return {@link Response} of {@link GoalRule} in JSON.
 	 */
 	@DELETE
 	@Path("{id}")
@@ -275,17 +301,24 @@ public class RuleApi {
 	}
 
 	/**
-	 * Changes the attribute of a specific rule
+	 * With this method the fields of one specific goal rule can be changed. For this the 
+	 * goal rule id, the API key of the specific organisaiton, the name of the field and 
+	 * the new field's value are needed. 
+	 * To modify the name or description of the goal rule the new string has to be passed 
+	 * with the attribute field. If the 
+	 * If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required id of the rule
+	 *          The id of the goal rule that should be changed. This parameter is required.
 	 * @param attribute
-	 *            required name of the attribute
+	 *           The name of the attribute which should be modified. This parameter is required. 
 	 * @param value
-	 *            requred new value of the attribute
+	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GoalRule} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal rule belongs to.
+	 * @return {@link Response} of {@link GoalRule} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
