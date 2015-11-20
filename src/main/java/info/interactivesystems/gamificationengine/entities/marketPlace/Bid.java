@@ -15,8 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * A player can give one or more bids for an offer so its total prize gets
- * higher and in order to increase the incentive of fulfilling the task.
+ * A player can give one or more bids for an offer so its total prize gets higher and in order to increase 
+ * the incentive of fulfilling the task. The bidden amount of coins will be subtracted from the bidder’s 
+ * current account and will be added to the offer’s current prize. Each player can make several bids on 
+ * condition that her/his coins are enough otherwise the bid cannot be done.
  */
 @Entity
 public class Bid {
@@ -41,11 +43,10 @@ public class Bid {
 	// @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Offer offer;
 
-	// GETTER & SETTER
 	/**
 	 * Gets the id of a bid.
 	 * 
-	 * @return id of a bid
+	 * @return The id of a bid as int.
 	 */
 	public int getId() {
 		return id;
@@ -55,7 +56,7 @@ public class Bid {
 	 * Sets the id of a bid.
 	 * 
 	 * @param id
-	 *            a unique integer, usually will be generated automatically
+	 *            A unique integer, usually will be generated automatically.
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -64,7 +65,7 @@ public class Bid {
 	/**
 	 * Gets the organisation a bid belongs to.
 	 * 
-	 * @return the organisation the bid belongs to
+	 * @return the organisation object the bid belongs to.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
@@ -74,7 +75,7 @@ public class Bid {
 	 * Sets the organisation a bid belongs to.
 	 * 
 	 * @param belongsTo
-	 *            a none null organisation
+	 *            The organisation a task belongs to.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
@@ -83,7 +84,7 @@ public class Bid {
 	/**
 	 * Gets the amount of coins, by which the prize of coins is raised.
 	 * 
-	 * @return prize the concrete bid
+	 * @return The coins of the concrete bid.
 	 */
 	public int getPrize() {
 		return prize;
@@ -93,16 +94,17 @@ public class Bid {
 	 * Sets the amount of coins, by which the prize is raised.
 	 * 
 	 * @param prize
-	 *            an amount of coins
+	 *            The amount of coins by which the bid is raised.
 	 */
 	public void setPrize(int prize) {
 		this.prize = prize;
 	}
 
 	/**
-	 * Gets the exact date and time, when the bid was given.
+	 * Gets the exact date and time, when the bid was made.
 	 * 
 	 * @return creationDate
+	 * 			The date and time, when the bid was created as LocalDateTime.
 	 */
 	public LocalDateTime getCreationDate() {
 		return creationDate;
@@ -112,7 +114,7 @@ public class Bid {
 	 * Sets the exact date and time, when the bid was given.
 	 * 
 	 * @param creationDate
-	 *            local date time, usually now
+	 *            Sets the date and time a bid was created as LocalDateTime. Usually it's now.
 	 */
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
@@ -121,7 +123,7 @@ public class Bid {
 	/**
 	 * Gets the player, who gives a bid for an offer.
 	 * 
-	 * @return player who has bid
+	 * @return The player who has made the bid.
 	 */
 	public Player getPlayer() {
 		return player;
@@ -131,6 +133,7 @@ public class Bid {
 	 * Sets the player, who gives a bid for an offer.
 	 * 
 	 * @param player
+	 * 			The player who has made the bid.
 	 * 
 	 */
 	public void setPlayer(Player player) {
@@ -141,6 +144,7 @@ public class Bid {
 	 * Gets the offer for which the bid was given.
 	 * 
 	 * @return offer
+	 * 			The offer the player had bid for.
 	 */
 	public Offer getOffer() {
 		return offer;
@@ -150,7 +154,7 @@ public class Bid {
 	 * Sets the offer for which a bid was given.
 	 * 
 	 * @param offer
-	 *            an instance of offer
+	 *            The offer object a bid was made for.
 	 */
 	public void setOffer(Offer offer) {
 		this.offer = offer;

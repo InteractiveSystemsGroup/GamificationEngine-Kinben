@@ -14,6 +14,7 @@ import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
@@ -45,7 +46,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for market place related services.
+ * The marketplace gives players the opportunity to offer tasks that have to be completed by their colleagues 
+ * so that they are able to fulfil those tasks and obtain the respective reward. Upon creation of a task, an 
+ * initial bid in terms of coins is set, which will be obtained as additional reward. Via Bids this initial bid
+ * can be raised. To be able to create offers, a marketplace for the organisation is needed. If none exists yet,
+ * it first has to be created. 
+ * 
+ * If an offer is created an initial bid in terms of coins is set which is obtained by the person who completes 
+ * it. The initial bid can be raised by other colleagues in order to increase the incentive of fulfilling the 
+ * task. When a player has completed a Task that belongs to an offer, she/he will obtain all bids as a reward. 
+ * The particular task is then also added to the player’s list of the finished tasks. All offers a player has 
+ * put on the marketplace can be requested. The name of an offer can be changed at a later point of time as 
+ * well as the optional date when an offer ends or the deadline when the associated task of an offer should be
+ * done at the latest.
+ * 
+ * At the marketplace not all offers may are visible for each player because the offers can be filtered by the 
+ * roles a player has. It can also additionally filtered by the date an offer was created or the prize which 
+ * can be earned. By making a bid, the reward of coins for completing a task is raised. The bidden amount of 
+ * coins will be subtracted from the bidder’s current account and will be added to the offer’s current prize. 
+ * Each player can make several bids on condition that her/his coins are enough otherwise the bid cannot be 
+ * made. It is also possible to get all bids that was made for an offer.
  */
 @Path("/marketPlace")
 @Stateless
@@ -72,11 +92,15 @@ public class MarketPlaceApi {
 	MarketPlaceDAO marketPlDao;
 
 	/**
-	 * Creates a new market place.
+	 * Creates a new market place for an organisation which is identified by the API key. So the method generates the
+	 * marketplace-id. But this is only possible if no marketplace exists yet. 
+	 * The organisation's API key is mandatory otherwise a warning with the hint for a non valid API key is 
+	 * returned. 
 	 * 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {MarketPlace} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this marketplace belongs to.
+	 * @return {@link Response} of {MarketPlace} in JSON.
 	 */
 	@POST
 	@Path("/market")
@@ -99,13 +123,16 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Deletes a market place.
+	 * Removes the marketplace with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param marketId
-	 *            required id of the market place
+	 *             Required path parameter as integer which uniquely identify the {@link MarketPlace}.
 	 * @param apikey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link MarketPlace} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return {@link Response} of {@link MarketPlace} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/market")
@@ -130,26 +157,33 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Creates a new offer.
-	 * 
+	 * Creates a new group of offer and so the method generates the offer-id. The organisation's API key is 
+	 * mandatory otherwise a warning with the hint for a non valid API key is returned. 
+	 * By the creation the name, the prize which represents the initial bid and id of the task the offer 
+	 * is associated should be passed. 
+	 * Additionally the id of the player who creates the offer and the id of the marketplace should be passed. 
+	 * Optionally it can be defined when the offer ends and until the task should be done. 
+	 *
 	 * @param name
-	 *            required name of the offer
+	 *            The name of the offer. This parameter is required.
 	 * @param endDate
-	 *            how long is the offer available on the market
+	 *            The date and time how long the offer is available on the market.
 	 * @param prize
-	 *            required prize of the offer
+	 *            The initial bid of the offer. This is the prize a player can earn.
 	 * @param taskId
-	 *            required task that should be completed
+	 *            The id of the task the offer is associated with. This parameter is required.
 	 * @param allowedRoles
-	 *            optional roles that are allowed to receive the price
+	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
+	 *            prize. 
 	 * @param deadLine
-	 *            how long is the offer valid
+	 *            The point of time until the offer is valid.
 	 * @param marketId
-	 *            required id of the market where the offer should be available
+	 *            The id of the marketplace where the offer should be available.
 	 * @param playerId
-	 *            required id of the player who created the offer
+	 *            The id of the player who created the offer. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this offer belongs to.
 	 * @return {@link Response} of {Offer} in JSON
 	 */
 	@POST
@@ -222,17 +256,21 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Places a bid on an offer.
+	 * With this method a player make a bid to an offer. So a new bid is created and therefore an id is 
+	 * generated. The id of the player is needed to indicate who has made the bid and id of the offer to identify 
+	 * for which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so 
+	 * the offer's prize is raised.
 	 * 
 	 * @param playerId
-	 *            required player who adds the bid
+	 *            The player who has done the bid. This parameter is required.
 	 * @param offerId
-	 *            required offer where the bid should be placed
+	 *            The offer the player has bidden for. This parameter is required.
 	 * @param prize
-	 *            required prize of the bid
+	 *            The amount of the bid. This is added to the current prize. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {Bid} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return {@link Response} of {Bid} in JSON.
 	 */
 	@POST
 	@Path("/bid")
@@ -313,13 +351,16 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets all offers of from a specific player.
+	 * Gets all offers a specific player has created. If the API key is not valid an analogous message is 
+	 * returned. It is also checked, if the id is a positive number otherwise a message for an invalid 
+	 * number is returned.
 	 * 
 	 * @param playerId
-	 *            required player id
+	 *            The player whose offers are returned.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {List<Offer>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return {@link Response} of {List<Offer>} in JSON.
 	 */
 	@GET
 	@Path("/getOffers")
@@ -344,15 +385,20 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets the allowed offers for a player.
+	 * Gets the allowed offers for a specific player. The player is identified by her/his passed id and API key.
+	 * The offers are filtered by the roles a player has so only offers are in the returned list which are 
+	 * associated with at least one role a player has. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the ids are a 
+	 * positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param playerId
-	 *            required player id
+	 *            The player whose roles are checked. This parameter is required.
 	 * @param marketPlId
-	 *            required market place id
+	 *            The marketplace whose offers are filtered.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {List<Offer>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this player belongs to.
+	 * @return {@link Response} of {List<Offer>} in JSON.
 	 */
 	@GET
 	@Path("/getOfferRole")
@@ -380,16 +426,19 @@ public class MarketPlaceApi {
 
 	/**
 	 * Gets all available offers for a player ordered by date, newest first.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
+	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param playerId
-	 *            required id of the player
+	 *            The player whose roles are checked. This parameter is required.
 	 * @param marketPlId
-	 *            required id of the market place
+	 *            The marketplace whose offers are filtered.
 	 * @param count
-	 *            optional count of offers that should be returned. Default "10"
+	 *            Optionally the count of offers that should be returned can be passed. The default value is 10. 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {List<Offer>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return {@link Response} of {List<Offer>} in JSON.
 	 */
 	@GET
 	@Path("/getNewestOffer")
@@ -419,18 +468,20 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets all available offers for a player ordered by prize, highest prize
-	 * first.
+	 * Gets all available offers for a player ordered by prize, highest prize first.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is 
+	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param playerId
-	 *            required id of the player
+	 *            The player whose roles are checked. This parameter is required.
 	 * @param marketPlId
-	 *            required id of the market place
+	 *            The marketplace whose offers are filtered.
 	 * @param count
-	 *            optional count of offers that should be returned. Default "10"
+	 *            Optionally the count of offers that should be returned can be passed. The default value is 10. 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {List<Offer>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return {@link Response} of {List<Offer>} in JSON.
 	 */
 	@GET
 	@Path("/getHighestO")
@@ -460,19 +511,22 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets a list of all bids placed on an offer.
+	 * Gets a list of all bids which was made for a specific offer. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the offer id is a 
+	 * positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param offerId
-	 *            required id of the offer
+	 *           The offer whose bids are returned. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<Bid>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return {@link Response} of {@link List<Bid>} in JSON.
 	 */
 	@GET
 	@Path("/{id}/bids")
 	public Response getBids(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		// TODO apiKey setzen
+	
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThenZero(offerId));
 		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer);
 
@@ -483,15 +537,17 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.of(bidsForOffer);
 	}
 
-	// TODO testen
 	/**
-	 * Deletes an offer.
+	 * Removes the offer with the assigned id from the data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param offerId
-	 *            required id of the offer
+	 *            The offer which should be removed. This parameter is required. 
 	 * @param apikey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Offer} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return {@link Response} of {@link Offer} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/offer")
@@ -530,16 +586,20 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * If an offer is fulfilled with this request the offer is completed and the player who has done it gets the 
-	 * the prize as a reward.
+	 * If an offer is fulfilled, with this request the offer is completed and the player with the passed id who
+	 * has completed it gets the prize as a reward. It is checked, if the passed ids are a positive number 
+	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous message
+	 * is returned.
 	 * 
 	 * @param offerId
-	 *            required id of the offer
+	 *            The offer id which was finished. This parameter is required. 
 	 * @param playerId
-	 *            required id of the player
+	 *            The id of the player who has completed the task that was associated with the offer. So 
+	 *            she/he earns the prize as a reward. 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Task#getId} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this player belongs to.
+	 * @return {@link Response} of {@link Task#getId} in JSON.
 	 */
 	@POST
 	@Path("/{id}/compOffer")
@@ -569,7 +629,6 @@ public class MarketPlaceApi {
 		}
 
 		Task task = offer.getTask();
-		// TODO testen
 		log.debug("task" + task.getId());
 		task.completeTask(organisation, player, ruleDao, goalDao, groupDao, LocalDateTime.now());
 		log.debug("Task completed");
@@ -584,17 +643,25 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Changes the value of a given attribute.
+	 * With this method the fields of an Offer can be changed. For this the id of the offer, the API key of 
+	 * the specific organisaiton, the name of the field and the new value are needed.
+	 * 
+	 * To modify the name the new String has to be passed with the attribute field. A new date and time as 
+	 * LocalDateTime for the deadline or enddate can also be passed. The format of this value is 
+	 * yyyy-MM-dd HH:mm. A new list of players can be passed when their ids are separated by commas. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the ids are a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param offerId
-	 *            required id of an offer
+	 *            The id of the offer that should be changed. This parameter is required.
 	 * @param attribute
-	 *            required attribute name to be changed
+	 *            The name of the attribute which should be modified. This parameter is required. 
 	 * @param value
-	 *            required new value
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Offer} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return {@link Response} of {@link Offer} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -637,6 +704,19 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.updated(offer);
 	}
 
+	/**
+	 * This method converts the string of role ids which are transfered to a list of roles.
+	 * These roles are then set as the new list of an offer's roles to indicate who is allowed to complete
+	 * the associated task. 
+	 * 
+	 * @param value
+	 * 		   	The new values of roles as string separated by commas. This parameter is required.
+	 * @param offer
+	 * 		  	The offer which field of roles will be modified. This parameter should be not null. 
+	 * @param apiKey
+	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this offer belongs to.
+	 */
 	private void changePlayerRoles(@NotNull String value, Offer offer, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
@@ -645,17 +725,23 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Removes a bid from the database.
+	 * Removes the bid with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the ids are
+	 * a positive number otherwise a message for an invalid number is returned.
+	 * 
 	 * 
 	 * @param bidId
-	 *            required id of a bid
+	 *            Required path parameter as integer to uniquely identify the bid. 
 	 * @param playerId
-	 *            required id of the player
+	 *            The id of the player who has made the bid. This parameter is required.
 	 * @param offerId
-	 *            required id of the offer
+	 *            The id of the offer to which the bid is associated.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Offer} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return {@link Response} of {@link Offer} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/bid")
@@ -667,7 +753,6 @@ public class MarketPlaceApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no bidId transferred");
 		}
 
-		// TODO testen
 		int id = ValidateUtils.requireGreaterThenZero(bidId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);

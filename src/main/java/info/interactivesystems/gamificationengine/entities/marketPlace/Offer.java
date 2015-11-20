@@ -23,9 +23,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 /**
- * With an offer a player can create a task for other players. The other players
- * can bid for this offer to be allowed to fulfil its task and to obtain coins
- * or other rewards.
+ * With an offer a player can create a task for other players. At this point of time an initial bid in terms 
+ * of coins is set which is obtained by the person who completes it. The initial bid can be raised by other 
+ * colleagues in order to increase the incentive of fulfilling the task. When a player has completed a Task 
+ * that belongs to an offer, she/he will obtain all bids as a reward. 
+ * The particular task is then also added to the player’s list of the finished tasks. 
  */
 @Entity
 public class Offer {
@@ -64,11 +66,10 @@ public class Offer {
 		// bids = new ArrayList<Bid>();
 	}
 
-	// GETTER & SETTER
 	/**
 	 * Gets the id of an offer.
 	 * 
-	 * @return int
+	 * @return The offer's id as int.
 	 */
 	public int getId() {
 		return id;
@@ -78,7 +79,7 @@ public class Offer {
 	 * Sets the id of an offer.
 	 * 
 	 * @param id
-	 *            - the id of an offer.
+	 *            The id of an offer.
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -87,7 +88,7 @@ public class Offer {
 	/**
 	 * Gets the exact LocalDateTime when the offer was created.
 	 * 
-	 * @return LocalDateTime
+	 * @return The date and time when an offer was created as LocalDateTime.
 	 */
 	public LocalDateTime getOfferDate() {
 		return offerDate;
@@ -97,16 +98,17 @@ public class Offer {
 	 * Sets the LocalDateTime when the offer was created.
 	 * 
 	 * @param offerDate
-	 *            - the exact Date, when the offer was created
+	 *            The exact date and time, when the offer was created.
 	 */
 	public void setOfferDate(LocalDateTime offerDate) {
 		this.offerDate = offerDate;
 	}
 
 	/**
-	 * Gets the LocalDateTime, when the offer end.
+	 * Gets the LocalDateTime, when the offer ends.
 	 * 
 	 * @return LocalDateTime
+	 * 			The exact date and time, when the offer ends.
 	 */
 	public LocalDateTime getEndDate() {
 		return endDate;
@@ -116,28 +118,29 @@ public class Offer {
 	 * Sets the LocalDateTime, when the offer ends.
 	 * 
 	 * @param endDate
-	 *            - the exact Date, when the offer ends
+	 *            The exact date and time, when the offer ends.
 	 */
 	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 
 	/**
-	 * Gets the exact Date and Time, when the task of an offer should be
+	 * Gets the exact date and time, when the task of an offer should be
 	 * finished.
 	 * 
 	 * @return LocalDateTime
+	 * 				The exact date and time, when the offer should be finished at least.
 	 */
 	public LocalDateTime getDeadLine() {
 		return deadLine;
 	}
 
 	/**
-	 * Sets the exact Date and Time, when the task of an offer should be
+	 * Sets the exact date and time, when the task of an offer should be
 	 * finished.
 	 * 
 	 * @param deadLine
-	 *            - the exact * Date, when the offer's task should be done
+	 *           The exact date and time, when the offer sould be done.
 	 */
 	public void setDeadLine(LocalDateTime deadLine) {
 		this.deadLine = deadLine;
@@ -148,6 +151,7 @@ public class Offer {
 	 * task.
 	 * 
 	 * @return int
+	 * 			The offer's current prize as int.
 	 */
 	public int getPrize() {
 		return prize;
@@ -158,8 +162,8 @@ public class Offer {
 	 * task.
 	 * 
 	 * @param prize
-	 *            - the amount of coins a player will get, after he finished
-	 *            offer's task
+	 *           The amount of coins a player will get, after she/he has finished the
+	 *            offer's task.
 	 */
 	public void setPrize(int prize) {
 		this.prize = prize;
@@ -168,7 +172,8 @@ public class Offer {
 	/**
 	 * Gets the organisation an offer belongs to.
 	 * 
-	 * @return organisation object
+	 * @return organisation 
+	 * 			  The organisation of the player as an object.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
@@ -178,7 +183,7 @@ public class Offer {
 	 * Sets the organisation an offer belongs to.
 	 * 
 	 * @param belongsTo
-	 *            - the organisation the offer belongs to.
+	 *            The player's organisation.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
@@ -187,7 +192,8 @@ public class Offer {
 	/**
 	 * Gets the task of an offer, which can be fulfilled to award the prize.
 	 * 
-	 * @return Task object
+	 * @return Task 
+	 * 			The task which was associated with the offer.
 	 */
 	public Task getTask() {
 		return task;
@@ -197,16 +203,18 @@ public class Offer {
 	 * Sets the task which is connected with the offer.
 	 * 
 	 * @param task
-	 *            - the task which must be finished to comply the offer
+	 *            The task which have to be finished to finish the offer.
 	 */
 	public void setTask(Task task) {
 		this.task = task;
 	}
 
 	/**
-	 * Gets the roles to check which player is allowed to fulfil this offer.
+	 * Gets the roles to check which player is allowed to fulfil this offer. A player need at least one role
+	 * to complete the task.
 	 * 
 	 * @return List<Role>
+	 * 			All roles which are allowed to fulfil the offer.
 	 */
 	public List<Role> getAllowedForRole() {
 		return allowedForRole;
@@ -214,10 +222,10 @@ public class Offer {
 
 	/**
 	 * Sets a list of roles for the task. Players who have at least one of these
-	 * roles is allowed to fulfil the task and award the prize.
+	 * roles are allowed to fulfil the task and award the prize.
 	 * 
 	 * @param allowedForRole
-	 *            - the roles of which a player must have at least one to
+	 *            The roles of which a player must have at least one to
 	 *            fulfill this task.
 	 */
 	public void setAllowedForRole(List<Role> allowedForRole) {
@@ -235,7 +243,7 @@ public class Offer {
 	/**
 	 * Gets the name of the offer, which can describe the task in a short way.
 	 * 
-	 * @return String
+	 * @return The offer's name as String.
 	 */
 	public String getName() {
 		return name;
@@ -245,7 +253,7 @@ public class Offer {
 	 * Sets the name of an offer, which can describe the task in a short way.
 	 * 
 	 * @param name
-	 *            - the name of the offer.
+	 *          The name of the offer as String.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -253,10 +261,10 @@ public class Offer {
 
 	/**
 	 * This method adds a further role to the list of roles. If a player has got
-	 * one of these roles he is allowed to fulfil the task.
+	 * one of these roles she/he is allowed to fulfil the task.
 	 * 
 	 * @param role
-	 *            - the new role which is added to the role list.
+	 *          The new role which is added to the list of roles.
 	 */
 	public void addRole(Role role) {
 		this.allowedForRole.add(role);
@@ -269,7 +277,8 @@ public class Offer {
 	/**
 	 * Gets the player who has created the offer.
 	 * 
-	 * @return Player object
+	 * @return Player 
+	 * 			The player object of the player who has created the offer.
 	 */
 	public Player getPlayer() {
 		return player;
@@ -279,19 +288,21 @@ public class Offer {
 	 * Sets a player as a creator of an offer.
 	 * 
 	 * @param player
-	 *            - the player who has created the offer.
+	 *            The player who has created the offer.
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
 	/**
-	 * This method checks if the API key of a role is equal to the
-	 * organisation's one, which means the role belongs to this organisation.
+	 * This method checks if the API key of a role is equal to the organisation's one. So it checks if the role
+	 * also belongs to this organisation.
 	 * 
 	 * @param organisation
-	 *            a none null organisation
+	 *            The organisation which is tested. This parameter is required.
 	 * @return boolean
+	 * 			The value if a offer belongs to the specific organisation (true) or
+	 *          not (false).
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
