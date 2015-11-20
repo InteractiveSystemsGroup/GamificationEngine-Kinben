@@ -5,6 +5,7 @@ import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDi
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerLevelDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.PlayerLevel;
 
 import javax.ejb.Stateless;
@@ -40,15 +41,21 @@ public class PlayerLevelApi {
 	PlayerLevelDAO playerLevelDao;
 
 	/**
-	 * Creates a new player level.
+	 * Creates a new player level and generates the PlayerLevel-id. The organisation's 
+	 * API key is mandatory otherwise a warning with the hint for a non valid API key 
+	 * is returned. 
+	 * By the creation the name and index of the player have to be passed. It is checked, 
+	 * if the index of the level is a positive number otherwise a message for the 
+	 * invalid number is returned. 
 	 * 
 	 * @param name
-	 *            required level name
+	 *           The name of the player level. This parameter is required.
 	 * @param index
-	 *            required level number
+	 *           The index of the level. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link PlayerLevel} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player level belongs to.
+	 * @return {@link Response} of {@link PlayerLevel} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -70,33 +77,42 @@ public class PlayerLevelApi {
 	}
 
 	/**
-	 * Returns a player level for assigned id.
+	 * Returns the player level associated with the passed id. If the API key is not 
+	 * valid an analogous message is returned. It is also checked, if the id is a 
+	 * positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required id of the level
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerLevel}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link PlayerLevel} in JSON
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player level belongs to.
+	 * @return {@link Response} of {@link PlayerLevel} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
 	public Response getPlayerLevel(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		PlayerLevel pL = playerLevelDao.getPlayerLevel(apiKey, ValidateUtils.requireGreaterThenZero(id));
 		return ResponseSurrogate.of(pL);
 	}
 
 	/**
-	 * Changes the value for a corresponding attribute key.
+	 * With this method the fields of a PlayerLevel can be changed. For this the id of the player level, 
+	 * the API key of the specific organisaiton, the name of the field and the new value are needed.
+	 * To modify the name or the index of the level the new value has to be passed with the value field. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the ids are a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *            required level id
+	 *           The id of the player level that should be changed. This parameter is required.
 	 * @param attribute
-	 *            required attribute key
+	 *            The name of the attribute which should be modified. This parameter is required. 
 	 * @param value
-	 *            required value for associated attribute
+	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link PlayerLevel} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which the player level belongs to.
+	 * @return {@link Response} of {@link PlayerLevel} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -133,13 +149,16 @@ public class PlayerLevelApi {
 	}
 
 	/**
-	 * Removes player level with assigned id from data base.
+	 * Removes the layer level with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param id
-	 *            required level id
+	 *           Required path parameter as integer which uniquely identify the {@link PlayerLevel}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link PlayerLevel} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this player level belongs to.
+	 * @return {@link Response} of {@link PlayerLevel} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")

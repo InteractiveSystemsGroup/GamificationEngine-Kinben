@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * The PlayerLevel shows the status of the Player. After the Player completed a
- * task his level can advance if the conditions are fulfilled.
+ * A player level shows the status of the player. This can be a number or a status like a titel.
+ * After the Player completed a task her/his level can advance if the conditions are fulfilled.
  */
 @Entity
 public class PlayerLevel {
@@ -28,80 +28,79 @@ public class PlayerLevel {
 	private String levelName;
 
 	/**
-	 * Get the id of the PlayerLevel.
+	 * Gets the id of the player level. 
 	 * 
-	 * @return int of the id
+	 * @return The player level's id as int.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * Set the id of a PlayerLevel
+	 * Sets the id of a player level. 
 	 * 
 	 * @param id
-	 *            the id of the PlayerLevel.
+	 *         The id of the player level henceforth.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Get the organisation which the player level belongs to and in which a
-	 * player can award it.
+	 * Gets the organisation which the player level belongs to.
 	 * 
-	 * @return an organisation object.
+	 * @return The organisations object the player level belongs to.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
 	}
 
 	/**
-	 * Set the organisation which the level belongs to and in which a player can
+	 * Sets the organisation which the level belongs to and in which a player can
 	 * award it.
 	 * 
 	 * @param belongsTo
-	 *            the organisation object.
+	 *            The organisation to which the group belongs to henceforth. 
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 
 	/**
-	 * Get the level's index.
+	 * Gets the level's index.
 	 * 
-	 * @return the levelIndex as an int
+	 * @return The index of the level as an int.
 	 */
 	public int getLevelIndex() {
 		return levelIndex;
 	}
 
 	/**
-	 * Set the levelIndex for the level.
+	 * Sets the index of the level.
 	 * 
 	 * @param levelIndex
-	 *            as int
+	 *            The index of the level as int.
 	 */
 	public void setLevelIndex(int levelIndex) {
 		this.levelIndex = levelIndex;
 	}
 
 	/**
-	 * Get the name of the level. This could be for example a number or a status
+	 * Gets the name of the level. This could be for example a number or a status
 	 * like a title.
 	 * 
-	 * @return a level name
+	 * @return The name of the level as String. 
 	 */
 	public String getLevelName() {
 		return levelName;
 	}
 
 	/**
-	 * Set the name of the level. This could be for example a number or a status
+	 * Sets the name of the level. This could be for example a number or a status
 	 * like a title.
 	 * 
 	 * @param levelName
-	 *            the for the level
+	 *            The name of the level henceforth. 
 	 */
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;

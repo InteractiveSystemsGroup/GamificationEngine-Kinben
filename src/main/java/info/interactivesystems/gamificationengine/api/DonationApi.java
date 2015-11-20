@@ -9,6 +9,7 @@ import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.entities.DonationCall;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -27,7 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for donation related services.
+ * A donation stands for a real world purpose. This could be for example a real donation for a 
+ * charitable purpose or an event for the organisation’s employees like the arrangement for the 
+ * company party or purchasing a new coffee machine. When a donation is created, players can pool 
+ * coins for a certain amount and the connected purpose if she/he has enough coins. If the required 
+ * amount is reached, the goal is reached and the purpose can be implemented by the responsible 
+ * manager.
  */
 @Path("/donation")
 @Stateless
@@ -46,17 +52,22 @@ public class DonationApi {
 	PlayerDAO playerDao;
 
 	/**
-	 * Creates a new call for a donation.
+	 * Creates a new call for donations and generates the DonationCall-id. The organisation's API key is
+	 * mandatory otherwise a warning with the hint for a non valid API key is returned. 
+	 * By the creation the name and description are passed who should be assigned to this call for donation.
+	 * The goal of the call for donations also has be specified. This goal repesents the amount of coins that 
+	 * should be reached.
 	 * 
 	 * @param name
-	 *            the short name of the donation call
+	 *           The short name of the call for donation.
 	 * @param description
-	 *            a longer description of the donation call describing its usage
+	 *            The longer description of the call for donation. This can contain the its purpose.
 	 * @param goal
-	 *            an id of the goal, which should be done for this donation
+	 *            The amount of coins that should be reached to fulfil this donation.
 	 * @param apiKey
-	 *            your api key
-	 * @return {@link Response} of {@link DonationCall} in JOSN
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this call for donations belongs to.
+	 * @return {@link Response} of {@link DonationCall} in JOSN.
 	 */
 	@POST
 	@Path("/")
@@ -79,21 +90,23 @@ public class DonationApi {
 	}
 
 	/**
-	 * With this method a player donates a specific amount of coins if she/he has enough. 
-	 * These coins are subtracted from the player’s current account and will be added 
-	 * to the Donation Call's current amount. 
+	 * With this method a player donates a specific amount of coins if she/he has enough coins. 
+	 * These coins are subtracted from the player’s current account and will be added to the Donation
+	 * Call's current amount. If the API key is not valid an analogous message is returned.
+	 * It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.
+
 	 * 
 	 * @param id
-	 *            the id of the call for donation
+	 *            The id of the call for donations to which a player donates. This path parameter is required.
 	 * @param playerId
-	 *            the player who donates
+	 *            The id of the player who donates. This path parameter is required.
 	 * @param amount
-	 *            the amount of coins which should be donated
+	 *            The amount of coins which the player donates. 
 	 * @param apiKey
-	 *            your api key
-	 * @return {@link Response} of {@link DonationCall} in JOSN
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this call for donations belongs to.
+	 * @return {@link Response} of {@link DonationCall} in JOSN.
 	 */
-
 	@POST
 	@Path("/{id}/donate/{playerId}")
 	public Response donate(@PathParam("id") @ValidPositiveDigit(message = "The donation id must be a valid number") String dId,
@@ -122,14 +135,18 @@ public class DonationApi {
 		return ResponseSurrogate.created(dCall);
 	}
 
+	
 	/**
-	 * Gets the {@link DonationCall} object by id.
+	 * Returns the call for donation which is associated with the passed id. If the API key is not 
+	 * valid an analogous message is returned. It is also checked, if the id is a positive number 
+	 * otherwise a message for an invalid number is returned.
 	 * 
 	 * @param dId
-	 *            the id of the call for donation
+	 * 			Required path parameter as integer which uniquely identify the {@link DonationCall}.
 	 * @param apiKey
-	 *            your api key
-	 * @return {@link Response} of {@link DonationCall} in JOSN
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this call for donations belongs to.
+	 * @return {@link Response} of {@link DonationCall} in JOSN.
 	 */
 	@GET
 	@Path("/{id}")
@@ -147,13 +164,17 @@ public class DonationApi {
 	}
 
 	/**
-	 * Deletes a call for donation.
+	 * Removes the call for donations with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
 	 * 
 	 * @param id
-	 *            id of the donation call that should be deleted
+	 *          Required path parameter as integer which uniquely identify the {@link DonationCall} that
+	 *          should be deleted.
 	 * @param apiKey
-	 *            your api key
-	 * @return {@link Response} of {@link DonationCall} in JOSN
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this call for donations belongs to.
+	 * @return {@link Response} of {@link DonationCall} in JOSN.
 	 */
 	@DELETE
 	@Path("/{id}")
