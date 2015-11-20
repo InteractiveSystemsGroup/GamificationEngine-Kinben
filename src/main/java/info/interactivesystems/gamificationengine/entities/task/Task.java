@@ -207,17 +207,17 @@ public class Task implements Serializable {
 	 * If a player completed a task this method adds the task to the list of finished 
 	 * tasks if the player is allowed to complete this task. This is tested by the 
 	 * roles a player has and the roles which are assigned to the task.  
-	 * It is also tested if the player isn't deactivated because then is she/he isn't 
+	 * Also the method tests if the player isn't deactivated because then she/he isn't 
 	 * allowed to complete tasks.
 	 * 
 	 * @param organisation
 	 *            The organisation for that the task was created and belongs to.
 	 * @param player
-	 *            The player who completed the task
+	 *            The player who completed the task. This parameter must not be null.
 	 * @param ruleDao
 	 *            The rule DAO is required to access the created rules.
 	 * @param goalDao
-	 *            The goal DAO is required to access created goals.
+	 *            The goal DAO is required to access created goals. 
 	 * @param groupDao
 	 *            The group DAO is required to access created groups.
 	 * @param finishedDate

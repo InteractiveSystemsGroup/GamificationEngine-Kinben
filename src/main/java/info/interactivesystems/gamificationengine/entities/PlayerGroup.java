@@ -67,8 +67,6 @@ public class PlayerGroup {
 		finishedGoals = new ArrayList<>();
 	}
 
-	// GETTER & SETTER
-
 	/**
 	 * Gets the name of the group.
 	 * 
@@ -210,8 +208,8 @@ public class PlayerGroup {
 	 * 
 	 * @param organisation
 	 * 			The organisation object a group may belongs to.
-	 * @return Boolean of the check if the API key of the group is the same 
-	 * 			of the tested organisation.
+	 * @return Boolean value if the API key of the group is the same 
+	 * 			of the tested organisation (true) or not (false).
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());

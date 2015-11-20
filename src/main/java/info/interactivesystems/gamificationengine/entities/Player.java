@@ -125,7 +125,7 @@ public class Player {
 	/**
 	 * Gets the nickname of a player.
 	 * 
-	 * @return nickname of the player as a String.
+	 * @return The nickname of the player as a String.
 	 */
 	public String getNickname() {
 		return nickname;
@@ -135,7 +135,7 @@ public class Player {
 	 * Sets the nickname of a player, that is displayed for the other players.
 	 * 
 	 * @param nickname
-	 *            The nickname of the player.
+	 *            The nickname of the player as String.
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
