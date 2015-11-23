@@ -7,12 +7,12 @@ import javax.ws.rs.core.Response;
 public class ValidateUtils {
 
 	/**
-	 * Validates whether assigned object is null.
+	 * Validates whether the assigned object is null.
 	 * 
 	 * @param id
-	 *            for output
+	 *           The id of the object. This is needed for output.
 	 * @param object
-	 *            to be tested
+	 *          The object that is tested.
 	 *
 	 * @return validated object identity
 	 */
@@ -24,11 +24,11 @@ public class ValidateUtils {
 	}
 
 	/**
-	 * Validates whether assigned value is greater then zero.
+	 * Validates whether the assigned value is greater then zero.
 	 * 
 	 * @param id
-	 *            for test
-	 * @return validated integer identity
+	 *         The id that is is tested. 
+	 * @return Validated integer identity.
 	 */
 	public static int requireGreaterThenZero(int id) {
 		if (id <= 0) {
@@ -38,12 +38,12 @@ public class ValidateUtils {
 	}
 
 	/**
-	 * Parses assigned string to an integer and validates it whether it is
-	 * greater then zero. Supposes a valid string digit were passed.
+	 * Parses the assigned String to an integer and validates it whether it is
+	 * greater then zero. Supposes a valid string digit was passed.
 	 * 
 	 * @param id
-	 *            for test
-	 * @return validated integer identity
+	 *         The String of id that is tested.
+	 * @return Validated integer identity.
 	 */
 	public static int requireGreaterThenZero(String id) {
 		return requireGreaterThenZero(Integer.valueOf(id));

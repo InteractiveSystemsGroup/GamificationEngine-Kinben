@@ -19,8 +19,8 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 /**
- * The annotated {@code CharSequence} will be checked for existance in data
- * base.
+ * The annotated {@code CharSequence} will be checked for existence in the
+ * data base.
  * 
  * Note: {@code null} elements are considered as invalid.
  */

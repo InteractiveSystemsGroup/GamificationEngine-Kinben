@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * This surrogate is used to add to each returned object an errors field. The
- * errors field may contain a list of errors. The deputized object is unwrapped,
+ * This surrogate is used to add to each returned object an error field. The
+ * error field may contain a list of errors. The deputized object is unwrapped,
  * so it seems the errors field exists in any response object.
  * 
  * @param <T>

@@ -12,7 +12,7 @@ public class SecurityTools {
 	 * TODO: Maybe change this to a encrypted timestamp/salt pair to decrypt
 	 * creation date.
 	 * 
-	 * @return a randomly generated code used as api key
+	 * @return a randomly generated code used as API key
 	 */
 	public static String generateApiKey() {
 		return UUID.randomUUID().toString();

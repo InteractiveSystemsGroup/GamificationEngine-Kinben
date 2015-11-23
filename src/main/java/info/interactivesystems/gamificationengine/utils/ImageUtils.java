@@ -12,36 +12,14 @@ import javax.ws.rs.core.Response;
 
 public class ImageUtils {
 
-	// method to create byte[] from image file
-	// public static byte[] imageToByte(String fileLocation) {
-	// File fileImage = new File(fileLocation);
-	// BufferedImage originalImage;
-	// byte[] byteImage = null;
-	//
-	// String format = fileLocation.substring(fileLocation.lastIndexOf(".") +
-	// 1);
-	//
-	// if (format.equals("png") || format.equals("jpg")) {
-	// try {
-	// originalImage = ImageIO.read(fileImage);
-	// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	// ImageIO.write(originalImage, format, baos);
-	// byteImage = baos.toByteArray();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// return byteImage;
-	// }
-
 	/**
-	 * Creates a byte[] from an image file that was passed as an Stings that
-	 * represents an URL. The format of the image has be .jpg or .png. Otherwise 
+	 * The passed String represents an URL. With this URL a byte[] is created from the image file that was passed as an Stings that
+	 * represents an URL. The format of the image has to be .jpg or .png. Otherwise 
 	 * an exception is thrown with the hint, that the URL was not valid.
 	 * 
 	 * @param fileLocation
-	 * 			The path an image can be located. This is an URL-
-	 * @return byte[] of the image content
+	 * 			The path an image can be located. This is an URL.
+	 * @return byte[] of the image content.
 	 */
 	public static byte[] imageToByte(String fileLocation) {
 		BufferedImage originalImage;

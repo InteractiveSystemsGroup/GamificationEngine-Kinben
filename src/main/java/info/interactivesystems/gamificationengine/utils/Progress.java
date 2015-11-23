@@ -17,7 +17,7 @@ public class Progress {
 	/**
 	 * Gets the current progress.
 	 * 
-	 * @return int as a current Step
+	 * @return The current step as int. 
 	 */
 	public int getCurrent() {
 		return current;
@@ -27,7 +27,7 @@ public class Progress {
 	 * Sets the current progress.
 	 *
 	 * @param current
-	 *            the current progress
+	 *            The current progress.
 	 */
 	public void setCurrent(int current) {
 		this.current = current;
@@ -36,17 +36,17 @@ public class Progress {
 	/**
 	 * Gets the full progress.
 	 * 
-	 * @return int as a value for the full progress
+	 * @return The value for the full progress as int.
 	 */
 	public int getFull() {
 		return full;
 	}
 
 	/**
-	 * Sets the value for a full progress.
+	 * Sets the value for the full progress.
 	 * 
 	 * @param full
-	 *            the value for a the full progress
+	 *            The value which represents the full progress.
 	 */
 	public void setFull(int full) {
 		this.full = full;
