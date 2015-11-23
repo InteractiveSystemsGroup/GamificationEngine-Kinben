@@ -22,11 +22,15 @@ import javax.validation.constraints.NotNull;
 
 /**
  * A present is a little positive message which one player can send to one or
- * more other players. A present can be a short text or an image.
- * <ul>
- * <li>sender - player who sends a present to another player.</li>
- * <li>receiver - one or more players who should receive the present.</li>
- * </ul>
+ * more other players. These presents can be an image or a short text message which 
+ * contains for example a little praise. A Board serves a player to send and to store
+ * little presents in terms of a short text message or an image. The difference between
+ * these two messages is as the name suggests, that the text message contains a short 
+ * text and the image message an image. To archive the presents they can be moved to 
+ * an additional list. It is possible to get for one player all her/his text messages 
+ * or all messages with a little image that were created. Furthermore all new presents 
+ * of player can be requested as well as the accepted and archived presents. All denies
+ * presents were removed from the in-box.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -54,7 +58,7 @@ public abstract class Present {
 	/**
 	 * Gets the id of the created present.
 	 * 
-	 * @return id of the present as int
+	 * @return The id of the present as int.
 	 */
 	public int getId() {
 		return id;
@@ -64,7 +68,7 @@ public abstract class Present {
 	 * Sets the id of a present.
 	 * 
 	 * @param id
-	 *            of the present
+	 *         The id of the present.
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -73,26 +77,26 @@ public abstract class Present {
 	/**
 	 * The organisation the present belongs to.
 	 * 
-	 * @return a not nullable organisation
+	 * @return The organisation of the present as an object. This parameter must not be null. 
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
 	}
 
 	/**
-	 * An organisation to which this group belongs, may not be null.
+	 * Sets the organisation to which this group belongs to. 
 	 * 
 	 * @param belongsTo
-	 *            an organisation
+	 *            The present's organisation.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 
 	/**
-	 * Gets the sender who send the present to one or more other players.
+	 * Gets the sender who sent the present to one or more other players.
 	 * 
-	 * @return the sender of a present
+	 * @return The sender of a present.
 	 */
 	public Player getSender() {
 		return sender;
@@ -102,7 +106,7 @@ public abstract class Present {
 	 * Sets the sender of a present.
 	 * 
 	 * @param sender
-	 *            who send the present
+	 *           The player who sent the present.
 	 */
 	public void setSender(Player sender) {
 		this.sender = sender;
@@ -111,24 +115,30 @@ public abstract class Present {
 	/**
 	 * Gets all receivers of a specific present.
 	 * 
-	 * @return List of all players who should receive the present
+	 * @return The list of all players who should receive the present.
 	 */
 	public List<Player> getReceiver() {
 		return receiver;
 	}
 
 	/**
-	 * Sets all player who should receive the present.
+	 * Sets all players who should receive the present.
 	 * 
-	 * @param List
-	 *            of players who receive the present
+	 * @param receiver
+	 *            The list of players who receive the present.
 	 */
 	public void setReceiver(List<Player> receiver) {
 		this.receiver = receiver;
 	}
 
 	/**
-	 * Tests if a group belongs to a specific organisation.
+	 * This method checks if a present belongs to a specific organisation. Therefore
+	 * it is tested if the organisation's API key matchs the present's API key. 
+	 * 
+	 * @param organisation
+	 * 			The organisation object a present may belong to.
+	 * @return Boolean value if the API key of the present is the same 
+	 * 			of the tested organisation (true) or not (false).
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());

@@ -23,8 +23,8 @@ import javax.ws.rs.core.Response;
 /**
  * A Board serves a player to store presents in three lists: When a present is
  * sent to a player firstly it is added to the inBox-list. The player decides if
- * he accepts the present, then it is added to the list which holds the current
- * presents else if it is denied it is removed from the inbox. When the player
+ * she/he accepts the present. If the player does it is added to the list which holds
+ * the current presents else if it is denied it is removed from the inbox. When the player
  * wants to archive a present it is added to the archive list.
  */
 @Entity
@@ -68,11 +68,10 @@ public class Board {
 		inBox = new ArrayList<>();
 	}
 
-	// GETTER & SETTER
 	/**
 	 * Gets the id of a created board.
 	 * 
-	 * @return id of the board as an int
+	 * @return The id of the board as int.
 	 */
 	public int getId() {
 		return id;
@@ -82,6 +81,7 @@ public class Board {
 	 * Sets the id of a board.
 	 * 
 	 * @param id
+	 * 			The id of the board as int.
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -90,17 +90,17 @@ public class Board {
 	/**
 	 * The organisation the board belongs to.
 	 * 
-	 * @return a not nullable organisation
+	 * @return The organisation of the board as an object. This parameter is required.
 	 */
 	public Organisation getBelongsTo() {
 		return belongsTo;
 	}
 
 	/**
-	 * * An organisation to which this board belongs, may not be null.
+	 * Sets the organisation the board belongs to. This parameter field must not be null.
 	 * 
 	 * @param belongsTo
-	 *            an organisation
+	 *           The organisation of the board.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
@@ -118,60 +118,75 @@ public class Board {
 	 * Gets all current presents of a player. These are presents which were
 	 * accepted before.
 	 * 
-	 * @return List<Present>
+	 * @return All accepted presents as List<Present>. 
 	 */
 	public List<Present> getCurrentPresents() {
 		return currentPresents;
 	}
 
 	/**
-	 * Set a List of current presents of a player.
+	 * Sets a list of current presents of a player.
 	 * 
 	 * @param presents
+	 * 			The current presents a player has accepted.
 	 */
 	public void setCurrentPresents(List<Present> presents) {
 		this.currentPresents = presents;
 	}
 
+	/**
+	 * Gets the owner of the board, so the owner belongs to.
+	 * 
+	 * @return The player who is the owner of the board.
+	 */
 	public Player getOwner() {
 		return owner;
 	}
 
+	/**
+	 * Sets the passed player as the owner of the board.
+	 * 
+	 * @param owner
+	 * 			The new owner of the board.
+	 */
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
 
 	/**
-	 * Gets a List of all archived presents which belongs to one player.
+	 * Gets a list of all archived presents which belongs to one player.
 	 * 
-	 * @return List<PresentArchived>
+	 * @return All archives presents as List<PresentArchived>.
 	 */
 	public List<PresentArchived> getArchive() {
 		return archive;
 	}
 
 	/**
-	 * Sets a List of player's archived presents.
+	 * Sets a list of all player's archived presents.
 	 * 
 	 * @param history
+	 * 			Sets the list of archived presents.
 	 */
 	public void setArchive(List<PresentArchived> history) {
 		this.archive = history;
 	}
 
 	/**
-	 * Gets all Presents which were sent to a player.
+	 * Gets all presents which were sent to a player and which the player hasn't neither
+	 * accepted nor denied, yet.
 	 * 
-	 * @return List<Present>
+	 * @return All just sent presents as List<Present>.
 	 */
 	public List<Present> getInBox() {
 		return inBox;
 	}
 
 	/**
-	 * Sets list of Presents which are sent to a player's board.
+	 * Sets a list of presents which are sent to a player's board.
 	 * 
 	 * @param inBox
+	 * 			All just sent presents as the list named inBox.
 	 */
 	public void setInBox(List<Present> inBox) {
 		this.inBox = inBox;
@@ -181,9 +196,9 @@ public class Board {
 	 * If a player accepts a specific present of her/his in-Box it will be added to
 	 * the list of current presents.
 	 * 
-	 * @param the
-	 *            present which should be accepted
-	 * @return the accepted present
+	 * @param p
+	 * 			The present a player has accepted. 
+	 * @return The accepted present as object of Present.
 	 */
 	public Present accept(Present p) {
 		if (this.inBox.contains(p)) {
@@ -201,9 +216,9 @@ public class Board {
 	 * If a player denies a specific present of her/his in-Box it will be removed of
 	 * the list of the in-box.
 	 * 
-	 * @param the
-	 *            present which should be denied
-	 * @return the denied present
+	 * @param p
+	 * 			The present which the player has denied. 
+	 * @return The denied present as object of Present.
 	 */
 	public Present deny(Present p) {
 		if (this.inBox.contains(p)) {
@@ -216,11 +231,11 @@ public class Board {
 
 	/**
 	 * If a player archives a specific present of current ones it will be added
-	 * to the list of archived presents.
+	 * to her/his list of archived presents.
 	 * 
-	 * @param the
-	 *            present which should be archived
-	 * @return the archived present
+	 * @param p
+	 *         The present which the player wants to archive.
+	 * @return The archived present.
 	 */
 	public PresentArchived archive(PresentArchived p) {
 		if (this.currentPresents.contains(p)) {
@@ -235,24 +250,30 @@ public class Board {
 	/**
 	 * Returns the list of all presents which are archived.
 	 * 
-	 * @return List of archived presents
+	 * @return The list of archived presents.
 	 */
 	public List<PresentArchived> showArchive() {
 		return this.archive;
 	}
 
 	/**
-	 * Test if a board belongs to a specific organisation.
+	 * This method checks if a board belongs to a specific organisation. Therefore
+	 * it is tested if the organisation's API key matchs the board's API key. 
+	 *
+	 * @param organisation
+	 * 			The organisation object a board may belong to.
+	 * @return Boolean value if the API key of the board is the same 
+	 * 			of the tested organisation (true) or not (false).
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
 	/**
-	 * A sent present is added to the in-box of the board.
+	 * The sent present is added to the in-box of the board.
 	 * 
 	 * @param present
-	 *            which is sent
+	 *           The present that is just sent and added to the inBox of the board.
 	 */
 	public void add(Present present) {
 		getInBox().add(present);

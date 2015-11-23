@@ -41,7 +41,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API for present related services.
+ * Players in a gamification application can send little presents to each other, whereby 
+ * one or more players can be a recipient. These presents can be an image or a short text
+ * message which contains for example a little praise. A Board serves a player to send and 
+ * to store little presents in terms of a short text message or an image. The difference 
+ * between these two messages is as the name suggests, that the text message contains a 
+ * short text and the image message an image. To archive the presents they can be moved to
+ * an additional list. It is possible to get for one player all her/his text messages or all
+ * messages with a little image that were created. Furthermore all new presents of player 
+ * can be requested as well as the accepted and archived presents. All denies presents were
+ * removed from the in-box.
  */
 @Path("/present")
 @Stateless
@@ -60,18 +69,25 @@ public class PresentApi {
 	BoardDAO boardDao;
 
 	/**
-	 * Creates a new text message as a present in a gamificated app.
+	 * Creates a new text message as a present in a gamificated application, so the method 
+	 * generates the Present-id. The organisation's API key is mandatory otherwise a warning
+	 * with the hint for a non valid API key is returned. 
+	 * By the creation the player-id of the sender and a list of the receiver ids are needed to 
+	 * be passed. Additionally the content of the text message has to be passed. 
+	 * It is checked, if the ids of the players are positive numbers otherwise a message for the
+	 * invalid number is returned.
 	 * 
 	 * @param senderId
-	 *            required id of the sender of the present
+	 *            The player who sends the text message as a present to other players. This 
+	 *            field must not be null.
 	 * @param receiverIds
-	 *            required list of ids which represents the receivers of the
-	 *            present
+	 *            The player ids of the present's receivers. This field must not be null.
 	 * @param content
-	 *            required content of the text message
+	 *            The content of the text message.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link TextMessage} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this text message belongs to.
+	 * @return {@link Response} of {@link TextMessage} in JSON.
 	 */
 	@POST
 	@Path("/textMessage")
@@ -86,7 +102,8 @@ public class PresentApi {
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
 
 		List<Player> receivers = new ArrayList<>();
-		// TODO in Player verschieben
+		
+		// TODO move to Player
 		if (receiverIds.contains(",")) {
 			String[] receiverList = receiverIds.split(",");
 
@@ -116,18 +133,27 @@ public class PresentApi {
 	}
 
 	/**
-	 * Creates a new image message as a present in a gamificated app.
+	 * Creates a new image message as a present in a gamificated application, so the method 
+	 * generates the Present-id. The organisation's API key is mandatory otherwise a warning
+	 * with the hint for a non valid API key is returned. 
+	 * By the creation the player-id of the sender and a list of the receiver ids are needed to 
+	 * be passed. These id have to be separated by commas. Additionally the image path of the 
+	 * image has to be passed. The format of the image has to be .jpg or .png.
+	 * It is checked, if the ids of the players are positive numbers otherwise a message for the
+	 * invalid number is returned.
 	 * 
 	 * @param senderId
-	 *            required id of the sender of the present
+	 *            The player who sends the image message as a present to other players. This 
+	 *            field must not be null.
 	 * @param receiverIds
-	 *            required list of ids which represents the receivers of the
-	 *            present
+	 *            The player ids of the present's receivers. This field must not be null.
 	 * @param imagePath
-	 *            required path for the image present
+	 *             The path of the image. This field must not be null and the format of the image
+	 *             has to be .jpg or .png.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link ImageMessage} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this image message belongs to.
+	 * @return {@link Response} of {@link ImageMessage} in JSON.
 	 */
 	@POST
 	@Path("/imageMessage")
@@ -142,7 +168,7 @@ public class PresentApi {
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
 
 		List<Player> receivers = new ArrayList<>();
-		// TODO in Player verschieben
+		// TODO move to Player
 		if (receiverIds.contains(",")) {
 			String[] receiverList = receiverIds.split(",");
 
@@ -178,13 +204,16 @@ public class PresentApi {
 	}
 
 	/**
-	 * Deletes a specific present.
+	 * Removes the specific present with the assigned id from data base. It is checked, if the passed 
+	 * id is a positive number otherwise a message for an invalid number is returned. If the API key 
+	 * is not valid an analogous message is returned.
 	 * 
 	 * @param presentId
-	 *            required id for the present which should be deleted
+	 *            Required path parameter as integer which uniquely identify the {@link Present}.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Present} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -211,13 +240,17 @@ public class PresentApi {
 	}
 
 	/**
-	 * Returns all text messages among a specific player's current presents.
+	 * This method returns all text messages of a specific player's current presents and which are
+	 * associated with the given API key and so all text messages which belong to the associated
+	 * organisation. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param playerId
-	 *            required player id who is the owner of the board
+	 *            The id of the player who owns the board with the current presents. This field 
+	 *            must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<TextMessage>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the text messages belongs to.
+	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
 	 */
 	@GET
 	@Path("/boardMessages")
@@ -260,13 +293,17 @@ public class PresentApi {
 	}
 
 	/**
-	 * Returns all image messages among a specific player's current presents.
+	 * This method returns all image messages of a specific player's current presents and which are
+	 * associated with the given API key and so all text messages which belong to the associated
+	 * organisation. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param playerId
-	 *            required player id who is the owner of the board
+	 *            The id of the player who owns the board with the current presents. This field 
+	 *            must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<ImageMessage>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the image messages belongs to.
+	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
 	 */
 	@GET
 	@Path("/imageMessages")
@@ -304,13 +341,15 @@ public class PresentApi {
 	}
 
 	/**
-	 * Sends one present to all specified receivers.
+	 * With this method one present is sent to all specified receivers. So the presents is stored 
+	 * in the each inbox of the receivers.
 	 * 
 	 * @param presentId
-	 *            required id of the present to send
+	 *            The path parameter of the present's id that should be sent to the receivers. 
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Present} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
 	@Path("/send")
@@ -370,16 +409,17 @@ public class PresentApi {
 	}
 
 	/**
-	 * Player accepts a present, so that it will be moved from his inbox to the
-	 * current presents-list.
+	 * With this method a player accepts a present. So the present will be moved from her/his inbox 
+	 * to the list of the player's current presents.
 	 * 
 	 * @param presentId
-	 *            required id of the present which is accepted
+	 *            The present that is accepted. This field must not be null.
 	 * @param playerId
-	 *            required player id who accepts the present
+	 *            The id of the player who accepts the present. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Present} in JSON
+	 *             The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
 	@Path("/accept")
@@ -424,16 +464,17 @@ public class PresentApi {
 	}
 
 	/**
-	 * Player denies a present, so that it will be deleted from his inbox of the
-	 * board.
+	 * With this method a player denies a present. So the present will be deleted from her/his 
+	 * inbox of the board. 
 	 * 
 	 * @param presentId
-	 *            required present id which is denied
+	 *            The present that is denied. This field must not be null.
 	 * @param playerId
-	 *            required player id who denies the present
+	 *            The id of the player who denies the present. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Present} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
 	@Path("/deny")
@@ -471,16 +512,17 @@ public class PresentApi {
 	}
 
 	/**
-	 * Moves one present from the current present-List to an archive on the
-	 * board.
+	 * With this method on present is archived. So the present is moved from the player's list of 
+	 * current presents to an list of archived presents on the board.
 	 * 
 	 * @param presentId
-	 *            required id of the present which is archived
+	 *            The present that is archived. This field must not be null.
 	 * @param playerId
-	 *            required player id who archives the present
+	 *            The id of the player who archived the present. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link Present} in JSON
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
 	@Path("/archive")
@@ -524,13 +566,16 @@ public class PresentApi {
 	}
 
 	/**
-	 * Returns all presents from a player's inbox as a list of present-objects.
+	 * This method returns all presents of a player's inbox associated with the given API key and so 
+	 * all presents who belong to the associated organisation. If the API key is not valid an analogous
+	 * message is returned.
 	 * 
 	 * @param playerId
-	 *            required player id whose presents are returned
+	 *            The id of the player whose presents are returned. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<Present>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link List<Present>} in JSON.
 	 */
 	@GET
 	@Path("/inbox")
@@ -555,14 +600,16 @@ public class PresentApi {
 
 	/**
 	 * 
-	 * Returns all presents from player's current presents as list of
-	 * present-objects.
+	 * Returns all presents from player's current presents as list of present-objects.
+	 * These presents were accepted by the player so they were moved from the inbox to the 
+	 * list of current presents.
 	 * 
 	 * @param playerId
-	 *            required player id whose current presents are returned
+	 *            The id of the player whose current presents are returned. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<Present>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link List<Present>} in JSON.
 	 */
 	@GET
 	@Path("/current")
@@ -587,14 +634,15 @@ public class PresentApi {
 	}
 
 	/**
-	 * Returns all presents from player's archived list as list of
-	 * present-objects.
+	 * Returns all presents from player's list of archived presents as list of present-objects.
+	 * These presents are accepted presents which the player wanted to archive.
 	 * 
 	 * @param playerId
-	 *            required player id whose presents are returned
+	 *            The id of the player whose current presents are returned. This field must not be null.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link List<Present>} in JSON
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link List<Present>} in JSON.
 	 */
 	@GET
 	@Path("/archive")

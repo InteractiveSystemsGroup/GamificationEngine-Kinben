@@ -18,18 +18,18 @@ public class ImageMessage extends Present {
 	private byte[] imageIcon;
 
 	/**
-	 * Gets the image icon which is sent as a present to a player as a byte[].
+	 * Gets the image icon which is sent as a present to a player as byte[].
 	 * 
-	 * @return byte[] of the sent image
+	 * @return The byte[] of the sent image.
 	 */
 	public byte[] getImageIcon() {
 		return imageIcon;
 	}
 
 	/**
-	 * Sets the image icon which is sent as a present to a player as a byte[].
+	 * Sets the image icon which is sent as a present to a player as byte[].
 	 * 
-	 * @param byte[] of the imageIcon, which should be sent
+	 * @param The byte[] of the imageIcon, which should be sent.
 	 */
 	public void setImageIcon(byte[] imageIcon) {
 		this.imageIcon = imageIcon;
