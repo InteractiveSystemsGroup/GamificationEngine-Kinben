@@ -22,14 +22,14 @@ public class BoardDAO extends AbstractDAO<Board> {
 	private EntityManager em;
 
 	/**
-	 * Returns the Board of a specific player of the organisation which the api
+	 * Returns the Board of a specific player of the organisation which the API
 	 * key belongs to.
 	 * 
 	 * @param playerId
-	 *            the owner of the board.
+	 *            The player who owns the board.
 	 * @param apiKey
-	 *            credential which identifies the board in one organisation.
-	 * @return Board
+	 *            Credential which identifies the board in one organisation.
+	 * @return The board.object of a player.
 	 */
 	public Board getBoard(int playerId, String apiKey) {
 		Query query = em.createQuery("select entity from Board entity where entity.owner.id = :playerId and entity.belongsTo.apiKey = :apiKey",
@@ -46,13 +46,13 @@ public class BoardDAO extends AbstractDAO<Board> {
 
 	/**
 	 * Returns the Boards of all players who are supposed to receive a present
-	 * as a list. The api key is needed to identify their boards.
+	 * as a list. The API key is needed to identify their boards.
 	 * 
 	 * @param receivers
-	 *            the owners of the boards.
+	 *            The owners of the boards who sould reveice a present.
 	 * @param apiKey
-	 *            credential which identifies the board in one organisation.
-	 * @return List<Board>
+	 *            Credential which identifies the board in one organisation.
+	 * @return A List<Board> that represent all boards of the players who get a present.
 	 */
 	public List<Board> getBoards(List<Player> receivers, String apiKey) {
 		Query query = em.createQuery("select entity from Board entity where entity.owner in (:owners) and entity.belongsTo.apiKey = :apiKey",

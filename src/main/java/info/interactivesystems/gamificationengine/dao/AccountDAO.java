@@ -20,24 +20,25 @@ public class AccountDAO extends AbstractDAO<Account> {
 	private EntityManager em;
 
 	/**
-	 * Find an account by email.
+	 * This method finds an account by email.
 	 * 
 	 * @param email
-	 *            an valid email adress
-	 * @return an Account or null if not found
+	 *            The valid email address that is unique.
+	 * @return The Account that is associated with the email address
+	 * 		   or null if not found.
 	 */
 	public Account getAccount(String email) {
 		return em.find(Account.class, email);
 	}
 
 	/**
-	 * Check if email and password match
+	 * Checks if email and password match.
 	 * 
 	 * @param email
-	 *            email of an account
+	 *            The email address of an account.
 	 * @param password
-	 *            password of an account
-	 * @return true if email and password match, false if not
+	 *            The password of an account.
+	 * @return Boolean value that is true if email and password match and false if not.
 	 */
 	public boolean checkCredentials(String email, String password) {
 		try {

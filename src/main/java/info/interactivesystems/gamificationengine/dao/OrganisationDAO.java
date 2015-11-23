@@ -22,33 +22,33 @@ public class OrganisationDAO {
 	private EntityManager em;
 
 	/**
-	 * Store a new organisation in the database.
+	 * Stores a new organisation in the data base.
 	 * 
 	 * @param organisation
-	 *            the {@link Organisation} that should be stored in the database
-	 * @return the id of the created database entry
+	 *            The {@link Organisation} that should be stored in the data base.
+	 * @return The id of the created data base entry.
 	 */
 	public void insertOrganisation(Organisation organisation) {
 		em.persist(organisation);
 	}
 
 	/**
-	 * Get the organisation from the database.
+	 * Gets the organisation from the data base.
 	 * 
 	 * @param id
-	 *            the requested id
-	 * @return {@link Organisation}
+	 *           The id of the requsted organisaiton.
+	 * @return The {@link Organisation} that is associated with the passed id.
 	 */
 	public Organisation getOrganisation(int id) {
 		return em.find(Organisation.class, id);
 	}
 
 	/**
-	 * Get all Organisations which belong to an email address
+	 * Gets all organisations which belong to an email address.
 	 * 
 	 * @param email
-	 *            the requested email address
-	 * @return {@link List<Organisation>}
+	 *            The email address of the requested organisaiton.
+	 * @return The {@link List<Organisation>} that are associated with the email addess.
 	 */
 	public List<Organisation> getAllOrganisations(String email) {
 		Query query = em.createQuery("select entity from Organisation entity join entity.managers m  where m.email=:email");
@@ -64,10 +64,10 @@ public class OrganisationDAO {
 	}
 
 	/**
-	 * Get all Organisations which belong to an api key
+	 * Gets all organisations which are associated with the specific API key.
 	 * 
 	 * @param apiKey
-	 *            the requested api key
+	 *           The API key to which the organisation belongs to.
 	 * @return {@link List<Organisation>}
 	 */
 	public Organisation getOrganisationByApiKey(String apiKey) {
@@ -84,11 +84,12 @@ public class OrganisationDAO {
 	}
 
 	/**
-	 * Checks whether the data base contains given api key.
+	 * Checks whether the data base contains the passed API key.
 	 * 
 	 * @param apiKey
-	 *            a {@link CharSequence} or a null
-	 * @return true if apiKey exists in data base, false else or null.
+	 *           The API key that is tested. This is represented by a {@link CharSequence} 
+	 *           or null.
+	 * @return True if the API key exists in data base, if null false is returned.
 	 */
 	public boolean checkApiKey(CharSequence apiKey) {
 		if (apiKey != null) {

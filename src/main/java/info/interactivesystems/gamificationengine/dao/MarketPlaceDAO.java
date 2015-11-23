@@ -21,11 +21,11 @@ public class MarketPlaceDAO {
 	private EntityManager em;
 
 	/**
-	 * Store a new market place in the database.
+	 * Stores a new marketplace in the data base.
 	 * 
 	 * @param market
-	 *            the {@link MarketPlace} that should be stored in the database
-	 * @return the id of the created database entry
+	 *            The {@link MarketPlace} that should be stored in the data base.
+	 * @return The id of the created data base entry.
 	 */
 	public int insertMarketPlace(MarketPlace market) {
 		em.persist(market);
@@ -34,11 +34,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Store a new offer in the database.
+	 * Stores a new offer in the data base.
 	 * 
 	 * @param market
-	 *            the {@link Offer} that should be stored in the database
-	 * @return the id of the created database entry
+	 *            The {@link Offer} that should be stored in the data base.
+	 * @return The id of the created data base entry.
 	 */
 	public int insertOffer(Offer offer) {
 		em.persist(offer);
@@ -47,11 +47,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Store a new bid in the database.
+	 * Stores a new bid in the data base.
 	 * 
 	 * @param market
-	 *            the {@link Bid} that should be stored in the database
-	 * @return the id of the created database entry
+	 *            The {@link Bid} that should be stored in the data base.
+	 * @return The id of the created data base entry.
 	 */
 	public int insertBid(Bid bid) {
 		em.persist(bid);
@@ -59,21 +59,15 @@ public class MarketPlaceDAO {
 		return bid.getId();
 	}
 
-	// public int insertBd(Offer offer, Bid bid) {
-	// em.persist(offer);
-	// em.persist(bid);
-	// em.flush();
-	// return bid.getId();
-	// }
 
 	/**
-	 * Get a list of bids for a specific player and offer
+	 * Gets a list of bids for a specific player and offer
 	 * 
 	 * @param player
-	 *            the player of the bids
+	 *            The player who has made the bids on the offer.
 	 * @param offer
-	 *            the offer of the bids
-	 * @return {@link List<Bid>}
+	 *            The offer that is associated with the bids.
+	 * @return {@link List<Bid>} 
 	 */
 	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
 		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
@@ -85,10 +79,10 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Get a list of bids for a specific offer
+	 * Gets a list of bids for a specific offer.
 	 * 
 	 * @param offer
-	 *            the requested offer
+	 *            The offer whose bids are requested.
 	 * @return {@link List<Bid>}
 	 */
 	public List<Bid> getBidsForOffer(Offer offer) {
@@ -101,11 +95,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Get a list of all offers of a specifice player
+	 * Gets a list of all offers which were created by a specific player.
 	 * 
 	 * @param player
-	 *            the requested player
-	 * @return {@link List<Offer>}
+	 *            The player who has created offers. 
+	 * @return A {@link List<Offer>} with all offers a player has created.
 	 */
 	public List<Offer> getOffersByPlayer(Player player) {
 		Query query = em.createQuery("select o from Offer o where o.player=:player");
@@ -114,11 +108,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Get the offer from the database
+	 * Gets a specific offer from the data base by its id.
 	 * 
 	 * @param offerId
-	 *            the requested id
-	 * @return {@link Offer}
+	 *            The id of the requested offer.
+	 * @return The {@link Offer} that is associated with the passed id.
 	 */
 	public Offer getOffer(int offerId) {
 		Offer offer = em.find(Offer.class, offerId);
@@ -126,11 +120,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Get the market place from the database
+	 * Gets a specific marketplace from the data base that is associated with the id.
 	 * 
 	 * @param marketId
-	 *            the requested id
-	 * @return {@link MarketPlace}
+	 *            The id of the requested marketplace.
+	 * @return The {@link MarketPlace} that is associated with the passed id.
 	 */
 	public MarketPlace getMarketPl(int marketId) {
 		MarketPlace marketPl = em.find(MarketPlace.class, marketId);
@@ -138,11 +132,12 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Get a list of all market places
+	 * Gets a list of all marketplaces which are associated with the passed API key.
 	 * 
 	 * @param apiKey
-	 *            the apiKey of the organisation
-	 * @return {@link List<MarketPlace>}
+	 *            The API key of the organisation to which the marketplaces belong to.
+	 * @return The {@link List<MarketPlace>} with all marketplaces that belong to the
+	 * 			passed API key.
 	 */
 	public List<MarketPlace> getAllMarketPlaceForApiKey(String apiKey) {
 		Query query = em.createQuery("select m from MarketPlace m where m.belongsTo.apiKey=:apiKey", MarketPlace.class);
@@ -152,11 +147,11 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Delete a market place from the database
+	 * Removes a marketplace from the data base.
 	 * 
 	 * @param id
-	 *            the id of the market place
-	 * @return {@link MarketPlace}
+	 *          The id of the marketplace that should be removed.
+	 * @return The {@link MarketPlace} that is removed from the database.
 	 */
 	public MarketPlace deleteMarketPlace(int id) {
 		// TODO with organisation-check
@@ -166,10 +161,10 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Delete an offer from the database
+	 * Deletes an offer from the data base.
 	 * 
 	 * @param id
-	 *            the id of the offer
+	 *           The id of the offer that should be removed from the data base.
 	 * @return {@link Offer}
 	 */
 	public Offer deleteOffer(int offerId) {

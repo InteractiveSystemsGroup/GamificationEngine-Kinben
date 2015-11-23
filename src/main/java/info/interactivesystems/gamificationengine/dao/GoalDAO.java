@@ -20,11 +20,11 @@ public class GoalDAO {
 	private EntityManager em;
 
 	/**
-	 * Store a new goal in the database.
+	 * Stores a new goal in the data base.
 	 * 
 	 * @param goal
-	 *            the goal which should be stored in the database
-	 * @return the id of the {@link Goal}
+	 *            The goal which should be stored in the data base.
+	 * @return The id of the {@link Goal}.
 	 */
 	public int insertGoal(Goal goal) {
 		em.persist(goal);
@@ -33,11 +33,11 @@ public class GoalDAO {
 	}
 
 	/**
-	 * Store a new finished goal in the database.
+	 * Stores a new finished goal in the data base.
 	 * 
 	 * @param goal
-	 *            the finished goal which should be stored in the database
-	 * @return the id of the {@link FinishedGoal}
+	 *            The finished goal which should be stored in the data base.
+	 * @return The id of the {@link FinishedGoal}.
 	 */
 	public int insertFinishedGoal(FinishedGoal goal) {
 		em.persist(goal);
@@ -46,24 +46,26 @@ public class GoalDAO {
 	}
 
 	/**
-	 * Get an goal from the database.
+	 * Gets an goal from the data base.
 	 * 
 	 * @param goalId
-	 *            the id of the goal
-	 * @return {@link Goal} or null
+	 *            The id of the goal.
+	 * @return The {@link Goal} object or null if it wasn't found.
 	 */
 	public Goal getGoal(int goalId) {
 		return em.find(Goal.class, goalId);
 	}
 
 	/**
-	 * Find a Goal by id and check if it belongs to the organisation.
+	 * This method finds a goal by its id and and returns it. The method also 
+	 * checks if it belongs to the passed organisation.
 	 * 
 	 * @param goalId
-	 *            the id of the goal
+	 *            The id of the goal.
 	 * @param organisation
-	 *            the organisation of the goal
-	 * @return {@link Goal} or null
+	 *            The organisation of the goal.
+	 * @return The {@link Goal} or null if the goal dosen't belong to the passed
+	 *        organisation.
 	 */
 	public Goal getGoalByIdAndOrganisation(int goalId, Organisation organisation) {
 		Goal goal = em.find(Goal.class, goalId);
@@ -79,12 +81,12 @@ public class GoalDAO {
 	}
 
 	/**
-	 * delete a goal by id and check if it belongs to the organisation.
+	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
 	 * 
 	 * @param goalId
-	 *            the id of the goal
+	 *            The id of the requested goal.
 	 * @param organisation
-	 *            the organisation of the goal
+	 *            The organisation the goal belongs to.
 	 * @return {@link Goal}
 	 */
 	public Goal deleteGoalByIdAndOrganisation(int id, Organisation organisation) {
@@ -94,11 +96,11 @@ public class GoalDAO {
 	}
 
 	/**
-	 * Get all goals which belong to a rule.
+	 * Gets all goals which are associated to a specific rule.
 	 * 
 	 * @param rule
-	 *            the rule
-	 * @return {@link List<Goal>}
+	 *           The rule to which the goals are associated. 
+	 * @return {@link List<Goal>} of all goals which are associacted to the specific rule.
 	 */
 	public List<Goal> getGoalsByRule(GoalRule rule) {
 
@@ -109,11 +111,12 @@ public class GoalDAO {
 	}
 
 	/**
-	 * Get all goals which belong to an apiKey
+	 * Gets all goals which belong to the specific passed API key.
 	 * 
 	 * @param apiKey
-	 *            the api key
-	 * @return {@link List<Goal>}
+	 *            The API key affiliated to one specific organisation, to which 
+	 *            the goals belongs to.
+	 * @return {@link List<Goal>} of all goals which are associacted to the specific API key.
 	 */
 	public List<Goal> getGoals(String apiKey) {
 		Query query = em.createQuery("select g from Goal g join g.belongsTo a where a.apiKey=:apiKey");

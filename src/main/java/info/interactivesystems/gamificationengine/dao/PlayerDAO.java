@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Data-access for user organisations. All dependent objects (i.e. userbadges)
+ * Data-access for user of an organisation. All dependent objects (i.e. badges of a user)
  * are implicitly loaded.
  *
  */
@@ -23,20 +23,20 @@ public class PlayerDAO {
 	private EntityManager em;
 
 	/**
-	 * Store a new player in the database.
+	 * Stores a new player in the data base.
 	 * 
 	 * @param player
-	 *            the player which should be stored in the database
+	 *            The player who should be stored in the data base.
 	 */
 	public void insert(Player player) {
 		em.persist(player);
 	}
 
 	/**
-	 * Store a list of new players in the database.
+	 * Stores a list of new players in the data base.
 	 * 
 	 * @param playerList
-	 *            the player list which should be stored in the database
+	 *            The list of players who should be stored in the data base.
 	 */
 	public void insert(List<Player> playerList) {
 		for (Player player : playerList) {
@@ -45,13 +45,13 @@ public class PlayerDAO {
 	}
 
 	/**
-	 * Get a player by id and api key.
+	 * Gets a player by her/his id and API key.
 	 * 
 	 * @param id
-	 *            the requested id
+	 *          The id of the requested player.
 	 * @param apiKey
-	 *            a valid api key
-	 * @return {@link Player}
+	 *            The API key of the organisation to which the player belongs to.
+	 * @return The {@link Player} that is associated with the passed id and APi key.
 	 */
 	public Player getPlayer(int id, String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id = :id", Player.class);
@@ -63,13 +63,13 @@ public class PlayerDAO {
 	}
 
 	/**
-	 * Get a list of players by ids and api key.
+	 * Gets a list of players by their ids and the API key.
 	 * 
 	 * @param receiverIds
-	 *            a list of requested ids
+	 *           A list of ids which represent the requested players.
 	 * @param apiKey
-	 *            a valid api key
-	 * @return {@link List<Player>}
+	 *           The API key of the organisation to which the players belong to. 
+	 * @return The {@link List<Player>} who are associated with the passed ids and APi key.
 	 */
 	public List<Player> getPlayers(List<Integer> receiverIds, String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id in (:receiverIds)", Player.class);
@@ -80,13 +80,13 @@ public class PlayerDAO {
 	}
 
 	/**
-	 * Delete a player from database.
+	 * Removes a player from the data base.
 	 * 
 	 * @param id
-	 *            of the player which should be deleted
+	 *           The id of the player who should be deleted.
 	 * @param apiKey
-	 *            a valid api key
-	 * @return {@link Player}
+	 *           The API key of the organisation to which the player belongs to. 
+	 * @return The {@link Player} that is associated with the passed id and APi key.
 	 */
 	public Player deletePlayer(int id, String apiKey) {
 		Player player = getPlayer(id, apiKey);
@@ -99,11 +99,11 @@ public class PlayerDAO {
 	}
 
 	/**
-	 * Get a list of all player which belong to an api key
+	 * Gets a list of all players who are associated with the passed API key.
 	 * 
 	 * @param apiKey
-	 *            the requested api key
-	 * @return {@link List<Player>}
+	 *           The API key of the organisation to which the players belong to. 
+	 * @return A {@link List<Player>} who are associated with the passed API key.
 	 */
 	public List<Player> getPlayers(String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey", Player.class);

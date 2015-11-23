@@ -12,7 +12,7 @@ public class AbstractDAO<T> {
 	 * Persist an entity.
 	 * 
 	 * @param entity
-	 *            required entity that should be stored in database
+	 *            Entity that should be stored in database. This field  must not be null.
 	 */
 	public void persist(T entity) {
 		em.persist(entity);
@@ -20,10 +20,10 @@ public class AbstractDAO<T> {
 	}
 
 	/**
-	 * Removes an entity from the database.
+	 * Removes an entity from the data base.
 	 * 
 	 * @param entity
-	 *            required entity that sould be deleted
+	 *            The entity that should be deleted. This field  must not be null.
 	 */
 	public void remove(T entity) {
 		em.remove(entity);

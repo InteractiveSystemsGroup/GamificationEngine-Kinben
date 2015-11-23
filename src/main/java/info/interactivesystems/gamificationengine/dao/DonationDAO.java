@@ -21,11 +21,11 @@ public class DonationDAO {
 	private EntityManager em;
 
 	/**
-	 * Store a new donation call in the database.
+	 * Stores a new call for donations in the database.
 	 * 
 	 * @param dCall
-	 *            the {@link DonationCall} that should be stored in the database
-	 * @return the id of the created database entry
+	 *            The new {@link DonationCall} that should be stored in the data base.
+	 * @return The id of the created data base entry.
 	 */
 	public int insertDonationCall(DonationCall dCall) {
 		em.persist(dCall);
@@ -34,22 +34,23 @@ public class DonationDAO {
 	}
 
 	/**
-	 * Get a donation call from the database.
+	 * Gets a call for donations from the data base.
 	 * 
 	 * @param donationCallId
-	 *            the id of the donation call
-	 * @return the found {@link DonationCall} or null
+	 *            The id of the call for donations.
+	 * @return The found {@link DonationCall} or null.
 	 */
 	public DonationCall getDonationCall(int donationCallId) {
 		return em.find(DonationCall.class, donationCallId);
 	}
 
 	/**
-	 * Get a list of all donation calls
+	 * Gets a list of all calls for donation in the data base.
 	 * 
 	 * @param apiKey
-	 *            the api key of the organisation
-	 * @return {@link List<DonationCall>}
+	 *            The API key affiliated to one specific organisation, to which
+	 *            the call for donations belongs to.
+	 * @return {@link List<DonationCall>}.
 	 */
 	public List<DonationCall> getDonationCalls(String apiKey) {
 		Query query = em.createQuery("select dc from DonationCall dc where dc.belongsTo.apiKey=:apiKey");
@@ -58,13 +59,14 @@ public class DonationDAO {
 	}
 
 	/**
-	 * Delete a donation call from the database
+	 * Removes a call for donations from the data base.
 	 * 
 	 * @param apikey
-	 *            the api key of the organisation
+	 *            The API key affiliated to one specific organisation, to which
+	 *            the call for donations belongs to.
 	 * @param dCId
-	 *            the id of the donation call
-	 * @return {@link DonationCall}
+	 *            The id of the call for daonations.
+	 * @return {@link DonationCall}.
 	 */
 	public DonationCall deleteDonationCall(String apikey, int dCId) {
 		DonationCall donationCall = getDonationCall(dCId);
