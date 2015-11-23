@@ -145,7 +145,7 @@ public class PlayerGroupApi {
 
 	/**
 	 * With this method the fields of a PlayerGroup can be changed. For this the id of the 
-	 * group, the API key of the specific organisaiton, the name of the field and the new 
+	 * group, the API key of the specific organisation, the name of the field and the new 
 	 * value are needed.
 	 * To modify the name the new String has to be passed with the attribute field. For a
 	 * new logo the path of new image is needed in the attribute parameter. The format of 

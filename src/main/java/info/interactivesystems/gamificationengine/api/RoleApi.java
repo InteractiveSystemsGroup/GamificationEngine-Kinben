@@ -120,7 +120,7 @@ public class RoleApi {
 
 	/**
 	 * With this method the name field of one role can be changed. For this the id of the role, the API key of the
-	 * specific organisaiton, the name of the field and the new value are needed.
+	 * specific organisation, the name of the field and the new value are needed.
 	 * If the API key is not valid an analogous message is returned. 
 	 * 
 	 * 

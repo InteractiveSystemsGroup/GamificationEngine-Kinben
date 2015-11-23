@@ -192,7 +192,7 @@ public class PlayerApi {
 
 	/**
 	 * With this method the fields of one specific player can be changed. For 
-	 * this the player id, the API key of the specific organisaiton, the 
+	 * this the player id, the API key of the specific organisation, the 
 	 * name of the field and the new field's value are needed. 
 	 * To modify the password, the reference and the nickname the new string has 
 	 * to be transfered with the attribute field. For a new avatar the path of

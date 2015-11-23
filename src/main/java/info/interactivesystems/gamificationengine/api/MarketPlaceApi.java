@@ -644,7 +644,7 @@ public class MarketPlaceApi {
 
 	/**
 	 * With this method the fields of an Offer can be changed. For this the id of the offer, the API key of 
-	 * the specific organisaiton, the name of the field and the new value are needed.
+	 * the specific organisation, the name of the field and the new value are needed.
 	 * 
 	 * To modify the name the new String has to be passed with the attribute field. A new date and time as 
 	 * LocalDateTime for the deadline or enddate can also be passed. The format of this value is 

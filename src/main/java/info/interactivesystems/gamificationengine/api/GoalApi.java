@@ -209,7 +209,7 @@ public class GoalApi {
 
 	/**
 	 * With this method the fields of one specific goal can be changed. For this the goal id, the API key of 
-	 * the specific organisaiton, the name of the field and the new field's value are needed. 
+	 * the specific organisation, the name of the field and the new field's value are needed. 
 	 * To modify the name of the goal the new string has to be transfered with the attribute field. 
 	 * A list with role-ids separated by commas can be passed to define new roles which a player has to be allowed
 	 * to complete the goal. By passing an id of another rule a new goal rule is associated with the goal.  

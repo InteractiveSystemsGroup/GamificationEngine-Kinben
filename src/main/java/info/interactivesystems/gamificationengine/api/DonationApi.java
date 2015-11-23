@@ -9,7 +9,6 @@ import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.entities.DonationCall;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

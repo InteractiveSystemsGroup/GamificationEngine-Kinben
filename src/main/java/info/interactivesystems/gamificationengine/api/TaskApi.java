@@ -12,7 +12,6 @@ import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
@@ -267,7 +266,7 @@ public class TaskApi {
 
 	/**
 	 * With this method the fields of a Task can be changed. For this the id of the 
-	 * task, the API key of the specific organisaiton, the name of the field and the new 
+	 * task, the API key of the specific organisation, the name of the field and the new 
 	 * value are needed.
 	 * To modify the name or the description the new String has to be passed with the 
 	 * attribute field. A new list of roles can be passed when their ids are separated by 

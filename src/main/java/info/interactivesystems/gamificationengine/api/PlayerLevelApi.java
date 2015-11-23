@@ -98,7 +98,7 @@ public class PlayerLevelApi {
 
 	/**
 	 * With this method the fields of a PlayerLevel can be changed. For this the id of the player level, 
-	 * the API key of the specific organisaiton, the name of the field and the new value are needed.
+	 * the API key of the specific organisation, the name of the field and the new value are needed.
 	 * To modify the name or the index of the level the new value has to be passed with the value field. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if 
 	 * the ids are a positive number otherwise a message for an invalid number is returned.

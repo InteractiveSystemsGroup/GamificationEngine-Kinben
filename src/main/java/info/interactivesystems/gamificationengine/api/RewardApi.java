@@ -476,7 +476,7 @@ public class RewardApi {
 
 	/**
 	 * With this method the fields of one specific achievement can be changed. For this the 
-	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * reward id, the API key of the specific organisation, the name of the field and the 
 	 * new field's value are needed.  
 	 * To modify the name and description the new string has to be transfered with the attribute 
 	 * field. For a new icon the path of the new image is needed in the attribute parameter. 
@@ -538,7 +538,7 @@ public class RewardApi {
 	
 	/**
 	 * With this method the fields of one specific badge can be changed. For this the 
-	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * reward id, the API key of the specific organisation, the name of the field and the 
 	 * new field's value are needed.  
 	 * To modify the name and description the new string has to be transfered with the attribute 
 	 * field. For a new icon the path of the new image is needed in the attribute parameter. 
@@ -597,7 +597,7 @@ public class RewardApi {
 
 	/**
 	 * With this method the fields of one specific point reward can be changed. For this the 
-	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * reward id, the API key of the specific organisation, the name of the field and the 
 	 * new field's value are needed.  
 	 * To modify the amount of points the new amount has to be transfered with the attribute
 	 * field. 
@@ -648,7 +648,7 @@ public class RewardApi {
 
 	/**
 	 * With this method the fields of one specific level reward can be changed. For this the 
-	 * reward id, the API key of the specific organisaiton, the name of the field and the 
+	 * reward id, the API key of the specific organisation, the name of the field and the 
 	 * new field's value are needed.  
 	 * To modify the name and amount of the level the new name respectively amount has to be 
 	 * transfered with the attribute field. 

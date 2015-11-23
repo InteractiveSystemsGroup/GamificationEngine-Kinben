@@ -302,7 +302,7 @@ public class RuleApi {
 
 	/**
 	 * With this method the fields of one specific goal rule can be changed. For this the 
-	 * goal rule id, the API key of the specific organisaiton, the name of the field and 
+	 * goal rule id, the API key of the specific organisation, the name of the field and 
 	 * the new field's value are needed. 
 	 * To modify the name or description of the goal rule the new string has to be passed 
 	 * with the attribute field. If the 
