@@ -25,13 +25,13 @@ public class QrApi {
 	private static final Logger log = LoggerFactory.getLogger(QrApi.class);
 
 	/**
-	 * Creates a QR code from any content
+	 * Creates a QR code from any content.
 	 * 
 	 * @param content
-	 *            required content that should be presented as a QR code.
-	 * @return QrCode as download
+	 *            The content that should be presented as a QR code. This field must 
+	 *            not be null.
+	 * @return QrCode as download.
 	 */
-
 	@GET
 	@Path("/{content}")
 	public Response getQrCode(@PathParam("content") String content) {

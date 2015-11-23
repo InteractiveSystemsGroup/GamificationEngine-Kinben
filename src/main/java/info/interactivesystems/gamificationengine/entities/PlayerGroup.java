@@ -207,7 +207,7 @@ public class PlayerGroup {
 	 * it is tested if the organisation's API key matchs the group's API key. 
 	 * 
 	 * @param organisation
-	 * 			The organisation object a group may belongs to.
+	 * 			The organisation object a group may belong to.
 	 * @return Boolean value if the API key of the group is the same 
 	 * 			of the tested organisation (true) or not (false).
 	 */

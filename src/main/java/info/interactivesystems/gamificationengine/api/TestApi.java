@@ -52,7 +52,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * API class for application information
+ * API class for application information. This class is used while developing to 
+ * generate test data.
  */
 @Path("/")
 @Stateless
