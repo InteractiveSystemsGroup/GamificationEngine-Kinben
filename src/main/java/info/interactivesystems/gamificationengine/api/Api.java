@@ -40,9 +40,9 @@ public class Api {
 	}
 
 	/**
-	 * Responses a state of current status.
+	 * Responses a state of current status. 
 	 * 
-	 * @return Response as JSON
+	 * @return Response as JSON with for example the current date and time.
 	 */
 	@GET
 	public Response status() {
