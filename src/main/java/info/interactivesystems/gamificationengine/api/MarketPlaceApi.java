@@ -360,7 +360,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOffers")
@@ -398,7 +398,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOfferRole")
@@ -438,7 +438,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getNewestOffer")
@@ -481,7 +481,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getHighestO")
@@ -520,7 +520,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
-	 * @return {@link Response} of {@link List<Bid>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Bid}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/bids")

@@ -69,7 +69,7 @@ public class PlayerDAO {
 	 *           A list of ids which represent the requested players.
 	 * @param apiKey
 	 *           The API key of the organisation to which the players belong to. 
-	 * @return The {@link List<Player>} who are associated with the passed ids and APi key.
+	 * @return The {@link List} of {@link Player}s who are associated with the passed ids and API key.
 	 */
 	public List<Player> getPlayers(List<Integer> receiverIds, String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id in (:receiverIds)", Player.class);
@@ -103,7 +103,7 @@ public class PlayerDAO {
 	 * 
 	 * @param apiKey
 	 *           The API key of the organisation to which the players belong to. 
-	 * @return A {@link List<Player>} who are associated with the passed API key.
+	 * @return A {@link List} of {@link Player}s who are associated with the passed API key.
 	 */
 	public List<Player> getPlayers(String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey", Player.class);

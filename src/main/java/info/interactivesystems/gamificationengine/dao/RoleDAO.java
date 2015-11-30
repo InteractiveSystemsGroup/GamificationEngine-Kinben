@@ -46,7 +46,7 @@ public class RoleDAO {
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the roles belong to. 
-	 * @return A {@link List<Roles>} with all roles which are associated with the passed 
+	 * @return A {@link List} of {@link Role}s which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Role> getRoles(String apiKey) {
@@ -100,7 +100,7 @@ public class RoleDAO {
 	 *			 A comma separated list of role ids.
 	 * @param apiKey
 	 * 			The API key of the organisation to which the roles belong to. 
-	 * @return A {@link List<Role>} with all roles which are associated with the passed 
+	 * @return A {@link List} of {@link Role}s which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Role> getRoles(List<Integer> ids, String apiKey) {

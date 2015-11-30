@@ -85,7 +85,7 @@ public class RoleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to. This field must not be null.
-	 * @return {@link Response} of {@link List<Role>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Role}s in JSON.
 	 */
 	@GET
 	@Path("/*")

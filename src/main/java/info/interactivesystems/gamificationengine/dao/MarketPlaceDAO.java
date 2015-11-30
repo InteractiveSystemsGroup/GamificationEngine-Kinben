@@ -36,7 +36,7 @@ public class MarketPlaceDAO {
 	/**
 	 * Stores a new offer in the data base.
 	 * 
-	 * @param market
+	 * @param offer
 	 *            The {@link Offer} that should be stored in the data base.
 	 * @return The id of the created data base entry.
 	 */
@@ -49,7 +49,7 @@ public class MarketPlaceDAO {
 	/**
 	 * Stores a new bid in the data base.
 	 * 
-	 * @param market
+	 * @param bid
 	 *            The {@link Bid} that should be stored in the data base.
 	 * @return The id of the created data base entry.
 	 */
@@ -61,13 +61,13 @@ public class MarketPlaceDAO {
 
 
 	/**
-	 * Gets a list of bids for a specific player and offer
+	 * Gets a list of bids for a specific player and offer.
 	 * 
 	 * @param player
 	 *            The player who has made the bids on the offer.
 	 * @param offer
 	 *            The offer that is associated with the bids.
-	 * @return {@link List<Bid>} 
+	 * @return A {@link List} of all {@link Bid}s that are associated to a specific player and offer. 
 	 */
 	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
 		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
@@ -83,7 +83,7 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param offer
 	 *            The offer whose bids are requested.
-	 * @return {@link List<Bid>}
+	 * @return A {@link List} of {@link Bid}s. that are associated to a specific offer.
 	 */
 	public List<Bid> getBidsForOffer(Offer offer) {
 		Query query = em.createQuery("select b from Bid b where b.offer=:offer");
@@ -99,7 +99,7 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param player
 	 *            The player who has created offers. 
-	 * @return A {@link List<Offer>} with all offers a player has created.
+	 * @return A {@link List} of {@link Offer}s with all offers a player has created.
 	 */
 	public List<Offer> getOffersByPlayer(Player player) {
 		Query query = em.createQuery("select o from Offer o where o.player=:player");
@@ -136,7 +136,7 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param apiKey
 	 *            The API key of the organisation to which the marketplaces belong to.
-	 * @return The {@link List<MarketPlace>} with all marketplaces that belong to the
+	 * @return The {@link List} of {@link MarketPlace} with all marketplaces that belong to the
 	 * 			passed API key.
 	 */
 	public List<MarketPlace> getAllMarketPlaceForApiKey(String apiKey) {
@@ -163,7 +163,7 @@ public class MarketPlaceDAO {
 	/**
 	 * Deletes an offer from the data base.
 	 * 
-	 * @param id
+	 * @param offerId
 	 *           The id of the offer that should be removed from the data base.
 	 * @return {@link Offer}
 	 */

@@ -12,7 +12,7 @@ public class StringUtils {
 
 	/**
 	 * Converts a string of digits to list of integers.
-	 * <p/>
+	 * <p></p>
 	 * Splits a comma separated list by a comma and trims each string. Collects to
 	 * a list of Integers.
 	 * 

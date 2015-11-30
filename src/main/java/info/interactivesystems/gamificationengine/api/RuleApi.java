@@ -242,7 +242,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} of {@link List<GoalRule>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link GoalRule}s in JSON.
 	 */
 	@GET
 	@Path("/*")

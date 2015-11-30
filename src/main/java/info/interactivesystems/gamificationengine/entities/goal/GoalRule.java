@@ -161,8 +161,8 @@ public class GoalRule {
 	 * @param finishedPlayerTasks
 	 * 			The list of already finished tasks a player has already completed.
 	 * @param lastDate
-	 * 			The last date a player has done a task.
-	 * @return 
+	 * 			The date a player has done a task. All dates after the passed date are checked.
+	 * @return The boolean value if a rule is fulfilled (true) or not(false).
 	 */
 	public boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate) {
 		return expressionTree.evaluate();

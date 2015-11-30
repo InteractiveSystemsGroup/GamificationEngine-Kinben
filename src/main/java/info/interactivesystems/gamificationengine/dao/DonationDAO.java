@@ -50,7 +50,7 @@ public class DonationDAO {
 	 * @param apiKey
 	 *            The API key affiliated to one specific organisation, to which
 	 *            the call for donations belongs to.
-	 * @return {@link List<DonationCall>}.
+	 * @return A {@link List} of {@link DonationCall}s.
 	 */
 	public List<DonationCall> getDonationCalls(String apiKey) {
 		Query query = em.createQuery("select dc from DonationCall dc where dc.belongsTo.apiKey=:apiKey");

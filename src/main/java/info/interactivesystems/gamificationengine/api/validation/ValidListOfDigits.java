@@ -19,7 +19,7 @@ import javax.validation.Payload;
 /**
  * The annotated {@code CharSequence} must match the following regular
  * expression: (\d+)(,\s*\d+)*
- * <p/>
+ * <p></p>
  * Accepts any digit or a list of comma separated digits, also zeros.
  * {@code null} elements are considered valid.
  */

@@ -6,21 +6,21 @@ import java.util.LinkedList;
  * Parses following LL(1) grammar:
  * 
  * <ul>
- * <li>expression -> term or_op</li>
- * <li>or_op -> OR term or_op</li>
- * <li>or_op -> EPSILON</li>
+ * <li>expression -: term or_op</li>
+ * <li>or_op -: OR term or_op</li>
+ * <li>or_op -: EPSILON</li>
  * 
- * <li>term -> and term_op</li>
- * <li>term_op -> AND and term_op</li>
- * <li>term_op -> EPSILON</li>
+ * <li>term -: and term_op</li>
+ * <li>term_op -: AND and term_op</li>
+ * <li>term_op -: EPSILON</li>
  * 
- * <li>and -> argument and_op</li>
- * <li>and_op -> EPSILON</li>
+ * <li>and -: argument and_op</li>
+ * <li>and_op -: EPSILON</li>
  * 
- * <li>argument -> OPEN_BRACKET expression CLOSE_BRACKET</li>
- * <li>argument -> NUMBER</li>
+ * <li>argument -: OPEN_BRACKET expression CLOSE_BRACKET</li>
+ * <li>argument -: NUMBER</li>
  * 
- * <li>value -> NUMBER</li>
+ * <li>value -: NUMBER</li>
  * </ul>
  */
 public class Parser {

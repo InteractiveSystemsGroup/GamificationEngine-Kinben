@@ -164,7 +164,7 @@ public class Player {
 	 * The amount of coins the player has earned will be added to the player's current 
 	 * coins and raise them.
 	 * 
-	 * @param coins
+	 * @param amount
 	 *            The Amount of coins which is transfered and so added to the player's 
 	 *            current coins.
 	 */

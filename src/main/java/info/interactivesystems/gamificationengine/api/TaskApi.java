@@ -328,13 +328,6 @@ public class TaskApi {
 	 * This method converts the string of role ids which are transfered to a list of roles.
 	 * These roles are then set as the new list of roles a player can have to fulfil this task. 
 	 * 
-	 * @param plGroup
-	 * 		  	
-	 * @param apiKey
-	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
-	 *        	to which this group and the players belong to.
-	 * 
-	 * 
 	 * @param value
 	 * 			The new values of roles as String separated by commas. This parameter is 
 	 * 		   	required.

@@ -121,7 +121,7 @@ public class MarketPlace {
 	 * @param player
 	 * 			The player whose roles are checked if they match an offer.
 	 * @param list
-	 * 			
+	 * 			The list of Roles which are the hint for filtering.
 	 * @return The list of all offers which are in the marketplace and a player is allowed
 	 * 			to complete.
 	 */

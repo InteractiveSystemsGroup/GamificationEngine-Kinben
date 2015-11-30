@@ -174,7 +174,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link javax.ws.rs.core.Response} of {@link List<Goal>} in JSON.
+	 * @return {@link javax.ws.rs.core.Response} as {@link List} of {@link Goal}s in JSON.
 	 */
 	@GET
 	@Path("/*")

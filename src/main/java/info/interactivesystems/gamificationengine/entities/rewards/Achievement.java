@@ -51,8 +51,8 @@ public class Achievement extends PermanentReward {
 	/**
 	 * Sets the byte[] as an icon of an achievement.
 	 * 
-	 * @param the
-	 *            icon that should be connected with the achievement
+	 * @param iconImage
+	 *            The icon that should be connected with the achievement.
 	 */
 	public void setImageIcon(byte[] iconImage) {
 		this.imageIcon = iconImage;

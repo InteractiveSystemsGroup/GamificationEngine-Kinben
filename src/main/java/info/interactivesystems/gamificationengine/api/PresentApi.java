@@ -250,7 +250,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the text messages belongs to.
-	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
 	@Path("/boardMessages")
@@ -303,7 +303,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the image messages belongs to.
-	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
 	@Path("/imageMessages")
@@ -575,7 +575,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/inbox")
@@ -609,7 +609,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/current")
@@ -642,7 +642,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/archive")

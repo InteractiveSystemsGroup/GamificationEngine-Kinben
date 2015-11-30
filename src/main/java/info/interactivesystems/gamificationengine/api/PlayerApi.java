@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
  * rewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of 
- * a level is set to “0”. These can be raised by fulfilling tasks in the gamification application. Furthermore 
+ * a level is set to "0". These can be raised by fulfilling tasks in the gamification application. Furthermore 
  * a player can have an avatar, by specifying the path of an image previously uploaded to a server. 
  * A player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create 
  * and to delete a player it is possible to get one particular player of one specific organisation by her/his 
@@ -129,7 +129,7 @@ public class PlayerApi {
 	 * 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation.
-	 * @return {@link Response} of {@link List<Player>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Player}s in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -173,7 +173,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link List<Player>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Player}s in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -382,7 +382,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Object} with an byte[] in JOSN.
+	 * @return {@link Response} of {@link Object} with an byte[] in JSON.
 	 */
 	@GET
 	@Path("{id}/avatar")
@@ -440,7 +440,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<FinishedGoal>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link FinishedGoal}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/goals")
@@ -462,7 +462,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<PermanentReward>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link PermanentReward}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/rewards")
@@ -485,7 +485,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<FinishedTask>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link FinishedTask}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/tasks")
@@ -508,7 +508,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link List<Badge>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Badge}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/badges")
@@ -532,7 +532,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link List<Achievement>} in JSON
+	 * @return {@link Response} as {@link List} of {@link Achievement}s in JSON
 	 */
 	@GET
 	@Path("/{id}/achievements")

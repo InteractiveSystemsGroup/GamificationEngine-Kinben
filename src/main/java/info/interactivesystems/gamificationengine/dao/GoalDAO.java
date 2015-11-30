@@ -83,7 +83,7 @@ public class GoalDAO {
 	/**
 	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
 	 * 
-	 * @param goalId
+	 * @param id
 	 *            The id of the requested goal.
 	 * @param organisation
 	 *            The organisation the goal belongs to.
@@ -100,7 +100,7 @@ public class GoalDAO {
 	 * 
 	 * @param rule
 	 *           The rule to which the goals are associated. 
-	 * @return {@link List<Goal>} of all goals which are associacted to the specific rule.
+	 * @return A {@link List} of all {@link Goal}s which are associated to the specific rule.
 	 */
 	public List<Goal> getGoalsByRule(GoalRule rule) {
 
@@ -116,7 +116,7 @@ public class GoalDAO {
 	 * @param apiKey
 	 *            The API key affiliated to one specific organisation, to which 
 	 *            the goals belongs to.
-	 * @return {@link List<Goal>} of all goals which are associacted to the specific API key.
+	 * @return A {@link List} of all {@link Goal}s which are associated to the specific API key.
 	 */
 	public List<Goal> getGoals(String apiKey) {
 		Query query = em.createQuery("select g from Goal g join g.belongsTo a where a.apiKey=:apiKey");

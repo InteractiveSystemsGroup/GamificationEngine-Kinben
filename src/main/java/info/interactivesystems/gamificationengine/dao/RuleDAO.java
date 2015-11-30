@@ -38,7 +38,7 @@ public class RuleDAO {
 	 * 
 	 * @param ruleId
 	 * 			The id of the requested rule.
-	 * @return The {@link Rule} which is associated with the passed id.
+	 * @return The {@link GoalRule} which is associated with the passed id.
 	 */
 	public GoalRule getRule(int ruleId) {
 		return em.find(GoalRule.class, ruleId);
@@ -49,8 +49,8 @@ public class RuleDAO {
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the rules belong to. 
-	 * @return A {@link List<Rule>} with all rules which are associated with the passed 
-	 * 			API key.
+	 * @return A {@link List} of {@link GoalRule}s with all rules which are associated with 
+	 * 			the passed API key.
 	 */
 	public List<GoalRule> getRules(String apiKey) {
 		Query query = em.createQuery("select g from GoalRule g join g.belongsTo a where a.apiKey=:apiKey");
@@ -65,7 +65,7 @@ public class RuleDAO {
 	 * 			The id of the requested rule.
 	 * @param organisation
 	 * 			The organisaiton the rule is associated with.
-	 * @return The {@link Rule} which is associated with the passed id and organisation.
+	 * @return The {@link GoalRule} which is associated with the passed id and organisation.
 	 */
 	public GoalRule getRuleByIdAndOrganisation(int ruleId, Organisation organisation) {
 		GoalRule rule = em.find(GoalRule.class, ruleId);
@@ -87,7 +87,7 @@ public class RuleDAO {
 	 * 			The id of the rule which should be deleted.
 	 * @param organisation
 	 * 			The organisaiton the rule is associated with.
-	 * @return The {@link Rule} that is associated with the passed id and organisation.
+	 * @return The {@link GoalRule} that is associated with the passed id and organisation.
 	 */
 	public GoalRule deleteRuleByIdAndOrganisation(int id, Organisation organisation) {
 		GoalRule rule = getRuleByIdAndOrganisation(id, organisation);
@@ -103,7 +103,7 @@ public class RuleDAO {
 	 * 			It is checked if the task rules of an organisation contain the task.			
 	 * @param organisation
 	 * 			The organisaiton the rule is associated with.
-	 * @return A {@link List<TaskRule>} with all task rules which contain the passed task and 
+	 * @return A {@link List} of {@link TaskRule}s which contain the passed task and 
 	 * 			are associated with the passed organisation.
 	 */
 	public List<TaskRule> getRulesByTask(Task task, Organisation organisation) {
@@ -123,7 +123,7 @@ public class RuleDAO {
 	/**
 	 * Gets all rules of the type PointsRule.
 	 * 
-	 * @return A {@link List<GoalRule>} with all points rules.
+	 * @return A {@link List} of {@link GoalRule}s with all points rules.
 	 */
 	public List<GoalRule> getAllPointsRules() {
 		Query query = em.createQuery("select r from GoalRule r where RULE_TYPE =:ruleType");

@@ -60,6 +60,8 @@ public class OrganisationApi {
 	 * All further Accounts which should be associated to this organisation are added with the 
 	 * method addManager. 
 	 *
+	 * @param name 
+	 * 			The name of the developer or the manager of the account.
 	 * @param email
 	 *           The required valid email address.
 	 * @param password
@@ -98,7 +100,9 @@ public class OrganisationApi {
 	 *            The required valid email.
 	 * @param password
 	 *             Required query param associated with the email address. 
-	 * @return a {@link Response} of {@link Organisation} in JSON
+	 *@param apiKey
+	 *			The API key of the organisation to which the manager belongs to.    
+	 * @return a {@link Response} of {@link Organisation} in JSON.
 	 */
 	@POST
 	@Path("/addManager")
@@ -135,7 +139,7 @@ public class OrganisationApi {
 	 * @param password
 	 *            Required query param to connect it with the given 
 	 *            email address.
-	 * @return {@link Response} of {@link List<Organisation>} in JSON
+	 * @return {@link Response} as {@link List} of {@link Organisation}s in JSON.
 	 */
 	@GET
 	@Path("/*")

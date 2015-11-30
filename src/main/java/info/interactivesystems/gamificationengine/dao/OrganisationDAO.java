@@ -26,7 +26,6 @@ public class OrganisationDAO {
 	 * 
 	 * @param organisation
 	 *            The {@link Organisation} that should be stored in the data base.
-	 * @return The id of the created data base entry.
 	 */
 	public void insertOrganisation(Organisation organisation) {
 		em.persist(organisation);
@@ -48,7 +47,7 @@ public class OrganisationDAO {
 	 * 
 	 * @param email
 	 *            The email address of the requested organisaiton.
-	 * @return The {@link List<Organisation>} that are associated with the email addess.
+	 * @return The {@link List} of {@link Organisation}s that are associated with the passed email address.
 	 */
 	public List<Organisation> getAllOrganisations(String email) {
 		Query query = em.createQuery("select entity from Organisation entity join entity.managers m  where m.email=:email");
@@ -64,11 +63,13 @@ public class OrganisationDAO {
 	}
 
 	/**
-	 * Gets all organisations which are associated with the specific API key.
+	 * Gets all organisations which are associated with the specific API key. The result
+	 * should only be one organisation.
 	 * 
 	 * @param apiKey
 	 *           The API key to which the organisation belongs to.
-	 * @return {@link List<Organisation>}
+	 * @return A {@link List} of {@link Organisation}s that are associated to the passed
+	 * 			API key. 
 	 */
 	public Organisation getOrganisationByApiKey(String apiKey) {
 		Query query = em.createQuery("select entity from Organisation entity where entity.apiKey=:apiKey");

@@ -84,7 +84,7 @@ public class PlayerGroupDAO {
 	 * 
 	 * @param organisation
 	 * 			The organisation to which the groups of players belong to.
-	 * @return The {@link List<PlayerGroup>} of all groups which belong to the passed organisaiton.
+	 * @return The {@link List} of {@link PlayerGroup}s which belong to the passed organisaiton.
 	 */
 	public List<PlayerGroup> getAllGroupsByOrganisation(Organisation organisation) {
 

@@ -66,7 +66,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JOSN.
+	 * @return {@link Response} of {@link DonationCall} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -93,9 +93,8 @@ public class DonationApi {
 	 * These coins are subtracted from the player’s current account and will be added to the Donation
 	 * Call's current amount. If the API key is not valid an analogous message is returned.
 	 * It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.
-
 	 * 
-	 * @param id
+	 * @param dId
 	 *            The id of the call for donations to which a player donates. This path parameter is required.
 	 * @param playerId
 	 *            The id of the player who donates. This path parameter is required.
@@ -104,7 +103,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JOSN.
+	 * @return {@link Response} of {@link DonationCall} in JSON.
 	 */
 	@POST
 	@Path("/{id}/donate/{playerId}")
@@ -145,7 +144,7 @@ public class DonationApi {
 	 * @param apiKey
 	 * 			The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JOSN.
+	 * @return {@link Response} of {@link DonationCall} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -173,7 +172,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JOSN.
+	 * @return {@link Response} of {@link DonationCall} in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
