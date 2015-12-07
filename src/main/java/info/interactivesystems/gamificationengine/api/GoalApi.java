@@ -37,6 +37,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A Goal comprises one or more tasks and has to be completed if the player wants to earn the connected awards.
  * To create a goal some already created components are needed. So the condition when a goal is completed is 
@@ -102,6 +104,7 @@ public class GoalApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Goal.class)
 	public Response createNewGoal(@QueryParam("name") @NotNull String name, @QueryParam("repeatable") @DefaultValue("true") String repeatable,
 			@QueryParam("ruleId") @NotNull @ValidPositiveDigit String ruleId, @QueryParam("rewardIds") @ValidListOfDigits String rewardIds,
 			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String roleIds,
@@ -178,6 +181,7 @@ public class GoalApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Goal[].class)
 	public Response getGoals(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Goal> goals = goalDao.getGoals(apiKey);
@@ -198,6 +202,7 @@ public class GoalApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Goal.class)
 	public Response getGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		int goalId = ValidateUtils.requireGreaterThenZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -230,6 +235,7 @@ public class GoalApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Goal.class)
 	public Response changeGoalAttributes(@PathParam("id") @ValidPositiveDigit String goalId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Goal");
@@ -331,6 +337,7 @@ public class GoalApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Goal.class)
 	public Response deleteGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");

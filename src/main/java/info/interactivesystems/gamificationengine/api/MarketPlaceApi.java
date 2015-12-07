@@ -14,7 +14,6 @@ import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
@@ -44,6 +43,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * The marketplace gives players the opportunity to offer tasks that have to be completed by their colleagues 
@@ -104,6 +105,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/market")
+	@TypeHint(MarketPlace.class)
 	public Response createMarketPlace(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create new MarketPlace");
@@ -136,6 +138,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/market")
+	@TypeHint(MarketPlace.class)
 	public Response deleteMarketPlace(
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
 			@QueryParam("apiKey") @ValidApiKey String apikey) {
@@ -184,10 +187,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this offer belongs to.
-	 * @return {@link Response} of {Offer} in JSON
+	 * @return {@link Response} of {Offer} in JSON.
 	 */
 	@POST
 	@Path("/offer")
+	@TypeHint(Offer.class)
 	public Response createNewOffer(@QueryParam("name") @NotNull String name, @QueryParam("endDate") String endDate,
 			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
@@ -274,6 +278,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/bid")
+	@TypeHint(Bid.class)
 	public Response giveABid(@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String prize,
@@ -364,6 +369,7 @@ public class MarketPlaceApi {
 	 */
 	@GET
 	@Path("/getOffers")
+	@TypeHint(Offer[].class)
 	public Response getPlayerOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -402,6 +408,7 @@ public class MarketPlaceApi {
 	 */
 	@GET
 	@Path("/getOfferRole")
+	@TypeHint(Offer[].class)
 	public Response getOffersByRole(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
@@ -442,6 +449,7 @@ public class MarketPlaceApi {
 	 */
 	@GET
 	@Path("/getNewestOffer")
+	@TypeHint(Offer[].class)
 	public Response getNewestOffers(@QueryParam("playerId") @NotNull @ValidPositiveDigit String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
@@ -485,6 +493,7 @@ public class MarketPlaceApi {
 	 */
 	@GET
 	@Path("/getHighestO")
+	@TypeHint(Offer[].class)
 	public Response getHighestOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
@@ -524,6 +533,7 @@ public class MarketPlaceApi {
 	 */
 	@GET
 	@Path("/{id}/bids")
+	@TypeHint(Bid[].class)
 	public Response getBids(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 	
@@ -551,6 +561,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/offer")
+	@TypeHint(Offer.class)
 	public Response deleteOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apikey) {
 
@@ -603,6 +614,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/{id}/compOffer")
+	@TypeHint(Task.class)
 	public Response completedOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -665,6 +677,7 @@ public class MarketPlaceApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Offer.class)
 	public Response changeOfferAttributes(
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
@@ -745,6 +758,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/bid")
+	@TypeHint(Offer.class)
 	public Response deleteBid(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String bidId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,

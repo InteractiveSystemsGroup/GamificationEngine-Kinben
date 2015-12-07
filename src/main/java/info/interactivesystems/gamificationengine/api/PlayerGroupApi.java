@@ -33,6 +33,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * Players can be assigned to a group by its creation or at a later point in time.
  * For example depending on the respective organization, a group can be a 
@@ -81,6 +83,7 @@ public class PlayerGroupApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(PlayerGroup.class)
 	public Response createNewGroup(@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds,
 			@QueryParam("name") @NotNull String groupName, @QueryParam("logoPath") String logoPath, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -131,6 +134,7 @@ public class PlayerGroupApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(PlayerGroup.class)
 	public Response getPlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -168,6 +172,7 @@ public class PlayerGroupApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(PlayerGroup.class)
 	public Response changePlayerGroupAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -241,6 +246,7 @@ public class PlayerGroupApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(PlayerGroup.class)
 	public Response deletePlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no GroupId transferred");

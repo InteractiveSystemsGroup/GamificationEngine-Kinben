@@ -39,6 +39,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A Task is the basic module and represents for example a specific activity. For a creation 
  * of a task, the roles are needed which indicate who is allowed to fulfil this task. To 
@@ -106,6 +108,7 @@ public class TaskApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Task.class)
 	public Response createNewTask(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("tradeable") @DefaultValue("false") String tradeable,
 			@QueryParam("roleIds") @NotNull @ValidListOfDigits(message = "The role ids must be a valid list of numbers") String roleIds,
@@ -147,6 +150,7 @@ public class TaskApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Task[].class)
 	public Response getTasks(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Task> tasks = taskDao.getTasks(apiKey);
@@ -174,6 +178,7 @@ public class TaskApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Task.class)
 	public Response getTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -199,6 +204,7 @@ public class TaskApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Task.class)
 	public Response deleteTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -232,6 +238,7 @@ public class TaskApi {
 	 */
 	@POST
 	@Path("/{id}/complete/{playerId}")
+	@TypeHint(Task.class)
 	public Response completeTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("finishedDate") String finishedDate, @QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -287,6 +294,7 @@ public class TaskApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Task.class)
 	public Response changeTaskAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Task");

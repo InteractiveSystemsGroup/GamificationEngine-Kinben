@@ -6,7 +6,6 @@ import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDi
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RewardDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
 import info.interactivesystems.gamificationengine.entities.rewards.Badge;
 import info.interactivesystems.gamificationengine.entities.rewards.Coins;
@@ -36,6 +35,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * A Reward will be awarded in dependent of the goal for a group or one person after 
@@ -74,6 +75,7 @@ public class RewardApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Reward[].class)
 	public Response getRewards(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Reward> reward = rewardDao.getRewards(apiKey);
@@ -95,6 +97,7 @@ public class RewardApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Reward.class)
 	public Response getReward(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -132,6 +135,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Reward.class)
 	public Response createNewReward(@QueryParam("type") @NotNull String type, @QueryParam("name") @NotNull String name,
 			@QueryParam("amount") @ValidPositiveDigit String amount, @QueryParam("icon") String url, @QueryParam("description") String description,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -189,6 +193,7 @@ public class RewardApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Reward.class)
 	public Response deleteReward(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no rewardId transferred");
@@ -214,6 +219,7 @@ public class RewardApi {
 	 */
 	@GET
 	@Path("/types")
+	@TypeHint(String[].class)
 	public Response getRewardTypes(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		List<String> rewards = Arrays.asList("Achievement", "Badge", "Coins", "Points", "ReceiveLevel");
 		return ResponseSurrogate.of(rewards);
@@ -239,6 +245,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/achievement")
+	@TypeHint(Achievement.class)
 	public Response createAchievement(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
@@ -285,6 +292,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/badge")
+	@TypeHint(Badge.class)
 	public Response createBadge(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
@@ -326,6 +334,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/coins")
+	@TypeHint(Coins.class)
 	public Response createCoinsReward(@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
@@ -356,6 +365,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/points")
+	@TypeHint(Points.class)
 	public Response createPointReward(@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("create Point Reward called");
@@ -388,6 +398,7 @@ public class RewardApi {
 	 */
 	@POST
 	@Path("/level")
+	@TypeHint(ReceiveLevel.class)
 	public Response createReceiveLevel(@QueryParam("amount") @NotNull @ValidPositiveDigit String index, @QueryParam("name") String name,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("create ReceiveLevel Reward called");
@@ -419,6 +430,7 @@ public class RewardApi {
 	 */
 	@GET
 	@Path("/achievement/{id}")
+	@TypeHint(byte[].class)
 	public Response getAchievementIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getAchievement called");
 
@@ -454,6 +466,7 @@ public class RewardApi {
 	 */
 	@GET
 	@Path("/badge/{id}")
+	@TypeHint(byte[].class)
 	public Response getBadgeIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getBadge called");
 
@@ -498,6 +511,7 @@ public class RewardApi {
 	 */
 	@PUT
 	@Path("/changeAchievement")
+	@TypeHint(Reward.class)
 	public Response changeAchievement(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -560,6 +574,7 @@ public class RewardApi {
 	 */
 	@PUT
 	@Path("/changeBadge")
+	@TypeHint(Reward.class)
 	public Response changeBadge(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -618,6 +633,7 @@ public class RewardApi {
 	 */
 	@PUT
 	@Path("/Points")
+	@TypeHint(Reward.class)
 	public Response changePointReward(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -669,6 +685,7 @@ public class RewardApi {
 	 */
 	@PUT
 	@Path("/ReceiveLevel")
+	@TypeHint(Reward.class)
 	public Response changeLevel(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 

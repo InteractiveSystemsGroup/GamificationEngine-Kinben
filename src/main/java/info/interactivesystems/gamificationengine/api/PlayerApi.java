@@ -39,6 +39,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
@@ -94,6 +96,7 @@ public class PlayerApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Player.class)
 	public Response create(@QueryParam("nickname") @NotNull String nickname, @QueryParam("password") @NotNull String password,
 			@QueryParam("reference") String reference, @QueryParam("roleIds") @ValidListOfDigits String playerRoleIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -133,6 +136,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Player[].class)
 	public Response getAll(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Player> players = playerDao.getPlayers(apiKey);
@@ -153,6 +157,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Player.class)
 	public Response get(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getplayer requested");
 
@@ -177,6 +182,7 @@ public class PlayerApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Player.class)
 	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int playerId = ValidateUtils.requireGreaterThenZero(id);
@@ -217,6 +223,7 @@ public class PlayerApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Player.class)
 	public Response changeAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Player");
@@ -323,6 +330,7 @@ public class PlayerApi {
 	 */
 	@PUT
 	@Path("/{id}/contacts")
+	@TypeHint(Player.class)
 	public Response addContacts(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("adding contacts to player");
@@ -356,6 +364,7 @@ public class PlayerApi {
 	 */
 	@DELETE
 	@Path("/{id}/contacts")
+	@TypeHint(Player.class)
 	public Response deleteContact(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("deleting contacts for of a player");
@@ -386,6 +395,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("{id}/avatar")
+	@TypeHint(byte[].class)
 	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("get player's avatar image");
 
@@ -418,6 +428,7 @@ public class PlayerApi {
 	 */
 	@POST
 	@Path("{id}/deactivate")
+	@TypeHint(Player.class)
 	public Response deactivate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("deactivate player called");
@@ -444,6 +455,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/goals")
+	@TypeHint(FinishedGoal[].class)
 	public Response getPlayerFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedGoals requested");
@@ -466,6 +478,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/rewards")
+	@TypeHint(PermanentReward[].class)
 	public Response getRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getPlayerPermanentRewards requested");
@@ -489,6 +502,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/tasks")
+	@TypeHint(FinishedTask[].class)
 	public Response getPlayerFinishedTasks(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedTasks requested");
@@ -512,6 +526,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/badges")
+	@TypeHint(Badge[].class)
 	public Response getPlayerBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Badges from Player requested");
@@ -536,6 +551,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/achievements")
+	@TypeHint(Achievement[].class)
 	public Response getPlayerAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");
@@ -560,6 +576,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/points")
+	@TypeHint(int.class)
 	public Response getPlayerPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");
@@ -584,6 +601,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/coins")
+	@TypeHint(int.class)
 	public Response getPlayerCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");

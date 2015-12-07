@@ -16,6 +16,9 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
+
 /**
  * API class for application information
  */
@@ -45,6 +48,7 @@ public class Api {
 	 * @return Response as JSON with for example the current date and time.
 	 */
 	@GET
+	@TypeHint(State.class)
 	public Response status() {
 		return Response.ok(new State()).build();
 	}

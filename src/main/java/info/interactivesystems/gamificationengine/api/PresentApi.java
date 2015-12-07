@@ -40,6 +40,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * Players in a gamification application can send little presents to each other, whereby 
  * one or more players can be a recipient. These presents can be an image or a short text
@@ -91,6 +93,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/textMessage")
+	@TypeHint(TextMessage.class)
 	public Response createTextMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
 			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("content") String content,
@@ -157,6 +160,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/imageMessage")
+	@TypeHint(ImageMessage.class)
 	public Response createImageMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
 			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("imagePath") @NotNull String imagePath,
@@ -217,6 +221,7 @@ public class PresentApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Present.class)
 	public Response deletePresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -254,6 +259,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/boardMessages")
+	@TypeHint(Present[].class)
 	public Response getTextMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -307,6 +313,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/imageMessages")
+	@TypeHint(ImageMessage[].class)
 	public Response getImageMessages(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -353,6 +360,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/send")
+	@TypeHint(Present.class)
 	public Response send(@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -423,6 +431,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/accept")
+	@TypeHint(Present.class)
 	public Response acceptPresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -478,6 +487,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/deny")
+	@TypeHint(Present.class)
 	public Response denyPresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -526,6 +536,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/archive")
+	@TypeHint(Present.class)
 	public Response archivePresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -579,6 +590,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/inbox")
+	@TypeHint(Present[].class)
 	public Response getInbox(@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -613,6 +625,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/current")
+	@TypeHint(Present[].class)
 	public Response getCurrent(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -646,6 +659,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/archive")
+	@TypeHint(PresentArchived[].class)
 	public Response getArchive(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {

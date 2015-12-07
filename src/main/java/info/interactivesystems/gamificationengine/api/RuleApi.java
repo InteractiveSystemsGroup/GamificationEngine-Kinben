@@ -8,7 +8,6 @@ import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.goal.DoAllTasksRule;
 import info.interactivesystems.gamificationengine.entities.goal.DoAnyTaskRule;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
@@ -40,6 +39,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal.
@@ -81,6 +82,7 @@ public class RuleApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(GoalRule.class)
 	public Response createNewRule(@QueryParam("name") @NotNull String name, @QueryParam("expression") @NotNull String expression,
 			@QueryParam("description") String description, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -142,6 +144,7 @@ public class RuleApi {
 	 */
 	@POST
 	@Path("/task")
+	@TypeHint(TaskRule.class)
 	public Response createNewTaskRule(@QueryParam("type") @NotNull String type, @QueryParam("name") @NotNull String name,
 			@QueryParam("description") String description, @QueryParam("tasks") @NotNull @ValidListOfDigits String taskIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -216,6 +219,7 @@ public class RuleApi {
 	 */
 	@POST
 	@Path("/point")
+	@TypeHint(GetPointsRule.class)
 	public Response createNewPointRule(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("points") @NotNull @ValidPositiveDigit String points, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -246,6 +250,7 @@ public class RuleApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(GoalRule[].class)
 	public Response getRules(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		List<GoalRule> tasks = ruleDao.getRules(apiKey);
 		return ResponseSurrogate.of(tasks);
@@ -265,6 +270,7 @@ public class RuleApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(GoalRule.class)
 	public Response getRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		int ruleId = ValidateUtils.requireGreaterThenZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -287,6 +293,7 @@ public class RuleApi {
 	 */
 	@DELETE
 	@Path("{id}")
+	@TypeHint(GoalRule.class)
 	public Response deleteRule(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no ruleId transferred");
@@ -322,6 +329,7 @@ public class RuleApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(GoalRule.class)
 	public Response changeRuleAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Rule");

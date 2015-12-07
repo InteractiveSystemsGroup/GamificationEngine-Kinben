@@ -26,6 +26,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A donation stands for a real world purpose. This could be for example a real donation for a 
  * charitable purpose or an event for the organisation’s employees like the arrangement for the 
@@ -70,6 +72,7 @@ public class DonationApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(DonationCall.class)
 	public Response createDonationCall(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("goal") @ValidPositiveDigit String goal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -90,7 +93,7 @@ public class DonationApi {
 
 	/**
 	 * With this method a player donates a specific amount of coins if she/he has enough coins. 
-	 * These coins are subtracted from the player’s current account and will be added to the Donation
+	 * These coins are subtracted from the player's current account and will be added to the Donation
 	 * Call's current amount. If the API key is not valid an analogous message is returned.
 	 * It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -107,6 +110,7 @@ public class DonationApi {
 	 */
 	@POST
 	@Path("/{id}/donate/{playerId}")
+	@TypeHint(DonationCall.class)
 	public Response donate(@PathParam("id") @ValidPositiveDigit(message = "The donation id must be a valid number") String dId,
 			@PathParam("playerId") @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("amount") @ValidPositiveDigit(message = "The amount must be a valid number") String amount,
@@ -148,6 +152,7 @@ public class DonationApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(DonationCall.class)
 	public Response getDonationCall(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int id = ValidateUtils.requireGreaterThenZero(dId);
@@ -176,6 +181,7 @@ public class DonationApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(DonationCall.class)
 	public Response deleteDonationCall(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no id transferred");

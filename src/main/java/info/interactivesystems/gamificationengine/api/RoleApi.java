@@ -27,6 +27,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A role describes which members of an organisation is allowed to do or see
  * particular elements of the engine such as to fulfil a particular task and get
@@ -64,6 +66,7 @@ public class RoleApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Role.class)
 	public Response create(@QueryParam("roleName") @NotNull String roleName, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create New Role ");
@@ -89,6 +92,7 @@ public class RoleApi {
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Role[].class)
 	public Response getAll(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Role> roles = roleDao.getRoles(apiKey);
@@ -109,6 +113,7 @@ public class RoleApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Role.class)
 	public Response get(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int roleId = ValidateUtils.requireGreaterThenZero(id);
@@ -137,6 +142,7 @@ public class RoleApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Role.class)
 	public Response changeAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -170,6 +176,7 @@ public class RoleApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Role.class)
 	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");
