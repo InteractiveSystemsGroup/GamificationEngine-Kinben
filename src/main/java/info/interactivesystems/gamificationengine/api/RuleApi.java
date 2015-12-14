@@ -13,15 +13,10 @@ import info.interactivesystems.gamificationengine.entities.goal.DoAnyTaskRule;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
-import info.interactivesystems.gamificationengine.entities.rule.ExpressionNode;
-import info.interactivesystems.gamificationengine.entities.rule.IdCollector;
-import info.interactivesystems.gamificationengine.entities.rule.Parser;
-import info.interactivesystems.gamificationengine.entities.rule.SetTask;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -65,60 +60,6 @@ public class RuleApi {
 	RuleDAO ruleDao;
 	@Inject
 	TaskDAO taskDao;
-
-	/**
-	 * 
-	 * Creates a new rule with an expression term.
-	 * 
-	 * @param name
-	 *            required name of the new goal
-	 * @param expression
-	 *            required expression term
-	 * @param description
-	 *            optional description of the goal
-	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GoalRule} in JSON
-	 */
-	@POST
-	@Path("/")
-	@TypeHint(GoalRule.class)
-	public Response createNewRule(@QueryParam("name") @NotNull String name, @QueryParam("expression") @NotNull String expression,
-			@QueryParam("description") String description, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		if (expression == null) {
-			throw new ApiError(Response.Status.PRECONDITION_FAILED, "expression is not provided");
-		}
-
-		Parser parser = new Parser();
-		ExpressionNode exp = parser.parse(expression);
-		configureExpressionTree(exp, apiKey);
-
-		GoalRule goalRule = new GoalRule();
-		goalRule.setName(name);
-		goalRule.setDescription(description);
-		goalRule.setBelongsTo(organisationDao.getOrganisationByApiKey(apiKey));
-		goalRule.setExpressionTree(exp);
-		ruleDao.insertRule(goalRule);
-
-		return ResponseSurrogate.created(goalRule);
-	}
-
-	private void configureExpressionTree(ExpressionNode exp, String apiKey) {
-
-		List<Integer> ids = new ArrayList<>();
-		exp.accept(new IdCollector(ids));
-		List<Task> tasks = taskDao.getTasks(ids, apiKey);
-
-		ids.removeAll(tasks.stream().map(Task::getId).collect(Collectors.toList()));
-		if (!ids.isEmpty()) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, task ids don't exist " + ids);
-		}
-
-		for (Task task : tasks) {
-			exp.accept(new SetTask(task));
-		}
-	}
 
 	/**
 	 * Creates a new task rule. By the creation the type of rule (DoAllTasksRule or DoAnyTaskRule) has to be defined, the rule's name, 

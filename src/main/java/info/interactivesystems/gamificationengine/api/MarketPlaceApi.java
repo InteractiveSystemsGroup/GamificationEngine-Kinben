@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -170,7 +171,8 @@ public class MarketPlaceApi {
 	 * @param name
 	 *            The name of the offer. This parameter is required.
 	 * @param endDate
-	 *            The date and time how long the offer is available on the market.
+	 *            The date and time how long the offer is available on the market. The format of the values are
+	 *            yyyy-MM-dd HH:mm.
 	 * @param prize
 	 *            The initial bid of the offer. This is the prize a player can earn.
 	 * @param taskId
@@ -179,7 +181,8 @@ public class MarketPlaceApi {
 	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
 	 *            prize. 
 	 * @param deadLine
-	 *            The point of time until the offer is valid.
+	 *            The point of time until the offer is valid. The format of the values are
+	 *            yyyy-MM-dd HH:mm.
 	 * @param marketId
 	 *            The id of the marketplace where the offer should be available.
 	 * @param playerId
@@ -365,7 +368,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOffers")
@@ -404,7 +407,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOfferRole")
@@ -492,7 +495,7 @@ public class MarketPlaceApi {
 	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
-	@Path("/getHighestO")
+	@Path("/getHighestOffer")
 	@TypeHint(Offer[].class)
 	public Response getHighestOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,

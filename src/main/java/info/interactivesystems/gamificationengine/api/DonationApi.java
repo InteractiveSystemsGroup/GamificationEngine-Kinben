@@ -12,6 +12,7 @@ import info.interactivesystems.gamificationengine.entities.Player;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -106,7 +107,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JSON.
+	 * @return A {@link Response} of {@link DonationCall} in JSON.
 	 */
 	@POST
 	@Path("/{id}/donate/{playerId}")

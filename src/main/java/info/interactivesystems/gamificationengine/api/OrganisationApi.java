@@ -68,7 +68,7 @@ public class OrganisationApi {
 	 *           The required valid email address.
 	 * @param password
 	 *           Required query param associated with the email address. 
-	 * @return a {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -105,7 +105,7 @@ public class OrganisationApi {
 	 *             Required query param associated with the email address. 
 	 *@param apiKey
 	 *			The API key of the organisation to which the manager belongs to.    
-	 * @return a {@link Response} of {@link Organisation} in JSON.
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@POST
 	@Path("/addManager")
@@ -143,7 +143,7 @@ public class OrganisationApi {
 	 * @param password
 	 *            Required query param to connect it with the given 
 	 *            email address.
-	 * @return {@link Response} as {@link List} of {@link Organisation}s in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Organisation}s in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -172,7 +172,7 @@ public class OrganisationApi {
 	 * @param password
 	 *             Required query parameter to connect it with the given 
 	 *             email address.
-	 * @return {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -204,7 +204,7 @@ public class OrganisationApi {
 	 * @param password
 	 *            Required query parameter to connect it with the given 
 	 *            email address.
-	 * @return {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/generateapikey")

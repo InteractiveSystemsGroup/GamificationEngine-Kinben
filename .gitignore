@@ -118,3 +118,4 @@ out/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
+/pom.xml
