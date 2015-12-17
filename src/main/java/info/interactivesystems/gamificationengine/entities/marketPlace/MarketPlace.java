@@ -141,7 +141,7 @@ public class MarketPlace {
 	/**
 	 * This method filters all matching offers to the player's roles and filters it by the
 	 * date so the latest offers are presented.  
-	 * A list with x offers are returned that are the latest and match at least one role of
+	 * A list with a specific count of offers are returned that are the latest and match at least one role of
 	 * the player. 
 	 * 
 	 * @param matchingOffers
@@ -169,7 +169,7 @@ public class MarketPlace {
 	 * @return The list with the number of the second parameter and matching offers to the 
 	 * player's roles is returned.
 	 */
-	public List<Offer> filterOfferByPrize(List<Offer> matchingOffers, int count) {
+	public List<Offer> filterOffersByPrize(List<Offer> matchingOffers, int count) {
 		Comparator<Offer> byOfferPrize = (o1, o2) -> Integer.compare(o1.getPrize(), o2.getPrize());
 		return filterOfferByParam(matchingOffers, count, byOfferPrize, true);
 	}

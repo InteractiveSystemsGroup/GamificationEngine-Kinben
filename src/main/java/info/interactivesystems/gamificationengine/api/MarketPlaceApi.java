@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -171,7 +170,7 @@ public class MarketPlaceApi {
 	 * @param name
 	 *            The name of the offer. This parameter is required.
 	 * @param endDate
-	 *            The date and time how long the offer is available on the market. The format of the values are
+	 *            The date and time how long the offer is available on the market. The format of the values is
 	 *            yyyy-MM-dd HH:mm.
 	 * @param prize
 	 *            The initial bid of the offer. This is the prize a player can earn.
@@ -181,7 +180,7 @@ public class MarketPlaceApi {
 	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
 	 *            prize. 
 	 * @param deadLine
-	 *            The point of time until the offer is valid. The format of the values are
+	 *            The point of time until the offer is valid. The format of the values is
 	 *            yyyy-MM-dd HH:mm.
 	 * @param marketId
 	 *            The id of the marketplace where the offer should be available.
@@ -435,7 +434,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets all available offers for a player ordered by date, newest first.
+	 * Gets all available offers for a player ordered by date, recent first.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
 	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -451,9 +450,9 @@ public class MarketPlaceApi {
 	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
-	@Path("/getNewestOffer")
+	@Path("/getRecentOffers")
 	@TypeHint(Offer[].class)
-	public Response getNewestOffers(@QueryParam("playerId") @NotNull @ValidPositiveDigit String playerId,
+	public Response getRecentOffers(@QueryParam("playerId") @NotNull @ValidPositiveDigit String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -470,9 +469,9 @@ public class MarketPlaceApi {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
 			}
 
-			List<Offer> newestOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
 
-			return ResponseSurrogate.of(newestOffers);
+			return ResponseSurrogate.of(recentOffers);
 		}
 
 		throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
@@ -495,7 +494,7 @@ public class MarketPlaceApi {
 	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
-	@Path("/getHighestOffer")
+	@Path("/getHighestOffers")
 	@TypeHint(Offer[].class)
 	public Response getHighestOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -514,7 +513,7 @@ public class MarketPlaceApi {
 			if (matchingOffers.size() <= 0) {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for this role");
 			}
-			List<Offer> highestOffers = market.filterOfferByPrize(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
 
 			return ResponseSurrogate.of(highestOffers);
 		}
@@ -662,7 +661,7 @@ public class MarketPlaceApi {
 	 * the specific organisation, the name of the field and the new value are needed.
 	 * 
 	 * To modify the name the new String has to be passed with the attribute field. A new date and time as 
-	 * LocalDateTime for the deadline or enddate can also be passed. The format of this value is 
+	 * LocalDateTime for the deadline or enddate can also be passed. The format of these values is 
 	 * yyyy-MM-dd HH:mm. A new list of players can be passed when their ids are separated by commas. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if 
 	 * the ids are a positive number otherwise a message for an invalid number is returned.
