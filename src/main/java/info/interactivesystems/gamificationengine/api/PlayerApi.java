@@ -426,7 +426,7 @@ public class PlayerApi {
 	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON.
 	 */
-	@POST
+	@PUT
 	@Path("{id}/deactivate")
 	@TypeHint(Player.class)
 	public Response deactivate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -440,6 +440,36 @@ public class PlayerApi {
 
 		return ResponseSurrogate.of(player);
 	}
+	
+	/**
+	 * Activates a player with the associated id and API key so this player is allowed to complete
+	 * tasks.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param id
+	 *         Required path parameter as integer which uniquely identify the {@link Player}.
+	 * @param apiKey
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
+	 * @return {@link Response} of {@link Player} in JSON.
+	 */
+	@PUT
+	@Path("{id}/activate")
+	@TypeHint(Player.class)
+	public Response activate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("activate player called");
+
+		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+
+		player.setActive(true);
+
+		return ResponseSurrogate.of(player);
+	}
+	
+	
 
 	/**
 	 * Returns a list of all already finished goals of a specific player. 

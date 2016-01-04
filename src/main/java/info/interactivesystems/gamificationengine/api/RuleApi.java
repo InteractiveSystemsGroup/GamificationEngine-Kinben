@@ -68,7 +68,7 @@ public class RuleApi {
 	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param type
-	 *            The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTasksRule". 
+	 *            The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTaskRule". 
 	 *            This field must not be null.
 	 * @param name
 	 *            The name of the task rule. This parameter is required.
@@ -121,7 +121,7 @@ public class RuleApi {
 			rule = new DoAllTasksRule();
 			break;
 
-		case "DoAnyTasksRule":
+		case "DoAnyTaskRule":
 			rule = new DoAnyTaskRule();
 			break;
 

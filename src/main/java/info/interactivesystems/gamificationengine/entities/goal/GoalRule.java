@@ -1,13 +1,7 @@
 package info.interactivesystems.gamificationengine.entities.goal;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.rule.ExpressionNode;
-import info.interactivesystems.gamificationengine.entities.task.FinishedTask;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -17,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -42,9 +35,6 @@ public class GoalRule {
 	private String name;
 
 	private String description;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	private ExpressionNode expressionTree;
 
 	/**
 	 * Gets the id of the GoalRule.
@@ -123,25 +113,6 @@ public class GoalRule {
 	}
 
 	/**
-	 * Gets the expression tree of a goal rule.
-	 * 
-	 * @return The expression tree of a goal rule. 
-	 */
-	public ExpressionNode getExpressionTree() {
-		return expressionTree;
-	}
-
-	/**
-	 * Set the expression tree of a goal rule to define the requirements to complete a goal.
-	 * 
-	 * @param expressionTree
-	 * 			The expression of the requirements which and how much tasks have to be complete to fulfil a gaol.
-	 */
-	public void setExpressionTree(ExpressionNode expressionTree) {
-		this.expressionTree = expressionTree;
-	}
-
-	/**
 	 * This method checks if a goal rule belongs to a specific organisation. Therefore
 	 * it is tested if the organisation's API key matchs the API key of the goal rule. 
 	 * 
@@ -152,20 +123,6 @@ public class GoalRule {
 	 */
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
-	}
-
-	/**
-	 * This rule checks if a rule is fulfilled. If it does true is returned otherwise false. Dependent on the
-	 * type of rule this check is different.
-	 *  
-	 * @param finishedPlayerTasks
-	 * 			The list of already finished tasks a player has already completed.
-	 * @param lastDate
-	 * 			The date a player has done a task. All dates after the passed date are checked.
-	 * @return The boolean value if a rule is fulfilled (true) or not(false).
-	 */
-	public boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate) {
-		return expressionTree.evaluate();
 	}
 
 

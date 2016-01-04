@@ -65,7 +65,7 @@ public class Player {
 	@Column(columnDefinition = "BLOB")
 	private byte[] avatar;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<PermanentReward> rewards;
 
 	private int points;
@@ -81,7 +81,7 @@ public class Player {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<FinishedGoal> finishedGoals;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<FinishedTask> finishedTasks;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

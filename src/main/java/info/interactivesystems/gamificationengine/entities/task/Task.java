@@ -434,6 +434,7 @@ public class Task implements Serializable {
 		log.debug("add Rewards to player");
 		// add Rewards to rewardList
 		for (Reward reward : recievedRewards) {
+			log.debug("Reward id : " + reward.getId());
 			reward.addReward(player, goalDao, ruleDao);
 		}
 

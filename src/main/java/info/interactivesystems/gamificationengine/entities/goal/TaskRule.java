@@ -16,7 +16,7 @@ import javax.persistence.ManyToMany;
 /**
  * A TaskRule defines the combination of tasks until a goal is fulfilled. So for a defined sample of tasks 
  * either all of them have to be fulfilled (type: DoAllTaskRule) which corresponds an AND-expression, or 
- * only one of a specific selection, which is like an OR-expression (type: DoAnyTasksRule).
+ * only one of a specific selection, which is like an OR-expression (type: DoAnyTaskRule).
  *
  */
 @Entity
@@ -71,6 +71,7 @@ public abstract class TaskRule extends GoalRule {
 		tasks.add(task);
 	}
 
+
 	/**
 	 * Abstract method to get the progress of a TaskRule. Dependent on the type of rule another value is returned.
 	 * 
@@ -82,4 +83,15 @@ public abstract class TaskRule extends GoalRule {
 	 */
 	public abstract Progress getProgress(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate);
 
+	/**
+	 * This rule checks if a rule is fulfilled. If it does true is returned otherwise false. Dependent on the
+	 * type of rule this check is different.
+	 *  
+	 * @param finishedPlayerTasks
+	 * 			The list of already finished tasks a player has already completed.
+	 * @param lastDate
+	 * 			The date a player has done a task. All dates after the passed date are checked.
+	 * @return The boolean value if a rule is fulfilled (true) or not(false).
+	 */
+	public abstract boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate);
 }
