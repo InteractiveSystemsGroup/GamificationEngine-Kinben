@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Kinben API: RoleApi</title>
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!--custom css for these pages-->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#apinav">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Kinben API: RoleApi</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="data.html">Data Types</a></li>
+          <li><a href="downloads.html">Files and Libraries</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar" id="apinav">
+        <ul class="nav nav-sidebar">
+          <li><a href="#resource_RoleApi_create_POST">POST /role</a></li>
+          <li><a href="#resource_RoleApi_getAll_GET">GET /role/*</a></li>
+          <li><a href="#resource_RoleApi_get_GET">GET /role/{id}</a></li>
+          <li><a href="#resource_RoleApi_changeAttributes_PUT">PUT /role/{id}/attributes</a></li>
+          <li><a href="#resource_RoleApi_delete_DELETE">DELETE /role/{id}</a></li>
+          <li class="divider"></li>
+          <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <ol class="breadcrumb" id="top">
+          <li class="active dropdown"><a href="index.html">Home</a></li>
+          <li class="active dropdown"><a href="resources.html">Resources</a></li>
+          <li class="dropdown"><a href="resource_RoleApi.html">RoleApi</a></li>
+        </ol>
+
+      <h1 class="page-header">RoleApi <small>Resource</small></h1>
+
+      <p>A role describes which members of an organisation is allowed to do or see
+particular elements of the engine such as to fulfil a particular task and get
+its rewards. Each Player can have many different roles such as one for his
+occupation or the department in which she/he works. But the roles can also be a
+part of an invented role system that isn’t oriented towards the work context. All
+roles are specific to the respective created organisation.
+Ancillary creating and deleting, either all roles of a specific organisation or with
+a given id the associated role can be gotten.
+The name of one role can also be changed at a later point of time.</p>
+
+      <div id="resource_RoleApi_create_POST">
+        <h3>POST <small>/role <!--<a href="./role" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Creates a new role for the organisation to which the API key belongs to. Because
+of this API key the created role is specific to this organisation.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@37055f2 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this role belongs to.</td>
+          </tr>
+          <tr>
+            <td>roleName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47659555 -->
+            <td>query</td>
+            <td>The required name of the new role. This field must not be null.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_role.html">Role</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Role} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_RoleApi_getAll_GET">
+        <h3>GET <small>/role/* <!--<a href="./role/*" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Gets all roles of a specific organisation that have been created. If the API key is not
+valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@fd208a3 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this role belongs to. This field must not be null.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_role.html">Role</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link Role}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_RoleApi_get_GET">
+        <h3>GET <small>/role/{id} <!--<a href="./role/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Gets a specific role of an organisation so the id of the organisation and its API key are needed.
+If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6c3661b0 -->
+            <td>path</td>
+            <td>Required path parameter id of the role that should be gotten. This parameter is required.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6d687601 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this role belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_role.html">Role</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Role} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_RoleApi_changeAttributes_PUT">
+        <h3>PUT <small>/role/{id}/attributes <!--<a href="./role/{id}/attributes" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>With this method the name field of one role can be changed. For this the id of the role, the API key of the
+specific organisation, the name of the field and the new value are needed.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6cc99c4 -->
+            <td>path</td>
+            <td>The id of the role that should be changed. This parameter is required.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@19440eae -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this role belongs to.</td>
+          </tr>
+          <tr>
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@46a0c7d7 -->
+            <td>query</td>
+            <td>The name of the attribute which should be changed.  This parameter is required.</td>
+          </tr>
+          <tr>
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@68d6697c -->
+            <td>query</td>
+            <td>The new value of the attribute. This parameter is required.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_role.html">Role</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Role} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_RoleApi_delete_DELETE">
+        <h3>DELETE <small>/role/{id} <!--<a href="./role/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Deletes a specific role of an organisation so the id of the organisation and its API key are needed.
+If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
+number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@a36cf1b -->
+            <td>path</td>
+            <td>Required path parameter id of the role that should be gotten. This parameter is required.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@33be818d -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this role belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_role.html">Role</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Role} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+        <footer class="footer">
+          <div class="container">
+            <p class="text-muted">Generated by <a href="http://enunciate.webcohesion.com">Enunciate</a>.</p>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript placed at the end of the document so the pages load faster. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- prettify code blocks. see http://code.google.com/p/google-code-prettify/ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js" type="text/javascript"></script>
+  <script>
+    $(function() {
+      $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+      });
+
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+
+</body>
+</html>

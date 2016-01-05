@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Kinben API: Data Types</title>
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!--custom css for these pages-->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#apinav">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Kinben API: Data Types</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="data.html">Data Types</a></li>
+          <li><a href="downloads.html">Files and Libraries</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar" id="apinav">
+        <ul class="nav nav-sidebar">
+          <li><a href="#syntax_json">JSON</a></li>
+          <li class="divider"></li>
+          <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <ol class="breadcrumb" id="top">
+          <li class="active dropdown"><a href="index.html">Home</a></li>
+          <li class="dropdown"><a href="data.html">Data Types</a></li>
+        </ol>
+
+  <h1 class="page-header" id="data">Data Types</h1>
+
+  <h3 id="syntax_json">JSON</h3>
+
+  <table class="table table-hover">
+  <caption>Default Namespace </caption>
+  <thead>
+    <tr>
+      <th align="center">type</th>
+      <th align="center">description</th>
+    </tr>
+  </thead>
+  <tbody data-link="row" class="rowlink">
+    <tr class="clickable-row" data-href="json_account.html">
+      <td>  Account
+</td>
+      <td>  An Account has to be created for at least one manager or developer. It
+is identified by a unique email address. The password ensures the
+identity. Optionally an account may have information about the user in form
+of her/his first name and last name.
+It is possible to change the password, the first name or last name
+at a later point of time. In addition to creating an account another
+possible request is to get the created account but only with the
+correct credentials.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_achievement.html">
+      <td>  Achievement
+</td>
+      <td>  The achievement class contains an image and a description for a documentary
+use to track significant results or milestones the player was able to achieve
+during her/his play. It's a more elaborate way to record the players achievements
+than the badge class. An achievement is a permanent reward, so a player can
+get a specific achievement only once.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_badge.html">
+      <td>  Badge
+</td>
+      <td>  The badge class serves as a Reward-subclass that represents a distinct icon.
+It should be used as a an instantly recognizable visual reference to an badge
+a player was able to reach. A badge is a permanent reward, so a player can
+award a specific badge only once.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_bid.html">
+      <td>  Bid
+</td>
+      <td>  A player can give one or more bids for an offer so its total prize gets higher and in order to increase
+the incentive of fulfilling the task. The bidden amount of coins will be subtracted from the bidder’s
+current account and will be added to the offer’s current prize. Each player can make several bids on
+condition that her/his coins are enough otherwise the bid cannot be done.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_board.html">
+      <td>  Board
+</td>
+      <td>  A Board serves a player to store presents in three lists: When a present is
+sent to a player firstly it is added to the inBox-list. The player decides if
+she/he accepts the present. If the player does it is added to the list which holds
+the current presents else if it is denied it is removed from the inbox. When the player
+wants to archive a present it is added to the archive list.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_coins.html">
+      <td>  Coins
+</td>
+      <td>  The Coins class serves as a Reward-subclass, that allocates coins to a player.
+Coins are a volatile reward which can be earned more than one time. These
+awarded coins are added to the current amount of coins a player owns.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_dayofweek.html">
+      <td>  DayOfWeek
+</td>
+      <td>  
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_donationcall.html">
+      <td>  DonationCall
+</td>
+      <td>  A DonationCall represents a call for donations. This could be a real world purpose like a real donation for a
+charitable purpose or an event for the organisation's employee. Players can donate obtained coins to reach a
+particular amount of coins. If the required amount is reached, the goal is reached and the purpose can be
+implemented by the responsible manager.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_finishedgoal.html">
+      <td>  FinishedGoal
+</td>
+      <td>  When a player has completed a Goal, it will be added to the player’s list of finished goals. If the goal is
+a group goal it is also stored in the group's list of finished goals. At the same time the date is also
+stored when this request was sent and the goal was officially be done.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_finishedtask.html">
+      <td>  FinishedTask
+</td>
+      <td>  When a player has completed a Task, it will be added to the player’s list of finished tasks.
+At the same time the date is also stored when this request was sent and the task was
+officially be done. If the task is the last one to fulfill a goal, the goal is also added
+to the player’s list of finished goals and the player will obtain all its associated
+rewards.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_getpointsrule.html">
+      <td>  GetPointsRule
+</td>
+      <td>  A PointsRule is a sub-class of the GoalRule. It specifies to reach a certain amount of points. If the player collected
+all needed points for example by executing tasks, the rule is completed. So every time the player receives points it
+is checked if one PointsRule is fulfilled.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_goal.html">
+      <td>  Goal
+</td>
+      <td>  A Goal comprises one or more tasks and is associated with a goal rule. If the player wants to earn the
+connected awards the rule has to be fulfilled. To create a goal some already created components are needed.
+So the condition when a goal is completed is defined in the goal rule and the connected tasks. Who can
+complete a goal is defined by the role of a player and whether it can be done by a group. It is also
+possible to define whether a goal is repeatable so that the player can complete the tasks and obtains its
+coins and points as rewards again. All goals that are associated with the organisation can be requested
+or like the elements before only one specific goal, if the correspondent id is used. The name, the
+associated rewards and also the rule for completion can be changed as well as the indication if the goal is
+repeatable or a goal that can be reached by a group. Is is also possible to change the roles so different
+people can complete the goal.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_goalrule.html">
+      <td>  GoalRule
+</td>
+      <td>  With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and
+obtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished
+goals. If the goal can also be done by a group it is also added to its list of finished goals. There are two types
+of rules that can be defined: a TaskRule or a PointsRule.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_imagemessage.html">
+      <td>  ImageMessage
+</td>
+      <td>  A present can be an imageMessage in the form of an image icon with a positive message for
+the receiver.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_localdatetime.html">
+      <td>  LocalDateTime
+</td>
+      <td>  
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_marketplace.html">
+      <td>  MarketPlace
+</td>
+      <td>  Players can create an offer with a task for the marketplace so another player can
+bid to do this task and get its rewards. Via Bids an initial bid by the creator can be
+raised. To be able to create offers, a marketplace for the organisation is needed.
+If none exists yet, it first has to be created.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_month.html">
+      <td>  Month
+</td>
+      <td>  
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_offer.html">
+      <td>  Offer
+</td>
+      <td>  With an offer a player can create a task for other players. At this point of time an initial bid in terms
+of coins is set which is obtained by the person who completes it. The initial bid can be raised by other
+colleagues in order to increase the incentive of fulfilling the task. When a player has completed a Task
+that belongs to an offer, she/he will obtain all bids as a reward.
+The particular task is then also added to the player’s list of the finished tasks.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_organisation.html">
+      <td>  Organisation
+</td>
+      <td>  An Organisation represents for example a specific company or an association which
+represents a group of people belonging together and which are participating in the
+gamification process.
+An Organisation possessed an generated API key which is needed for all further interactions
+because all database entries are associated with this unique key and so with the respective
+organisation. The API key is uniquely in the whole application. It
+may be changed, for this reason it has no primary key.
+When an Organisation is created it has to be connected with an account. Each organisation
+may be managed by many people, but at least by one who is added to the list of the manager
+of the respective organisation and so also the Account.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_permanentreward.html">
+      <td>  PermanentReward
+</td>
+      <td>  Permanent rewards are rewards that can be earned only once. These are for
+example an achievement or a badge. If a player has such an reward she/he
+may reach the goal again but doesn't get the reward one more time.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_player.html">
+      <td>  Player
+</td>
+      <td>  A player represents a user in the gamification application, eg. an employee of an organisation or a customer.
+By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned
+rewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised
+by fulfilling tasks in the gamification application. Furthermore a player can have an avatar.
+A player can be set active or can be deactivated so that she/he cannot complete tasks.
+Each player can also have a list of contacts which represent other players in the same organisation to send
+little presents.
+At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a
+player has.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_playergroup.html">
+      <td>  PlayerGroup
+</td>
+      <td>  Players can be assigned to a group by its creation or at a later point in time.
+For example depending on the respective organization, a group can be a
+department, a work group or several employees with the same occupation. It is
+possible to create special tasks which can be done also or only as a group.
+When a member of a group completed such a task the group obtains its rewards.
+So a group can also have a list of already earned rewards and finished Goals.
+Like a player, a group can be assigned an image as a logo.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_playerlevel.html">
+      <td>  PlayerLevel
+</td>
+      <td>  A player level shows the status of the player. This can be a number or a status like a titel.
+After the Player completed a task her/his level can advance if the conditions are fulfilled.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_points.html">
+      <td>  Points
+</td>
+      <td>  Points class serves as a Reward-subclass, that allocates points to a player.
+Points are a volatile reward which can be earned more than one time. The
+awarded points are added to the current ones of a player.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_present.html">
+      <td>  Present
+</td>
+      <td>  A present is a little positive message which one player can send to one or
+more other players. These presents can be an image or a short text message which
+contains for example a little praise. A Board serves a player to send and to store
+little presents in terms of a short text message or an image. The difference between
+these two messages is as the name suggests, that the text message contains a short
+text and the image message an image. To archive the presents they can be moved to
+an additional list. It is possible to get for one player all her/his text messages
+or all messages with a little image that were created. Furthermore all new presents
+of player can be requested as well as the accepted and archived presents. All denies
+presents were removed from the in-box.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_presentarchived.html">
+      <td>  PresentArchived
+</td>
+      <td>  Presents that are accepted a player can archived. If the player archived a present
+an PresentArchived object is created.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_receivelevel.html">
+      <td>  ReceiveLevel
+</td>
+      <td>  The ReceiveLevel class is a Reward-subclass that allocates a specific level
+to a player which can serve as a status.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_reward.html">
+      <td>  Reward
+</td>
+      <td>  The super class of all rewards. Here are general information of the reward
+like to which organisation the reward belongs to or the goal to which it
+is associated.
+
+A Reward will be awarded in dependent of the goal for a group or one person
+after a person fulfilled a task. It can be chosen between one or more of
+the following rewards for a task: A permanent reward like a badge or
+achievement which can be obtained only once, or a volatile reward such as
+coins, points or a particular level which can be changed by getting for
+example more coins or be decreased by giving a bid for an offer in the
+marketplace.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_role.html">
+      <td>  Role
+</td>
+      <td>  A role describes which members of an organisation is allowed to do or see
+particular elements of the engine such as to fulfil a particular task and get
+its rewards. Each Player can have many different roles such as one for his
+occupation or the department in which she/he works. But the roles can also be a
+part of an invented role system that isn’t oriented towards the work context. All
+roles are specific to the respective created organisation.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_state.html">
+      <td>  State
+</td>
+      <td>  A State is the default answer of the engine. It gives information about the current date
+and time as well as the current version. It also shows the used path of the local host and the
+protocols that are supported.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_status.html">
+      <td>  Status
+</td>
+      <td>  
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_task.html">
+      <td>  Task
+</td>
+      <td>  The Super Class for different types of Task.
+
+A Task is the basic module and represents for example a specific activity. By its creation
+the roles were assigned which indicate who is allowed to fulfil this task. To complete the
+task only one of these roles is needed. One or more tasks can be assigned to a goal, so
+depending on the rule of the goal some additional tasks may also have to be completed to
+fulfill the goal so the player can earn the associated rewards. If the task is tradeable
+it can be offered in the marketplace, so that another player can do it and gets the reward
+of it.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_taskrule.html">
+      <td>  TaskRule
+</td>
+      <td>  A TaskRule defines the combination of tasks until a goal is fulfilled. So for a defined sample of tasks
+either all of them have to be fulfilled (type: DoAllTaskRule) which corresponds an AND-expression, or
+only one of a specific selection, which is like an OR-expression (type: DoAnyTaskRule).
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_textmessage.html">
+      <td>  TextMessage
+</td>
+      <td>  A present can be a short positive text message, which is sent to one or more
+receivers. This can contains a little thank or a praise.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_url.html">
+      <td>  URL
+</td>
+      <td>  
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_volatilereward.html">
+      <td>  VolatileReward
+</td>
+      <td>  A volatile reward is a reward that can be awarded more than one time. So the
+player can reach a goal and earn the connected rewards again. Such a reward
+is for example a specific amount of points which is added to the player's
+current points.
+</td>
+    </tr>
+  </tbody>
+  </table>
+
+        <footer class="footer">
+          <div class="container">
+            <p class="text-muted">Generated by <a href="http://enunciate.webcohesion.com">Enunciate</a>.</p>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript placed at the end of the document so the pages load faster. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- prettify code blocks. see http://code.google.com/p/google-code-prettify/ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js" type="text/javascript"></script>
+  <script>
+    $(function() {
+      $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+      });
+
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+
+</body>
+</html>

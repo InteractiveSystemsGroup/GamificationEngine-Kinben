@@ -1,0 +1,11 @@
+info.interactivesystems.gamificationengine.api
+info.interactivesystems.gamificationengine.api.exeption
+info.interactivesystems.gamificationengine.api.validation
+info.interactivesystems.gamificationengine.dao
+info.interactivesystems.gamificationengine.entities
+info.interactivesystems.gamificationengine.entities.goal
+info.interactivesystems.gamificationengine.entities.marketPlace
+info.interactivesystems.gamificationengine.entities.present
+info.interactivesystems.gamificationengine.entities.rewards
+info.interactivesystems.gamificationengine.entities.task
+info.interactivesystems.gamificationengine.utils

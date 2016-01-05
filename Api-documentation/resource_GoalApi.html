@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Kinben API: GoalApi</title>
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!--custom css for these pages-->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#apinav">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Kinben API: GoalApi</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="data.html">Data Types</a></li>
+          <li><a href="downloads.html">Files and Libraries</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar" id="apinav">
+        <ul class="nav nav-sidebar">
+          <li><a href="#resource_GoalApi_createNewGoal_POST">POST /goal</a></li>
+          <li><a href="#resource_GoalApi_getGoals_GET">GET /goal/*</a></li>
+          <li><a href="#resource_GoalApi_getGoal_GET">GET /goal/{id}</a></li>
+          <li><a href="#resource_GoalApi_changeGoalAttributes_PUT">PUT /goal/{id}/attributes</a></li>
+          <li><a href="#resource_GoalApi_deleteGoal_DELETE">DELETE /goal/{id}</a></li>
+          <li class="divider"></li>
+          <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <ol class="breadcrumb" id="top">
+          <li class="active dropdown"><a href="index.html">Home</a></li>
+          <li class="active dropdown"><a href="resources.html">Resources</a></li>
+          <li class="dropdown"><a href="resource_GoalApi.html">GoalApi</a></li>
+        </ol>
+
+      <h1 class="page-header">GoalApi <small>Resource</small></h1>
+
+      <p>A Goal comprises one or more tasks and has to be completed if the player wants to earn the connected awards.
+To create a goal some already created components are needed. So the condition when a goal is completed is
+defined in the goal rule and the connected tasks. Who can complete a goal is defined by the role of a player
+and whether it can be done by a group. It is also possible to define whether a goal is repeatable so that the
+player can complete the tasks and obtains its coins and points as rewards again. All goals that are
+associated with the organisation can be requested or like the elements before only one specific goal, if the
+correspondent id is used. The name, the associated rewards and also the rule for completion can be changed
+as well as the indication if the goal is repeatable or a goal that can be reached by a group. It is also
+possible to change the roles so different people can complete the goal.</p>
+
+      <div id="resource_GoalApi_createNewGoal_POST">
+        <h3>POST <small>/goal <!--<a href="./goal" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Creates a new goal and so the method generates the goal-id.
+The organisation's API key is mandatory otherwise a warning with the hint for a
+non valid API key is returned.
+By the creation the name and the id of the associated rule are needed. It can also be defined if
+the goal is repeatable or if it can also be completed by a group.
+Optionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at
+least one of these roles she/he can complete the goal and earn its rewards. It is checked, if the ids of the
+players are positive numbers otherwise a message for the invalid number is returned.
+Optionally the goal can be passed the id of rewards which can be earned. These ids are also checked if
+they are positive numbers.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+            <th>default</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@43cf3472 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this goal belongs to.</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>groupGoal</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@718048a2 -->
+            <td>query</td>
+            <td>Optionally a goal can also be done by a group. Possible values are "1" or "0", "true" or
+"false". The default value is "false".</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@162dcbca -->
+            <td>query</td>
+            <td>The name of the goal. This parameter is required.</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>repeatable</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6eb4104 -->
+            <td>query</td>
+            <td>Optionally a goal can be set as repeatable by "1" or "0", "true" or
+"false". The default value is "true".</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td>rewardIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3cbd890f -->
+            <td>query</td>
+            <td>All rewards that are awarded to the player who completes the goal. These ids are
+separated by commas.</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4f0b1362 -->
+            <td>query</td>
+            <td>Optionally a list of role-ids can be passed which are separated by commas. These ids indicate
+who is allowed to fulfil the goal. This parameter is required.</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td>ruleId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3780f2d2 -->
+            <td>query</td>
+            <td>The rule which define when a goal is completed. This parameter is required.</td>
+            <td>&nbsp;</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_goal.html">Goal</a>
+ (JSON)</td>
+            <td rowspan="1">A {@link Response} of {@link Goal} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_GoalApi_getGoals_GET">
+        <h3>GET <small>/goal/* <!--<a href="./goal/*" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns all goals which are associated with the given API key and so are belonging to the organisation.
+The players of one organisaiton can try to complete one these goals.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6b3f6647 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this goal belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_goal.html">Goal</a>
+ (JSON)</td>
+            <td rowspan="1">A {@link javax.ws.rs.core.Response} as {@link List} of {@link Goal}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_GoalApi_getGoal_GET">
+        <h3>GET <small>/goal/{id} <!--<a href="./goal/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Gets the {@link GoalRule} object which is associated with the goal. It is identified by the passed id and
+the API key. If the API key is not valid an analogous message is returned. It is also checked, if the
+id is a positive number otherwise a message for an invalid number is returned..</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b1a7fde -->
+            <td>path</td>
+            <td>Required integer which uniquely identify the {@link Goal}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c9debdc -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this goal belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_goal.html">Goal</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Goal} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_GoalApi_changeGoalAttributes_PUT">
+        <h3>PUT <small>/goal/{id}/attributes <!--<a href="./goal/{id}/attributes" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>With this method the fields of one specific goal can be changed. For this the goal id, the API key of
+the specific organisation, the name of the field and the new field's value are needed.
+To modify the name of the goal the new string has to be transfered with the attribute field.
+A list with role-ids separated by commas can be passed to define new roles which a player has to be allowed
+to complete the goal. By passing an id of another rule a new goal rule is associated with the goal.
+To modify if a goal is repeatable or can be completed as a group the values "1" or "0" or alternatively
+"true" and "false" can be passed.
+It is also checked, if all ids are a positive number otherwise a message for an invalid number is returned.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c3b9aff -->
+            <td>path</td>
+            <td>required id of the goal which should be modified</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c26da61 -->
+            <td>query</td>
+            <td>a valid query param api key affiliated to an organisation</td>
+          </tr>
+          <tr>
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@642aa0b4 -->
+            <td>query</td>
+            <td>required attribute which should be modified</td>
+          </tr>
+          <tr>
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@272a64e6 -->
+            <td>query</td>
+            <td>required new value of the attribute</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_goal.html">Goal</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Goal} in JSON</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_GoalApi_deleteGoal_DELETE">
+        <h3>DELETE <small>/goal/{id} <!--<a href="./goal/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes a specific goal from the data base which is identified by the given id and the
+API key. If the API key is not valid an analogous message is returned. It is also checked,
+if the id is a positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6786fe9e -->
+            <td>path</td>
+            <td>Required integer which uniquely identify the {@link Goal}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5dc9c5dd -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this goal belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_goal.html">Goal</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Goal} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+        <footer class="footer">
+          <div class="container">
+            <p class="text-muted">Generated by <a href="http://enunciate.webcohesion.com">Enunciate</a>.</p>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript placed at the end of the document so the pages load faster. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- prettify code blocks. see http://code.google.com/p/google-code-prettify/ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js" type="text/javascript"></script>
+  <script>
+    $(function() {
+      $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+      });
+
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+
+</body>
+</html>
