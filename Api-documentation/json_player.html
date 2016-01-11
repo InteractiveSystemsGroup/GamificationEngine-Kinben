@@ -70,7 +70,8 @@
 By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned
 rewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised
 by fulfilling tasks in the gamification application. Furthermore a player can have an avatar.
-A player can be set active or can be deactivated so that she/he cannot complete tasks.
+A player can be set active or can be deactivated so that she/he cannot complete tasks. By default every created
+player is active until she/he is deactivated.
 Each player can also have a list of contacts which represent other players in the same organisation to send
 little presents.
 At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a
@@ -289,16 +290,16 @@ all badges and achievements.
   &quot;finishedTasks&quot; : [ {
     &quot;id&quot; : 12345.0,
     &quot;finishedDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;nano&quot; : 12345.0,
       &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
       &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
+      &quot;second&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfYear&quot; : 12345.0,
       &quot;dayOfMonth&quot; : 12345.0,
-      &quot;dayOfYear&quot; : 12345.0
+      &quot;year&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;monthValue&quot; : 12345.0
     },
     &quot;task&quot; : {
       &quot;id&quot; : 12345.0,
@@ -311,16 +312,16 @@ all badges and achievements.
   }, {
     &quot;id&quot; : 12345.0,
     &quot;finishedDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;nano&quot; : 12345.0,
       &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
       &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
+      &quot;second&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfYear&quot; : 12345.0,
       &quot;dayOfMonth&quot; : 12345.0,
-      &quot;dayOfYear&quot; : 12345.0
+      &quot;year&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;monthValue&quot; : 12345.0
     },
     &quot;task&quot; : {
       &quot;id&quot; : 12345.0,
@@ -334,16 +335,16 @@ all badges and achievements.
   &quot;finishedGoals&quot; : [ {
     &quot;id&quot; : 12345.0,
     &quot;finishedDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;nano&quot; : 12345.0,
       &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
       &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
+      &quot;second&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfYear&quot; : 12345.0,
       &quot;dayOfMonth&quot; : 12345.0,
-      &quot;dayOfYear&quot; : 12345.0
+      &quot;year&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;monthValue&quot; : 12345.0
     },
     &quot;goal&quot; : {
       &quot;id&quot; : 12345.0,
@@ -358,16 +359,16 @@ all badges and achievements.
   }, {
     &quot;id&quot; : 12345.0,
     &quot;finishedDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;nano&quot; : 12345.0,
       &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
       &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
+      &quot;second&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfYear&quot; : 12345.0,
       &quot;dayOfMonth&quot; : 12345.0,
-      &quot;dayOfYear&quot; : 12345.0
+      &quot;year&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;monthValue&quot; : 12345.0
     },
     &quot;goal&quot; : {
       &quot;id&quot; : 12345.0,
@@ -422,17 +423,17 @@ all badges and achievements.
     &quot;name&quot; : &quot;...&quot;,
     &quot;description&quot; : &quot;...&quot;,
     &quot;icon&quot; : {
-      &quot;userInfo&quot; : &quot;...&quot;,
-      &quot;file&quot; : &quot;...&quot;,
-      &quot;content&quot; : { },
-      &quot;authority&quot; : &quot;...&quot;,
-      &quot;protocol&quot; : &quot;...&quot;,
       &quot;port&quot; : 12345.0,
+      &quot;content&quot; : { },
+      &quot;protocol&quot; : &quot;...&quot;,
+      &quot;path&quot; : &quot;...&quot;,
       &quot;defaultPort&quot; : 12345.0,
+      &quot;userInfo&quot; : &quot;...&quot;,
       &quot;host&quot; : &quot;...&quot;,
-      &quot;ref&quot; : &quot;...&quot;,
       &quot;query&quot; : &quot;...&quot;,
-      &quot;path&quot; : &quot;...&quot;
+      &quot;authority&quot; : &quot;...&quot;,
+      &quot;ref&quot; : &quot;...&quot;,
+      &quot;file&quot; : &quot;...&quot;
     },
     &quot;imageIcon&quot; : &quot;...&quot;,
     &quot;id&quot; : 12345.0,
@@ -447,17 +448,17 @@ all badges and achievements.
     &quot;name&quot; : &quot;...&quot;,
     &quot;description&quot; : &quot;...&quot;,
     &quot;icon&quot; : {
-      &quot;userInfo&quot; : &quot;...&quot;,
-      &quot;file&quot; : &quot;...&quot;,
-      &quot;content&quot; : { },
-      &quot;authority&quot; : &quot;...&quot;,
-      &quot;protocol&quot; : &quot;...&quot;,
       &quot;port&quot; : 12345.0,
+      &quot;content&quot; : { },
+      &quot;protocol&quot; : &quot;...&quot;,
+      &quot;path&quot; : &quot;...&quot;,
       &quot;defaultPort&quot; : 12345.0,
+      &quot;userInfo&quot; : &quot;...&quot;,
       &quot;host&quot; : &quot;...&quot;,
-      &quot;ref&quot; : &quot;...&quot;,
       &quot;query&quot; : &quot;...&quot;,
-      &quot;path&quot; : &quot;...&quot;
+      &quot;authority&quot; : &quot;...&quot;,
+      &quot;ref&quot; : &quot;...&quot;,
+      &quot;file&quot; : &quot;...&quot;
     },
     &quot;imageIcon&quot; : &quot;...&quot;,
     &quot;id&quot; : 12345.0,
@@ -474,17 +475,17 @@ all badges and achievements.
     &quot;description&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;,
     &quot;icon&quot; : {
-      &quot;userInfo&quot; : &quot;...&quot;,
-      &quot;file&quot; : &quot;...&quot;,
-      &quot;content&quot; : { },
-      &quot;authority&quot; : &quot;...&quot;,
-      &quot;protocol&quot; : &quot;...&quot;,
       &quot;port&quot; : 12345.0,
+      &quot;content&quot; : { },
+      &quot;protocol&quot; : &quot;...&quot;,
+      &quot;path&quot; : &quot;...&quot;,
       &quot;defaultPort&quot; : 12345.0,
+      &quot;userInfo&quot; : &quot;...&quot;,
       &quot;host&quot; : &quot;...&quot;,
-      &quot;ref&quot; : &quot;...&quot;,
       &quot;query&quot; : &quot;...&quot;,
-      &quot;path&quot; : &quot;...&quot;
+      &quot;authority&quot; : &quot;...&quot;,
+      &quot;ref&quot; : &quot;...&quot;,
+      &quot;file&quot; : &quot;...&quot;
     },
     &quot;id&quot; : 12345.0,
     &quot;belongsTo&quot; : {
@@ -499,17 +500,17 @@ all badges and achievements.
     &quot;description&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;,
     &quot;icon&quot; : {
-      &quot;userInfo&quot; : &quot;...&quot;,
-      &quot;file&quot; : &quot;...&quot;,
-      &quot;content&quot; : { },
-      &quot;authority&quot; : &quot;...&quot;,
-      &quot;protocol&quot; : &quot;...&quot;,
       &quot;port&quot; : 12345.0,
+      &quot;content&quot; : { },
+      &quot;protocol&quot; : &quot;...&quot;,
+      &quot;path&quot; : &quot;...&quot;,
       &quot;defaultPort&quot; : 12345.0,
+      &quot;userInfo&quot; : &quot;...&quot;,
       &quot;host&quot; : &quot;...&quot;,
-      &quot;ref&quot; : &quot;...&quot;,
       &quot;query&quot; : &quot;...&quot;,
-      &quot;path&quot; : &quot;...&quot;
+      &quot;authority&quot; : &quot;...&quot;,
+      &quot;ref&quot; : &quot;...&quot;,
+      &quot;file&quot; : &quot;...&quot;
     },
     &quot;id&quot; : 12345.0,
     &quot;belongsTo&quot; : {

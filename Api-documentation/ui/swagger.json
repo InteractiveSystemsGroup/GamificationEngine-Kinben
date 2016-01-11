@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info" : {
-    "description" : "In this API all methods and if applicable their default values are described which the gamification engine \n\t\t\t\tKinben provides. \n\t\t\t\tVisit the \n\t\t\t\t <a href=\"https://github.com/InteractiveSystemsGroup/GamificationEngine-Kinben/wiki\">Kinben wiki<\/a>\n\t\t\t\t \n\t\t\t\tfor more information or examples.",
+    "description" : "In this API all methods and if applicable their default values are described which the gamification engine \n\t\t\t\tKinben provides. \n\t\t\t\tVisit the \n\t\t\t\t <a href=\"https://github.com/InteractiveSystemsGroup/GamificationEngine-Kinben/wiki\">Kinben wiki<\/a>\n\t\t\t\t \n\t\t\t\tfor more information or examples.\n\t\t\t\t\n\t\t\t\tFor the gamification engine exists also a \n\t\t\t\t <a href=\"http://interactivesystemsgroup.github.io/GamificationEngine-Kinben/Javadoc/\">Javadoc documentation<\/a>\n\t\t\t\t .",
     "version" : "1.0.0-SNAPSHOT",
     "title" : "Kinben API"
   },
@@ -38,12 +38,12 @@
     ,
     {
       "name" : "PlayerApi",
-      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of\r\na level is set to \"0\". These can be raised by fulfilling tasks in the gamification application. Furthermore\r\na player can have an avatar, by specifying the path of an image previously uploaded to a server.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create\r\nand to delete a player it is possible to get one particular player of one specific organisation by her/his\r\nassociated id or all players of the organisation. The avatar of one player can also be requested. To display\r\nthe status of a player ancillary the already finished goals and finished tasks it can be requested all earned\r\npermanent rewards. If only one status element is needed, the current points, coins, badges or achievements\r\ncan be gotten instead.\r\nEach player can also have a list of contacts which represent other players in the same organisation to send\r\nlittle presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has."
+      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of\r\na level is set to \"0\". These can be raised by fulfilling tasks in the gamification application. Furthermore\r\na player can have an avatar, by specifying the path of an image previously uploaded to a server.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create\r\nand to delete a player it is possible to get one particular player of one specific organisation by her/his\r\nassociated id or all players of the organisation. The avatar of one player can also be requested. To display\r\nthe status of a player ancillary the already finished goals and finished tasks it can be requested all earned\r\npermanent rewards. If only one status element is needed, the current points, coins, badges or achievements\r\ncan be gotten instead.\r\nEach player can also have a list of contacts which represent other players in the same organisation, so players\r\ncan send them little presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has."
     }
     ,
     {
       "name" : "PlayerGroupApi",
-      "description" : "Players can be assigned to a group by its creation or at a later point in time.\r\nFor example depending on the respective organization, a group can be a\r\ndepartment, a work group or several employees with the same occupation. It is\r\npossible to create special tasks which can be done also or only as a group.\r\nWhen a member of a group completed such a task the group obtains its rewards.\r\nSo a group can also have a list of already earned rewards and finished Goals.\r\nLike a player, a group can be assigned an image as a logo. This can either be\r\ndone when creating the group or later through a PUT query. Later players can\r\nalso be added to a group or the group’s name can be changed."
+      "description" : "Players can be assigned to a group by its creation or at a later point in time.\r\nFor example depending on the respective organization, a group can be a\r\ndepartment, a work group or several employees with the same occupation. It is\r\npossible to create special tasks which can be done only as a group.\r\nWhen a member of a group completed such a task the group obtains its rewards.\r\nSo a group can also have a list of already earned rewards and finished Goals.\r\nLike a player, a group can be assigned an image as a logo. This can either be\r\ndone when creating the group or later through a PUT query. Later players can\r\nalso be added to a group or the group’s name can be changed."
     }
     ,
     {
@@ -53,7 +53,7 @@
     ,
     {
       "name" : "PresentApi",
-      "description" : "Players in a gamification application can send little presents to each other, whereby\r\none or more players can be a recipient. These presents can be an image or a short text\r\nmessage which contains for example a little praise. A Board serves a player to send and\r\nto store little presents in terms of a short text message or an image. The difference\r\nbetween these two messages is as the name suggests, that the text message contains a\r\nshort text and the image message an image. To archive the presents they can be moved to\r\nan additional list. It is possible to get for one player all her/his text messages or all\r\nmessages with a little image that were created. Furthermore all new presents of player\r\ncan be requested as well as the accepted and archived presents. All denies presents were\r\nremoved from the in-box."
+      "description" : "Players in a gamification application can send presents to each other, whereby\r\none or more players can be a recipient. These presents can be a small image or a short text\r\nmessage which contains for example a little praise. A Board serves a player to send and\r\nto store presents in terms of a short text message or an image. The difference\r\nbetween these two messages is as the name suggests, that the text message contains a\r\nshort text and the image message an image. To archive the presents they can be moved to\r\nan additional list. It is possible to get for one player all her/his text messages or all\r\nmessages with a small image that were created. Furthermore all new presents of player\r\ncan be requested as well as the accepted and archived presents. All denies presents were\r\nremoved from the in-box."
     }
     ,
     {
@@ -754,7 +754,7 @@
 }
             }
           },
-      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised\r\nby fulfilling tasks in the gamification application. Furthermore a player can have an avatar.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks.\r\nEach player can also have a list of contacts which represent other players in the same organisation to send\r\nlittle presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has."
+      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised\r\nby fulfilling tasks in the gamification application. Furthermore a player can have an avatar.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks. By default every created\r\nplayer is active until she/he is deactivated.\r\nEach player can also have a list of contacts which represent other players in the same organisation to send\r\nlittle presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has."
     }
     ,
     "json_playergroup" : {
@@ -815,7 +815,7 @@
 }
             }
           },
-      "description" : "Players can be assigned to a group by its creation or at a later point in time.\r\nFor example depending on the respective organization, a group can be a\r\ndepartment, a work group or several employees with the same occupation. It is\r\npossible to create special tasks which can be done also or only as a group.\r\nWhen a member of a group completed such a task the group obtains its rewards.\r\nSo a group can also have a list of already earned rewards and finished Goals.\r\nLike a player, a group can be assigned an image as a logo."
+      "description" : "Players can be assigned to a group by its creation or at a later point in time.\r\nFor example depending on the respective organization, a group can be a\r\ndepartment, a work group or several employees with the same occupation. It is\r\npossible to create special tasks which can be done only as a group.\r\nWhen a member of a group completed such a task the group obtains its rewards.\r\nSo a group can also have a list of already earned rewards and finished Goals.\r\nLike a player, a group can be assigned an image as a logo."
     }
     ,
     "json_playerlevel" : {
@@ -888,7 +888,7 @@
 "$ref" : "#/definitions/json_player"
             }
           },
-      "description" : "A present is a little positive message which one player can send to one or\r\nmore other players. These presents can be an image or a short text message which\r\ncontains for example a little praise. A Board serves a player to send and to store\r\nlittle presents in terms of a short text message or an image. The difference between\r\nthese two messages is as the name suggests, that the text message contains a short\r\ntext and the image message an image. To archive the presents they can be moved to\r\nan additional list. It is possible to get for one player all her/his text messages\r\nor all messages with a little image that were created. Furthermore all new presents\r\nof player can be requested as well as the accepted and archived presents. All denies\r\npresents were removed from the in-box."
+      "description" : "A present is a little positive message which one player can send to one or\r\nmore other players. These presents can be an image or a short text message which\r\ncontains for example a little praise. A Board serves a player to send and to store\r\nthese presents in terms of a short text message or an small image. The difference between\r\nthese two messages is as the name suggests, that the text message contains a short\r\ntext and the image message an image. To archive the presents they can be moved to\r\nan additional list. It is possible to get for one player all her/his text messages\r\nor all messages with a small image that were created. Furthermore all new presents\r\nof a player can be requested as well as the accepted and archived presents. All denied\r\npresents were removed from the in-box."
     }
     ,
     "json_presentarchived" : {
@@ -1103,7 +1103,7 @@
           }
         }
       ],
-      "description" : "A present can be a short positive text message, which is sent to one or more\r\nreceivers. This can contains a little thank or a praise."
+      "description" : "A present can be a short positive text message, which is sent to one or more\r\nreceivers. It can contain a little thank or a praise."
     }
     ,
     "json_url" : {
@@ -1579,25 +1579,25 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "required id of the goal which should be modified"
+            "description" : "Required id of the goal which should be modified."
           },
           {
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "a valid query param api key affiliated to an organisation"
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this role belongs to."
           },
           {
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "required attribute which should be modified"
+            "description" : "The attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"goalName\", \"isRepeateable\", \"isGroupGoal\", \"rewardId\", \"ruleId\" and \"roles\"."
           },
           {
             "name" : "value",
             "in" : "query",
             "type" : "string",
-            "description" : "required new value of the attribute"
+            "description" : "The new value of the attribute."
           }
         ],
         "responses" : {
@@ -1726,8 +1726,8 @@
     "/marketPlace/{id}/compOffer" : {
       "post" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "If an offer is fulfilled, with this request the offer is completed and the player with the passed id who\r\nhas completed it gets the prize as a reward. It is checked, if the passed ids are a positive number\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous message\r\nis returned.",
-        "operationId" : "resource_MarketPlaceApi_completedOffer_POST",
+        "description" : "If an offer is fulfilled by a player, this request can be used to complete the offer. With this request\r\nthe player with the passed id represents the player who fulfilled the task so she/he gets the prize as a\r\nreward.\r\nIt is checked, if all passed ids are a positive number otherwise a message for an invalid number is\r\nreturned. If the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_MarketPlaceApi_completeOffer_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
           {
@@ -1822,7 +1822,7 @@
     "/marketPlace/bid" : {
       "post" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "With this method a player make a bid to an offer. So a new bid is created and therefore an id is\r\ngenerated. The id of the player is needed to indicate who has made the bid and id of the offer to identify\r\nfor which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so\r\nthe offer's prize is raised.",
+        "description" : "With this method a player makes a bid to an offer. So a new bid is created and therefore an id is\r\ngenerated. The id of the player is needed to indicate who has made the bid and id of the offer to identify\r\nfor which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so\r\nthe offer's prize is raised.",
         "operationId" : "resource_MarketPlaceApi_giveABid_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2088,7 +2088,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"deadline\", \"enddate\" and \"playerRoles\"."
           },
           {
             "name" : "value",
@@ -2359,7 +2359,7 @@
             "name" : "password",
             "in" : "query",
             "type" : "string",
-            "description" : "Required query param associated with the email address."
+            "description" : "Required query parameter associated with the email address."
           }
         ],
         "responses" : {
@@ -2745,7 +2745,7 @@
     "/player" : {
       "post" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Creates a new player and so the method generates the player-id. The organisation's API key\r\nis mandatory otherwise a warning with the hint for a non valid API key is returned.\r\nThe player can choose a password for her/his account. By the creation some initial\r\nroles can be set which can also be changed at a later point of time. It is checked, if\r\nthe id of the roles are positive numbers otherwise a message for the invalid number\r\nis returned.",
+        "description" : "Creates a new player and so the method generates the player-id. The organisation's API key\r\nis mandatory otherwise a warning with the hint for a non valid API key is returned.\r\nThe player can choose a password for her/his account. By the creation some initial\r\nroles can be set which can also be changed at a later point of time. By default every\r\ncreated player is active until she/he is deactivated. It is checked, if the id of the\r\nroles are positive numbers otherwise a message for the invalid number is returned.",
         "operationId" : "resource_PlayerApi_create_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2944,7 +2944,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This\r\nparameter is required. The following names of attributes can\r\nbe used to change the associated field:\r\n\"password\", \"reference\", \"nickname\", \"playerRoles\", \"contact\"\r\nand \"avatar\"."
           },
           {
             "name" : "value",
@@ -3299,7 +3299,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is\r\nrequired. The following names of attributes can be used to change the\r\nassociated field:\r\n\"name\", \"playerIds\" and \"logo\"."
           },
           {
             "name" : "value",
@@ -3420,7 +3420,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the\r\nassociated field:\r\n\"levelName\" and \"levelIndex\"."
           },
           {
             "name" : "value",
@@ -3770,7 +3770,7 @@
     "/present/send" : {
       "post" : {
         "tags" : [ "PresentApi" ],
-        "description" : "With this method one present is sent to all specified receivers. So the presents is stored\r\nin the each inbox of the receivers.",
+        "description" : "With this method one present is sent to all specified receivers. So the present is stored\r\nin each inbox of the receivers.",
         "operationId" : "resource_PresentApi_send_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -4126,7 +4126,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
           },
           {
             "name" : "id",
@@ -4175,7 +4175,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
           },
           {
             "name" : "id",
@@ -4476,7 +4476,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\" and \"name\"."
           },
           {
             "name" : "id",
@@ -4677,7 +4677,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This\r\nparameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\"."
           },
           {
             "name" : "id",
@@ -4875,7 +4875,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be changed.  This parameter is required."
+            "description" : "The name of the attribute which should be changed.  This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\"."
           },
           {
             "name" : "value",
@@ -5171,7 +5171,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"description\", \"name\" and if it is a GetPointsRule: \"points\"."
           },
           {
             "name" : "value",
@@ -5292,7 +5292,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"taskName\", \"description\", \"tradeable\" and \"roles\"."
           },
           {
             "name" : "value",
@@ -5377,7 +5377,7 @@
     "/task/{id}/complete/{playerId}" : {
       "post" : {
         "tags" : [ "TaskApi" ],
-        "description" : "This method completes a task with the assigned id and associated API key. The player-id\r\nrepresents the player who has completed the task. The task is added to the list of\r\nfinished tasks of this player. Thereby the task becomes a finished task object ant the\r\ntime and date is also stored when the task was officially be done.",
+        "description" : "This method completes a task with the assigned id and associated API key. The player-id\r\nrepresents the player who has completed the task. The task is added to the list of\r\nfinished tasks of this player. Thereby the task becomes a finished task object and the\r\ntime and date is also stored when the task was officially be done.",
         "operationId" : "resource_TaskApi_completeTask_POST",
         "produces" : [ "application/json" ],
         "parameters" : [

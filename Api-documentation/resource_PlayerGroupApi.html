@@ -74,7 +74,7 @@
       <p>Players can be assigned to a group by its creation or at a later point in time.
 For example depending on the respective organization, a group can be a
 department, a work group or several employees with the same occupation. It is
-possible to create special tasks which can be done also or only as a group.
+possible to create special tasks which can be done only as a group.
 When a member of a group completed such a task the group obtains its rewards.
 So a group can also have a list of already earned rewards and finished Goals.
 Like a player, a group can be assigned an image as a logo. This can either be
@@ -103,23 +103,23 @@ a message for the invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@27b8182d -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@535092a3 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>
           </tr>
           <tr>
-            <td>logoPath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@39dc3599 -->
+            <td>logoPath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@81c804f -->
             <td>query</td>
             <td>Optionally a group logo as a HTTP reference can be passed.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@77a14768 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@96ac7d1 -->
             <td>query</td>
             <td>The name of the group. This parameter is required.</td>
           </tr>
           <tr>
-            <td>playerIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4666ea3e -->
+            <td>playerIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@cdba98e -->
             <td>query</td>
             <td>A list of player-ids can be passed that a group has. These ids are
 separated by commas. This parameter is required.</td>
@@ -165,12 +165,12 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@21f8ebaf -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5bc9f73c -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@79d072f4 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@37bb1af2 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>
@@ -222,24 +222,26 @@ the ids are a positive number otherwise a message for an invalid number is retur
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@437f0a1 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6830079b -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7571cd03 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@39f654ca -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this role belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@13b2e591 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d9224df -->
             <td>query</td>
-            <td>The name of the attribute which should be modified. This
-parameter is required.</td>
+            <td>The name of the attribute which should be modified. This parameter is
+required. The following names of attributes can be used to change the
+associated field:
+"name", "playerIds" and "logo".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@698f62c1 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4211d715 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -284,12 +286,12 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@520635a9 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a750c13 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2964e33f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@212e5d93 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>

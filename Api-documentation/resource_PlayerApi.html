@@ -95,8 +95,8 @@ associated id or all players of the organisation. The avatar of one player can a
 the status of a player ancillary the already finished goals and finished tasks it can be requested all earned
 permanent rewards. If only one status element is needed, the current points, coins, badges or achievements
 can be gotten instead.
-Each player can also have a list of contacts which represent other players in the same organisation to send
-little presents.
+Each player can also have a list of contacts which represent other players in the same organisation, so players
+can send them little presents.
 At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a
 player has.</p>
 
@@ -106,9 +106,9 @@ player has.</p>
         <p>Creates a new player and so the method generates the player-id. The organisation's API key
 is mandatory otherwise a warning with the hint for a non valid API key is returned.
 The player can choose a password for her/his account. By the creation some initial
-roles can be set which can also be changed at a later point of time. It is checked, if
-the id of the roles are positive numbers otherwise a message for the invalid number
-is returned.</p>
+roles can be set which can also be changed at a later point of time. By default every
+created player is active until she/he is deactivated. It is checked, if the id of the
+roles are positive numbers otherwise a message for the invalid number is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -121,29 +121,29 @@ is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b10f20f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1cbdd298 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player should belong to.</td>
           </tr>
           <tr>
-            <td>nickname</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47892bd3 -->
+            <td>nickname</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7f4536a3 -->
             <td>query</td>
             <td>The query parameter of the player's nickname. This field must not be null.</td>
           </tr>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e474c49 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@10cb2c27 -->
             <td>query</td>
             <td>The query parameter for the player's password. This field must not be null.</td>
           </tr>
           <tr>
-            <td>reference</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@62a27357 -->
+            <td>reference</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7e35fbb3 -->
             <td>query</td>
             <td>Optionally the player's reference as string map to a customers user
 identifier.</td>
           </tr>
           <tr>
-            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7e3e6586 -->
+            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c6ecfff -->
             <td>query</td>
             <td>Optionally a list of role ids can be passed that a player has. These ids are
 separated by commas.</td>
@@ -189,7 +189,7 @@ is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70671e21 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a4810ff -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation.</td>
           </tr>
@@ -234,12 +234,12 @@ id is a positive number otherwise a message for an invalid number is returned.</
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74c63160 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@132bb585 -->
             <td>path</td>
             <td>Required integer as path parameter which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@50fdc64 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@42123c30 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -285,12 +285,12 @@ if the id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@8109b16 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@387902ba -->
             <td>path</td>
             <td>Required integer as path parameter which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40ce1a23 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@222c32a2 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this role belongs to.</td>
@@ -344,24 +344,27 @@ an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5466e6b -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6ce52cff -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7ed16e5b -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f456eef -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this role belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@729592bc -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4f59d76f -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This
-parameter is required.</td>
+parameter is required. The following names of attributes can
+be used to change the associated field:
+"password", "reference", "nickname", "playerRoles", "contact"
+and "avatar".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@42ba81cf -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@ca34504 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -407,18 +410,18 @@ message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74398ac5 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@496412bb -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1ef81af -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5d423f6e -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
           </tr>
           <tr>
-            <td>contactIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5f31e35c -->
+            <td>contactIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5c217906 -->
             <td>query</td>
             <td>The list of player ids which should be added to the contact list. These ids are
 separated by commas.</td>
@@ -465,18 +468,18 @@ message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4913a58c -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4abc8ce3 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@714471c9 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2324aec5 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
           </tr>
           <tr>
-            <td>contactIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c5b74b7 -->
+            <td>contactIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fd14c80 -->
             <td>query</td>
             <td>The list of player ids which should be added to the contact list. These ids are
 separated by commas and must not be null.</td>
@@ -523,12 +526,12 @@ is a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5ca05d63 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@38eff135 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@8cbbcbe -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@161ab95f -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -575,12 +578,12 @@ is a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5ad35e57 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@10ce6fdf -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@dfa6776 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@751e840a -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -627,12 +630,12 @@ is a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@536f78ef -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@323fa5c5 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6941070 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@712c229c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -678,12 +681,12 @@ player id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4675c713 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@127f0bf1 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@18ead97c -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1340f360 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -729,12 +732,12 @@ player id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@306a728e -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5c1e7d40 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@165bf363 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4c369c9d -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -781,12 +784,12 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7efee3e4 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@267c2669 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3091e47e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@32331a35 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -833,12 +836,12 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@530c0ee0 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1de8954e -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1a053f09 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6542301a -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -885,12 +888,12 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@13ed1e6e -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@224a1db5 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c60ba79 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@802497b -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -937,12 +940,12 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1fa8ca1b -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5119ffd0 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c665390 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@25afc709 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
@@ -989,12 +992,12 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5703361c -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@577ac1bc -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Player}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7e99edf7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4da903b9 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
