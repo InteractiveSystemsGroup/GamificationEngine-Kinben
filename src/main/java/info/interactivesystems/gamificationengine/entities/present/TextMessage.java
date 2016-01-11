@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 /**
  * A present can be a short positive text message, which is sent to one or more
- * receivers. This can contains a little thank or a praise.
+ * receivers. It can contain a little thank or a praise.
  */
 @Entity
 @DiscriminatorValue("PreTextM")

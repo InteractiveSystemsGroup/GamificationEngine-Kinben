@@ -224,13 +224,16 @@ public class GoalApi {
 	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param goalId
-	 *            required id of the goal which should be modified
+	 *            Required id of the goal which should be modified.
 	 * @param attribute
-	 *            required attribute which should be modified
+	 *            The attribute which should be modified. This parameter is required.
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "goalName", "isRepeateable", "isGroupGoal", "rewardId", "ruleId" and "roles".
 	 * @param value
-	 *            required new value of the attribute
+	 *            The new value of the attribute.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this role belongs to.
 	 * @return {@link Response} of {@link Goal} in JSON
 	 */
 	@PUT

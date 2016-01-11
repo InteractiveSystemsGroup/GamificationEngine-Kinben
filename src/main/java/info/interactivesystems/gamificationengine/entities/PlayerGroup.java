@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
  * Players can be assigned to a group by its creation or at a later point in time. 
  * For example depending on the respective organization, a group can be a 
  * department, a work group or several employees with the same occupation. It is 
- * possible to create special tasks which can be done also or only as a group. 
+ * possible to create special tasks which can be done only as a group. 
  * When a member of a group completed such a task the group obtains its rewards. 
  * So a group can also have a list of already earned rewards and finished Goals. 
  * Like a player, a group can be assigned an image as a logo.
@@ -204,7 +204,7 @@ public class PlayerGroup {
 
 	/**
 	 * This method checks if a group belongs to a specific organisation. Therefore
-	 * it is tested if the organisation's API key matchs the group's API key. 
+	 * it is tested if the organisation's API key matches the group's API key. 
 	 * 
 	 * @param organisation
 	 * 			The organisation object a group may belong to.

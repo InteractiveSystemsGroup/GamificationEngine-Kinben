@@ -102,7 +102,7 @@ public class OrganisationApi {
 	 * @param email
 	 *            The required valid email.
 	 * @param password
-	 *             Required query param associated with the email address. 
+	 *             Required query parameter associated with the email address. 
 	 *@param apiKey
 	 *			The API key of the organisation to which the manager belongs to.    
 	 * @return A {@link Response} of {@link Organisation} in JSON.

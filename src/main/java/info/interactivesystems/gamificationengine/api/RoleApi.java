@@ -133,8 +133,10 @@ public class RoleApi {
 	 *            The id of the role that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be changed.  This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "name".
 	 * @param value
-	 *            The new value of the attribute. This parameter is required.
+	 *            The new value of the attribute. This parameter is required.  
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.

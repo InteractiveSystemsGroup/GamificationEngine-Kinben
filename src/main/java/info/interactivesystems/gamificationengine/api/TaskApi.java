@@ -219,7 +219,7 @@ public class TaskApi {
 	/**
 	 * This method completes a task with the assigned id and associated API key. The player-id
 	 * represents the player who has completed the task. The task is added to the list of 
-	 * finished tasks of this player. Thereby the task becomes a finished task object ant the 
+	 * finished tasks of this player. Thereby the task becomes a finished task object and the 
 	 * time and date is also stored when the task was officially be done.
 	 * 
 	 * 
@@ -285,6 +285,8 @@ public class TaskApi {
 	 *           The id of the task that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "taskName", "description", "tradeable" and "roles".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey

@@ -260,7 +260,9 @@ public class RuleApi {
 	 * @param id
 	 *          The id of the goal rule that should be changed. This parameter is required.
 	 * @param attribute
-	 *           The name of the attribute which should be modified. This parameter is required. 
+	 *           The name of the attribute which should be modified. This parameter is required.
+	 *           The following names of attributes can be used to change the associated field:
+	 *           "description", "name" and if it is a GetPointsRule: "points". 
 	 * @param value
 	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey

@@ -43,14 +43,14 @@ import org.slf4j.LoggerFactory;
 import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
- * Players in a gamification application can send little presents to each other, whereby 
- * one or more players can be a recipient. These presents can be an image or a short text
+ * Players in a gamification application can send presents to each other, whereby 
+ * one or more players can be a recipient. These presents can be a small image or a short text
  * message which contains for example a little praise. A Board serves a player to send and 
- * to store little presents in terms of a short text message or an image. The difference 
+ * to store presents in terms of a short text message or an image. The difference 
  * between these two messages is as the name suggests, that the text message contains a 
  * short text and the image message an image. To archive the presents they can be moved to
  * an additional list. It is possible to get for one player all her/his text messages or all
- * messages with a little image that were created. Furthermore all new presents of player 
+ * messages with a small image that were created. Furthermore all new presents of player 
  * can be requested as well as the accepted and archived presents. All denies presents were
  * removed from the in-box.
  */
@@ -348,8 +348,8 @@ public class PresentApi {
 	}
 
 	/**
-	 * With this method one present is sent to all specified receivers. So the presents is stored 
-	 * in the each inbox of the receivers.
+	 * With this method one present is sent to all specified receivers. So the present is stored 
+	 * in each inbox of the receivers.
 	 * 
 	 * @param presentId
 	 *            The path parameter of the present's id that should be sent to the receivers. 

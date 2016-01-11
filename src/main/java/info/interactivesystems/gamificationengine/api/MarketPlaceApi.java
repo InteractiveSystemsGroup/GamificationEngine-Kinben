@@ -262,7 +262,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * With this method a player make a bid to an offer. So a new bid is created and therefore an id is 
+	 * With this method a player makes a bid to an offer. So a new bid is created and therefore an id is 
 	 * generated. The id of the player is needed to indicate who has made the bid and id of the offer to identify 
 	 * for which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so 
 	 * the offer's prize is raised.
@@ -599,10 +599,11 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * If an offer is fulfilled, with this request the offer is completed and the player with the passed id who
-	 * has completed it gets the prize as a reward. It is checked, if the passed ids are a positive number 
-	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous message
-	 * is returned.
+	 * If an offer is fulfilled by a player, this request can be used to complete the offer. With this request 
+	 * the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a 
+	 * reward. 
+	 * It is checked, if all passed ids are a positive number otherwise a message for an invalid number is 
+	 * returned. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param offerId
 	 *            The offer id which was finished. This parameter is required. 
@@ -617,7 +618,7 @@ public class MarketPlaceApi {
 	@POST
 	@Path("/{id}/compOffer")
 	@TypeHint(Task.class)
-	public Response completedOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
+	public Response completeOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -670,6 +671,8 @@ public class MarketPlaceApi {
 	 *            The id of the offer that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "name", "deadline", "enddate" and "playerRoles".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey

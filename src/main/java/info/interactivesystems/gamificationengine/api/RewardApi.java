@@ -500,8 +500,9 @@ public class RewardApi {
 	 * @param rewardId
 	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "name", "description" and "icon".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -563,8 +564,9 @@ public class RewardApi {
 	 * @param rewardId
 	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            The name of the attribute which should be modified. This parameter is required.
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "name", "description" and "icon".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -622,8 +624,9 @@ public class RewardApi {
 	 * @param rewardId
 	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "amount".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -674,8 +677,9 @@ public class RewardApi {
 	 * @param rewardId
 	 *            Required integer which uniquely identify the {@link Reward}.
 	 * @param attribute
-	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            The name of the attribute which should be modified. This parameter is required.
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "amount" and "name". 
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey

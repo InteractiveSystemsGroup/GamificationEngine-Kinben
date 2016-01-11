@@ -53,8 +53,8 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * the status of a player ancillary the already finished goals and finished tasks it can be requested all earned 
  * permanent rewards. If only one status element is needed, the current points, coins, badges or achievements 
  * can be gotten instead. 
- * Each player can also have a list of contacts which represent other players in the same organisation to send 
- * little presents. 
+ * Each player can also have a list of contacts which represent other players in the same organisation, so players 
+ * can send them little presents. 
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
  * player has.
  */
@@ -75,9 +75,9 @@ public class PlayerApi {
 	 * Creates a new player and so the method generates the player-id. The organisation's API key 
 	 * is mandatory otherwise a warning with the hint for a non valid API key is returned.
 	 * The player can choose a password for her/his account. By the creation some initial
-	 * roles can be set which can also be changed at a later point of time. It is checked, if 
-	 * the id of the roles are positive numbers otherwise a message for the invalid number 
-	 * is returned.
+	 * roles can be set which can also be changed at a later point of time. By default every 
+	 * created player is active until she/he is deactivated. It is checked, if the id of the 
+	 * roles are positive numbers otherwise a message for the invalid number is returned.
 	 * 
 	 * @param nickname
 	 *            The query parameter of the player's nickname. This field must not be null.
@@ -213,7 +213,10 @@ public class PlayerApi {
 	 *            Required integer which uniquely identify the {@link Player}.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            parameter is required. The following names of attributes can 
+	 *            be used to change the associated field:
+	 *            "password", "reference", "nickname", "playerRoles", "contact" 
+	 *            and "avatar".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey

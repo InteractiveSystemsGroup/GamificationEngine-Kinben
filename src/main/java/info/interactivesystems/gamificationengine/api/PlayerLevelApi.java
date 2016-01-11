@@ -110,6 +110,9 @@ public class PlayerLevelApi {
 	 *           The id of the player level that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the 
+	 *            associated field:
+	 *            "levelName" and "levelIndex". 
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey

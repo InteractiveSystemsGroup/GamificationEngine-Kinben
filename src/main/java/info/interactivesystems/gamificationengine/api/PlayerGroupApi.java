@@ -39,7 +39,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * Players can be assigned to a group by its creation or at a later point in time.
  * For example depending on the respective organization, a group can be a 
  * department, a work group or several employees with the same occupation. It is
- * possible to create special tasks which can be done also or only as a group. 
+ * possible to create special tasks which can be done only as a group. 
  * When a member of a group completed such a task the group obtains its rewards. 
  * So a group can also have a list of already earned rewards and finished Goals. 
  * Like a player, a group can be assigned an image as a logo. This can either be 
@@ -161,8 +161,10 @@ public class PlayerGroupApi {
 	 * @param id
 	 *           Required integer which uniquely identify the {@link PlayerGroup}.
 	 * @param attribute
-	 *           The name of the attribute which should be modified. This 
-	 *           parameter is required. 
+	 *           The name of the attribute which should be modified. This parameter is 
+	 *           required. The following names of attributes can be used to change the 
+	 *           associated field:
+	 *           "name", "playerIds" and "logo".
 	 * @param value
 	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey

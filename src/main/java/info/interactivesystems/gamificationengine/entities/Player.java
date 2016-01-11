@@ -24,14 +24,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
  * rewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised 
  * by fulfilling tasks in the gamification application. Furthermore a player can have an avatar.
- * A player can be set active or can be deactivated so that she/he cannot complete tasks. 
+ * A player can be set active or can be deactivated so that she/he cannot complete tasks. By default every created 
+ * player is active until she/he is deactivated. 
  * Each player can also have a list of contacts which represent other players in the same organisation to send 
  * little presents. 
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
