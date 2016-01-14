@@ -612,7 +612,7 @@ public class PlayerApi {
 	@TypeHint(int.class)
 	public Response getPlayerPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		log.debug("get earned points from Player requested");
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
 		int points = player.getPoints();
 
@@ -637,7 +637,7 @@ public class PlayerApi {
 	@TypeHint(int.class)
 	public Response getPlayerCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		log.debug("get earned coins from Player requested");
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
 		int coins = player.getCoins();
 

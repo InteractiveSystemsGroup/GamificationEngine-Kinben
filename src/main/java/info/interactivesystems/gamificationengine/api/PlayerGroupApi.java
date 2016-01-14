@@ -285,7 +285,7 @@ public class PlayerGroupApi {
 		log.debug("get groups's avatar image");
 
 		int groupId = ValidateUtils.requireGreaterThenZero(id);
-		PlayerGroup group = groupDao.getPlayerGroup(groupId, apiKey);
+		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(groupId), apiKey);
 
 		byte[] bytes = group.getGroupLogo();
 
@@ -294,4 +294,53 @@ public class PlayerGroupApi {
 		});
 	}
 	
+	/**
+	 * Returns the current amount of points associated with the group of players of the passed id. If 
+	 * the API key is not valid an analogous message is returned. It is also checked, if
+	 * the group id is a positive number otherwise a message for an invalid number is 
+	 * returned.
+	 *
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group of players belongs to.
+	 * @return {@link Response} of {@link int} in JSON.
+	 */
+	@GET
+	@Path("/{id}/points")
+	@TypeHint(int.class)
+	public Response getPlayerGroupPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get earned points from group requested");
+		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		int points = group.getPoints();
+
+		return ResponseSurrogate.of(points);
+	}
+
+	/**
+	 * Returns the current amount of coins associated with the group of players of the passed id. If 
+	 * the API key is not valid an analogous message is returned. It is also checked, if
+	 * the group id is a positive number otherwise a message for an invalid number is 
+	 * returned.
+	 * 
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group of players belongs to.
+	 * @return {@link Response} of {@link int} in JSON.
+	 */
+	@GET
+	@Path("/{id}/coins")
+	@TypeHint(int.class)
+	public Response getPlayerGroupCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get earned coins from group of players requested");
+		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		int coins = group.getCoins();
+
+		return ResponseSurrogate.of(coins);
+	}
 }
