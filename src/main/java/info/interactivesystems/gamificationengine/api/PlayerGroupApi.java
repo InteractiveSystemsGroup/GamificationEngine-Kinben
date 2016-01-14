@@ -264,6 +264,34 @@ public class PlayerGroupApi {
 		return ResponseSurrogate.deleted(plGroup);
 	}
 
-	//TODO get all earned bages/achviements/points and coins of a group
+	//TODO get all earned bages/achievements/points and coins of a group
+	/**
+	 * Returns the avatar which is associated with a group of players. To identify the group its id and 
+	 * the API key is needed to which the group belongs to. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
+	 * @return {@link Response} of {@link Object} with an byte[] in JSON.
+	 */
+	@GET
+	@Path("{id}/avatar")
+	@TypeHint(byte[].class)
+	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		log.debug("get groups's avatar image");
+
+		int groupId = ValidateUtils.requireGreaterThenZero(id);
+		PlayerGroup group = groupDao.getPlayerGroup(groupId, apiKey);
+
+		byte[] bytes = group.getGroupLogo();
+
+		return ResponseSurrogate.of(new Object() {
+			public byte[] image = bytes;
+		});
+	}
 	
 }

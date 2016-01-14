@@ -384,7 +384,7 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns the avatar which is associated with a player. To identify the pplayer her/his id and 
+	 * Returns the avatar which is associated with a player. To identify the player her/his id and 
 	 * the API key is needed to which the player belongs to. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
