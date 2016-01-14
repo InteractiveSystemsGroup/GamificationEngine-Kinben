@@ -4,6 +4,7 @@ import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.PlayerGroup;
+import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
 import info.interactivesystems.gamificationengine.entities.goal.Goal;
@@ -74,6 +75,8 @@ public class Points extends VolatileReward {
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
+		//New: Test for matching roles
+		List<Role> matchingRoles;
 
 		log.debug("Add points to player: " + amount);
 
@@ -91,9 +94,31 @@ public class Points extends VolatileReward {
 
 			// get goals which contain this rule
 			for (Goal goal : goalDao.getGoalsByRule(rule)) {
+				
+				//New: Test, if player role match with role of the goal 
+				if (goal.getCanCompletedBy().size() > 0) {
+					log.debug("Pointsgoal is restricted by roles");
+					matchingRoles = goal.getCanCompletedBy().stream().filter(r -> {
+						if (player.getBelongsToRoles().contains(r)) {
+							log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
+							return true;
+						} else {
+							return false;
+						}
+					}).collect(Collectors.toList());
 
+					if (matchingRoles.size() > 0) {
+						log.debug("Roles match for PointGoal -> proceed");
+					} else {
+						log.debug("Roles don't match for Pointgoal -> Pointgoal can not be completed");
+						continue;
+					}
+				} else {
+					log.debug("Pointgoal is not restricted by roles");
+				}//Until here
+				
 				List<FinishedGoal> oldFinishedGoals = player.getFinishedGoalsByGoal(goal);
-
+				
 				// check if goal is already finished
 				if (oldFinishedGoals.size() > 0) {
 					// goal is already finished
@@ -139,7 +164,9 @@ public class Points extends VolatileReward {
 
 		log.debug("add finishedGoals to player");
 		// add Goals to finishedGaolsList
-		player.addFinishedGoal(fGoalsList);
+		if(fGoalsList.size() > 0){
+			player.addFinishedGoal(fGoalsList);
+		}
 
 		log.debug("add Rewards to player");
 		// add Rewards to rewardList
@@ -169,7 +196,9 @@ public class Points extends VolatileReward {
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
-
+		//New: Test for matching roles
+		List<Role> matchingRoles;
+		
 		log.debug("Add points to group: " + amount);
 
 		group.awardPoints(amount);
@@ -188,6 +217,8 @@ public class Points extends VolatileReward {
 			// get goals which contain this rule
 			for (Goal goal : goalDao.getGoalsByRule(rule)) {
 
+							
+				
 				List<FinishedGoal> oldFinishedGoals = group.getFinishedGoalsByGoal(goal);
 
 				// check if goal is already finished
