@@ -1,6 +1,7 @@
 package info.interactivesystems.gamificationengine.dao;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public class PlayerGroupDAO {
 	 * 
 	 * @param organisation
 	 * 			The organisation to which the groups of players belong to.
-	 * @return The {@link List<PlayerGroup>} of all groups which belong to the passed organisaiton.
+	 * @return The {@link List} of {@link PlayerGroup}s which belong to the passed organisaiton.
 	 */
 	public List<PlayerGroup> getAllGroupsByOrganisation(Organisation organisation) {
 
@@ -97,4 +98,22 @@ public class PlayerGroupDAO {
 
 	}
 
+	
+	/**
+	 * Gets a group by its id and API key.
+	 * 
+	 * @param id
+	 *          The id of the requested group of players.
+	 * @param apiKey
+	 *            The API key of the organisation to which the group belongs to.
+	 * @return The {@link PlayerGroup} that is associated with the passed id and API key.
+	 */
+	public PlayerGroup getPlayerGroup(int id, String apiKey) {
+		Query query = em.createQuery("select p from PlayerGroup p where p.belongsTo.apiKey=:apiKey and p.id = :id", PlayerGroup.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((PlayerGroup) list.get(0));
+	}
 }

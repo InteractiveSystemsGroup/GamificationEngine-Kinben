@@ -22,6 +22,8 @@ import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * An Account has to be created for at least one manager or developer. It
  * is identified by a unique email address. The password ensures the
@@ -53,10 +55,11 @@ public class AccountApi {
 	 *            A required valid unique email address.
 	 * @param password
 	 *            Required query parameter associated with the email address. 
-	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
+	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
 	 */
 	@GET
 	@Path("/")
+	@TypeHint(Account.class)
 	public Response get(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password) {
 
 		log.debug("get account requested");
@@ -87,10 +90,11 @@ public class AccountApi {
 	 * @param lastName
 	 *            Optionally the last name of the Account's owner can be set.
 	 * 
-	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
+	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Account.class)
 	public Response create(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password,
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
 
@@ -111,7 +115,7 @@ public class AccountApi {
 	 * specific email address and associated password are mandatory.
 	 * Otherwise a warning with the hint for wrong credentials is returned.
 	 *
-	 *  @param email
+	 * @param email
 	 *            A required valid email address. 
 	 * @param password
 	 *            Required query parameter to connect it with the given 
@@ -121,10 +125,11 @@ public class AccountApi {
 	 * @param lastName
 	 *            Optionally the last name of the Account's owner can be set.
 	 * 
-	 * @return a {@link javax.ws.rs.core.Response} of {@link Account} in JSON
+	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
 	 */
 	@PUT
 	@Path("/")
+	@TypeHint(Account.class)
 	public Response update(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password,
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
 

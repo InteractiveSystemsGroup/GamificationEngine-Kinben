@@ -8,21 +8,15 @@ import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.goal.DoAllTasksRule;
 import info.interactivesystems.gamificationengine.entities.goal.DoAnyTaskRule;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
-import info.interactivesystems.gamificationengine.entities.rule.ExpressionNode;
-import info.interactivesystems.gamificationengine.entities.rule.IdCollector;
-import info.interactivesystems.gamificationengine.entities.rule.Parser;
-import info.interactivesystems.gamificationengine.entities.rule.SetTask;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -40,6 +34,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal.
@@ -66,66 +62,13 @@ public class RuleApi {
 	TaskDAO taskDao;
 
 	/**
-	 * 
-	 * Creates a new rule with an expression term.
-	 * 
-	 * @param name
-	 *            required name of the new goal
-	 * @param expression
-	 *            required expression term
-	 * @param description
-	 *            optional description of the goal
-	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
-	 * @return {@link Response} of {@link GoalRule} in JSON
-	 */
-	@POST
-	@Path("/")
-	public Response createNewRule(@QueryParam("name") @NotNull String name, @QueryParam("expression") @NotNull String expression,
-			@QueryParam("description") String description, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		if (expression == null) {
-			throw new ApiError(Response.Status.PRECONDITION_FAILED, "expression is not provided");
-		}
-
-		Parser parser = new Parser();
-		ExpressionNode exp = parser.parse(expression);
-		configureExpressionTree(exp, apiKey);
-
-		GoalRule goalRule = new GoalRule();
-		goalRule.setName(name);
-		goalRule.setDescription(description);
-		goalRule.setBelongsTo(organisationDao.getOrganisationByApiKey(apiKey));
-		goalRule.setExpressionTree(exp);
-		ruleDao.insertRule(goalRule);
-
-		return ResponseSurrogate.created(goalRule);
-	}
-
-	private void configureExpressionTree(ExpressionNode exp, String apiKey) {
-
-		List<Integer> ids = new ArrayList<>();
-		exp.accept(new IdCollector(ids));
-		List<Task> tasks = taskDao.getTasks(ids, apiKey);
-
-		ids.removeAll(tasks.stream().map(Task::getId).collect(Collectors.toList()));
-		if (!ids.isEmpty()) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, task ids don't exist " + ids);
-		}
-
-		for (Task task : tasks) {
-			exp.accept(new SetTask(task));
-		}
-	}
-
-	/**
 	 * Creates a new task rule. By the creation the type of rule (DoAllTasksRule or DoAnyTaskRule) has to be defined, the rule's name, 
 	 * description and the ids which should be associated with this rule.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
 	 * number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param type
-	 *            The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTasksRule". 
+	 *            The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTaskRule". 
 	 *            This field must not be null.
 	 * @param name
 	 *            The name of the task rule. This parameter is required.
@@ -142,6 +85,7 @@ public class RuleApi {
 	 */
 	@POST
 	@Path("/task")
+	@TypeHint(TaskRule.class)
 	public Response createNewTaskRule(@QueryParam("type") @NotNull String type, @QueryParam("name") @NotNull String name,
 			@QueryParam("description") String description, @QueryParam("tasks") @NotNull @ValidListOfDigits String taskIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -177,7 +121,7 @@ public class RuleApi {
 			rule = new DoAllTasksRule();
 			break;
 
-		case "DoAnyTasksRule":
+		case "DoAnyTaskRule":
 			rule = new DoAnyTaskRule();
 			break;
 
@@ -216,6 +160,7 @@ public class RuleApi {
 	 */
 	@POST
 	@Path("/point")
+	@TypeHint(GetPointsRule.class)
 	public Response createNewPointRule(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("points") @NotNull @ValidPositiveDigit String points, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -242,10 +187,11 @@ public class RuleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} of {@link List<GoalRule>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link GoalRule}s in JSON.
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(GoalRule[].class)
 	public Response getRules(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		List<GoalRule> tasks = ruleDao.getRules(apiKey);
 		return ResponseSurrogate.of(tasks);
@@ -265,6 +211,7 @@ public class RuleApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(GoalRule.class)
 	public Response getRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		int ruleId = ValidateUtils.requireGreaterThenZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -287,6 +234,7 @@ public class RuleApi {
 	 */
 	@DELETE
 	@Path("{id}")
+	@TypeHint(GoalRule.class)
 	public Response deleteRule(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no ruleId transferred");
@@ -312,7 +260,9 @@ public class RuleApi {
 	 * @param id
 	 *          The id of the goal rule that should be changed. This parameter is required.
 	 * @param attribute
-	 *           The name of the attribute which should be modified. This parameter is required. 
+	 *           The name of the attribute which should be modified. This parameter is required.
+	 *           The following names of attributes can be used to change the associated field:
+	 *           "description", "name" and if it is a GetPointsRule: "points". 
 	 * @param value
 	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -322,6 +272,7 @@ public class RuleApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(GoalRule.class)
 	public Response changeRuleAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Rule");

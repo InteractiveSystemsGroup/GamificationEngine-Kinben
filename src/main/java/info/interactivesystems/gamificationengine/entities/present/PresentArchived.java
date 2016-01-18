@@ -111,7 +111,9 @@ public class PresentArchived {
 
 	/**
 	 * Sets the board where the present is archived.
+	 * 
 	 * @param board
+	 * 			The board, where the presents are stored.
 	 */
 	public void setBoard(Board board) {
 		this.board = board;
@@ -120,7 +122,7 @@ public class PresentArchived {
 	/**
 	 * Gets the present object of the present that is archived.
 	 * 
-	 * return The archived present as present object.
+	 * @return The archived present as present object.
 	 */
 	public Present getPresent() {
 		return present;

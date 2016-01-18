@@ -19,8 +19,8 @@ import javax.validation.Payload;
 /**
  * The annotated {@code CharSequence} must match the following regular
  * expression: \d+
- * <p/>
- * Accepts any digit, also a zero. {@code null} elements are considered valid.
+ * <p></p>
+ * Accepts any digit, also a zero. {@code null} elements are regarded as valid.
  */
 @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
 @Retention(RUNTIME)

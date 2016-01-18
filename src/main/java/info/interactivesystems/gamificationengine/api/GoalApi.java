@@ -37,6 +37,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A Goal comprises one or more tasks and has to be completed if the player wants to earn the connected awards.
  * To create a goal some already created components are needed. So the condition when a goal is completed is 
@@ -98,10 +100,11 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link Response} of {@link Goal} in JSON.
+	 * @return A {@link Response} of {@link Goal} in JSON.
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Goal.class)
 	public Response createNewGoal(@QueryParam("name") @NotNull String name, @QueryParam("repeatable") @DefaultValue("true") String repeatable,
 			@QueryParam("ruleId") @NotNull @ValidPositiveDigit String ruleId, @QueryParam("rewardIds") @ValidListOfDigits String rewardIds,
 			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String roleIds,
@@ -174,10 +177,11 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link javax.ws.rs.core.Response} of {@link List<Goal>} in JSON.
+	 * @return A {@link javax.ws.rs.core.Response} as {@link List} of {@link Goal}s in JSON.
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Goal[].class)
 	public Response getGoals(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Goal> goals = goalDao.getGoals(apiKey);
@@ -198,6 +202,7 @@ public class GoalApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Goal.class)
 	public Response getGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		int goalId = ValidateUtils.requireGreaterThenZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -219,17 +224,21 @@ public class GoalApi {
 	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param goalId
-	 *            required id of the goal which should be modified
+	 *            Required id of the goal which should be modified.
 	 * @param attribute
-	 *            required attribute which should be modified
+	 *            The attribute which should be modified. This parameter is required.
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "goalName", "isRepeateable", "isGroupGoal", "rewardId", "ruleId" and "roles".
 	 * @param value
-	 *            required new value of the attribute
+	 *            The new value of the attribute.
 	 * @param apiKey
-	 *            a valid query param api key affiliated to an organisation
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this role belongs to.
 	 * @return {@link Response} of {@link Goal} in JSON
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Goal.class)
 	public Response changeGoalAttributes(@PathParam("id") @ValidPositiveDigit String goalId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Goal");
@@ -331,6 +340,7 @@ public class GoalApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Goal.class)
 	public Response deleteGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");

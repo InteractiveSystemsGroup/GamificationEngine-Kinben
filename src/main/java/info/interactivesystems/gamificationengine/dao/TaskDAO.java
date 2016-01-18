@@ -83,7 +83,7 @@ public class TaskDAO {
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the tasks belong to. 
-	 * @return A {@link List<Task>} with all tasks which are associated with the passed 
+	 * @return A {@link List} of {@link Task}s with all tasks which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Task> getTasks(String apiKey) {
@@ -99,7 +99,7 @@ public class TaskDAO {
 	 * 			A list of task ids. 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the tasks belong to. 
-	 * @return A {@link List<Task>} with all tasks which are associated with the passed 
+	 * @return A {@link List} of {@link Task}s which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Task> getTasks(List<Integer> taskIds, String apiKey) {

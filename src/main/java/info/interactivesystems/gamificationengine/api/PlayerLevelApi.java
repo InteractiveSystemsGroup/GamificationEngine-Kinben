@@ -5,7 +5,6 @@ import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDi
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerLevelDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.PlayerLevel;
 
 import javax.ejb.Stateless;
@@ -24,6 +23,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * API for player level related services.
@@ -59,6 +60,7 @@ public class PlayerLevelApi {
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(PlayerLevel.class)
 	public Response createNewPlayerLevel(@QueryParam("levelName") @NotNull String name,
 			@QueryParam("levelIndex") @NotNull @ValidPositiveDigit String index, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -90,6 +92,7 @@ public class PlayerLevelApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(PlayerLevel.class)
 	public Response getPlayerLevel(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		PlayerLevel pL = playerLevelDao.getPlayerLevel(apiKey, ValidateUtils.requireGreaterThenZero(id));
@@ -107,6 +110,9 @@ public class PlayerLevelApi {
 	 *           The id of the player level that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the 
+	 *            associated field:
+	 *            "levelName" and "levelIndex". 
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -116,6 +122,7 @@ public class PlayerLevelApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(PlayerLevel.class)
 	public Response changePlayerLevelAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of PlayerLevel");
@@ -162,6 +169,7 @@ public class PlayerLevelApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(PlayerLevel.class)
 	public Response deletePlayerLevel(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		PlayerLevel playerLevel = playerLevelDao.deletePlayerLevel(apiKey, ValidateUtils.requireGreaterThenZero(id));
 		return ResponseSurrogate.deleted(playerLevel);

@@ -52,7 +52,6 @@ public class Badge extends PermanentReward {
 	 * Sets the name of a created badge. The name should be meaningful and
 	 * connected to the completed task(s).
 	 * 
-	 * @return The badge's name as a String.
 	 * @param name
 	 *            The new name of the badge as a String. 
 	 */

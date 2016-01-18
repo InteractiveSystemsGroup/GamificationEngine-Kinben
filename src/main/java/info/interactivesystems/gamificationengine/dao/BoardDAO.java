@@ -52,7 +52,7 @@ public class BoardDAO extends AbstractDAO<Board> {
 	 *            The owners of the boards who sould reveice a present.
 	 * @param apiKey
 	 *            Credential which identifies the board in one organisation.
-	 * @return A List<Board> that represent all boards of the players who get a present.
+	 * @return A {@link List} of {@link Board}s that represent all boards of the players who get a present.
 	 */
 	public List<Board> getBoards(List<Player> receivers, String apiKey) {
 		Query query = em.createQuery("select entity from Board entity where entity.owner in (:owners) and entity.belongsTo.apiKey = :apiKey",

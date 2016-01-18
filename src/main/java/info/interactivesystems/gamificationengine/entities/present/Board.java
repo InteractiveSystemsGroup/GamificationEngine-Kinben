@@ -118,7 +118,7 @@ public class Board {
 	 * Gets all current presents of a player. These are presents which were
 	 * accepted before.
 	 * 
-	 * @return All accepted presents as List<Present>. 
+	 * @return All accepted presents as {@link List} of {@link Present}s. 
 	 */
 	public List<Present> getCurrentPresents() {
 		return currentPresents;
@@ -156,7 +156,7 @@ public class Board {
 	/**
 	 * Gets a list of all archived presents which belongs to one player.
 	 * 
-	 * @return All archives presents as List<PresentArchived>.
+	 * @return All archives presents as {@link List} of {@link PresentArchived}.
 	 */
 	public List<PresentArchived> getArchive() {
 		return archive;
@@ -176,7 +176,7 @@ public class Board {
 	 * Gets all presents which were sent to a player and which the player hasn't neither
 	 * accepted nor denied, yet.
 	 * 
-	 * @return All just sent presents as List<Present>.
+	 * @return All just sent presents as {@link List} of {@link Present}s.
 	 */
 	public List<Present> getInBox() {
 		return inBox;

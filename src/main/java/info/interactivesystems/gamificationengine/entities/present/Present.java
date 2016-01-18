@@ -24,12 +24,12 @@ import javax.validation.constraints.NotNull;
  * A present is a little positive message which one player can send to one or
  * more other players. These presents can be an image or a short text message which 
  * contains for example a little praise. A Board serves a player to send and to store
- * little presents in terms of a short text message or an image. The difference between
+ * these presents in terms of a short text message or an small image. The difference between
  * these two messages is as the name suggests, that the text message contains a short 
  * text and the image message an image. To archive the presents they can be moved to 
  * an additional list. It is possible to get for one player all her/his text messages 
- * or all messages with a little image that were created. Furthermore all new presents 
- * of player can be requested as well as the accepted and archived presents. All denies
+ * or all messages with a small image that were created. Furthermore all new presents 
+ * of a player can be requested as well as the accepted and archived presents. All denied
  * presents were removed from the in-box.
  */
 @Entity

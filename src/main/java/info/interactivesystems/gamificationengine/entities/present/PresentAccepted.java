@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * Presents that are in the inbox of the board a player can accept or deny. If the player
+ * Presents that are in the in-box of the board a player can accept or deny. If the player
  * accept a present its status is set to accepted and an PresentAccepted object is created.
  */
 @Entity

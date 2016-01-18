@@ -29,6 +29,8 @@ import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * An Organisation represents for example a specific company or an association which 
  * represents a group of people belonging together and which are participating in the 
@@ -60,14 +62,17 @@ public class OrganisationApi {
 	 * All further Accounts which should be associated to this organisation are added with the 
 	 * method addManager. 
 	 *
+	 * @param name 
+	 * 			The name of the developer or the manager of the account.
 	 * @param email
 	 *           The required valid email address.
 	 * @param password
 	 *           Required query param associated with the email address. 
-	 * @return a {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Organisation.class)
 	public Response create(@QueryParam("name") String name, @QueryParam("email") @NotNull @Email String email,
 			@QueryParam("password") @NotNull String password) {
 
@@ -97,11 +102,14 @@ public class OrganisationApi {
 	 * @param email
 	 *            The required valid email.
 	 * @param password
-	 *             Required query param associated with the email address. 
-	 * @return a {@link Response} of {@link Organisation} in JSON
+	 *             Required query parameter associated with the email address. 
+	 *@param apiKey
+	 *			The API key of the organisation to which the manager belongs to.    
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@POST
 	@Path("/addManager")
+	@TypeHint(Organisation.class)
 	public Response addManager(@QueryParam("manager") @NotNull @Email String manager, @QueryParam("email") @NotNull @Email String email,
 			@QueryParam("password") @NotNull String password, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -135,10 +143,11 @@ public class OrganisationApi {
 	 * @param password
 	 *            Required query param to connect it with the given 
 	 *            email address.
-	 * @return {@link Response} of {@link List<Organisation>} in JSON
+	 * @return A {@link Response} as {@link List} of {@link Organisation}s in JSON.
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Organisation[].class)
 	public Response get(@QueryParam("email") @Email String email, @QueryParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
@@ -163,10 +172,11 @@ public class OrganisationApi {
 	 * @param password
 	 *             Required query parameter to connect it with the given 
 	 *             email address.
-	 * @return {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Organisation.class)
 	public Response get(@PathParam("id") String id, @QueryParam("email") @Email String email, @QueryParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
@@ -194,10 +204,11 @@ public class OrganisationApi {
 	 * @param password
 	 *            Required query parameter to connect it with the given 
 	 *            email address.
-	 * @return {@link Response} of {@link Organisation} in JSON
+	 * @return A {@link Response} of {@link Organisation} in JSON.
 	 */
 	@PUT
 	@Path("/{id}/generateapikey")
+	@TypeHint(Organisation.class)
 	public Response generateApiKey(@PathParam("id") String id, @QueryParam("email") @Email String email,
 			@QueryParam("password") @NotNull String password) {
 		Notification notification = new Notification();

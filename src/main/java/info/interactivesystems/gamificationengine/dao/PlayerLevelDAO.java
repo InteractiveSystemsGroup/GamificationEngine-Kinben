@@ -37,7 +37,7 @@ public class PlayerLevelDAO {
 	 * 			The of the organisaiton the player level is associated with.
 	 * @param playerLevelId
 	 * 			The id of the requested player level.
-	 * @return
+	 * @return 
 	 */
 	public PlayerLevel getPlayerLevel(String organisationId, int playerLevelId) {
 		return em.find(PlayerLevel.class, playerLevelId);

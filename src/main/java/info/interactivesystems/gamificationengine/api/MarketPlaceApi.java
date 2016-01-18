@@ -14,7 +14,6 @@ import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
@@ -44,6 +43,8 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
  * The marketplace gives players the opportunity to offer tasks that have to be completed by their colleagues 
@@ -104,6 +105,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/market")
+	@TypeHint(MarketPlace.class)
 	public Response createMarketPlace(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create new MarketPlace");
@@ -136,6 +138,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/market")
+	@TypeHint(MarketPlace.class)
 	public Response deleteMarketPlace(
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
 			@QueryParam("apiKey") @ValidApiKey String apikey) {
@@ -167,7 +170,8 @@ public class MarketPlaceApi {
 	 * @param name
 	 *            The name of the offer. This parameter is required.
 	 * @param endDate
-	 *            The date and time how long the offer is available on the market.
+	 *            The date and time how long the offer is available on the market. The format of the values is
+	 *            yyyy-MM-dd HH:mm.
 	 * @param prize
 	 *            The initial bid of the offer. This is the prize a player can earn.
 	 * @param taskId
@@ -176,7 +180,8 @@ public class MarketPlaceApi {
 	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
 	 *            prize. 
 	 * @param deadLine
-	 *            The point of time until the offer is valid.
+	 *            The point of time until the offer is valid. The format of the values is
+	 *            yyyy-MM-dd HH:mm.
 	 * @param marketId
 	 *            The id of the marketplace where the offer should be available.
 	 * @param playerId
@@ -184,10 +189,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this offer belongs to.
-	 * @return {@link Response} of {Offer} in JSON
+	 * @return {@link Response} of {Offer} in JSON.
 	 */
 	@POST
 	@Path("/offer")
+	@TypeHint(Offer.class)
 	public Response createNewOffer(@QueryParam("name") @NotNull String name, @QueryParam("endDate") String endDate,
 			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
@@ -256,7 +262,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * With this method a player make a bid to an offer. So a new bid is created and therefore an id is 
+	 * With this method a player makes a bid to an offer. So a new bid is created and therefore an id is 
 	 * generated. The id of the player is needed to indicate who has made the bid and id of the offer to identify 
 	 * for which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so 
 	 * the offer's prize is raised.
@@ -274,6 +280,7 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/bid")
+	@TypeHint(Bid.class)
 	public Response giveABid(@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String prize,
@@ -360,10 +367,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOffers")
+	@TypeHint(Offer[].class)
 	public Response getPlayerOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -398,10 +406,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
 	@Path("/getOfferRole")
+	@TypeHint(Offer[].class)
 	public Response getOffersByRole(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
@@ -425,7 +434,7 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets all available offers for a player ordered by date, newest first.
+	 * Gets all available offers for a player ordered by date, recent first.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
 	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -438,11 +447,12 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
-	@Path("/getNewestOffer")
-	public Response getNewestOffers(@QueryParam("playerId") @NotNull @ValidPositiveDigit String playerId,
+	@Path("/getRecentOffers")
+	@TypeHint(Offer[].class)
+	public Response getRecentOffers(@QueryParam("playerId") @NotNull @ValidPositiveDigit String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -459,9 +469,9 @@ public class MarketPlaceApi {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
 			}
 
-			List<Offer> newestOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
 
-			return ResponseSurrogate.of(newestOffers);
+			return ResponseSurrogate.of(recentOffers);
 		}
 
 		throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
@@ -481,10 +491,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {List<Offer>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
 	 */
 	@GET
-	@Path("/getHighestO")
+	@Path("/getHighestOffers")
+	@TypeHint(Offer[].class)
 	public Response getHighestOffers(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
@@ -502,7 +513,7 @@ public class MarketPlaceApi {
 			if (matchingOffers.size() <= 0) {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for this role");
 			}
-			List<Offer> highestOffers = market.filterOfferByPrize(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
 
 			return ResponseSurrogate.of(highestOffers);
 		}
@@ -520,10 +531,11 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
-	 * @return {@link Response} of {@link List<Bid>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Bid}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/bids")
+	@TypeHint(Bid[].class)
 	public Response getBids(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 	
@@ -551,6 +563,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/offer")
+	@TypeHint(Offer.class)
 	public Response deleteOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apikey) {
 
@@ -586,10 +599,11 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * If an offer is fulfilled, with this request the offer is completed and the player with the passed id who
-	 * has completed it gets the prize as a reward. It is checked, if the passed ids are a positive number 
-	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous message
-	 * is returned.
+	 * If an offer is fulfilled by a player, this request can be used to complete the offer. With this request 
+	 * the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a 
+	 * reward. 
+	 * It is checked, if all passed ids are a positive number otherwise a message for an invalid number is 
+	 * returned. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param offerId
 	 *            The offer id which was finished. This parameter is required. 
@@ -603,7 +617,8 @@ public class MarketPlaceApi {
 	 */
 	@POST
 	@Path("/{id}/compOffer")
-	public Response completedOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
+	@TypeHint(Task.class)
+	public Response completeOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -647,7 +662,7 @@ public class MarketPlaceApi {
 	 * the specific organisation, the name of the field and the new value are needed.
 	 * 
 	 * To modify the name the new String has to be passed with the attribute field. A new date and time as 
-	 * LocalDateTime for the deadline or enddate can also be passed. The format of this value is 
+	 * LocalDateTime for the deadline or enddate can also be passed. The format of these values is 
 	 * yyyy-MM-dd HH:mm. A new list of players can be passed when their ids are separated by commas. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if 
 	 * the ids are a positive number otherwise a message for an invalid number is returned.
@@ -656,6 +671,8 @@ public class MarketPlaceApi {
 	 *            The id of the offer that should be changed. This parameter is required.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "name", "deadline", "enddate" and "playerRoles".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -665,6 +682,7 @@ public class MarketPlaceApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Offer.class)
 	public Response changeOfferAttributes(
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
@@ -745,6 +763,7 @@ public class MarketPlaceApi {
 	 */
 	@DELETE
 	@Path("/{id}/bid")
+	@TypeHint(Offer.class)
 	public Response deleteBid(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String bidId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,

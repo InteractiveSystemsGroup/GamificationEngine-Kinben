@@ -39,11 +39,13 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
  * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
  * rewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of 
- * a level is set to “0”. These can be raised by fulfilling tasks in the gamification application. Furthermore 
+ * a level is set to "0". These can be raised by fulfilling tasks in the gamification application. Furthermore 
  * a player can have an avatar, by specifying the path of an image previously uploaded to a server. 
  * A player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create 
  * and to delete a player it is possible to get one particular player of one specific organisation by her/his 
@@ -51,8 +53,8 @@ import org.slf4j.LoggerFactory;
  * the status of a player ancillary the already finished goals and finished tasks it can be requested all earned 
  * permanent rewards. If only one status element is needed, the current points, coins, badges or achievements 
  * can be gotten instead. 
- * Each player can also have a list of contacts which represent other players in the same organisation to send 
- * little presents. 
+ * Each player can also have a list of contacts which represent other players in the same organisation, so players 
+ * can send them little presents. 
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
  * player has.
  */
@@ -73,9 +75,9 @@ public class PlayerApi {
 	 * Creates a new player and so the method generates the player-id. The organisation's API key 
 	 * is mandatory otherwise a warning with the hint for a non valid API key is returned.
 	 * The player can choose a password for her/his account. By the creation some initial
-	 * roles can be set which can also be changed at a later point of time. It is checked, if 
-	 * the id of the roles are positive numbers otherwise a message for the invalid number 
-	 * is returned.
+	 * roles can be set which can also be changed at a later point of time. By default every 
+	 * created player is active until she/he is deactivated. It is checked, if the id of the 
+	 * roles are positive numbers otherwise a message for the invalid number is returned.
 	 * 
 	 * @param nickname
 	 *            The query parameter of the player's nickname. This field must not be null.
@@ -90,10 +92,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player should belong to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return A {@link Response} of {@link Player} in JSON.
 	 */
 	@POST
 	@Path("/")
+	@TypeHint(Player.class)
 	public Response create(@QueryParam("nickname") @NotNull String nickname, @QueryParam("password") @NotNull String password,
 			@QueryParam("reference") String reference, @QueryParam("roleIds") @ValidListOfDigits String playerRoleIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -129,10 +132,11 @@ public class PlayerApi {
 	 * 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation.
-	 * @return {@link Response} of {@link List<Player>} in JSON.
+	 * @return A {@link Response} as {@link List} of {@link Player}s in JSON.
 	 */
 	@GET
 	@Path("/*")
+	@TypeHint(Player[].class)
 	public Response getAll(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		List<Player> players = playerDao.getPlayers(apiKey);
@@ -153,6 +157,7 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}")
+	@TypeHint(Player.class)
 	public Response get(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getplayer requested");
 
@@ -173,10 +178,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link List<Player>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Player}s in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Player.class)
 	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int playerId = ValidateUtils.requireGreaterThenZero(id);
@@ -207,7 +213,10 @@ public class PlayerApi {
 	 *            Required integer which uniquely identify the {@link Player}.
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This 
-	 *            parameter is required. 
+	 *            parameter is required. The following names of attributes can 
+	 *            be used to change the associated field:
+	 *            "password", "reference", "nickname", "playerRoles", "contact" 
+	 *            and "avatar".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -217,6 +226,7 @@ public class PlayerApi {
 	 */
 	@PUT
 	@Path("/{id}/attributes")
+	@TypeHint(Player.class)
 	public Response changeAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Player");
@@ -323,6 +333,7 @@ public class PlayerApi {
 	 */
 	@PUT
 	@Path("/{id}/contacts")
+	@TypeHint(Player.class)
 	public Response addContacts(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("adding contacts to player");
@@ -356,6 +367,7 @@ public class PlayerApi {
 	 */
 	@DELETE
 	@Path("/{id}/contacts")
+	@TypeHint(Player.class)
 	public Response deleteContact(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("deleting contacts for of a player");
@@ -372,7 +384,7 @@ public class PlayerApi {
 	}
 
 	/**
-	 * Returns the avatar which is associated with a player. To identify the pplayer her/his id and 
+	 * Returns the avatar which is associated with a player. To identify the player her/his id and 
 	 * the API key is needed to which the player belongs to. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
@@ -382,10 +394,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Object} with an byte[] in JOSN.
+	 * @return {@link Response} of {@link Object} with an byte[] in JSON.
 	 */
 	@GET
 	@Path("{id}/avatar")
+	@TypeHint(byte[].class)
 	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("get player's avatar image");
 
@@ -416,8 +429,9 @@ public class PlayerApi {
 	 *         to which this player belongs to.
 	 * @return {@link Response} of {@link Player} in JSON.
 	 */
-	@POST
+	@PUT
 	@Path("{id}/deactivate")
+	@TypeHint(Player.class)
 	public Response deactivate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("deactivate player called");
@@ -429,6 +443,36 @@ public class PlayerApi {
 
 		return ResponseSurrogate.of(player);
 	}
+	
+	/**
+	 * Activates a player with the associated id and API key so this player is allowed to complete
+	 * tasks.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param id
+	 *         Required path parameter as integer which uniquely identify the {@link Player}.
+	 * @param apiKey
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this player belongs to.
+	 * @return {@link Response} of {@link Player} in JSON.
+	 */
+	@PUT
+	@Path("{id}/activate")
+	@TypeHint(Player.class)
+	public Response activate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("activate player called");
+
+		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+
+		player.setActive(true);
+
+		return ResponseSurrogate.of(player);
+	}
+	
+	
 
 	/**
 	 * Returns a list of all already finished goals of a specific player. 
@@ -440,10 +484,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<FinishedGoal>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link FinishedGoal}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/goals")
+	@TypeHint(FinishedGoal[].class)
 	public Response getPlayerFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedGoals requested");
@@ -462,10 +507,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<PermanentReward>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link PermanentReward}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/rewards")
+	@TypeHint(PermanentReward[].class)
 	public Response getRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getPlayerPermanentRewards requested");
@@ -485,10 +531,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link List<FinishedTask>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link FinishedTask}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/tasks")
+	@TypeHint(FinishedTask[].class)
 	public Response getPlayerFinishedTasks(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedTasks requested");
@@ -508,10 +555,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link List<Badge>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Badge}s in JSON.
 	 */
 	@GET
 	@Path("/{id}/badges")
+	@TypeHint(Badge[].class)
 	public Response getPlayerBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Badges from Player requested");
@@ -532,10 +580,11 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link List<Achievement>} in JSON
+	 * @return {@link Response} as {@link List} of {@link Achievement}s in JSON
 	 */
 	@GET
 	@Path("/{id}/achievements")
+	@TypeHint(Achievement[].class)
 	public Response getPlayerAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");
@@ -560,9 +609,10 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/points")
+	@TypeHint(int.class)
 	public Response getPlayerPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		log.debug("get earned points from Player requested");
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
 		int points = player.getPoints();
 
@@ -584,9 +634,10 @@ public class PlayerApi {
 	 */
 	@GET
 	@Path("/{id}/coins")
+	@TypeHint(int.class)
 	public Response getPlayerCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		log.debug("get earned coins from Player requested");
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
 		int coins = player.getCoins();
 

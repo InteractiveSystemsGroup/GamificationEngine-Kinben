@@ -68,7 +68,7 @@ public class RewardDAO {
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the rewards belong to. 
-	 * @return A {@link List<Reward>} with all rewards which are associated with the passed 
+	 * @return A {@link List} of {@link Reward}s which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Reward> getRewards(String apiKey) {
@@ -99,7 +99,7 @@ public class RewardDAO {
 	 * 			A list of reward ids. 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the rewards belong to. 
-	 * @return A {@link List<Reward>} with all rewards which are associated with the passed 
+	 * @return A {@link List} of {@link Reward}s which are associated with the passed 
 	 * 			API key.
 	 */
 	public List<Reward> getRewards(List<Integer> ids, String apiKey) {

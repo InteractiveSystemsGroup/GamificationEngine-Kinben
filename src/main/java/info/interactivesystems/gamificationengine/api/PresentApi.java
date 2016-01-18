@@ -40,15 +40,17 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.webcohesion.enunciate.metadata.rs.TypeHint;
+
 /**
- * Players in a gamification application can send little presents to each other, whereby 
- * one or more players can be a recipient. These presents can be an image or a short text
+ * Players in a gamification application can send presents to each other, whereby 
+ * one or more players can be a recipient. These presents can be a small image or a short text
  * message which contains for example a little praise. A Board serves a player to send and 
- * to store little presents in terms of a short text message or an image. The difference 
+ * to store presents in terms of a short text message or an image. The difference 
  * between these two messages is as the name suggests, that the text message contains a 
  * short text and the image message an image. To archive the presents they can be moved to
  * an additional list. It is possible to get for one player all her/his text messages or all
- * messages with a little image that were created. Furthermore all new presents of player 
+ * messages with a small image that were created. Furthermore all new presents of player 
  * can be requested as well as the accepted and archived presents. All denies presents were
  * removed from the in-box.
  */
@@ -91,6 +93,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/textMessage")
+	@TypeHint(TextMessage.class)
 	public Response createTextMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
 			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("content") String content,
@@ -157,6 +160,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/imageMessage")
+	@TypeHint(ImageMessage.class)
 	public Response createImageMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
 			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("imagePath") @NotNull String imagePath,
@@ -217,6 +221,7 @@ public class PresentApi {
 	 */
 	@DELETE
 	@Path("/{id}")
+	@TypeHint(Present.class)
 	public Response deletePresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -250,10 +255,11 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the text messages belongs to.
-	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
 	@Path("/boardMessages")
+	@TypeHint(Present[].class)
 	public Response getTextMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -303,10 +309,11 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the image messages belongs to.
-	 * @return {@link Response} of {@link List<TextMessage>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
 	@Path("/imageMessages")
+	@TypeHint(ImageMessage[].class)
 	public Response getImageMessages(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -341,8 +348,8 @@ public class PresentApi {
 	}
 
 	/**
-	 * With this method one present is sent to all specified receivers. So the presents is stored 
-	 * in the each inbox of the receivers.
+	 * With this method one present is sent to all specified receivers. So the present is stored 
+	 * in each inbox of the receivers.
 	 * 
 	 * @param presentId
 	 *            The path parameter of the present's id that should be sent to the receivers. 
@@ -353,6 +360,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/send")
+	@TypeHint(Present.class)
 	public Response send(@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -423,6 +431,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/accept")
+	@TypeHint(Present.class)
 	public Response acceptPresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -478,6 +487,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/deny")
+	@TypeHint(Present.class)
 	public Response denyPresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -526,6 +536,7 @@ public class PresentApi {
 	 */
 	@POST
 	@Path("/archive")
+	@TypeHint(Present.class)
 	public Response archivePresent(
 			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
@@ -575,10 +586,11 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/inbox")
+	@TypeHint(Present[].class)
 	public Response getInbox(@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -609,10 +621,11 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/current")
+	@TypeHint(Present[].class)
 	public Response getCurrent(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -642,10 +655,11 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link List<Present>} in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
 	@Path("/archive")
+	@TypeHint(PresentArchived[].class)
 	public Response getArchive(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {

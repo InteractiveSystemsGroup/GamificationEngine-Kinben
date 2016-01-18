@@ -30,7 +30,8 @@ import javax.validation.constraints.NotNull;
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
  * rewards, already finished Goals and finished Tasks. Points, coins and index of a level can be earned or raised 
  * by fulfilling tasks in the gamification application. Furthermore a player can have an avatar.
- * A player can be set active or can be deactivated so that she/he cannot complete tasks. 
+ * A player can be set active or can be deactivated so that she/he cannot complete tasks. By default every created 
+ * player is active until she/he is deactivated. 
  * Each player can also have a list of contacts which represent other players in the same organisation to send 
  * little presents. 
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
@@ -64,7 +65,7 @@ public class Player {
 	@Column(columnDefinition = "BLOB")
 	private byte[] avatar;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<PermanentReward> rewards;
 
 	private int points;
@@ -80,7 +81,7 @@ public class Player {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<FinishedGoal> finishedGoals;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<FinishedTask> finishedTasks;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -164,7 +165,7 @@ public class Player {
 	 * The amount of coins the player has earned will be added to the player's current 
 	 * coins and raise them.
 	 * 
-	 * @param coins
+	 * @param amount
 	 *            The Amount of coins which is transfered and so added to the player's 
 	 *            current coins.
 	 */

@@ -213,7 +213,7 @@ public class Offer {
 	 * Gets the roles to check which player is allowed to fulfil this offer. A player need at least one role
 	 * to complete the task.
 	 * 
-	 * @return List<Role>
+	 * @return A {@link List} of {@link Role}s.
 	 * 			All roles which are allowed to fulfil the offer.
 	 */
 	public List<Role> getAllowedForRole() {
