@@ -206,9 +206,6 @@ public class PlayerGroupApi {
 			plGroup.setGroupLogo(ImageUtils.imageToByte(value));
 			break;
 
-		case "points":
-			plGroup.setPoints(ValidateUtils.requireGreaterThenZero(value));
-			break;
 		}
 
 		groupDao.insertGroup(plGroup);
