@@ -10,6 +10,10 @@ import info.interactivesystems.gamificationengine.dao.PlayerGroupDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.PlayerGroup;
+import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
+import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
+import info.interactivesystems.gamificationengine.entities.rewards.Badge;
+import info.interactivesystems.gamificationengine.entities.rewards.PermanentReward;
 import info.interactivesystems.gamificationengine.utils.ImageUtils;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
@@ -264,7 +268,30 @@ public class PlayerGroupApi {
 		return ResponseSurrogate.deleted(plGroup);
 	}
 
-	//TODO get all earned bages/achievements/points and coins of a group
+	/**
+	 * Returns a list of all already finished goals of a specific group of players. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * group id is a positive number otherwise a message for an invalid number is returned.
+	 *
+	 * @param id
+	 *         Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this group belongs to.
+	 * @return {@link Response} as {@link List} of {@link FinishedGoal}s in JSON.
+	 */
+	@GET
+	@Path("/{id}/goals")
+	@TypeHint(FinishedGoal[].class)
+	public Response getPlayerGroupFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("getFinishedGoals of Group requested");
+		List<FinishedGoal> fgoals = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getFinishedGoals();
+				
+		return ResponseSurrogate.of(fgoals);
+	}
+
+	
 	/**
 	 * Returns the avatar which is associated with a group of players. To identify the group its id and 
 	 * the API key is needed to which the group belongs to. 
@@ -343,4 +370,77 @@ public class PlayerGroupApi {
 
 		return ResponseSurrogate.of(coins);
 	}
+	
+	/**
+	 * Returns a list of all already awarded rewards associated with the group of players of the 
+	 * given id.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * group id is a positive number otherwise a message for an invalid number is returned.
+	 *
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *         The valid query parameter API key affiliated to one specific organisation, 
+	 *         to which this group of players belongs to.
+	 * @return {@link Response} as {@link List} of {@link PermanentReward}s in JSON.
+	 */
+	@GET
+	@Path("/{id}/rewards")
+	@TypeHint(PermanentReward[].class)
+	public Response getPlayerGroupRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("getPlayerGroupPermanentRewards requested");
+		List<PermanentReward> pRewards = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getRewards();
+
+		return ResponseSurrogate.of(pRewards);
+	}
+
+	/**
+	 * Returns a list of all awarded badges associated with the group of players of the passed 
+	 * id. If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the group id is a positive number otherwise a message for an invalid number is 
+	 * returned.
+	 *
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group belongs to.
+	 * @return {@link Response} as {@link List} of {@link Badge}s in JSON.
+	 */
+	@GET
+	@Path("/{id}/badges")
+	@TypeHint(Badge[].class)
+	public Response getPlayerGroupBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get earned Badges from PlayerGroup requested");
+		List<Badge> badges = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getOnlyBadges();
+				
+		return ResponseSurrogate.of(badges);
+	}
+
+	/**
+	 * Returns a list of all awarded achievements associated with the group of players of the 
+	 * passed id. If the API key is not valid an analogous message is returned. It is also 
+	 * checked, if the player id is a positive number otherwise a message for an invalid number 
+	 * is returned.
+	 *
+	 * @param id
+	 *          Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group belongs to.
+	 * @return {@link Response} as {@link List} of {@link Achievement}s in JSON
+	 */
+	@GET
+	@Path("/{id}/achievements")
+	@TypeHint(Achievement[].class)
+	public Response getPlayerGroupAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get earned Achievements from Player requested");
+		List<Achievement> achievements = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getOnlyAchievement();
+
+		return ResponseSurrogate.of(achievements);
+	}
+	
 }

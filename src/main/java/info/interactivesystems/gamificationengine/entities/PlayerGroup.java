@@ -2,10 +2,13 @@ package info.interactivesystems.gamificationengine.entities;
 
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.goal.Goal;
+import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
+import info.interactivesystems.gamificationengine.entities.rewards.Badge;
 import info.interactivesystems.gamificationengine.entities.rewards.PermanentReward;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -306,6 +309,42 @@ public class PlayerGroup {
 	public void setRewards(List<PermanentReward> rewards) {
 		this.rewards = rewards;
 	}
+	
+	/**
+	 * Gets only all Badges a group of players has already obtained.
+	 * If the group has no Badge, null is returned. 
+	 * 
+	 * @return A List of all obtained Badges as List.
+	 */
+	public List<Badge> getOnlyBadges() {
+		// filter PermanentRewards for Badges
+		if (rewards != null) {
+			List<Badge> badges = rewards.stream().filter(r -> r instanceof Badge).map(r -> (Badge) r).collect(Collectors.toList());
+			return badges;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Gets only all Achievements a group of players has already obtained.
+	 * If the group has no Achievement, null is returned. 
+	 * 
+	 * @return A List of all obtained Achievements as List.
+	 */
+	public List<Achievement> getOnlyAchievement() {
+		// filter PermanantAchievements for Achievements
+		if (rewards != null) {
+			List<Achievement> achievements = rewards.stream().filter(r -> r instanceof Achievement).map(r -> (Achievement) r)
+					.collect(Collectors.toList());
+
+			return achievements;
+		} else {
+			return null;
+		}
+	}
+
+	
 	
 	/**
 	 * Gets the current level index of a group of players.
