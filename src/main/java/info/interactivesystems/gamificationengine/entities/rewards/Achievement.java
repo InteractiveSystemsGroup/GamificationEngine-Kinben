@@ -121,8 +121,8 @@ public class Achievement extends PermanentReward {
 	}
 
 	/**
-	 * With this method the player awards an achievement. Therefore the achievement
-	 * is added to her/his list of permanent rewards.
+	 * With this method the player awards an achievement if she/he hasn't awarded it, yet. 
+	 * Therefore the achievement is added to her/his list of permanent rewards.
 	 * 
 	 * @param player
 	 *            The player who should award the achievement. This parameter must
@@ -134,12 +134,14 @@ public class Achievement extends PermanentReward {
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
-		player.addPermanentReward(this);
+		if(!player.getRewards().contains(this)){
+			player.addPermanentReward(this);
+		}
 	}
 
 	/**
-	 * Awards a group an achievement and adds it to the list with permanent
-	 * rewards.
+	 * With this method a group awards an achievement and adds it to the list with permanent
+	 * rewards, but only if this achievement isn't already in the list of permanent rewards.
 	 * 
 	 * @param group
 	 *            The group of players which should award the achievement. This 
@@ -151,6 +153,8 @@ public class Achievement extends PermanentReward {
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
-		group.addPermanentReward(this);
+		if(!group.getRewards().contains(this)){
+			group.addPermanentReward(this);
+		}
 	}
 }

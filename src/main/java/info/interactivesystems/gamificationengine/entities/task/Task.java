@@ -351,6 +351,9 @@ public class Task implements Serializable {
 				// check if goal is groupGoal
 				if (!goal.isPlayerGroupGoal()) {
 
+//					if(player.getFinishedGoals().size()>0){
+//						log.debug("get Player already finishedGoals: " + player.getFinishedGoals() + " - name: " + player.getFinishedGoals().get(0).getGoal().getName());
+//					}
 					oldFinishedGoals.addAll(player.getFinishedGoalsByGoal(goal));
 
 					// check if goal is completed
@@ -370,15 +373,15 @@ public class Task implements Serializable {
 						}
 					}
 
-					// foreach group
-					for (PlayerGroup g : playerGroups) {
-						// set finishedGoals
-						List<FinishedGoal> groupFinishedGoals = g.getFinishedGoals();
+					// for each group
+					for (PlayerGroup group : playerGroups) {
+						// get finishedGoals
+						List<FinishedGoal> groupFinishedGoals = group.getFinishedGoals();
 
-						// get fininshed tasks from all players
+						// get finished tasks from all players
 						List<FinishedTask> groupFinishedTasksList = new ArrayList<>();
 
-						for (Player p : g.getPlayers()) {
+						for (Player p : group.getPlayers()) {
 							groupFinishedTasksList.addAll(p.getFinishedTasks());
 						}
 
@@ -392,9 +395,19 @@ public class Task implements Serializable {
 							// add rewards to group
 							for (Reward r : goal.getRewards()) {
 								log.debug("Add Reward to group");
-								r.addReward(g, goalDao, ruleDao);
+								r.addReward(group, goalDao, ruleDao);
+//								if(r instanceof Points){
+//									((Points) r).addReward(g, player, goalDao, ruleDao);
+//								} else {
+//									r.addReward(g, goalDao, ruleDao);
+//								}
 							}
 
+							//Control
+							for (PlayerGroup gr : playerGroups) {
+								log.debug("Group points are: " + gr.getPoints());
+							}
+							
 						}
 
 					}
@@ -404,7 +417,7 @@ public class Task implements Serializable {
 		}
 
 		// proceed with fGoalsList
-		log.debug("procedd with fGoalsList");
+		log.debug("proceed with fGoalsList");
 		for (FinishedGoal fGoal : finishedPlayerGoalsList) {
 
 			// for each reward -> addReward

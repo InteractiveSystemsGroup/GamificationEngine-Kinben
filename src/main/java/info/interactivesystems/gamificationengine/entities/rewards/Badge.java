@@ -120,8 +120,8 @@ public class Badge extends PermanentReward {
 	}
 
 	/**
-	 * With this method the player awards an badge. Therefore the badge is added
-	 * to her/his list of permanent rewards.
+	 * With this method the player awards an badge if she/he hasn't awarded it, yet. 
+	 * Therefore the badge is added to her/his list of permanent rewards.
 	 * 
 	 * @param player
 	 *            The player who should award the badge. This parameter must
@@ -133,11 +133,14 @@ public class Badge extends PermanentReward {
 	 */
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
-		player.addPermanentReward(this);
+		if(!player.getRewards().contains(this)){
+			player.addPermanentReward(this);
+		}
 	}
 
 	/**
-	 * Awards a group a badge and adds it to the list with permanent rewards.
+	 * With this method a group awards an badge and adds it to the list with permanent
+	 * rewards, but only if this badge isn't already in the list of permanent rewards.
 	 * 
 	 * @param group
 	 *            The group of players which should award the badge. This 
@@ -149,6 +152,8 @@ public class Badge extends PermanentReward {
 	 */
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
-		group.addPermanentReward(this);
+		if(!group.getRewards().contains(this)){
+			group.addPermanentReward(this);
+		}
 	}
 }

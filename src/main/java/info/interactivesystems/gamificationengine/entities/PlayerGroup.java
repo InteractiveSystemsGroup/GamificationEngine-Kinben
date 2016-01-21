@@ -52,7 +52,7 @@ public class PlayerGroup {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<FinishedGoal> finishedGoals;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<PermanentReward> rewards;
 
 	private int coins;
