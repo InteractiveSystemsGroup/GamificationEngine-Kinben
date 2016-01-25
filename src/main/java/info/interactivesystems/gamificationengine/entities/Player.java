@@ -173,25 +173,25 @@ public class Player {
 		coins += amount;
 	}
 	
-	/**
-	 * This method adds a new earned Achivement to the player's list of permanent rewards.
-	 * 
-	 * @param r 
-	 * 			The achievement that will be awarded to the player.
-	 */
-	private void awardAchievement(Achievement r) {
-		rewards.add(r);
-	}
+//	/**
+//	 * This method adds a new earned Achivement to the player's list of permanent rewards.
+//	 * 
+//	 * @param r 
+//	 * 			The achievement that will be awarded to the player.
+//	 */
+//	private void awardAchievement(Achievement r) {
+//		rewards.add(r);
+//	}
 
-	/**
-	 * This method adds a new earned Badge to the player's list of permanent rewards.
-	 * 
-	 * @param r 
-	 * 			The badge that will be awarded to the player.
-	 */
-	private void awardBadge(Badge r) {
-		rewards.add(r);
-	}
+//	/**
+//	 * This method adds a new earned Badge to the player's list of permanent rewards.
+//	 * 
+//	 * @param r 
+//	 * 			The badge that will be awarded to the player.
+//	 */
+//	private void awardBadge(Badge r) {
+//		rewards.add(r);
+//	}
 
 	/**
 	 * Gets the real name of a player.
@@ -649,5 +649,13 @@ public class Player {
 	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public void addRoles(List<Role> newRoles){
+		for(Role role : newRoles){
+			if(!belongsToRoles.contains(role)){
+				belongsToRoles.add(role);
+			}
+		}
 	}
 }

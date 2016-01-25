@@ -349,6 +349,42 @@ public class PlayerApi {
 		return ResponseSurrogate.updated(player);
 	}
 
+	
+	/**
+	 * Adds one or more roles to the current player's list of roles. All ids are checked, if they are 
+	 * positive numbers otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
+	 * 
+	 * @param id
+	 *           Required path parameter as integer which uniquely identify the {@link Player}.
+	 * @param roleIds
+	 *           The list of role ids which should be added to the contact list. These ids are 
+	 *           separated by commas.
+	 * @param apiKey
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this player belongs to.
+	 * @return {@link Response} of {@link Player} in JSON.
+	 */
+	@PUT
+	@Path("/{id}/roles")
+	@TypeHint(Player.class)
+	public Response addRoles(@PathParam("id") @ValidPositiveDigit String id,
+			@QueryParam("roleIds") @NotNull @ValidListOfDigits String roleIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		log.debug("adding contacts to player");
+
+		List<Integer> list = StringUtils.stringArrayToIntegerList(roleIds);
+		List<Role> rolesToAdd = roleDao.getRoles(list, apiKey); 
+
+		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+		player.addRoles(rolesToAdd); 
+
+		playerDao.insert(player);
+		return ResponseSurrogate.updated(player);
+	}
+	
+	
+	
 	/**
 	 * Removes one or more contacts from the currents player's contact list. A contact represents another
 	 * player in the gamification application. All ids are checked, if they are positive numbers 
