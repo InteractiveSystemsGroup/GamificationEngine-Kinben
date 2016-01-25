@@ -100,28 +100,6 @@ public class Player {
 
 	}
 
-	// The parameter is the (repeated) completed finishedGoal.
-	// public void grantReward(FinishedGoal fGoal) {
-	// List<Reward> rewards = fGoal.getGoal().getRewards();
-	//
-	// for (Reward r : rewards) {
-	// if (r instanceof Points) {
-	// awardPoints(((Points) r).getAmount());
-	// } else if (r instanceof Coins) {
-	// awardCoins(((Coins) r).getAmount());
-	// } else if (r instanceof ReceiveLevel) {
-	// // awardLevel(((ReceiveLevel) r).getLevelAmount());
-	// awardLevel(((ReceiveLevel) r).getId());
-	// } else if (r instanceof Achievement) {
-	// awardAchievement((Achievement) r);
-	// } else if (r instanceof Badge) {
-	// awardBadge((Badge) r);
-	// }
-	//
-	// }
-	//
-	// }
-
 
 	/**
 	 * Gets the nickname of a player.
@@ -173,25 +151,6 @@ public class Player {
 		coins += amount;
 	}
 	
-//	/**
-//	 * This method adds a new earned Achivement to the player's list of permanent rewards.
-//	 * 
-//	 * @param r 
-//	 * 			The achievement that will be awarded to the player.
-//	 */
-//	private void awardAchievement(Achievement r) {
-//		rewards.add(r);
-//	}
-
-//	/**
-//	 * This method adds a new earned Badge to the player's list of permanent rewards.
-//	 * 
-//	 * @param r 
-//	 * 			The badge that will be awarded to the player.
-//	 */
-//	private void awardBadge(Badge r) {
-//		rewards.add(r);
-//	}
 
 	/**
 	 * Gets the real name of a player.
