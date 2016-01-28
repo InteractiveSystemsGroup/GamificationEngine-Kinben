@@ -351,9 +351,6 @@ public class Task implements Serializable {
 				// check if goal is groupGoal
 				if (!goal.isPlayerGroupGoal()) {
 
-//					if(player.getFinishedGoals().size()>0){
-//						log.debug("get Player already finishedGoals: " + player.getFinishedGoals() + " - name: " + player.getFinishedGoals().get(0).getGoal().getName());
-//					}
 					oldFinishedGoals.addAll(player.getFinishedGoalsByGoal(goal));
 
 					// check if goal is completed
@@ -366,6 +363,7 @@ public class Task implements Serializable {
 					// get all groups from player
 					List<PlayerGroup> allGroups = groupDao.getAllGroupsByOrganisation(organisation);
 					List<PlayerGroup> playerGroups = new ArrayList<>();
+					List<Role> matchingGroupRoles = new ArrayList<>();
 
 					for (PlayerGroup g : allGroups) {
 						if (g.getPlayers().contains(player)) {
@@ -385,6 +383,34 @@ public class Task implements Serializable {
 							groupFinishedTasksList.addAll(p.getFinishedTasks());
 						}
 
+						
+						//Test, if one player role of the group match with role of the goal 
+						if (goal.getCanCompletedBy().size() > 0) {
+							log.debug("Pointsgoal is restricted by roles");
+							
+							for(Player everyGroupPlayer : group.getPlayers()){
+									matchingGroupRoles.addAll(goal.getCanCompletedBy().stream().filter(r -> {
+								
+									if (everyGroupPlayer.getBelongsToRoles().contains(r)) {
+										log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
+										return true;
+									} else {
+										return false;
+									}
+								}).collect(Collectors.toList()));
+							}
+								
+							if (matchingGroupRoles.size() > 0) {
+								log.debug("Roles match for PointGoal -> proceed");
+							} else {
+								log.debug("Roles don't match for Pointgoal -> Pointgoal can not be completed");
+								continue;
+							}
+						} else {
+							log.debug("Pointgoal is not restricted by roles");
+						}			
+						
+						
 						// check if goal is completed and add it to
 						// finishedGoals of group
 						FinishedGoal tempFinishedGoal = goal.checkGoal(groupFinishedGoals, groupFinishedTasksList, rule);
@@ -395,12 +421,15 @@ public class Task implements Serializable {
 							// add rewards to group
 							for (Reward r : goal.getRewards()) {
 								log.debug("Add Reward to group");
-								r.addReward(group, goalDao, ruleDao);
-//								if(r instanceof Points){
-//									((Points) r).addReward(g, player, goalDao, ruleDao);
-//								} else {
-//									r.addReward(g, goalDao, ruleDao);
-//								}
+//								r.addReward(group, goalDao, ruleDao);
+
+								//Test for Awardings Rewards
+								if(r instanceof Points){
+//									((Points) r).addReward(group, player, goalDao, ruleDao);
+									((Points) r).addReward(group, goalDao, ruleDao);
+								} else {
+									r.addReward(group, goalDao, ruleDao);
+								}
 							}
 
 							//Control

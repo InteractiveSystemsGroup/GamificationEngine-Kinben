@@ -143,6 +143,9 @@ public class RuleApi {
 	/**
 	 * Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the 
 	 * goal and also its name are needed. A description can also be made. 
+	 * If a goal is associated with a points rule and is also repeatable the goal will be added once only to the
+	 * player's or respectively group's list of already finished goals. The rewards of such a goal are also awarded
+	 * only once. So a points rule can be fulfilled once only although the associated goal is repeatable.  
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
 	 * number otherwise a message for an invalid number is returned.
 	 * 
@@ -262,7 +265,7 @@ public class RuleApi {
 	 * @param attribute
 	 *           The name of the attribute which should be modified. This parameter is required.
 	 *           The following names of attributes can be used to change the associated field:
-	 *           "description", "name" and if it is a GetPointsRule: "points". 
+	 *           "description", "name" and if it is a GetPointsRule additionally "points". 
 	 * @param value
 	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey

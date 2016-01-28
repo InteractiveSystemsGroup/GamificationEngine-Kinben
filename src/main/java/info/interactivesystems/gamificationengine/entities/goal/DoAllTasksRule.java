@@ -124,6 +124,7 @@ public class DoAllTasksRule extends TaskRule {
 		// grouping and counting tasks by name
 		Map<String, Long> tasksToComplete = tasks.stream().collect(Collectors.groupingBy(Task::getTaskName, Collectors.counting()));
 
+		log.debug(" Rule = DoALLTasksRule! ");
 		log.debug("Last Date: " + lastDate);
 		log.debug("Temp Tasks List last item: " + finishedPlayerTasks.get((finishedPlayerTasks.size() - 1)).getFinishedDate());
 

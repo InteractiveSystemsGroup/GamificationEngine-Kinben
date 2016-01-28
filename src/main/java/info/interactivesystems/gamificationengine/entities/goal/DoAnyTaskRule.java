@@ -14,6 +14,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A DoAnyTaskRule defines a task rule by which only one of all mentioned tasks have to be fulfilled. If is this 
  * task is finsihed the goal rule an so the associated goal is completed.
@@ -23,6 +26,8 @@ import javax.persistence.Inheritance;
 @DiscriminatorValue("TRULEANY")
 public class DoAnyTaskRule extends TaskRule {
 
+	private static final Logger log = LoggerFactory.getLogger(DoAllTasksRule.class);
+	
 	/**
 	 * Gets the tasks of a DoAnyTaskRule that are already finished. So the user gets a status which tasks she/he 
 	 * dosen't have to complete any more. Therefore a list of finished tasks that were done by a specific 
@@ -110,6 +115,8 @@ public class DoAnyTaskRule extends TaskRule {
 
 		Map<String, Long> finishedTasks;
 
+		log.debug("DoAnyTaskRule! ");
+		
 		if (lastDate != null) {
 
 			// grouping and counting finished tasks after last finishedDate

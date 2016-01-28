@@ -75,7 +75,6 @@ public class Points extends VolatileReward {
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
-		//New: Test for matching roles
 		List<Role> matchingRoles;
 
 		log.debug("Add points to player: " + amount);
@@ -94,72 +93,54 @@ public class Points extends VolatileReward {
 
 			// get goals which contain this rule
 			for (Goal goal : goalDao.getGoalsByRule(rule)) {
-				
-				//New: Test, if player role match with role of the goal 
-				if (goal.getCanCompletedBy().size() > 0) {
-					log.debug("Pointsgoal is restricted by roles");
-					matchingRoles = goal.getCanCompletedBy().stream().filter(r -> {
-						if (player.getBelongsToRoles().contains(r)) {
-							log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
-							return true;
+
+				if(!goal.isPlayerGroupGoal()){
+					//Test, if player role match with one role of the goal 
+					if (goal.getCanCompletedBy().size() > 0) {
+						log.debug("Pointsgoal is restricted by roles");
+						matchingRoles = goal.getCanCompletedBy().stream().filter(r -> {
+							if (player.getBelongsToRoles().contains(r)) {
+								log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
+								return true;
+							} else {
+								return false;
+							}
+						}).collect(Collectors.toList());
+	
+						if (matchingRoles.size() > 0) {
+							log.debug("Roles match for PointGoal -> proceed");
 						} else {
-							return false;
+							log.debug("Roles don't match for Pointgoal -> Pointgoal can not be completed");
+							continue;
 						}
-					}).collect(Collectors.toList());
-
-					if (matchingRoles.size() > 0) {
-						log.debug("Roles match for PointGoal -> proceed");
 					} else {
-						log.debug("Roles don't match for Pointgoal -> Pointgoal can not be completed");
-						continue;
+						log.debug("Pointgoal is not restricted by roles");
 					}
-				} else {
-					log.debug("Pointgoal is not restricted by roles");
-				}//Until here
-				
-				List<FinishedGoal> oldFinishedGoals = player.getFinishedGoalsByGoal(goal);
-				
-				// check if goal is already finished
-				if (oldFinishedGoals.size() > 0) {
-					// goal is already finished
-					log.debug("Points Goal: is on finishedGoals list");
-					// check if goal is repeatable
-					if (goal.isRepeatable()) {
-						// get finishedDate of last goal
-						log.debug("Points Goal: is repeatable");
-						lastDate = oldFinishedGoals.get(oldFinishedGoals.size() - 1).getFinishedDate();
-					} else {
-						log.debug("Points Goal: is not repeatable -> break");
-						break;
-					}
-
-					// check if goal/rule is completed after lastDate
-					if (rule.checkRule(player)) {
-						// add goal to tempFinishedGoals list
-						log.debug("Points Goal: Rule is completed! -> add to fGoalsList (temp)");
-						FinishedGoal fGoal = new FinishedGoal();
-						fGoal.setGoal(goal);
-						fGoal.setFinishedDate(finishedDate);
-						fGoalsList.add(fGoal);
-					}
-				} else {
-					// goal has not yet been finished
-					log.debug("Points Goal: is NOT on finished Goals list");
-					// check if goal/rule is completed after lastDate
-					if (rule.checkRule(player)) {
-						// add goal to tempFinishedGoals list
-						log.debug("Points Goal: Rule is completed! -> add to fGoalsList (temp)");
-						FinishedGoal fGoal = new FinishedGoal();
-						fGoal.setGoal(goal);
-						fGoal.setFinishedDate(finishedDate);
-						fGoalsList.add(fGoal);
-						// for each reward -> addReward
-						for (Reward reward : goal.getRewards()) {
-							recievedRewards.add(reward);
+					
+					List<FinishedGoal> oldFinishedGoals = player.getFinishedGoalsByGoal(goal);
+					
+					// check if goal is already finished (if not list ist empty)
+					if(oldFinishedGoals.isEmpty()){
+						// goal has not yet been finished
+						log.debug("Points Goal: is NOT on finished Goals list");
+						// check if goal/rule is completed after lastDate
+						if (rule.checkRule(player)) {
+							// add goal to tempFinishedGoals list
+							log.debug("Points Goal: Rule is completed! -> add to fGoalsList (temp)");
+							FinishedGoal fGoal = new FinishedGoal();
+							fGoal.setGoal(goal);
+							fGoal.setFinishedDate(finishedDate);
+							fGoalsList.add(fGoal);
+							// for each reward -> addReward
+							for (Reward reward : goal.getRewards()) {
+								recievedRewards.add(reward);
+							}
 						}
 					}
 				}
+			
 			}
+			
 		}
 
 		log.debug("add finishedGoals to player");
@@ -196,8 +177,7 @@ public class Points extends VolatileReward {
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
-		//New: Test for matching roles
-		List<Role> matchingRoles;
+		List<Role> matchingRoles = new ArrayList<Role>();
 		
 		log.debug("Add points to group: " + amount);
 
@@ -216,48 +196,52 @@ public class Points extends VolatileReward {
 
 			// get goals which contain this rule
 			for (Goal goal : goalDao.getGoalsByRule(rule)) {
-
-							
 				
-				List<FinishedGoal> oldFinishedGoals = group.getFinishedGoalsByGoal(goal);
-
-				// check if goal is already finished
-				if (oldFinishedGoals.size() > 0) {
-					// goal is already finished
-					log.debug("Group: Points Goal: is on finishedGoals list");
-					// check if goal is repeatable
-					if (goal.isRepeatable()) {
-						// get finishedDate of last goal
-						log.debug("Group: Points Goal: is repeatable");
-						lastDate = oldFinishedGoals.get(oldFinishedGoals.size() - 1).getFinishedDate();
+				if(goal.isPlayerGroupGoal()){
+					//Test, if one player role of the group match with role of the goal 
+					if (goal.getCanCompletedBy().size() > 0) {
+						log.debug("Pointsgoal is restricted by roles");
+						
+						for(Player everyGroupPlayer : group.getPlayers()){
+								matchingRoles.addAll(goal.getCanCompletedBy().stream().filter(r -> {
+							
+								if (everyGroupPlayer.getBelongsToRoles().contains(r)) {
+									log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
+									return true;
+								} else {
+									return false;
+								}
+							}).collect(Collectors.toList()));
+						}
+							
+						if (matchingRoles.size() > 0) {
+							log.debug("Roles match for PointGoal -> proceed");
+						} else {
+							log.debug("Roles don't match for Pointgoal -> Pointgoal can not be completed");
+							continue;
+						}
 					} else {
-						log.debug("Group: Points Goal: is not repeatable -> break");
-						break;
-					}
-
-					// check if goal/rule is completed after lastDate
-					if (rule.checkRule(group)) {
-						// add goal to tempFinishedGoals list
-						log.debug("Group: Points Goal: Rule is completed! -> add to fGoalsList (temp)");
-						FinishedGoal fGoal = new FinishedGoal();
-						fGoal.setGoal(goal);
-						fGoal.setFinishedDate(finishedDate);
-						fGoalsList.add(fGoal);
-					}
-				} else {
-					// goal has not yet been finished
-					log.debug("Group: Points Goal: is NOT on finished Goals list");
-					// check if goal/rule is completed after lastDate
-					if (rule.checkRule(group)) {
-						// add goal to tempFinishedGoals list
-						log.debug("Group: Points Goal: Rule is completed! -> add to fGoalsList (temp)");
-						FinishedGoal fGoal = new FinishedGoal();
-						fGoal.setGoal(goal);
-						fGoal.setFinishedDate(finishedDate);
-						fGoalsList.add(fGoal);
-						// for each reward -> addReward
-						for (Reward reward : goal.getRewards()) {
-							recievedRewards.add(reward);
+						log.debug("Pointgoal is not restricted by roles");
+					}			
+					
+					List<FinishedGoal> oldFinishedGoals = group.getFinishedGoalsByGoal(goal);
+	
+					// check if goal is already finished (if not list is empty)
+					if(oldFinishedGoals.isEmpty()){
+						// goal has not yet been finished
+						log.debug("Group: Points Goal: is NOT on finished Goals list");
+						// check if goal/rule is completed after lastDate
+						if (rule.checkRule(group)) {
+							// add goal to tempFinishedGoals list
+							log.debug("Group: Points Goal: Rule is completed! -> add to fGoalsList (temp)");
+							FinishedGoal fGoal = new FinishedGoal();
+							fGoal.setGoal(goal);
+							fGoal.setFinishedDate(finishedDate);
+							fGoalsList.add(fGoal);
+							// for each reward -> addReward
+							for (Reward reward : goal.getRewards()) {
+								recievedRewards.add(reward);
+							}
 						}
 					}
 				}
@@ -271,8 +255,15 @@ public class Points extends VolatileReward {
 		log.debug("Group: add Rewards to group");
 		// add Rewards to rewardList
 		for (Reward reward : recievedRewards) {
-			reward.addReward(group, goalDao, ruleDao);
+//			reward.addReward(group, goalDao, ruleDao);		//Test, if points are correct
+			if(reward instanceof Points){
+				((Points) reward).addReward(group, goalDao, ruleDao);
+			} else {
+				reward.addReward(group, goalDao, ruleDao);
+			}
 		}
 
 	}
+
+	
 }

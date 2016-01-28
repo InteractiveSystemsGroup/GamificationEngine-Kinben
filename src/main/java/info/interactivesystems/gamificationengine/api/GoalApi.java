@@ -70,8 +70,8 @@ public class GoalApi {
 
 	/**
 	 * Creates a new goal and so the method generates the goal-id.
-	 * The organisation's API key is mandatory otherwise a warning with the hint for a 
-	 * non valid API key is returned. 
+	 * The organisation's API key is mandatory otherwise a warning with the hint for a  non valid API key is 
+	 * returned. 
 	 * By the creation the name and the id of the associated rule are needed. It can also be defined if 
 	 * the goal is repeatable or if it can also be completed by a group. 
 	 * Optionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at 
@@ -80,6 +80,10 @@ public class GoalApi {
 	 * Optionally the goal can be passed the id of rewards which can be earned. These ids are also checked if 
 	 * they are positive numbers.
 	 * If the API key is not valid an analogous message is returned. 
+	 * 
+	 * Note:  If a goal is associated with a points rule and is also repeatable the goal will be added once only to the
+	 * player's or respectively group's list of already finished goals. The rewards of such a goal are also awarded
+	 * only once. So a points rule can be fulfilled once only although the associated goal is repeatable.  
 	 * 
 	 * @param name
 	 *            The name of the goal. This parameter is required. 
