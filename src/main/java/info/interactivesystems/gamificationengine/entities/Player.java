@@ -610,6 +610,13 @@ public class Player {
 		this.isActive = isActive;
 	}
 	
+	/**
+	 * This method adds one or more roles to the player's list of roles, but only if they
+	 * are not in this list already.
+	 * 
+	 * @param newRoles
+	 * 			The roles that should be added to the player's current list of roles.
+	 */
 	public void addRoles(List<Role> newRoles){
 		for(Role role : newRoles){
 			if(!belongsToRoles.contains(role)){
