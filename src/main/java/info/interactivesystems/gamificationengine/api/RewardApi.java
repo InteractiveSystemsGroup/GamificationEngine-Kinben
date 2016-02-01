@@ -511,9 +511,9 @@ public class RewardApi {
 	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
-	@Path("/changeAchievement")
+	@Path("/{id}/changeAchievement")
 	@TypeHint(Reward.class)
-	public Response changeAchievement(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId,
+	public Response changeAchievement(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -543,7 +543,7 @@ public class RewardApi {
 				break;
 			}
 		} else {
-			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id is not a achievement");
+			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to an achievement");
 		}
 
 		return ResponseSurrogate.updated(reward);
@@ -575,9 +575,9 @@ public class RewardApi {
 	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
-	@Path("/changeBadge")
+	@Path("/{id}/changeBadge")
 	@TypeHint(Reward.class)
-	public Response changeBadge(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") @NotNull String attribute,
+	public Response changeBadge(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("change " + attribute + "of Badge in " + value);
@@ -606,7 +606,7 @@ public class RewardApi {
 				break;
 			}
 		} else {
-			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id is not a badge");
+			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a badge.");
 		}
 
 		return ResponseSurrogate.updated(reward);
@@ -635,13 +635,13 @@ public class RewardApi {
 	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
-	@Path("/Points")
+	@Path("/{id}/Points")
 	@TypeHint(Reward.class)
-	public Response changePointReward(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId,
+	public Response changePointReward(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of Points in " + value);
+		log.debug("change " + attribute + "of points in " + value);
 
 		if (!organisationDao.checkApiKey(apiKey)) {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
@@ -659,11 +659,66 @@ public class RewardApi {
 
 			}
 		} else {
-			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id is not a point");
+			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a point");
 		}
 
 		return ResponseSurrogate.updated(reward);
 	}
+	
+	
+	/**
+	 * With this method the fields of one specific coin reward can be changed. For this the 
+	 * reward id, the API key of the specific organisation, the name of the field and the 
+	 * new field's value are needed.  
+	 * To modify the amount of coins the new amount has to be transfered with the attribute
+	 * field. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param rewardId
+	 *            Required integer which uniquely identify the {@link Reward}.
+	 * @param attribute
+	 *            The name of the attribute which should be modified. This parameter is required. 
+	 *            The following names of attributes can be used to change the associated field:
+	 *            "amount".
+	 * @param value
+	 *            The new value of the attribute. This parameter is required.
+	 * @param apiKey
+	 *             The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this reward belongs to.
+	 * @return {@link Response} of {@link Reward} in JSON.
+	 */
+	@PUT
+	@Path("/{id}/Coins")
+	@TypeHint(Reward.class)
+	public Response changeCoinsReward(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId,
+			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("change " + attribute + "of coins in " + value);
+
+		if (!organisationDao.checkApiKey(apiKey)) {
+			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
+		}
+
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+
+		if ("null".equals(value) || value != null && value.isEmpty()) {
+			value = null;
+		}
+		if (reward instanceof Coins) {
+			switch (attribute) {
+			case "amount":
+				((Coins) reward).setAmount(ValidateUtils.requireGreaterThenZero(value));
+
+			}
+		} else {
+			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a coins reward");
+		}
+
+		return ResponseSurrogate.updated(reward);
+	}
+	
 
 	/**
 	 * With this method the fields of one specific level reward can be changed. For this the 
@@ -688,12 +743,12 @@ public class RewardApi {
 	 * @return {@link Response} of {@link Reward} in JSON.
 	 */
 	@PUT
-	@Path("/ReceiveLevel")
+	@Path("/{id}/ReceiveLevel")
 	@TypeHint(Reward.class)
-	public Response changeLevel(@QueryParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") String attribute,
+	public Response changeLevel(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of ReceiveLwvwl in " + value);
+		log.debug("change " + attribute + "of ReceiveLevel in " + value);
 
 		if (!organisationDao.checkApiKey(apiKey)) {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
@@ -714,7 +769,7 @@ public class RewardApi {
 
 			}
 		} else {
-			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id is not a point");
+			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a level");
 		}
 
 		return ResponseSurrogate.updated(reward);

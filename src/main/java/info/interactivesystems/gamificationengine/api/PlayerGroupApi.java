@@ -252,7 +252,7 @@ public class PlayerGroupApi {
 	@TypeHint(PlayerGroup.class)
 	public Response deletePlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no GroupId transferred");
+			throw new ApiError(Response.Status.FORBIDDEN, "No GroupId transferred");
 		}
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
