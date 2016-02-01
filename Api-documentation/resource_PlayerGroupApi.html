@@ -57,6 +57,13 @@
           <li><a href="#resource_PlayerGroupApi_getPlayerGroup_GET">GET /playerGroup/{id}</a></li>
           <li><a href="#resource_PlayerGroupApi_changePlayerGroupAttributes_PUT"><abbr title="PUT /playerGroup/{id}/attributes">PUT /playerGroup/{id}/attribut...</abbr></a></li>
           <li><a href="#resource_PlayerGroupApi_deletePlayerGroup_DELETE">DELETE /playerGroup/{id}</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupFinishedGoals_GET">GET /playerGroup/{id}/goals</a></li>
+          <li><a href="#resource_PlayerGroupApi_getAvatar_GET">GET /playerGroup/{id}/avatar</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupPoints_GET">GET /playerGroup/{id}/points</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupCoins_GET">GET /playerGroup/{id}/coins</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupRewards_GET">GET /playerGroup/{id}/rewards</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupBadges_GET">GET /playerGroup/{id}/badges</a></li>
+          <li><a href="#resource_PlayerGroupApi_getPlayerGroupAchievements_GET"><abbr title="GET /playerGroup/{id}/achievements">GET /playerGroup/{id}/achievem...</abbr></a></li>
           <li class="divider"></li>
           <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
         </ul>
@@ -103,23 +110,23 @@ a message for the invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@535092a3 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6959b9d7 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>
           </tr>
           <tr>
-            <td>logoPath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@81c804f -->
+            <td>logoPath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4e58710e -->
             <td>query</td>
             <td>Optionally a group logo as a HTTP reference can be passed.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@96ac7d1 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@46c5da58 -->
             <td>query</td>
             <td>The name of the group. This parameter is required.</td>
           </tr>
           <tr>
-            <td>playerIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@cdba98e -->
+            <td>playerIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@676aa119 -->
             <td>query</td>
             <td>A list of player-ids can be passed that a group has. These ids are
 separated by commas. This parameter is required.</td>
@@ -165,12 +172,12 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5bc9f73c -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@43592b22 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@37bb1af2 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4e84f246 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>
@@ -222,18 +229,18 @@ the ids are a positive number otherwise a message for an invalid number is retur
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6830079b -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@26fbf6d4 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@39f654ca -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@142bf97b -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this role belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d9224df -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1ea1d0e7 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is
 required. The following names of attributes can be used to change the
@@ -241,7 +248,7 @@ associated field:
 "name", "playerIds" and "logo".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4211d715 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@77de07b7 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -286,12 +293,12 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a750c13 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@e6a12ce -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@212e5d93 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4541c259 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this group of players belongs to.</td>
@@ -314,6 +321,369 @@ to which this group of players belongs to.</td>
             <td><a href="json_playergroup.html">PlayerGroup</a>
  (JSON)</td>
             <td rowspan="1">{@link Response} of {@link PlayerGroup} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupFinishedGoals_GET">
+        <h3>GET <small>/playerGroup/{id}/goals <!--<a href="./playerGroup/{id}/goals" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns a list of all already finished goals of a specific group of players.
+If the API key is not valid an analogous message is returned. It is also checked, if the
+group id is a positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@557704fe -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@52135258 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_finishedgoal.html">FinishedGoal</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link FinishedGoal}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getAvatar_GET">
+        <h3>GET <small>/playerGroup/{id}/avatar <!--<a href="./playerGroup/{id}/avatar" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns the avatar which is associated with a group of players. To identify the group its id and
+the API key is needed to which the group belongs to.
+If the API key is not valid an analogous message is returned. It is also checked, if the id
+is a positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c31d6b6 -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47298e63 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>string
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Object} with an byte[] in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupPoints_GET">
+        <h3>GET <small>/playerGroup/{id}/points <!--<a href="./playerGroup/{id}/points" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns the current amount of points associated with the group of players of the passed id. If
+the API key is not valid an analogous message is returned. It is also checked, if
+the group id is a positive number otherwise a message for an invalid number is
+returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a94228c -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@625d2414 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>number
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link int} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupCoins_GET">
+        <h3>GET <small>/playerGroup/{id}/coins <!--<a href="./playerGroup/{id}/coins" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns the current amount of coins associated with the group of players of the passed id. If
+the API key is not valid an analogous message is returned. It is also checked, if
+the group id is a positive number otherwise a message for an invalid number is
+returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@605bda8f -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6b0a1a71 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>number
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link int} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupRewards_GET">
+        <h3>GET <small>/playerGroup/{id}/rewards <!--<a href="./playerGroup/{id}/rewards" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns a list of all already awarded rewards associated with the group of players of the
+given id.
+If the API key is not valid an analogous message is returned. It is also checked, if the
+group id is a positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6081d5de -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6bf7205e -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_permanentreward.html">PermanentReward</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link PermanentReward}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupBadges_GET">
+        <h3>GET <small>/playerGroup/{id}/badges <!--<a href="./playerGroup/{id}/badges" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns a list of all awarded badges associated with the group of players of the passed
+id. If the API key is not valid an analogous message is returned. It is also checked,
+if the group id is a positive number otherwise a message for an invalid number is
+returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@55c6000d -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6e245156 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_badge.html">Badge</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link Badge}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PlayerGroupApi_getPlayerGroupAchievements_GET">
+        <h3>GET <small>/playerGroup/{id}/achievements <!--<a href="./playerGroup/{id}/achievements" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns a list of all awarded achievements associated with the group of players of the
+passed id. If the API key is not valid an analogous message is returned. It is also
+checked, if the player id is a positive number otherwise a message for an invalid number
+is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@654669 -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link PlayerGroup}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@524273eb -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_achievement.html">Achievement</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link Achievement}s in JSON</td>
           </tr>
           </tbody>
         </table>

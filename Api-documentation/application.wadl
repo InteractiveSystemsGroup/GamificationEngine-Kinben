@@ -128,8 +128,8 @@ to which this call for donations belongs to.]]></wadl:doc>
     <wadl:resource path="/goal">
       <wadl:method name="POST">
         <wadl:doc><![CDATA[Creates a new goal and so the method generates the goal-id.
-The organisation's API key is mandatory otherwise a warning with the hint for a
-non valid API key is returned.
+The organisation's API key is mandatory otherwise a warning with the hint for a  non valid API key is
+returned.
 By the creation the name and the id of the associated rule are needed. It can also be defined if
 the goal is repeatable or if it can also be completed by a group.
 Optionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at
@@ -137,7 +137,11 @@ least one of these roles she/he can complete the goal and earn its rewards. It i
 players are positive numbers otherwise a message for the invalid number is returned.
 Optionally the goal can be passed the id of rewards which can be earned. These ids are also checked if
 they are positive numbers.
-If the API key is not valid an analogous message is returned.]]></wadl:doc>
+If the API key is not valid an analogous message is returned.
+
+Note:  If a goal is associated with a points rule and is also repeatable the goal will be added once only to the
+player's or respectively group's list of already finished goals. The rewards of such a goal are also awarded
+only once. So a points rule can be fulfilled once only although the associated goal is repeatable.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1163,72 +1167,6 @@ to which this reward belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
-    <wadl:resource path="/reward/Points">
-      <wadl:method name="PUT">
-        <wadl:doc><![CDATA[With this method the fields of one specific point reward can be changed. For this the
-reward id, the API key of the specific organisation, the name of the field and the
-new field's value are needed.
-To modify the amount of points the new amount has to be transfered with the attribute
-field.
-If the API key is not valid an analogous message is returned. It is also checked, if
-the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this reward belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="attribute" style="query">
-            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
-The following names of attributes can be used to change the associated field:
-"amount".]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="id" style="query">
-            <wadl:doc><![CDATA[Required integer which uniquely identify the {@link Reward}.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="value" style="query">
-            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/reward/ReceiveLevel">
-      <wadl:method name="PUT">
-        <wadl:doc><![CDATA[With this method the fields of one specific level reward can be changed. For this the
-reward id, the API key of the specific organisation, the name of the field and the
-new field's value are needed.
-To modify the name and amount of the level the new name respectively amount has to be
-transfered with the attribute field.
-If the API key is not valid an analogous message is returned. It is also checked, if
-the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this reward belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="attribute" style="query">
-            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
-The following names of attributes can be used to change the associated field:
-"amount" and "name".]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="id" style="query">
-            <wadl:doc><![CDATA[Required integer which uniquely identify the {@link Reward}.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="value" style="query">
-            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
     <wadl:resource path="/reward/achievement">
       <wadl:method name="POST">
         <wadl:doc><![CDATA[Creates a new reward of type achievement so the method generates its reward-id. The
@@ -1281,74 +1219,6 @@ to which this reward belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} of {@link Badge} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/reward/changeAchievement">
-      <wadl:method name="PUT">
-        <wadl:doc><![CDATA[With this method the fields of one specific achievement can be changed. For this the
-reward id, the API key of the specific organisation, the name of the field and the
-new field's value are needed.
-To modify the name and description the new string has to be transfered with the attribute
-field. For a new icon the path of the new image is needed in the attribute parameter.
-The format of the image has to be .jpg or .png.
-If the API key is not valid an analogous message is returned. It is also checked, if
-the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this reward belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="attribute" style="query">
-            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
-The following names of attributes can be used to change the associated field:
-"name", "description" and "icon".]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="id" style="query">
-            <wadl:doc><![CDATA[Required integer which uniquely identify the {@link Reward}.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="value" style="query">
-            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/reward/changeBadge">
-      <wadl:method name="PUT">
-        <wadl:doc><![CDATA[With this method the fields of one specific badge can be changed. For this the
-reward id, the API key of the specific organisation, the name of the field and the
-new field's value are needed.
-To modify the name and description the new string has to be transfered with the attribute
-field. For a new icon the path of the new image is needed in the attribute parameter.
-The format of the image has to be .jpg or .png.
-If the API key is not valid an analogous message is returned. It is also checked, if
-the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this reward belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="attribute" style="query">
-            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
-The following names of attributes can be used to change the associated field:
-"name", "description" and "icon".]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="id" style="query">
-            <wadl:doc><![CDATA[Required integer which uniquely identify the {@link Reward}.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="value" style="query">
-            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1553,6 +1423,9 @@ to which this rule belongs to.]]></wadl:doc>
       <wadl:method name="POST">
         <wadl:doc><![CDATA[Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the
 goal and also its name are needed. A description can also be made.
+If a goal is associated with a points rule and is also repeatable the goal will be added once only to the
+player's or respectively group's list of already finished goals. The rewards of such a goal are also awarded
+only once. So a points rule can be fulfilled once only although the associated goal is repeatable.
 If the API key is not valid an analogous message is returned. It is also checked, if the id is a positive
 number otherwise a message for an invalid number is returned.]]></wadl:doc>
         <wadl:request>
@@ -1966,7 +1839,7 @@ and "avatar".]]></wadl:doc>
 
     <wadl:resource path="/player/{id}/avatar">
       <wadl:method name="GET">
-        <wadl:doc><![CDATA[Returns the avatar which is associated with a player. To identify the pplayer her/his id and
+        <wadl:doc><![CDATA[Returns the avatar which is associated with a player. To identify the player her/his id and
 the API key is needed to which the player belongs to.
 If the API key is not valid an analogous message is returned. It is also checked, if the id
 is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
@@ -2141,6 +2014,28 @@ to which this player belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/player/{id}/roles">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[Adds one or more roles to the current player's list of roles. All ids are checked, if they are
+positive numbers otherwise a message for an invalid number is returned. If the API key is not
+valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="roleIds" style="query">
+            <wadl:doc><![CDATA[The list of role ids which should be added to the contact list. These ids are
+separated by commas.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/player/{id}/tasks">
       <wadl:method name="GET">
         <wadl:doc><![CDATA[Returns a list of all already finished tasks associated with the player of the passed
@@ -2155,6 +2050,25 @@ to which this player belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link FinishedTask}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/achievements">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns a list of all awarded achievements associated with the group of players of the
+passed id. If the API key is not valid an analogous message is returned. It is also
+checked, if the player id is a positive number otherwise a message for an invalid number
+is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Achievement}s in JSON]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2188,6 +2102,119 @@ associated field:
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/avatar">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns the avatar which is associated with a group of players. To identify the group its id and
+the API key is needed to which the group belongs to.
+If the API key is not valid an analogous message is returned. It is also checked, if the id
+is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Object} with an byte[] in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/badges">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns a list of all awarded badges associated with the group of players of the passed
+id. If the API key is not valid an analogous message is returned. It is also checked,
+if the group id is a positive number otherwise a message for an invalid number is
+returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Badge}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/coins">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns the current amount of coins associated with the group of players of the passed id. If
+the API key is not valid an analogous message is returned. It is also checked, if
+the group id is a positive number otherwise a message for an invalid number is
+returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/goals">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns a list of all already finished goals of a specific group of players.
+If the API key is not valid an analogous message is returned. It is also checked, if the
+group id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link FinishedGoal}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/points">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns the current amount of points associated with the group of players of the passed id. If
+the API key is not valid an analogous message is returned. It is also checked, if
+the group id is a positive number otherwise a message for an invalid number is
+returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/rewards">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns a list of all already awarded rewards associated with the group of players of the
+given id.
+If the API key is not valid an analogous message is returned. It is also checked, if the
+group id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link PermanentReward}s in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2260,6 +2287,158 @@ to which this reward belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/reward/{id}/Coins">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific coin reward can be changed. For this the
+reward id, the API key of the specific organisation, the name of the field and the
+new field's value are needed.
+To modify the amount of coins the new amount has to be transfered with the attribute
+field.
+If the API key is not valid an analogous message is returned. It is also checked, if
+the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
+The following names of attributes can be used to change the associated field:
+"amount".]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/reward/{id}/Points">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific point reward can be changed. For this the
+reward id, the API key of the specific organisation, the name of the field and the
+new field's value are needed.
+To modify the amount of points the new amount has to be transfered with the attribute
+field.
+If the API key is not valid an analogous message is returned. It is also checked, if
+the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
+The following names of attributes can be used to change the associated field:
+"amount".]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/reward/{id}/ReceiveLevel">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific level reward can be changed. For this the
+reward id, the API key of the specific organisation, the name of the field and the
+new field's value are needed.
+To modify the name and amount of the level the new name respectively amount has to be
+transfered with the attribute field.
+If the API key is not valid an analogous message is returned. It is also checked, if
+the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
+The following names of attributes can be used to change the associated field:
+"amount" and "name".]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/reward/{id}/changeAchievement">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific achievement can be changed. For this the
+reward id, the API key of the specific organisation, the name of the field and the
+new field's value are needed.
+To modify the name and description the new string has to be transfered with the attribute
+field. For a new icon the path of the new image is needed in the attribute parameter.
+The format of the image has to be .jpg or .png.
+If the API key is not valid an analogous message is returned. It is also checked, if
+the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
+The following names of attributes can be used to change the associated field:
+"name", "description" and "icon".]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/reward/{id}/changeBadge">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific badge can be changed. For this the
+reward id, the API key of the specific organisation, the name of the field and the
+new field's value are needed.
+To modify the name and description the new string has to be transfered with the attribute
+field. For a new icon the path of the new image is needed in the attribute parameter.
+The format of the image has to be .jpg or .png.
+If the API key is not valid an analogous message is returned. It is also checked, if
+the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
+The following names of attributes can be used to change the associated field:
+"name", "description" and "icon".]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/role/{id}/attributes">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[With this method the name field of one role can be changed. For this the id of the role, the API key of the
@@ -2303,7 +2482,7 @@ to which this goal rule belongs to.]]></wadl:doc>
           <wadl:param name="attribute" style="query">
             <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
-"description", "name" and if it is a GetPointsRule: "points".]]></wadl:doc>
+"description", "name" and if it is a GetPointsRule additionally "points".]]></wadl:doc>
           </wadl:param>
           <wadl:param name="value" style="query">
             <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>

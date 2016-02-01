@@ -796,6 +796,20 @@
 "description" : "Gets the name of the group.",
 "type" : "string"
             },
+            "onlyAchievement" : {
+"description" : "Gets only all Achievements a group of players has already obtained.\r\nIf the group has no Achievement, null is returned.",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_achievement"
+}
+            },
+            "onlyBadges" : {
+"description" : "Gets only all Badges a group of players has already obtained.\r\nIf the group has no Badge, null is returned.",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_badge"
+}
+            },
             "players" : {
 "description" : "Gets the current list of players who are belong to this group.",
 "type" : "array",
@@ -1501,7 +1515,7 @@
     "/goal" : {
       "post" : {
         "tags" : [ "GoalApi" ],
-        "description" : "Creates a new goal and so the method generates the goal-id.\r\nThe organisation's API key is mandatory otherwise a warning with the hint for a\r\nnon valid API key is returned.\r\nBy the creation the name and the id of the associated rule are needed. It can also be defined if\r\nthe goal is repeatable or if it can also be completed by a group.\r\nOptionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at\r\nleast one of these roles she/he can complete the goal and earn its rewards. It is checked, if the ids of the\r\nplayers are positive numbers otherwise a message for the invalid number is returned.\r\nOptionally the goal can be passed the id of rewards which can be earned. These ids are also checked if\r\nthey are positive numbers.\r\nIf the API key is not valid an analogous message is returned.",
+        "description" : "Creates a new goal and so the method generates the goal-id.\r\nThe organisation's API key is mandatory otherwise a warning with the hint for a  non valid API key is\r\nreturned.\r\nBy the creation the name and the id of the associated rule are needed. It can also be defined if\r\nthe goal is repeatable or if it can also be completed by a group.\r\nOptionally the goal can be passed the ids of roles which are allowed to complete the goal. So if a player has at\r\nleast one of these roles she/he can complete the goal and earn its rewards. It is checked, if the ids of the\r\nplayers are positive numbers otherwise a message for the invalid number is returned.\r\nOptionally the goal can be passed the id of rewards which can be earned. These ids are also checked if\r\nthey are positive numbers.\r\nIf the API key is not valid an analogous message is returned.\r\n\r\nNote:  If a goal is associated with a points rule and is also repeatable the goal will be added once only to the\r\nplayer's or respectively group's list of already finished goals. The rewards of such a goal are also awarded\r\nonly once. So a points rule can be fulfilled once only although the associated goal is repeatable.",
         "operationId" : "resource_GoalApi_createNewGoal_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3116,6 +3130,49 @@
       }
     }
     ,
+    "/player/{id}/roles" : {
+      "put" : {
+        "tags" : [ "PlayerApi" ],
+        "description" : "Adds one or more roles to the current player's list of roles. All ids are checked, if they are\r\npositive numbers otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.",
+        "operationId" : "resource_PlayerApi_addRoles_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link Player}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          },
+          {
+            "name" : "roleIds",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The list of role ids which should be added to the contact list. These ids are\r\nseparated by commas."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/player/{id}/points" : {
       "get" : {
         "tags" : [ "PlayerApi" ],
@@ -3156,7 +3213,7 @@
     "/player/{id}/avatar" : {
       "get" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Returns the avatar which is associated with a player. To identify the pplayer her/his id and\r\nthe API key is needed to which the player belongs to.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
+        "description" : "Returns the avatar which is associated with a player. To identify the player her/his id and\r\nthe API key is needed to which the player belongs to.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
         "operationId" : "resource_PlayerApi_getAvatar_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3313,6 +3370,277 @@
             "schema" : {
 "description" : "",
 "$ref" : "#/definitions/json_playergroup"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/goals" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns a list of all already finished goals of a specific group of players.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\ngroup id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupFinishedGoals_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_finishedgoal"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/avatar" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns the avatar which is associated with a group of players. To identify the group its id and\r\nthe API key is needed to which the group belongs to.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_PlayerGroupApi_getAvatar_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "string"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/achievements" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns a list of all awarded achievements associated with the group of players of the\r\npassed id. If the API key is not valid an analogous message is returned. It is also\r\nchecked, if the player id is a positive number otherwise a message for an invalid number\r\nis returned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupAchievements_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_achievement"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/points" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns the current amount of points associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupPoints_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "number"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/badges" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns a list of all awarded badges associated with the group of players of the passed\r\nid. If the API key is not valid an analogous message is returned. It is also checked,\r\nif the group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupBadges_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_badge"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/coins" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns the current amount of coins associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupCoins_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "number"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/rewards" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns a list of all already awarded rewards associated with the group of players of the\r\ngiven id.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\ngroup id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupRewards_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_permanentreward"
+}
             },
             "headers" : {
             },
@@ -4109,13 +4437,19 @@
       }
     }
     ,
-    "/reward/changeAchievement" : {
+    "/reward/{id}/Coins" : {
       "put" : {
         "tags" : [ "RewardApi" ],
-        "description" : "With this method the fields of one specific achievement can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and description the new string has to be transfered with the attribute\r\nfield. For a new icon the path of the new image is needed in the attribute parameter.\r\nThe format of the image has to be .jpg or .png.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_RewardApi_changeAchievement_PUT",
+        "description" : "With this method the fields of one specific coin reward can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the amount of coins the new amount has to be transfered with the attribute\r\nfield.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_RewardApi_changeCoinsReward_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required integer which uniquely identify the {@link Reward}."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -4126,62 +4460,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
-          },
-          {
-            "name" : "id",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Reward}."
-          },
-          {
-            "name" : "value",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The new value of the attribute. This parameter is required."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_reward"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/reward/changeBadge" : {
-      "put" : {
-        "tags" : [ "RewardApi" ],
-        "description" : "With this method the fields of one specific badge can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and description the new string has to be transfered with the attribute\r\nfield. For a new icon the path of the new image is needed in the attribute parameter.\r\nThe format of the image has to be .jpg or .png.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_RewardApi_changeBadge_PUT",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
-          },
-          {
-            "name" : "attribute",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
-          },
-          {
-            "name" : "id",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Reward}."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\"."
           },
           {
             "name" : "value",
@@ -4391,6 +4670,55 @@
       }
     }
     ,
+    "/reward/{id}/Points" : {
+      "put" : {
+        "tags" : [ "RewardApi" ],
+        "description" : "With this method the fields of one specific point reward can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the amount of points the new amount has to be transfered with the attribute\r\nfield.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_RewardApi_changePointReward_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required integer which uniquely identify the {@link Reward}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
+          },
+          {
+            "name" : "attribute",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\"."
+          },
+          {
+            "name" : "value",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The new value of the attribute. This parameter is required."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_reward"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/reward/*" : {
       "get" : {
         "tags" : [ "RewardApi" ],
@@ -4447,55 +4775,6 @@
 "items" : {
   "type" : "string"
 }
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/reward/ReceiveLevel" : {
-      "put" : {
-        "tags" : [ "RewardApi" ],
-        "description" : "With this method the fields of one specific level reward can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and amount of the level the new name respectively amount has to be\r\ntransfered with the attribute field.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_RewardApi_changeLevel_PUT",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
-          },
-          {
-            "name" : "attribute",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\" and \"name\"."
-          },
-          {
-            "name" : "id",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Reward}."
-          },
-          {
-            "name" : "value",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The new value of the attribute. This parameter is required."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_reward"
             },
             "headers" : {
             },
@@ -4623,6 +4902,55 @@
       }
     }
     ,
+    "/reward/{id}/changeBadge" : {
+      "put" : {
+        "tags" : [ "RewardApi" ],
+        "description" : "With this method the fields of one specific badge can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and description the new string has to be transfered with the attribute\r\nfield. For a new icon the path of the new image is needed in the attribute parameter.\r\nThe format of the image has to be .jpg or .png.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_RewardApi_changeBadge_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required integer which uniquely identify the {@link Reward}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
+          },
+          {
+            "name" : "attribute",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
+          },
+          {
+            "name" : "value",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The new value of the attribute. This parameter is required."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_reward"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/reward/coins" : {
       "post" : {
         "tags" : [ "RewardApi" ],
@@ -4660,13 +4988,19 @@
       }
     }
     ,
-    "/reward/Points" : {
+    "/reward/{id}/changeAchievement" : {
       "put" : {
         "tags" : [ "RewardApi" ],
-        "description" : "With this method the fields of one specific point reward can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the amount of points the new amount has to be transfered with the attribute\r\nfield.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_RewardApi_changePointReward_PUT",
+        "description" : "With this method the fields of one specific achievement can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and description the new string has to be transfered with the attribute\r\nfield. For a new icon the path of the new image is needed in the attribute parameter.\r\nThe format of the image has to be .jpg or .png.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_RewardApi_changeAchievement_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required integer which uniquely identify the {@link Reward}."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -4677,13 +5011,56 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\"."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"description\" and \"icon\"."
           },
           {
-            "name" : "id",
+            "name" : "value",
             "in" : "query",
             "type" : "string",
+            "description" : "The new value of the attribute. This parameter is required."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_reward"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/reward/{id}/ReceiveLevel" : {
+      "put" : {
+        "tags" : [ "RewardApi" ],
+        "description" : "With this method the fields of one specific level reward can be changed. For this the\r\nreward id, the API key of the specific organisation, the name of the field and the\r\nnew field's value are needed.\r\nTo modify the name and amount of the level the new name respectively amount has to be\r\ntransfered with the attribute field.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_RewardApi_changeLevel_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
             "description" : "Required integer which uniquely identify the {@link Reward}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
+          },
+          {
+            "name" : "attribute",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"amount\" and \"name\"."
           },
           {
             "name" : "value",
@@ -4941,7 +5318,7 @@
     "/rule/point" : {
       "post" : {
         "tags" : [ "RuleApi" ],
-        "description" : "Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the\r\ngoal and also its name are needed. A description can also be made.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id is a positive\r\nnumber otherwise a message for an invalid number is returned.",
+        "description" : "Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the\r\ngoal and also its name are needed. A description can also be made.\r\nIf a goal is associated with a points rule and is also repeatable the goal will be added once only to the\r\nplayer's or respectively group's list of already finished goals. The rewards of such a goal are also awarded\r\nonly once. So a points rule can be fulfilled once only although the associated goal is repeatable.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id is a positive\r\nnumber otherwise a message for an invalid number is returned.",
         "operationId" : "resource_RuleApi_createNewPointRule_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -5171,7 +5548,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"description\", \"name\" and if it is a GetPointsRule: \"points\"."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"description\", \"name\" and if it is a GetPointsRule additionally \"points\"."
           },
           {
             "name" : "value",

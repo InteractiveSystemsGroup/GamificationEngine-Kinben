@@ -270,6 +270,7 @@ of the respective organisation and so also the Account.
 </samp></li><li><samp>  /player/{id}
 </samp></li><li><samp>  /player/{id}/achievements
 </samp></li><li><samp>  /player/*
+</samp></li><li><samp>  /player/{id}/roles
 </samp></li><li><samp>  /player/{id}/points
 </samp></li><li><samp>  /player/{id}/avatar
 </samp></li><li><samp>  /player/{id}/deactivate
@@ -286,6 +287,7 @@ of the respective organisation and so also the Account.
 </samp></li><li><samp>  DELETE, GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
@@ -312,10 +314,24 @@ player has.
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /playerGroup
 </samp></li><li><samp>  /playerGroup/{id}/attributes
+</samp></li><li><samp>  /playerGroup/{id}/goals
+</samp></li><li><samp>  /playerGroup/{id}/avatar
+</samp></li><li><samp>  /playerGroup/{id}/achievements
+</samp></li><li><samp>  /playerGroup/{id}/points
+</samp></li><li><samp>  /playerGroup/{id}/badges
+</samp></li><li><samp>  /playerGroup/{id}/coins
+</samp></li><li><samp>  /playerGroup/{id}/rewards
 </samp></li><li><samp>  /playerGroup/{id}
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
 </samp></li><li><samp>  PUT
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE, GET
 </samp></li></ul></td>
       <td>  Players can be assigned to a group by its creation or at a later point in time.
@@ -386,34 +402,36 @@ removed from the in-box.
       <td>  RewardApi
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /reward/badge
-</samp></li><li><samp>  /reward/changeAchievement
-</samp></li><li><samp>  /reward/changeBadge
+</samp></li><li><samp>  /reward/{id}/Coins
 </samp></li><li><samp>  /reward
 </samp></li><li><samp>  /reward/achievement/{id}
 </samp></li><li><samp>  /reward/badge/{id}
 </samp></li><li><samp>  /reward/achievement
+</samp></li><li><samp>  /reward/{id}/Points
 </samp></li><li><samp>  /reward/*
 </samp></li><li><samp>  /reward/types
-</samp></li><li><samp>  /reward/ReceiveLevel
 </samp></li><li><samp>  /reward/{id}
 </samp></li><li><samp>  /reward/level
+</samp></li><li><samp>  /reward/{id}/changeBadge
 </samp></li><li><samp>  /reward/coins
-</samp></li><li><samp>  /reward/Points
+</samp></li><li><samp>  /reward/{id}/changeAchievement
+</samp></li><li><samp>  /reward/{id}/ReceiveLevel
 </samp></li><li><samp>  /reward/points
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
 </samp></li><li><samp>  PUT
-</samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
-</samp></li><li><samp>  GET
-</samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE, GET
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  PUT
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
 </samp></li></ul></td>

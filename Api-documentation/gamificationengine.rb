@@ -131,42 +131,42 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :port
+    attr_accessor :ref
     # (no documentation provided)
     attr_accessor :content
     # (no documentation provided)
     attr_accessor :protocol
     # (no documentation provided)
-    attr_accessor :path
-    # (no documentation provided)
-    attr_accessor :defaultPort
-    # (no documentation provided)
     attr_accessor :userInfo
-    # (no documentation provided)
-    attr_accessor :host
     # (no documentation provided)
     attr_accessor :query
     # (no documentation provided)
-    attr_accessor :authority
+    attr_accessor :host
     # (no documentation provided)
-    attr_accessor :ref
+    attr_accessor :path
     # (no documentation provided)
     attr_accessor :file
+    # (no documentation provided)
+    attr_accessor :authority
+    # (no documentation provided)
+    attr_accessor :port
+    # (no documentation provided)
+    attr_accessor :defaultPort
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
       _h['content'] = content.to_jaxb_json_hash unless content.nil?
       _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
-      _h['path'] = path.to_jaxb_json_hash unless path.nil?
-      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
       _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
       _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
-      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['path'] = path.to_jaxb_json_hash unless path.nil?
       _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
+      _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
       return _h
     end
 
@@ -177,17 +177,17 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
       @content = Object.from_json(_o['content']) unless _o['content'].nil?
       @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
-      @path = String.from_json(_o['path']) unless _o['path'].nil?
-      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
       @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
       @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
-      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @path = String.from_json(_o['path']) unless _o['path'].nil?
       @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
+      @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
     end
 
     # constructs a URL from a (parsed) JSON hash
@@ -458,39 +458,39 @@ module Time
   class LocalDateTime 
 
     # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
     attr_accessor :hour
-    # (no documentation provided)
-    attr_accessor :second
     # (no documentation provided)
     attr_accessor :month
     # (no documentation provided)
+    attr_accessor :second
+    # (no documentation provided)
     attr_accessor :dayOfWeek
     # (no documentation provided)
-    attr_accessor :dayOfYear
-    # (no documentation provided)
-    attr_accessor :dayOfMonth
+    attr_accessor :minute
     # (no documentation provided)
     attr_accessor :year
     # (no documentation provided)
+    attr_accessor :monthValue
+    # (no documentation provided)
     attr_accessor :nano
     # (no documentation provided)
-    attr_accessor :monthValue
+    attr_accessor :dayOfMonth
+    # (no documentation provided)
+    attr_accessor :dayOfYear
 
     # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
-      _h['second'] = second.to_jaxb_json_hash unless second.nil?
       _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['second'] = second.to_jaxb_json_hash unless second.nil?
       _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
-      _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['year'] = year.to_jaxb_json_hash unless year.nil?
-      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
       _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
+      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
+      _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
       return _h
     end
 
@@ -501,16 +501,16 @@ module Time
 
     #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
-      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
-      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
       @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
       @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
-      @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
+      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
-      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
       @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
+      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
+      @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
     end
 
     # constructs a LocalDateTime from a (parsed) JSON hash
@@ -1450,6 +1450,10 @@ module Entities
     attr_accessor :coins
     # List of all obtained permanent rewards.
     attr_accessor :rewards
+    # A List of all obtained Badges as List.
+    attr_accessor :onlyBadges
+    # A List of all obtained Achievements as List.
+    attr_accessor :onlyAchievement
     # Level index returned as int.
     attr_accessor :levelIndex
     # The name of the player&#39;s current level as String.
@@ -1482,6 +1486,16 @@ module Entities
         _ha = Array.new
         rewards.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['rewards'] = _ha
+      end
+      if !onlyBadges.nil?
+        _ha = Array.new
+        onlyBadges.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['onlyBadges'] = _ha
+      end
+      if !onlyAchievement.nil?
+        _ha = Array.new
+        onlyAchievement.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['onlyAchievement'] = _ha
       end
       _h['levelIndex'] = levelIndex.to_jaxb_json_hash unless levelIndex.nil?
       _h['levelLabel'] = levelLabel.to_jaxb_json_hash unless levelLabel.nil?
@@ -1519,6 +1533,16 @@ module Entities
         @rewards = Array.new
         _oa = _o['rewards']
         _oa.each { | _item | @rewards.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward.from_json(_item) }
+      end
+      if !_o['onlyBadges'].nil?
+        @onlyBadges = Array.new
+        _oa = _o['onlyBadges']
+        _oa.each { | _item | @onlyBadges.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Badge.from_json(_item) }
+      end
+      if !_o['onlyAchievement'].nil?
+        @onlyAchievement = Array.new
+        _oa = _o['onlyAchievement']
+        _oa.each { | _item | @onlyAchievement.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Achievement.from_json(_item) }
       end
       @levelIndex = Fixnum.from_json(_o['levelIndex']) unless _o['levelIndex'].nil?
       @levelLabel = String.from_json(_o['levelLabel']) unless _o['levelLabel'].nil?
@@ -1908,42 +1932,13 @@ module Entities
 module Present
 
   # (no documentation provided)
-  class ImageMessage < Info::Interactivesystems::Gamificationengine::Entities::Present::Present 
+  class Status
 
-    # The byte[] of the sent image.
-    attr_accessor :imageIcon
+    # 
+    ACCEPT = "ACCEPT"
 
-    # the json hash for this ImageMessage
-    def to_jaxb_json_hash
-      _h = super
-      if !imageIcon.nil?
-        _ha = Array.new
-        imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['imageIcon'] = _ha
-      end
-      return _h
-    end
-
-    #initializes this ImageMessage with a json hash
-    def init_jaxb_json_hash(_o)
-      super _o
-      if !_o['imageIcon'].nil?
-        @imageIcon = Array.new
-        _oa = _o['imageIcon']
-        _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
-      end
-    end
-
-    # constructs a ImageMessage from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
+    # 
+    DENIED = "DENIED"
   end
 
 end
@@ -2014,13 +2009,42 @@ module Entities
 module Present
 
   # (no documentation provided)
-  class Status
+  class ImageMessage < Info::Interactivesystems::Gamificationengine::Entities::Present::Present 
 
-    # 
-    ACCEPT = "ACCEPT"
+    # The byte[] of the sent image.
+    attr_accessor :imageIcon
 
-    # 
-    DENIED = "DENIED"
+    # the json hash for this ImageMessage
+    def to_jaxb_json_hash
+      _h = super
+      if !imageIcon.nil?
+        _ha = Array.new
+        imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['imageIcon'] = _ha
+      end
+      return _h
+    end
+
+    #initializes this ImageMessage with a json hash
+    def init_jaxb_json_hash(_o)
+      super _o
+      if !_o['imageIcon'].nil?
+        @imageIcon = Array.new
+        _oa = _o['imageIcon']
+        _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
+      end
+    end
+
+    # constructs a ImageMessage from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
   end
 
 end
