@@ -12,7 +12,6 @@ import info.interactivesystems.gamificationengine.entities.Player;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;

@@ -30,18 +30,6 @@ public class PlayerGroupDAO {
 		return group.getId();
 	}
 
-	public PlayerGroup getOrganisation(int groupId) {
-		return em.find(PlayerGroup.class, groupId);
-	}
-
-	
-	public PlayerGroup getGroupByApiKey(String apiKey) {
-		Query query = em.createQuery("select g from PlayerGroup g where g.belongsTo.apiKey=:apiKey");
-		query.setParameter("apiKey", apiKey);
-
-		return (PlayerGroup) query.getSingleResult();
-	}
-
 	/** 
 	 * Gets a group of players by its id and organisation.
 	 * 
@@ -64,23 +52,6 @@ public class PlayerGroupDAO {
 		}
 	}
 	
-	/**
-	 * Gets a group of players by her/his id and API key.
-	 * 
-	 * @param id
-	 *          The id of the requested player.
-	 * @param apiKey
-	 *            The API key of the organisation to which the group of players belongs to.
-	 * @return The {@link Playergroup} that is associated with the passed id and API key.
-	 */
-	public PlayerGroup getPlayergroupByIdAndAPIkey(int id, String apiKey) {
-		Query query = em.createQuery("select g from PlayerGroup g where g.belongsTo.apiKey=:apiKey and g.id = :id", PlayerGroup.class);
-		List list = QueryUtils.configureQuery(query, id, apiKey);
-		if (list.isEmpty()) {
-			return null;
-		}
-		return ((PlayerGroup) list.get(0));
-	}
 
 	/**
 	 * Removes a group of player from the data base.
@@ -97,6 +68,26 @@ public class PlayerGroupDAO {
 		return plGroup;
 	}
 
+	
+	/**
+	 * Gets a group of players by its id and API key.
+	 * 
+	 * @param id
+	 *          The id of the requested group of players.
+	 * @param apiKey
+	 *            The API key of the organisation to which the group of players belongs to.
+	 * @return The {@link PlayerGroup} that is associated with the passed id and API key.
+	 */
+	public PlayerGroup getPlayergroupByIdAndAPIkey(int id, String apiKey) {
+		Query query = em.createQuery("select g from PlayerGroup g where g.belongsTo.apiKey=:apiKey and g.id = :id", PlayerGroup.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((PlayerGroup) list.get(0));
+	}
+
+	
 	/**
 	 * Gets all groups of players which are associated with a specific organisation.
 	 * 
@@ -113,24 +104,5 @@ public class PlayerGroupDAO {
 
 		return query.getResultList();
 
-	}
-
-	
-	/**
-	 * Gets a group by its id and API key.
-	 * 
-	 * @param id
-	 *          The id of the requested group of players.
-	 * @param apiKey
-	 *            The API key of the organisation to which the group belongs to.
-	 * @return The {@link PlayerGroup} that is associated with the passed id and API key.
-	 */
-	public PlayerGroup getPlayerGroup(int id, String apiKey) {
-		Query query = em.createQuery("select p from PlayerGroup p where p.belongsTo.apiKey=:apiKey and p.id = :id", PlayerGroup.class);
-		List list = QueryUtils.configureQuery(query, id, apiKey);
-		if (list.isEmpty()) {
-			return null;
-		}
-		return ((PlayerGroup) list.get(0));
 	}
 }

@@ -283,8 +283,13 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedGoals of Group requested");
-		List<FinishedGoal> fgoals = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getFinishedGoals();
-				
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+
+		List<FinishedGoal> fgoals = group.getFinishedGoals();
 		return ResponseSurrogate.of(fgoals);
 	}
 
@@ -309,8 +314,12 @@ public class PlayerGroupApi {
 		log.debug("get groups's avatar image");
 
 		int groupId = ValidateUtils.requireGreaterThenZero(id);
-		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(groupId), apiKey);
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(groupId), apiKey);
 
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
 		byte[] bytes = group.getGroupLogo();
 
 		return ResponseSurrogate.of(new Object() {
@@ -337,7 +346,12 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned points from group requested");
-		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
 		int points = group.getPoints();
 
 		return ResponseSurrogate.of(points);
@@ -362,7 +376,12 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned coins from group of players requested");
-		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
 		int coins = group.getCoins();
 
 		return ResponseSurrogate.of(coins);
@@ -387,8 +406,13 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getPlayerGroupPermanentRewards requested");
-		List<PermanentReward> pRewards = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getRewards();
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+				
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
 
+		List<PermanentReward> pRewards = group.getRewards();
 		return ResponseSurrogate.of(pRewards);
 	}
 
@@ -411,8 +435,13 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Badges from PlayerGroup requested");
-		List<Badge> badges = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getOnlyBadges();
-				
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
+		List<Badge> badges = group.getOnlyBadges();
 		return ResponseSurrogate.of(badges);
 	}
 
@@ -435,8 +464,13 @@ public class PlayerGroupApi {
 	public Response getPlayerGroupAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");
-		List<Achievement> achievements = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThenZero(id), apiKey).getOnlyAchievement();
-
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
+		List<Achievement> achievements = group.getOnlyAchievement();
 		return ResponseSurrogate.of(achievements);
 	}
 	
@@ -468,6 +502,11 @@ public class PlayerGroupApi {
 
 		int groupId = ValidateUtils.requireGreaterThenZero(id);
 		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(groupId, apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+		}
+		
 		group.addPlayers(playersToAdd); 
 		
 		groupDao.insertGroup(group); 
