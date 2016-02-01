@@ -383,4 +383,19 @@ public class PlayerGroup {
 	public void setLevelLabel(String levelLabel) {
 		this.levelLabel = levelLabel;
 	}
+	
+	/**
+	 * This method adds one or more players to the group's list of current players, but only if they
+	 * are not in this list already.
+	 * 
+	 * @param newPlayer
+	 * 			The new players that should be added to the list of players.
+	 */
+	public void addPlayers(List<Player> newPlayer){
+		for(Player player : newPlayer){
+			if(!players.contains(player)){
+				players.add(player);
+			}
+		}
+	}
 }

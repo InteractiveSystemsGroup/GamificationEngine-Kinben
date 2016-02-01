@@ -440,4 +440,37 @@ public class PlayerGroupApi {
 		return ResponseSurrogate.of(achievements);
 	}
 	
+	/**
+	 * Adds one or more players to a group of players. All ids are checked, if they are positive numbers
+	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous 
+	 * message is returned.
+	 * 
+	 * @param id
+	 * 			 Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param playerIds
+	 * 			 The list of player ids which should be added to the contact list. These ids are 
+	 *           separated by commas.	
+	 * @param apiKey
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
+	 * @return {@link Response} of {@link PlayerGroup} in JSON.
+	 */
+	@PUT
+	@Path("/{id}/addPlayers")
+	@TypeHint(Player.class)
+	public Response addPlayers(@PathParam("id") @ValidPositiveDigit String id,
+			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		log.debug("adding players to group called");
+
+		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
+		List<Player> playersToAdd = playerDao.getPlayers(listplayIds, apiKey); 
+
+		int groupId = ValidateUtils.requireGreaterThenZero(id);
+		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(groupId, apiKey);
+		group.addPlayers(playersToAdd); 
+		
+		groupDao.insertGroup(group); 
+		return ResponseSurrogate.updated(group);
+	}
 }

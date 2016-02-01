@@ -370,7 +370,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response addRoles(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("roleIds") @NotNull @ValidListOfDigits String roleIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("adding contacts to player");
+		log.debug("adding roles to player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(roleIds);
 		List<Role> rolesToAdd = roleDao.getRoles(list, apiKey); 
