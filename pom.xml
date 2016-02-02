@@ -15,7 +15,7 @@
 		<slf.version>1.7.6</slf.version>
 		<resteasy.version>3.0.9.Final</resteasy.version>
 		<jackson.version>2.5.0</jackson.version>
-	</properties>
+</properties>
 
 	<repositories>
 		<repository>
@@ -72,7 +72,6 @@
 		</dependency>
 
 
-
 		<!-- Hibernate validator for extended validation annotations. -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -90,6 +89,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>3.5.6-Final</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.webcohesion.enunciate</groupId>
+ 			 <artifactId>enunciate-core-annotations</artifactId>
+  			<version>2.0.0-M.1</version>
 		</dependency>
 
 		<!-- Logging framework. -->
@@ -131,8 +135,8 @@
 	</dependencies>
 
 	<build>
-		<finalName>gamification_engine</finalName>
-		<plugins>
+	   <finalName>gamification_engine</finalName>
+			<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -170,9 +174,10 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.3</version>
 				<configuration>
-					<show>public</show>
+				    <excludePackageNames>info.interactivesystems.gamificationengine.entities.rule:info.interactivesystems.gamificationengine.test</excludePackageNames>			
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
@@ -194,17 +199,19 @@
 			<plugin>
 				<groupId>com.webcohesion.enunciate</groupId>
 				<artifactId>enunciate-maven-plugin</artifactId>
-				<version>2.0.0-M.5</version>
+				<version>2.1.1</version>
 				<executions>
 					<execution>
-						<id>assemble</id>
-						<goals>
-							<goal>assemble</goal>
-						</goals>
-					</execution>
+				      <goals>
+				        <goal>assemble</goal>
+				      </goals>
+				       <configuration>
+       						 <configFile>enunciate.xml</configFile>
+     					 </configuration> 
+  				  </execution>				 
 				</executions>
 			</plugin>
-		</plugins>
+	   </plugins> 
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
