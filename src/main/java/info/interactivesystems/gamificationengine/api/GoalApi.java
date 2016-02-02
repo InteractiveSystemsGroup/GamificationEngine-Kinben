@@ -232,7 +232,7 @@ public class GoalApi {
 	 * @param attribute
 	 *            The attribute which should be modified. This parameter is required.
 	 *            The following names of attributes can be used to change the associated field:
-	 *            "goalName", "isRepeateable", "isGroupGoal", "rewardId", "ruleId" and "roles".
+	 *            "goalName", "isRepeateable", "isGroupGoal", "rewardId" and "roles".
 	 * @param value
 	 *            The new value of the attribute.
 	 * @param apiKey
@@ -271,11 +271,6 @@ public class GoalApi {
 
 		case "rewardId":
 			changeRewardIds(value, organisation, goal, apiKey);
-			break;
-
-		case "ruleId":
-			GoalRule goalRule = ruleDao.getRule(ValidateUtils.requireGreaterThenZero(value));
-			goal.setRule(goalRule);
 			break;
 
 		case "roles":

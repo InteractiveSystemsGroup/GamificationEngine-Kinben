@@ -265,7 +265,8 @@ public class RuleApi {
 	 * @param attribute
 	 *           The name of the attribute which should be modified. This parameter is required.
 	 *           The following names of attributes can be used to change the associated field:
-	 *           "description", "name" and if it is a GetPointsRule additionally "points". 
+	 *           "description" and "name". The tasks that have to be completed or the amount of 
+	 *           points that have to be reached, can't be changed later. 
 	 * @param value
 	 *           The new value of the attribute. This parameter is required.
 	 * @param apiKey
@@ -299,12 +300,7 @@ public class RuleApi {
 			rule.setName(value);
 			break;
 
-		case "points":
-			((GetPointsRule) rule).setPoints(ValidateUtils.requireGreaterThenZero(value));
-			break;
-
 		default:
-
 			break;
 		}
 
