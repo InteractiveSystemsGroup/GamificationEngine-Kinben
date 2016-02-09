@@ -4,6 +4,7 @@ import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class Board {
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "board_current")
-	private List<Present> currentPresents;
+	private List<PresentAccepted> currentPresents;
 
 	/**
 	 * If the player wants to archive a present it is stored in the list of archived presents.
@@ -120,7 +121,7 @@ public class Board {
 	 * 
 	 * @return All accepted presents as {@link List} of {@link Present}s. 
 	 */
-	public List<Present> getCurrentPresents() {
+	public List<PresentAccepted> getCurrentPresents() {
 		return currentPresents;
 	}
 
@@ -130,7 +131,7 @@ public class Board {
 	 * @param presents
 	 * 			The current presents a player has accepted.
 	 */
-	public void setCurrentPresents(List<Present> presents) {
+	public void setCurrentPresents(List<PresentAccepted> presents) {
 		this.currentPresents = presents;
 	}
 
@@ -196,55 +197,68 @@ public class Board {
 	 * If a player accepts a specific present of her/his in-Box it will be added to
 	 * the list of current presents.
 	 * 
-	 * @param p
+	 * @param present
 	 * 			The present a player has accepted. 
 	 * @return The accepted present as object of Present.
 	 */
-	public Present accept(Present p) {
-		if (this.inBox.contains(p)) {
-			// this.inBox.remove(p.getPresent());
-			// this.currentPresents.add(p);
-			this.inBox.remove(p);
-			this.currentPresents.add(p);
+	public Present acceptAndCreateAcceptedPresent(Present present) {
+		if (this.inBox.contains(present)) {
+			this.inBox.remove(present);
+			
+			PresentAccepted accPresent = new PresentAccepted();
+			accPresent.setDate(LocalDateTime.now());
+			accPresent.setPresent(present);
+			accPresent.setBoard(this);
+			accPresent.setBelongsTo(present.getBelongsTo());
+			accPresent.setStatus();
+			
+			this.currentPresents.add(accPresent);
 		} else {
-			throw new ApiError(Response.Status.FORBIDDEN, "no such present to accept");
+			throw new ApiError(Response.Status.FORBIDDEN, "No such present to accept");
 		}
-		return p;
+		return present;
 	}
 
 	/**
 	 * If a player denies a specific present of her/his in-Box it will be removed of
 	 * the list of the in-box.
 	 * 
-	 * @param p
+	 * @param present
 	 * 			The present which the player has denied. 
 	 * @return The denied present as object of Present.
 	 */
-	public Present deny(Present p) {
-		if (this.inBox.contains(p)) {
-			this.inBox.remove(p);
+	public Present denyPresent(Present present) {
+		if (this.inBox.contains(present)) {
+			this.inBox.remove(present);
 		} else {
 			throw new ApiError(Response.Status.FORBIDDEN, "no such present to accept");
 		}
-		return p;
+		return present;
 	}
 
 	/**
 	 * If a player archives a specific present of current ones it will be added
 	 * to her/his list of archived presents.
 	 * 
-	 * @param p
+	 * @param present
 	 *         The present which the player wants to archive.
 	 * @return The archived present.
 	 */
-	public PresentArchived archive(PresentArchived p) {
-		if (this.currentPresents.contains(p)) {
-			this.currentPresents.remove(p.getPresent());
-			this.archive.add(p);
+	public PresentAccepted archive(PresentAccepted present) {
+		if (this.currentPresents.contains(present)) {
+			this.currentPresents.remove(present.getPresent());
+			
+			PresentArchived aPresent = new PresentArchived();
+			aPresent.setDate(LocalDateTime.now());
+			aPresent.setPresent(present);
+			aPresent.setBoard(this);
+			aPresent.setBelongsTo(present.getBelongsTo());
+			
+			this.archive.add(aPresent);
 		} else {
 			throw new ApiError(Response.Status.FORBIDDEN, "no such present to archive");
 		}
-		return p;
+		return present;
 	}
 
 	/**
@@ -277,5 +291,11 @@ public class Board {
 	 */
 	public void add(Present present) {
 		getInBox().add(present);
+	}
+	
+	public void checkBoardExists(Board board){
+		if(board == null){
+			throw new ApiError(Response.Status.NOT_FOUND, "Player hasn't a board with presents taht can be accepted.");
+		}
 	}
 }

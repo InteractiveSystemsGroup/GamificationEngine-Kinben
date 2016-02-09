@@ -154,4 +154,16 @@ public class PresentAccepted {
 		this.status = Status.ACCEPT;
 	}
 
+	/**
+	 * This method checks if a accepted present belongs to a specific organisation. Therefore
+	 * it is tested if the organisation's API key matchs the present's API key. 
+	 * 
+	 * @param organisation
+	 * 			The organisation object a present may belongs to.
+	 * @return Boolean value if the API key of the accepted present is the same 
+	 * 			of the tested organisation (true) or not (false).
+	 */
+	public boolean belongsTo(Organisation organisation) {
+		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
+	}
 }

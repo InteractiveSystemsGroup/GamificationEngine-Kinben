@@ -13,15 +13,18 @@ import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.present.Board;
 import info.interactivesystems.gamificationengine.entities.present.ImageMessage;
 import info.interactivesystems.gamificationengine.entities.present.Present;
+import info.interactivesystems.gamificationengine.entities.present.PresentAccepted;
 import info.interactivesystems.gamificationengine.entities.present.PresentArchived;
 import info.interactivesystems.gamificationengine.entities.present.TextMessage;
 import info.interactivesystems.gamificationengine.utils.ImageUtils;
+import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
@@ -96,7 +99,8 @@ public class PresentApi {
 	@TypeHint(TextMessage.class)
 	public Response createTextMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
-			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("content") String content,
+			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, 
+			@QueryParam("content") String content,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create New TestMessage called");
@@ -106,25 +110,11 @@ public class PresentApi {
 
 		List<Player> receivers = new ArrayList<>();
 		
-		// TODO move to Player
-		if (receiverIds.contains(",")) {
-			String[] receiverList = receiverIds.split(",");
-
-			for (String receiverIdString : receiverList) {
-				Player playerRec = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(receiverIdString), apiKey);
-				if (playerRec != null) {
-					receivers.add(playerRec);
-					log.debug(playerRec.getId() + "player added as receiver.");
-				}
-			}
-		} else {
-			Player playerRec = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(receiverIds), apiKey);
-			if (playerRec != null) {
-				receivers.add(playerRec);
-				log.debug("player added");
-			}
-		}
-
+		receivers = receiverList(receiverIds, apiKey);
+		for (Player player : receivers) {
+			log.debug("Receivers: " + player.getId());
+		} 
+		
 		TextMessage message = new TextMessage();
 		message.setBelongsTo(organisation);
 		message.setReceiver(receivers);
@@ -134,6 +124,8 @@ public class PresentApi {
 		presentDao.insertPresent(message);
 		return ResponseSurrogate.created(message);
 	}
+	
+	
 
 	/**
 	 * Creates a new image message as a present in a gamificated application, so the method 
@@ -163,7 +155,8 @@ public class PresentApi {
 	@TypeHint(ImageMessage.class)
 	public Response createImageMessage(
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
-			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, @QueryParam("imagePath") @NotNull String imagePath,
+			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, 
+			@QueryParam("imagePath") @NotNull String imagePath,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("createNew ImageMessage called");
@@ -172,25 +165,12 @@ public class PresentApi {
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
 
 		List<Player> receivers = new ArrayList<>();
-		// TODO move to Player
-		if (receiverIds.contains(",")) {
-			String[] receiverList = receiverIds.split(",");
-
-			for (String receiverIdString : receiverList) {
-				Player playerRec = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(receiverIdString), apiKey);
-				if (playerRec != null) {
-					receivers.add(playerRec);
-					log.debug(playerRec.getId() + " player added as receiver.");
-				}
-			}
-		} else {
-			Player playerRec = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(receiverIds), apiKey);
-			if (playerRec != null) {
-				receivers.add(playerRec);
-				log.debug(playerRec.getId() + " player added");
-			}
-		}
-
+		
+		receivers = receiverList(receiverIds, apiKey);
+		for (Player player : receivers) {
+			log.debug("Receivers: " + player.getId());
+		} 
+		
 		ImageMessage iMessage = new ImageMessage();
 		iMessage.setBelongsTo(organisation);
 		iMessage.setReceiver(receivers);
@@ -207,6 +187,27 @@ public class PresentApi {
 		return ResponseSurrogate.created(iMessage);
 	}
 
+	
+	/**
+	 * This method converts the string of receiver ids which are transfered to a list of players.
+	 * These players are then set as the list of receivers a present has. 
+	 * 
+	 * @param commaSeparatedList
+	 * 			The list of receivers as string separated by commas. This parameter is 
+	 * 		   	required.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *        	to which this present belongs to.
+	 * @return
+	 */
+	private List<Player> receiverList(String commaSeparatedList, String apiKey) {
+		StringUtils.validateAsListOfDigits(commaSeparatedList);
+		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
+		List<Player> receivers = playerDao.getPlayers(ids, apiKey);
+		return receivers;
+	}
+	
+	
 	/**
 	 * Removes the specific present with the assigned id from data base. It is checked, if the passed 
 	 * id is a positive number otherwise a message for an invalid number is returned. If the API key 
@@ -258,10 +259,10 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
-	@Path("/boardMessages")
+	@Path("/{playerId}/boardMessages")
 	@TypeHint(Present[].class)
 	public Response getTextMessage(
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getMessages called");
@@ -275,19 +276,12 @@ public class PresentApi {
 			boardDao.persist(board);
 		}
 
-		List<Present> presents = board.getCurrentPresents();
+		List<PresentAccepted> presents = board.getCurrentPresents();
 		List<TextMessage> textMList = new ArrayList<>();
 
-		// for (PresentAccepted present : presents) {
-		// Present p = present.getPresent();
-		// if (p instanceof TextMessage) {
-		// textMList.add((TextMessage) p);
-		// }
-		// }
-
-		for (Present present : presents) {
-			if (present instanceof TextMessage) {
-				textMList.add((TextMessage) present);
+		for (PresentAccepted present : presents) {
+			if (present.getPresent() instanceof TextMessage) {
+				textMList.add((TextMessage) present.getPresent());
 			}
 		}
 
@@ -312,10 +306,10 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
-	@Path("/imageMessages")
+	@Path("/{playerId}/imageMessages")
 	@TypeHint(ImageMessage[].class)
 	public Response getImageMessages(
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getImageMessages called");
@@ -329,18 +323,12 @@ public class PresentApi {
 			boardDao.persist(board);
 		}
 
-		List<Present> presents = board.getCurrentPresents();
+		List<PresentAccepted> presents = board.getCurrentPresents();
 		List<ImageMessage> imMessageList = new ArrayList<>();
 
-		// for (PresentAccepted present : presents) {
-		// Present p = present.getPresent();
-		// if (p instanceof ImageMessage) {
-		// imMessageList.add((ImageMessage) p);
-		// }
-		// }
-		for (Present present : presents) {
-			if (present instanceof ImageMessage) {
-				imMessageList.add((ImageMessage) present);
+		for (PresentAccepted present : presents) {
+			if (present.getPresent() instanceof ImageMessage) {
+				imMessageList.add((ImageMessage) present.getPresent());
 			}
 		}
 
@@ -359,9 +347,9 @@ public class PresentApi {
 	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
-	@Path("/send")
+	@Path("/{presentId}/send")
 	@TypeHint(Present.class)
-	public Response send(@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+	public Response send(@PathParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("send a Present called");
@@ -373,11 +361,21 @@ public class PresentApi {
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to send.");
 		}
-
-		List<Player> receivers = present.getReceiver();
+		
+		log.debug("Receivers player: " + present.getId());
+		
+		Set<Player> receiverSet = new HashSet<Player>(present.getReceiver());
+		List<Player> receivers = new ArrayList<>();
+		receivers.addAll(receiverSet);
+		
 		List<Board> boards = boardDao.getBoards(receivers, apiKey);
 
-		List<Player> copyRecievers = new ArrayList<>(receivers);
+		log.debug("List Boards vorher Receivers: ");
+		for (Board b : boards) {
+			log.debug("Kopie Receivers: " + b.getOwner().getId());
+		} 
+		
+		List<Player> copyRecievers = new ArrayList<Player>(receivers);
 		copyRecievers.removeAll(boards.stream().map(Board::getOwner).collect(Collectors.toList()));
 		if (!copyRecievers.isEmpty()) {
 			for (Player player : copyRecievers) {
@@ -390,17 +388,8 @@ public class PresentApi {
 		}
 
 		log.debug("present id: " + present.getId());
-
 		for (Player player : receivers) {
 			log.debug("receivers sind: " + player.getId());
-		}
-
-		for (int i = 0; i < receivers.size() - 1; i++) {
-			for (int j = i + 1; j < receivers.size(); j++) {
-				if (receivers.get(i).equals(receivers.get(j))) {
-					receivers.remove(j);
-				}
-			}
 		}
 
 		for (Player player : receivers) {
@@ -430,11 +419,11 @@ public class PresentApi {
 	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
-	@Path("/accept")
+	@Path("/{presentId}/accept/{playerId}")
 	@TypeHint(Present.class)
 	public Response acceptPresent(
-			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("receive a Present called");
@@ -448,25 +437,12 @@ public class PresentApi {
 		}
 		log.debug("present id: " + present.getId());
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
-		if (board == null) {
-			board = new Board();
-			board.setOwner(player);
-			board.setBelongsTo(player.getBelongsTo());
-			boardDao.persist(board);
-		}
+		board.checkBoardExists(board);
+		
 		log.debug("Board " + board.getId());
 
-		// PresentAccepted accPresent = new PresentAccepted();
-		// accPresent.setDate(LocalDateTime.now());
-		// accPresent.setPresent(present);
-		// accPresent.setBoard(board);
-		// accPresent.setBelongsTo(organisation);
-		// accPresent.setStatus();
-
-		// board.accept(accPresent);
-		board.accept(present);
+		board.acceptAndCreateAcceptedPresent(present);
 
 		boardDao.persist(board);
 		return ResponseSurrogate.created(present);
@@ -486,11 +462,11 @@ public class PresentApi {
 	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
-	@Path("/deny")
+	@Path("/{presentId}/deny/{playerId}")
 	@TypeHint(Present.class)
 	public Response denyPresent(
-			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("deny a Present called");
@@ -505,17 +481,14 @@ public class PresentApi {
 
 		log.debug("present id: " + present.getId());
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
-		if (board == null) {
-			board = new Board();
-			board.setOwner(player);
-			board.setBelongsTo(player.getBelongsTo());
-			boardDao.persist(board);
+		if(board == null){
+			throw new ApiError(Response.Status.NOT_FOUND, "Player hasn't a board with presents that can be accepted.");
 		}
+		
 		log.debug("Board " + board.getId());
 
-		board.deny(present);
+		board.denyPresent(present);
 
 		boardDao.persist(board);
 		return ResponseSurrogate.created(present);
@@ -535,18 +508,18 @@ public class PresentApi {
 	 * @return {@link Response} of {@link Present} in JSON.
 	 */
 	@POST
-	@Path("/archive")
+	@Path("/{presentId}/archive/{playerId}")
 	@TypeHint(Present.class)
 	public Response archivePresent(
-			@QueryParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("archive a Present called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
+		PresentAccepted present = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
 
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
@@ -554,23 +527,12 @@ public class PresentApi {
 
 		log.debug("present id: " + present.getId());
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
-		if (board == null) {
-			board = new Board();
-			board.setOwner(player);
-			board.setBelongsTo(player.getBelongsTo());
-			boardDao.persist(board);
-		}
+		board.checkBoardExists(board);
+		
 		log.debug("Board " + board.getId());
 
-		PresentArchived aPresent = new PresentArchived();
-		aPresent.setDate(LocalDateTime.now());
-		aPresent.setPresent(present);
-		aPresent.setBoard(board);
-		aPresent.setBelongsTo(organisation);
-
-		board.archive(aPresent);
+		board.archive(present);
 
 		boardDao.persist(board);
 		return ResponseSurrogate.created(present);
@@ -589,9 +551,9 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
-	@Path("/inbox")
+	@Path("/{playerId}/inbox")
 	@TypeHint(Present[].class)
-	public Response getInbox(@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+	public Response getInbox(@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get inbox");
@@ -624,10 +586,10 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
-	@Path("/current")
+	@Path("/{playerId}/current")
 	@TypeHint(Present[].class)
 	public Response getCurrent(
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get current presents");
@@ -658,10 +620,10 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 */
 	@GET
-	@Path("/archive")
+	@Path("/{playerId}/archive")
 	@TypeHint(PresentArchived[].class)
 	public Response getArchive(
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get archived presents");

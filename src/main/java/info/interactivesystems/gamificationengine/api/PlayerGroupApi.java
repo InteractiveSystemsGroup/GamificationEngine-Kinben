@@ -479,7 +479,7 @@ public class PlayerGroupApi {
 	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous 
 	 * message is returned.
 	 * 
-	 * @param id
+	 * @param groupIds
 	 * 			 Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
 	 * @param playerIds
 	 * 			 The list of player ids which should be added to the contact list. These ids are 
@@ -492,7 +492,7 @@ public class PlayerGroupApi {
 	@PUT
 	@Path("/{id}/addPlayers")
 	@TypeHint(Player.class)
-	public Response addPlayers(@PathParam("id") @ValidPositiveDigit String id,
+	public Response addPlayers(@PathParam("id") @ValidPositiveDigit String groupIds,
 			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("adding players to group called");
@@ -500,11 +500,11 @@ public class PlayerGroupApi {
 		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
 		List<Player> playersToAdd = playerDao.getPlayers(listplayIds, apiKey); 
 
-		int groupId = ValidateUtils.requireGreaterThenZero(id);
+		int groupId = ValidateUtils.requireGreaterThenZero(groupIds);
 		PlayerGroup group = groupDao.getPlayergroupByIdAndAPIkey(groupId, apiKey);
 		
 		if (group == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + groupId);
 		}
 		
 		group.addPlayers(playersToAdd); 

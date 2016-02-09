@@ -19,10 +19,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class PresentArchived {
 
-	enum Status {
-		ACCEPT, DENIED
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -39,9 +35,8 @@ public class PresentArchived {
 
 	@NotNull
 	@ManyToOne
-	private Present present;
+	private PresentAccepted acceptedPresent;
 
-	private Status status;
 
 	/**
 	 * Gets the id of the archived present.
@@ -124,8 +119,8 @@ public class PresentArchived {
 	 * 
 	 * @return The archived present as present object.
 	 */
-	public Present getPresent() {
-		return present;
+	public PresentAccepted getPresent() {
+		return acceptedPresent;
 	}
 
 	/**
@@ -134,29 +129,8 @@ public class PresentArchived {
 	 * @param present
 	 * 			The archived present as a present object.
 	 */
-	public void setPresent(Present present) {
-		this.present = present;
+	public void setPresent(PresentAccepted present) {
+		this.acceptedPresent = present;
 	}
 	
-	/**
-	 * Gets the status of the archived present. If it was accepted (ACCEPT)
-	 * or not (DENIED).
-	 * 
-	 * @return The status of the archived present.
-	 */
-	public Status getStatus() {
-		return status;
-	}
-
-	/**
-	 * Sets the status of the archived present. If it was accepted (ACCEPT)
-	 * or not (DENIED).
-	 * 
-	 * @param status
-	 * 			The status of the archived present.
-	 */
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 }
