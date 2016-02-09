@@ -21,8 +21,8 @@ public class StringUtils {
 	 * @return The list of single integers that were separated. 
 	 */
 	public static @NotNull List<Integer> stringArrayToIntegerList(@NotNull String commaSeparatedList) {
-		String[] rolesList = commaSeparatedList.split(",");
-		return Stream.of(rolesList).map(String::trim).collect(Collectors.mapping(Integer::valueOf, Collectors.toList()));
+		String[] arrayList = commaSeparatedList.split(",");
+		return Stream.of(arrayList).map(String::trim).collect(Collectors.mapping(Integer::valueOf, Collectors.toList()));
 	}
 
 	/**

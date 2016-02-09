@@ -38,6 +38,8 @@ public class ImageUtils {
 			} catch (IOException e) {
 				throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
 			}
+		}else{
+			throw new ApiError(Response.Status.FORBIDDEN, "The image format has to be .png or .jpg");
 		}
 		return byteImage;
 	}
