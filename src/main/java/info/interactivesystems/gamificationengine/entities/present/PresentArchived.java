@@ -31,10 +31,6 @@ public class PresentArchived {
 
 	@NotNull
 	@ManyToOne
-	private Board board;
-
-	@NotNull
-	@ManyToOne
 	private PresentAccepted acceptedPresent;
 
 
@@ -96,30 +92,11 @@ public class PresentArchived {
 	}
 
 	/**
-	 * Gets the board the present belongs to.
-	 * 
-	 * @return The board where the present is stored.
-	 */
-	public Board getBoard() {
-		return board;
-	}
-
-	/**
-	 * Sets the board where the present is archived.
-	 * 
-	 * @param board
-	 * 			The board, where the presents are stored.
-	 */
-	public void setBoard(Board board) {
-		this.board = board;
-	}
-
-	/**
 	 * Gets the present object of the present that is archived.
 	 * 
 	 * @return The archived present as present object.
 	 */
-	public PresentAccepted getPresent() {
+	public PresentAccepted getAcceptedPresent() {
 		return acceptedPresent;
 	}
 
@@ -129,7 +106,7 @@ public class PresentArchived {
 	 * @param present
 	 * 			The archived present as a present object.
 	 */
-	public void setPresent(PresentAccepted present) {
+	public void setAcceptedPresent(PresentAccepted present) {
 		this.acceptedPresent = present;
 	}
 	

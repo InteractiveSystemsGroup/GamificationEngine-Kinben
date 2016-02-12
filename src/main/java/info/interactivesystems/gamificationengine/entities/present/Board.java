@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,21 +41,22 @@ public class Board {
 	/**
 	 * Received presents are stored in the inBox-list. The player can decide if she/he wants to accept or deny each present.
 	 */
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "board_inBox")
+//	@JsonIgnore
 	private List<Present> inBox;
 
 	/**
 	 * If the player decides to accept a present it is stored in the list of current presents.
 	 */
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "board_current")
 	private List<PresentAccepted> currentPresents;
 
 	/**
 	 * If the player wants to archive a present it is stored in the list of archived presents.
 	 */
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "board_archive")
 	private List<PresentArchived> archive;
 
@@ -106,14 +106,6 @@ public class Board {
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;
 	}
-
-	// public List<PresentAccepted> getCurrentPresents() {
-	// return currentPresents;
-	// }
-	//
-	// public void setCurrentPresents(List<PresentAccepted> presents) {
-	// this.currentPresents = presents;
-	// }
 
 	/**
 	 * Gets all current presents of a player. These are presents which were
@@ -208,11 +200,12 @@ public class Board {
 			PresentAccepted accPresent = new PresentAccepted();
 			accPresent.setDate(LocalDateTime.now());
 			accPresent.setPresent(present);
-			accPresent.setBoard(this);
+//			accPresent.setBoard(this);
 			accPresent.setBelongsTo(present.getBelongsTo());
 			accPresent.setStatus();
 			
 			this.currentPresents.add(accPresent);
+//			this.setInBox(getInBox());
 		} else {
 			throw new ApiError(Response.Status.FORBIDDEN, "No such present to accept");
 		}
@@ -246,15 +239,15 @@ public class Board {
 	 */
 	public PresentAccepted archive(PresentAccepted present) {
 		if (this.currentPresents.contains(present)) {
-			this.currentPresents.remove(present.getPresent());
+			this.currentPresents.remove(present);
 			
-			PresentArchived aPresent = new PresentArchived();
-			aPresent.setDate(LocalDateTime.now());
-			aPresent.setPresent(present);
-			aPresent.setBoard(this);
-			aPresent.setBelongsTo(present.getBelongsTo());
+			PresentArchived archPresent = new PresentArchived();
+			archPresent.setDate(LocalDateTime.now());
+			archPresent.setAcceptedPresent(present);
+//			aPresent.setBoard(this);
+			archPresent.setBelongsTo(present.getBelongsTo());
 			
-			this.archive.add(aPresent);
+			this.archive.add(archPresent);
 		} else {
 			throw new ApiError(Response.Status.FORBIDDEN, "no such present to archive");
 		}
@@ -293,9 +286,51 @@ public class Board {
 		getInBox().add(present);
 	}
 	
+	
+	/**
+	 * This method checks, if a passed board exists in the database. Otherwise an error message is sent.
+	 * 
+	 * @param board
+	 * 			The board that has to be checked.
+	 */
 	public void checkBoardExists(Board board){
 		if(board == null){
 			throw new ApiError(Response.Status.NOT_FOUND, "Player hasn't a board with presents taht can be accepted.");
 		}
 	}
+	
+	/**
+	 * This method gets all message of the type TextMessage which were accepted by the player.
+	 *  
+	 * @param presents
+	 * 				All currently accepted presents of a player.
+	 * @return A list with all text messages of the list of accepted presents.
+	 */
+	public List<TextMessage> filterTextMessages(List<PresentAccepted> presents){
+		List<TextMessage> textMList = new ArrayList<>();
+		for (PresentAccepted present : presents) {
+			if (present.getPresent() instanceof TextMessage) {
+				textMList.add((TextMessage) present.getPresent());
+			}
+		}
+		return textMList;
+	}
+
+	/**
+	 * This method gets all message of the type ImageMessage which were accepted by the player.
+	 *  
+	 * @param presents
+	 * 				All currently accepted presents of a player.
+	 * @return A list with all text messages of the list of accepted presents.
+	 */
+	public List<ImageMessage> filterImageMessages(List<PresentAccepted> presents) {
+		List<ImageMessage> imMessageList = new ArrayList<>();
+		for (PresentAccepted present : presents) {
+			if (present.getPresent() instanceof ImageMessage) {
+				imMessageList.add((ImageMessage) present.getPresent());
+			}
+		}
+		return imMessageList;
+	}
+	
 }

@@ -34,10 +34,6 @@ public class PresentAccepted {
 
 	@NotNull
 	@ManyToOne
-	private Board board;
-
-	@NotNull
-	@ManyToOne
 	private Present present;
 
 	private Status status;
@@ -97,25 +93,6 @@ public class PresentAccepted {
 	 */
 	public void setDate(LocalDateTime date) {
 		this.date = date;
-	}
-
-	/**
-	 * Gets the board to which the present was accepted.
-	 * 
-	 * @return The board in which the present was accepted.
-	 */
-	public Board getBoard() {
-		return board;
-	}
-
-	/**
-	 * Sets the board the present belongs to. 
-	 * 
-	 * @param board
-	 * 			The board the accepted presents belongs to henceforth.
-	 */
-	public void setBoard(Board board) {
-		this.board = board;
 	}
 
 	/**

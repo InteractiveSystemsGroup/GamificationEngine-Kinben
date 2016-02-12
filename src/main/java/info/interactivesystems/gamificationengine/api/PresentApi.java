@@ -246,9 +246,50 @@ public class PresentApi {
 	}
 
 	/**
-	 * This method returns all text messages of a specific player's current presents and which are
-	 * associated with the given API key and so all text messages which belong to the associated
-	 * organisation. If the API key is not valid an analogous message is returned.
+	 * This method returns all already accepted messages of a specific player's current presents.  
+	 * If the API key is not valid an analogous message is returned.
+	 * 
+	 * @param playerId
+	 *            The id of the player who owns the board with the current presents. This field 
+	 *            must not be null.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the messages belongs to.
+	 * @return {@link Response} as {@link List} of {@link Presents}s in JSON.
+	 * 
+	 */
+	@GET
+	@Path("/{playerId}/boardMessages")
+	@TypeHint(ImageMessage[].class)
+	public Response getCurrentBoardMessages(
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("getboardMessages called");
+
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
+		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
+		if (board == null) {
+			board = new Board();
+			board.setOwner(player);
+			board.setBelongsTo(player.getBelongsTo());
+			boardDao.persist(board);
+		}
+
+		List<PresentAccepted> presents = board.getCurrentPresents();
+		
+		return ResponseSurrogate.of(presents);
+	}
+	
+	
+	/**
+	 * This method returns all text messages of a specific player's current presents. 
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param playerId
 	 *            The id of the player who owns the board with the current presents. This field 
@@ -259,15 +300,20 @@ public class PresentApi {
 	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
 	 */
 	@GET
-	@Path("/{playerId}/boardMessages")
+	@Path("/{playerId}/textMessages")
 	@TypeHint(Present[].class)
-	public Response getTextMessage(
+	public Response getCurrentTextMessage(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getMessages called");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
 			board = new Board();
@@ -277,25 +323,14 @@ public class PresentApi {
 		}
 
 		List<PresentAccepted> presents = board.getCurrentPresents();
-		List<TextMessage> textMList = new ArrayList<>();
+		List<TextMessage> currentTextMessages = board.filterTextMessages(presents); 
 
-		for (PresentAccepted present : presents) {
-			if (present.getPresent() instanceof TextMessage) {
-				textMList.add((TextMessage) present.getPresent());
-			}
-		}
-
-		for (TextMessage textMessage : textMList) {
-			log.debug("TextId:" + textMessage.getId());
-		}
-
-		return ResponseSurrogate.of(presents);
+		return ResponseSurrogate.of(currentTextMessages);
 	}
 
 	/**
-	 * This method returns all image messages of a specific player's current presents and which are
-	 * associated with the given API key and so all text messages which belong to the associated
-	 * organisation. If the API key is not valid an analogous message is returned.
+	 * This method returns all image messages of a specific player's current presents.
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param playerId
 	 *            The id of the player who owns the board with the current presents. This field 
@@ -303,18 +338,23 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the image messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
+	 * @return {@link Response} as {@link List} of {@link ImageMessage}s in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/imageMessages")
 	@TypeHint(ImageMessage[].class)
-	public Response getImageMessages(
+	public Response getCurrentImageMessages(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getImageMessages called");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
 			board = new Board();
@@ -324,17 +364,12 @@ public class PresentApi {
 		}
 
 		List<PresentAccepted> presents = board.getCurrentPresents();
-		List<ImageMessage> imMessageList = new ArrayList<>();
+		List<ImageMessage> currentImageMessages = board.filterImageMessages(presents); 
 
-		for (PresentAccepted present : presents) {
-			if (present.getPresent() instanceof ImageMessage) {
-				imMessageList.add((ImageMessage) present.getPresent());
-			}
-		}
-
-		return ResponseSurrogate.of(imMessageList);
+		return ResponseSurrogate.of(currentImageMessages);
 	}
-
+	
+	
 	/**
 	 * With this method one present is sent to all specified receivers. So the present is stored 
 	 * in each inbox of the receivers.
@@ -370,9 +405,9 @@ public class PresentApi {
 		
 		List<Board> boards = boardDao.getBoards(receivers, apiKey);
 
-		log.debug("List Boards vorher Receivers: ");
+		log.debug("List Boards Receivers: ");
 		for (Board b : boards) {
-			log.debug("Kopie Receivers: " + b.getOwner().getId());
+			log.debug("Copy Receivers: " + b.getOwner().getId());
 		} 
 		
 		List<Player> copyRecievers = new ArrayList<Player>(receivers);
@@ -389,11 +424,11 @@ public class PresentApi {
 
 		log.debug("present id: " + present.getId());
 		for (Player player : receivers) {
-			log.debug("receivers sind: " + player.getId());
+			log.debug("receivers are: " + player.getId());
 		}
 
 		for (Player player : receivers) {
-			log.debug("bereinigte receivers sind: " + player.getId());
+			log.debug("receivers are: " + player.getId());
 		}
 
 		for (Board board : boards) {
@@ -437,6 +472,11 @@ public class PresentApi {
 		}
 		log.debug("present id: " + present.getId());
 
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		board.checkBoardExists(board);
 		
@@ -481,6 +521,12 @@ public class PresentApi {
 
 		log.debug("present id: " + present.getId());
 
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if(board == null){
 			throw new ApiError(Response.Status.NOT_FOUND, "Player hasn't a board with presents that can be accepted.");
@@ -519,23 +565,35 @@ public class PresentApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		PresentAccepted present = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
+		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
 
-		if (present == null) {
+		if (accPresent == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
 		}
 
-		log.debug("present id: " + present.getId());
+		log.debug("present id: " + accPresent.getId());
 
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		board.checkBoardExists(board);
 		
+		log.debug("unit here");
+		
 		log.debug("Board " + board.getId());
 
-		board.archive(present);
+		board.archive(accPresent);
 
+		log.debug("a new message is archived");
+		
 		boardDao.persist(board);
-		return ResponseSurrogate.created(present);
+		
+		log.debug("Persisted Board");
+		return ResponseSurrogate.created(accPresent);
 	}
 
 	/**
@@ -559,76 +617,53 @@ public class PresentApi {
 		log.debug("get inbox");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
 			board = new Board();
 			board.setOwner(player);
 			board.setBelongsTo(player.getBelongsTo());
-			boardDao.persist(board);
+//			boardDao.persist(board);
 		}
 		log.debug("Board " + board.getId());
 
+		List<Present> presents = board.getInBox();
+		
 		boardDao.persist(board);
-		return ResponseSurrogate.of(board.getInBox());
+		return ResponseSurrogate.of(presents);
 	}
 
-	/**
-	 * 
-	 * Returns all presents from player's current presents as list of present-objects.
-	 * These presents were accepted by the player so they were moved from the inbox to the 
-	 * list of current presents.
-	 * 
-	 * @param playerId
-	 *            The id of the player whose current presents are returned. This field must not be null.
-	 * @param apiKey
-	 *            The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which this present belongs to.
-	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
-	 */
-	@GET
-	@Path("/{playerId}/current")
-	@TypeHint(Present[].class)
-	public Response getCurrent(
-			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		log.debug("get current presents");
-
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
-		if (board == null) {
-			board = new Board();
-			board.setOwner(player);
-			board.setBelongsTo(player.getBelongsTo());
-			boardDao.persist(board);
-		}
-		log.debug("Board " + board.getId());
-
-		boardDao.persist(board);
-		return ResponseSurrogate.of(board.getCurrentPresents());
-	}
 
 	/**
-	 * Returns all presents from player's list of archived presents as list of present-objects.
-	 * These presents are accepted presents which the player wanted to archive.
+	 * This method returns all already archived messages of a specific player's presents.  
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param playerId
-	 *            The id of the player whose current presents are returned. This field must not be null.
+	 *            The id of the player who owns the board. This field must not be null.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which this present belongs to.
-	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
+	 *            to which the messages belongs to.
+	 * @return {@link Response} as {@link List} of {@link PresentArchived}s in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/archive")
 	@TypeHint(PresentArchived[].class)
-	public Response getArchive(
+	public Response getArchiveMessages(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get archived presents");
+		log.debug("get archived Messages called");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		
+		if(player == null){
+			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
+		}
+		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
 			board = new Board();
@@ -637,7 +672,8 @@ public class PresentApi {
 			boardDao.persist(board);
 		}
 
-		boardDao.persist(board);
-		return ResponseSurrogate.of(board.getArchive());
+		List<PresentArchived> presents = board.getArchive();
+		
+		return ResponseSurrogate.of(presents);
 	}
 }
