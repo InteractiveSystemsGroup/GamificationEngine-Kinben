@@ -200,12 +200,10 @@ public class Board {
 			PresentAccepted accPresent = new PresentAccepted();
 			accPresent.setDate(LocalDateTime.now());
 			accPresent.setPresent(present);
-//			accPresent.setBoard(this);
 			accPresent.setBelongsTo(present.getBelongsTo());
 			accPresent.setStatus();
 			
 			this.currentPresents.add(accPresent);
-//			this.setInBox(getInBox());
 		} else {
 			throw new ApiError(Response.Status.FORBIDDEN, "No such present to accept");
 		}
@@ -244,7 +242,6 @@ public class Board {
 			PresentArchived archPresent = new PresentArchived();
 			archPresent.setDate(LocalDateTime.now());
 			archPresent.setAcceptedPresent(present);
-//			aPresent.setBoard(this);
 			archPresent.setBelongsTo(present.getBelongsTo());
 			
 			this.archive.add(archPresent);

@@ -260,7 +260,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/{playerId}/boardMessages")
-	@TypeHint(ImageMessage[].class)
+	@TypeHint(PresentAccepted[].class)
 	public Response getCurrentBoardMessages(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -301,7 +301,7 @@ public class PresentApi {
 	 */
 	@GET
 	@Path("/{playerId}/textMessages")
-	@TypeHint(Present[].class)
+	@TypeHint(TextMessage[].class)
 	public Response getCurrentTextMessage(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
