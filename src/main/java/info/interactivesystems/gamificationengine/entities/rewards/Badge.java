@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
 
 /**
  * The badge class serves as a Reward-subclass that represents a distinct icon.
@@ -23,10 +22,6 @@ import javax.validation.constraints.NotNull;
 @DiscriminatorValue("RewBadge")
 public class Badge extends PermanentReward {
 
-	@NotNull
-	private String name;
-
-	private String description;
 
 	private URL icon;
 
@@ -34,52 +29,7 @@ public class Badge extends PermanentReward {
 	@Column(columnDefinition = "BLOB")
 	private byte[] imageIcon;
 
-	public Badge() {
-		// TODO Auto-generated constructor stub
-	}
 
-	/**
-	 * Gets the name of the badge. The name should be meaningful and connected to
-	 * the completed task(s).
-	 * 
-	 * @return The badge's name as String.
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name of a created badge. The name should be meaningful and
-	 * connected to the completed task(s).
-	 * 
-	 * @param name
-	 *            The new name of the badge as a String. 
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Gets the description of a created badge. This could contain for example
-	 * which tasks werde completed to get this badge.
-	 * 
-	 * @return The descirtopion of the badge. 
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * Sets the description of a badge. This can contain further information how the
-	 * badge can be earned, like the requirements to get the badge or the
-	 * process to award the badge.
-	 *
-	 * @param description
-	 *            The description of the badge as String.
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	/**
 	 * Gets the URL of the badge's icon, when it was created.

@@ -7,6 +7,7 @@ import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 /**
  * The Coins class serves as a Reward-subclass, that allocates coins to a player.
@@ -17,7 +18,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("RewCoins")
 public class Coins extends VolatileReward {
 
-	// @NotNull
+	@NotNull
 	private int amount;
 
 	/**

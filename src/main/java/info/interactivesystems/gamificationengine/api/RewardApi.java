@@ -159,9 +159,9 @@ public class RewardApi {
 		case "Badge":
 			return createBadge(name, description, url, apiKey);
 		case "Coins":
-			return createCoinsReward(amount, apiKey);
+			return createCoinsReward(name, description, amount, apiKey);
 		case "Points":
-			return createPointReward(amount, apiKey);
+			return createPointReward(name, description, amount, apiKey);
 		case "ReceiveLevel":
 			return createReceiveLevel(amount, name, apiKey);
 
@@ -335,7 +335,9 @@ public class RewardApi {
 	@POST
 	@Path("/coins")
 	@TypeHint(Coins.class)
-	public Response createCoinsReward(@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
+	public Response createCoinsReward(@QueryParam("name") @NotNull String name, 
+			@QueryParam("description") String description,
+			@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("create Coins Reward called");
@@ -343,8 +345,10 @@ public class RewardApi {
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		Coins reward = new Coins();
+		reward.setName(name);
+		reward.setDescription(description);
 		reward.setAmount(ValidateUtils.requireGreaterThenZero(amount));
-
+		
 		reward.setBelongsTo(organisation);
 		rewardDao.insertReward(reward);
 
@@ -366,13 +370,17 @@ public class RewardApi {
 	@POST
 	@Path("/points")
 	@TypeHint(Points.class)
-	public Response createPointReward(@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
+	public Response createPointReward(@QueryParam("name") @NotNull String name, 
+			@QueryParam("description") String description,
+			@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("create Point Reward called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		Points reward = new Points();
+		reward.setName(name);
+		reward.setDescription(description);
 		reward.setAmount(ValidateUtils.requireGreaterThenZero(amount));
 
 		reward.setBelongsTo(organisation);

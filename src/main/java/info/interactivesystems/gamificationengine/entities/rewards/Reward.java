@@ -47,6 +47,10 @@ public abstract class Reward {
 	@ManyToOne
 	private Organisation belongsTo;
 
+	private String name;
+	
+	private String description;
+	
 	private int timeToLive;
 
 	@ManyToMany(mappedBy = "rewards")
@@ -129,4 +133,49 @@ public abstract class Reward {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
+	
+	//----
+	/**
+	 * Gets the description of an achievement. This could contains for example the 
+	 * different tasks which have to be completed to get this achievement.
+	 * 
+	 * @return the achievement's description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * Sets the description of an achievement. This contains for example further 
+	 * information about how the achievement can be earned, like all requirements to 
+	 * get the achievement or the process to award the achievement.
+	 * 
+	 * @param description
+	 *            of the achievement
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * Gets the name of an achievement which can describe the success in a short
+	 * way and can be displayed in the application.
+	 * 
+	 * @return The achievement's name as String.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets the name of an achievement, which can describe the success in a short
+	 * way and can be displayed in the application.
+	 * 
+	 * @param name
+	 *            The name of the achievement as a String.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
