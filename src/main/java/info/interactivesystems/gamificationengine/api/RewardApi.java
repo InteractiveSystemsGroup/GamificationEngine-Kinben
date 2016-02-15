@@ -163,7 +163,7 @@ public class RewardApi {
 		case "Points":
 			return createPointReward(name, description, amount, apiKey);
 		case "ReceiveLevel":
-			return createReceiveLevel(amount, name, apiKey);
+			return createReceiveLevel(name, description, amount, apiKey);
 
 		default:
 			reward = new Achievement();
@@ -407,7 +407,8 @@ public class RewardApi {
 	@POST
 	@Path("/level")
 	@TypeHint(ReceiveLevel.class)
-	public Response createReceiveLevel(@QueryParam("amount") @NotNull @ValidPositiveDigit String index, @QueryParam("name") String name,
+	public Response createReceiveLevel(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
+			@QueryParam("amount") @NotNull @ValidPositiveDigit String index,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("create ReceiveLevel Reward called");
 
@@ -416,6 +417,7 @@ public class RewardApi {
 		ReceiveLevel reward = new ReceiveLevel();
 		reward.setLevelIndex((ValidateUtils.requireGreaterThenZero(index)));
 		reward.setLevelLabel(name);
+		reward.setDescription(description);
 
 		reward.setBelongsTo(organisation);
 		rewardDao.insertReward(reward);
