@@ -32,8 +32,4 @@ public class TextMessage extends Present {
 		this.content = content;
 	}
 
-	@Override
-	public String toString() {
-		return content;
-	}
 }
