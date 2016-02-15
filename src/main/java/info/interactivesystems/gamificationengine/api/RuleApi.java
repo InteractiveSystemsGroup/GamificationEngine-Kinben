@@ -108,7 +108,7 @@ public class RuleApi {
 		List<Task> tasks = new ArrayList<>();
 
 		for (String taskIdString : taskIdList) {
-			Task task = taskDao.getTaskByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(taskIdString), organisation);
+			Task task = taskDao.getTaskByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(taskIdString), organisation);
 			if (task != null) {
 				tasks.add(task);
 			}
@@ -175,7 +175,7 @@ public class RuleApi {
 		rule.setName(name);
 		rule.setDescription(description);
 		rule.setBelongsTo(organisation);
-		rule.setPoints(ValidateUtils.requireGreaterThenZero(points));
+		rule.setPoints(ValidateUtils.requireGreaterThanZero(points));
 
 		ruleDao.insertRule(rule);
 
@@ -216,7 +216,7 @@ public class RuleApi {
 	@Path("/{id}")
 	@TypeHint(GoalRule.class)
 	public Response getRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		int ruleId = ValidateUtils.requireGreaterThenZero(id);
+		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ruleId, organisation);
 		ValidateUtils.requireNotNull(ruleId, rule);
@@ -243,7 +243,7 @@ public class RuleApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no ruleId transferred");
 		}
 
-		int ruleId = ValidateUtils.requireGreaterThenZero(id);
+		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		GoalRule rule = ruleDao.deleteRuleByIdAndOrganisation(ruleId, organisation);
 
@@ -283,7 +283,7 @@ public class RuleApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		int ruleId = ValidateUtils.requireGreaterThenZero(id);
+		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		GoalRule rule = ruleDao.getRule(ruleId);
 
 		if ("null".equals(value)) {

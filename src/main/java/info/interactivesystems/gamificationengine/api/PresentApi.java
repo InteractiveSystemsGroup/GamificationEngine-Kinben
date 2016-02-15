@@ -105,10 +105,10 @@ public class PresentApi {
 
 		log.debug("create New TestMessage called");
 		
-		int sendId = ValidateUtils.requireGreaterThenZero(senderId);
+		int sendId = ValidateUtils.requireGreaterThanZero(senderId);
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
+		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(senderId), apiKey);
 		ValidateUtils.requireNotNull(sendId, sender);
 		
 		List<Player> receivers = new ArrayList<>();
@@ -165,10 +165,10 @@ public class PresentApi {
 
 		log.debug("createNew ImageMessage called");
 
-		int sendId = ValidateUtils.requireGreaterThenZero(senderId);
+		int sendId = ValidateUtils.requireGreaterThanZero(senderId);
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
+		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(senderId), apiKey);
 		ValidateUtils.requireNotNull(sendId, sender);
 		
 		List<Player> receivers = new ArrayList<>();
@@ -239,7 +239,7 @@ public class PresentApi {
 
 		log.debug("getboardMessages called");
 
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
 		Player player = playerDao.getPlayer(playId, apiKey);
 		ValidateUtils.requireNotNull(playId, player);
@@ -279,7 +279,7 @@ public class PresentApi {
 
 		log.debug("getMessages called");
 
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(playId, apiKey);
 		ValidateUtils.requireNotNull(playId, player);
 		
@@ -318,7 +318,7 @@ public class PresentApi {
 
 		log.debug("getImageMessages called");
 
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(playId, apiKey);
 		ValidateUtils.requireNotNull(playId, player);
 		
@@ -358,7 +358,7 @@ public class PresentApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		int presId = ValidateUtils.requireGreaterThenZero(presentId);
+		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		Present present = presentDao.getPresentByIdAndOrganisation(presId, organisation);
 		ValidateUtils.requireNotNull(presId, present);
 		
@@ -428,8 +428,8 @@ public class PresentApi {
 
 		log.debug("receive a Present called");
 
-		int presId = ValidateUtils.requireGreaterThenZero(presentId);
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int presId = ValidateUtils.requireGreaterThanZero(presentId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -477,7 +477,7 @@ public class PresentApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
+		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(presentId), organisation);
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to deny.");
 		}
@@ -527,7 +527,7 @@ public class PresentApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
+		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(presentId), organisation);
 		if (accPresent == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
 		}
@@ -650,7 +650,7 @@ public class PresentApi {
 
 		log.debug("delete Present called");
 
-		int id = ValidateUtils.requireGreaterThenZero(presentId);
+		int id = ValidateUtils.requireGreaterThanZero(presentId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		
 		Present present = presentDao.getPresentByIdAndOrganisation(id, organisation);
@@ -684,8 +684,8 @@ public class PresentApi {
 
 		log.debug("delete Present called");
 
-		int presId = ValidateUtils.requireGreaterThenZero(presentId);
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int presId = ValidateUtils.requireGreaterThanZero(presentId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		
@@ -729,8 +729,8 @@ public class PresentApi {
 
 		log.debug("delete Present called");
 
-		int presId = ValidateUtils.requireGreaterThenZero(presentId);
-		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		int presId = ValidateUtils.requireGreaterThanZero(presentId);
+		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		

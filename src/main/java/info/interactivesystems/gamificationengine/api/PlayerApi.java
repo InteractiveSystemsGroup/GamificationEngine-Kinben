@@ -161,7 +161,7 @@ public class PlayerApi {
 	public Response get(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getplayer requested");
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
 		ValidateUtils.requireNotNull(playerId, player);
@@ -185,8 +185,8 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
-		ValidateUtils.requireGreaterThenZero(playerId);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
+		ValidateUtils.requireGreaterThanZero(playerId);
 
 		log.debug("getplayer requested");
 
@@ -231,7 +231,7 @@ public class PlayerApi {
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Player");
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		log.debug("Player Id" + playerId);
 
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -341,7 +341,7 @@ public class PlayerApi {
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
 		List<Player> contactsToAdd = roleDao.getPlayers(list, apiKey);
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		player.addContacts(contactsToAdd);
 
@@ -375,7 +375,7 @@ public class PlayerApi {
 		List<Integer> list = StringUtils.stringArrayToIntegerList(roleIds);
 		List<Role> rolesToAdd = roleDao.getRoles(list, apiKey); 
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		player.addRoles(rolesToAdd); 
 
@@ -411,7 +411,7 @@ public class PlayerApi {
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
 		List<Player> contactsToDelete = roleDao.getPlayers(list, apiKey);
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		player.removeContacts(contactsToDelete);
 
@@ -438,7 +438,7 @@ public class PlayerApi {
 	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("get player's avatar image");
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
 		byte[] bytes = player.getAvatar();
@@ -472,7 +472,7 @@ public class PlayerApi {
 
 		log.debug("deactivate player called");
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
 		player.setActive(false);
@@ -500,7 +500,7 @@ public class PlayerApi {
 
 		log.debug("activate player called");
 
-		int playerId = ValidateUtils.requireGreaterThenZero(id);
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
 		player.setActive(true);
@@ -528,7 +528,7 @@ public class PlayerApi {
 	public Response getPlayerFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedGoals requested");
-		List<FinishedGoal> goals = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey).getFinishedGoals();
+		List<FinishedGoal> goals = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getFinishedGoals();
 
 		return ResponseSurrogate.of(goals);
 	}
@@ -551,7 +551,7 @@ public class PlayerApi {
 	public Response getRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getPlayerPermanentRewards requested");
-		List<PermanentReward> pRewards = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey).getRewards();
+		List<PermanentReward> pRewards = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getRewards();
 
 		return ResponseSurrogate.of(pRewards);
 	}
@@ -575,7 +575,7 @@ public class PlayerApi {
 	public Response getPlayerFinishedTasks(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getFinishedTasks requested");
-		List<FinishedTask> fTasks = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey).getFinishedTasks();
+		List<FinishedTask> fTasks = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getFinishedTasks();
 
 		return ResponseSurrogate.of(fTasks);
 	}
@@ -599,7 +599,7 @@ public class PlayerApi {
 	public Response getPlayerBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Badges from Player requested");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		List<Badge> badges = player.getOnlyBadges();
 
 		return ResponseSurrogate.of(badges);
@@ -624,7 +624,7 @@ public class PlayerApi {
 	public Response getPlayerAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned Achievements from Player requested");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		List<Achievement> achievements = player.getOnlyAchievement();
 
 		return ResponseSurrogate.of(achievements);
@@ -649,7 +649,7 @@ public class PlayerApi {
 	public Response getPlayerPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned points from Player requested");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		int points = player.getPoints();
 
 		return ResponseSurrogate.of(points);
@@ -674,7 +674,7 @@ public class PlayerApi {
 	public Response getPlayerCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get earned coins from Player requested");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(id), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		int coins = player.getCoins();
 
 		return ResponseSurrogate.of(coins);

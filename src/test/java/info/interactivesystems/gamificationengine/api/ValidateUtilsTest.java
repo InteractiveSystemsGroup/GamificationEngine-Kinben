@@ -28,27 +28,27 @@ public class ValidateUtilsTest {
 
 	@Test
 	public void testRequireGreaterThenZero() {
-		assertThat(ValidateUtils.requireGreaterThenZero(1)).isEqualTo(1);
-		assertThat(ValidateUtils.requireGreaterThenZero(23)).isEqualTo(23);
+		assertThat(ValidateUtils.requireGreaterThanZero(1)).isEqualTo(1);
+		assertThat(ValidateUtils.requireGreaterThanZero(23)).isEqualTo(23);
 	}
 
 	@Test
 	public void testRequireGreaterThenZeroException() {
 		thrown.expect(ApiError.class);
-		ValidateUtils.requireGreaterThenZero(0);
-		ValidateUtils.requireGreaterThenZero(-1);
+		ValidateUtils.requireGreaterThanZero(0);
+		ValidateUtils.requireGreaterThanZero(-1);
 	}
 
 	@Test
 	public void testRequireGreaterThenZeroString() {
-		assertThat(ValidateUtils.requireGreaterThenZero("1")).isEqualTo(1);
-		assertThat(ValidateUtils.requireGreaterThenZero("23")).isEqualTo(23);
+		assertThat(ValidateUtils.requireGreaterThanZero("1")).isEqualTo(1);
+		assertThat(ValidateUtils.requireGreaterThanZero("23")).isEqualTo(23);
 	}
 
 	@Test
 	public void testRequireGreaterThenZeroStringException() {
 		thrown.expect(ApiError.class);
-		ValidateUtils.requireGreaterThenZero("0");
-		ValidateUtils.requireGreaterThenZero("-1");
+		ValidateUtils.requireGreaterThanZero("0");
+		ValidateUtils.requireGreaterThanZero("-1");
 	}
 }

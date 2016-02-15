@@ -101,7 +101,7 @@ public class RewardApi {
 	public Response getReward(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		int rewardId = ValidateUtils.requireGreaterThenZero(id);
+		int rewardId = ValidateUtils.requireGreaterThanZero(id);
 		Reward reward = rewardDao.getRewardByIdAndOrganisation(rewardId, organisation);
 
 		ValidateUtils.requireNotNull(rewardId, reward);
@@ -200,7 +200,7 @@ public class RewardApi {
 		}
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		int rewardId = ValidateUtils.requireGreaterThenZero(id);
+		int rewardId = ValidateUtils.requireGreaterThanZero(id);
 		Reward reward = rewardDao.deleteRewardByIdAndOrganisation(rewardId, organisation);
 
 		ValidateUtils.requireNotNull(rewardId, reward);
@@ -347,7 +347,7 @@ public class RewardApi {
 		Coins reward = new Coins();
 		reward.setName(name);
 		reward.setDescription(description);
-		reward.setAmount(ValidateUtils.requireGreaterThenZero(amount));
+		reward.setAmount(ValidateUtils.requireGreaterThanZero(amount));
 		
 		reward.setBelongsTo(organisation);
 		rewardDao.insertReward(reward);
@@ -381,7 +381,7 @@ public class RewardApi {
 		Points reward = new Points();
 		reward.setName(name);
 		reward.setDescription(description);
-		reward.setAmount(ValidateUtils.requireGreaterThenZero(amount));
+		reward.setAmount(ValidateUtils.requireGreaterThanZero(amount));
 
 		reward.setBelongsTo(organisation);
 		rewardDao.insertReward(reward);
@@ -415,7 +415,7 @@ public class RewardApi {
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		ReceiveLevel reward = new ReceiveLevel();
-		reward.setLevelIndex((ValidateUtils.requireGreaterThenZero(index)));
+		reward.setLevelIndex((ValidateUtils.requireGreaterThanZero(index)));
 		reward.setLevelLabel(name);
 		reward.setDescription(description);
 
@@ -444,7 +444,7 @@ public class RewardApi {
 	public Response getAchievementIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getAchievement called");
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if (!(reward instanceof Achievement)) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Achievement: " + reward);
@@ -480,7 +480,7 @@ public class RewardApi {
 	public Response getBadgeIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("getBadge called");
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if (!(reward instanceof Badge)) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Badge: " + reward);
@@ -533,7 +533,7 @@ public class RewardApi {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
 		}
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if (value.isEmpty()) {
 			value = null;
@@ -596,7 +596,7 @@ public class RewardApi {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
 		}
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -657,7 +657,7 @@ public class RewardApi {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
 		}
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -665,7 +665,7 @@ public class RewardApi {
 		if (reward instanceof Points) {
 			switch (attribute) {
 			case "amount":
-				((Points) reward).setAmount(ValidateUtils.requireGreaterThenZero(value));
+				((Points) reward).setAmount(ValidateUtils.requireGreaterThanZero(value));
 
 			}
 		} else {
@@ -711,7 +711,7 @@ public class RewardApi {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
 		}
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -719,7 +719,7 @@ public class RewardApi {
 		if (reward instanceof Coins) {
 			switch (attribute) {
 			case "amount":
-				((Coins) reward).setAmount(ValidateUtils.requireGreaterThenZero(value));
+				((Coins) reward).setAmount(ValidateUtils.requireGreaterThanZero(value));
 
 			}
 		} else {
@@ -764,7 +764,7 @@ public class RewardApi {
 			return Response.status(Response.Status.FORBIDDEN).entity("No such apiKey: " + apiKey).build();
 		}
 
-		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThenZero(rewardId));
+		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId));
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -772,7 +772,7 @@ public class RewardApi {
 		if (reward instanceof ReceiveLevel) {
 			switch (attribute) {
 			case "amount":
-				((ReceiveLevel) reward).setLevelIndex(ValidateUtils.requireGreaterThenZero(value));
+				((ReceiveLevel) reward).setLevelIndex(ValidateUtils.requireGreaterThanZero(value));
 
 			case "name":
 				((ReceiveLevel) reward).setLevelLabel(value);

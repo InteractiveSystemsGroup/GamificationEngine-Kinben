@@ -116,7 +116,7 @@ public class RoleApi {
 	@TypeHint(Role.class)
 	public Response get(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int roleId = ValidateUtils.requireGreaterThenZero(id);
+		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);
 
 		ValidateUtils.requireNotNull(roleId, role);
@@ -150,7 +150,7 @@ public class RoleApi {
 
 		log.debug("change Attribute of Role");
 
-		int roleId = ValidateUtils.requireGreaterThenZero(id);
+		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);
 
 		// not changeable: id -> generated & belongsTo;
@@ -184,7 +184,7 @@ public class RoleApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");
 		}
 
-		int roleId = ValidateUtils.requireGreaterThenZero(id);
+		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.delete(roleId, apiKey);
 
 		ValidateUtils.requireNotNull(roleId, role);

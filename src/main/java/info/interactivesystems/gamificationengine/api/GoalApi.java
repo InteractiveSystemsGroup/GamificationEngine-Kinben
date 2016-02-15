@@ -140,7 +140,7 @@ public class GoalApi {
 		goal.setPlayerGroupGoal(isPlayerGroupGoal);
 
 		// Get rule object
-		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(ruleId), organisation);
+		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(ruleId), organisation);
 		goal.setRule(rule);
 
 		// Find all rewards by Id
@@ -148,7 +148,7 @@ public class GoalApi {
 
 		for (String rewardIdString : rewardIdList) {
 			log.debug("RewardToAdd: " + rewardIdString);
-			Reward reward = rewardDao.getRewardByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(rewardIdString), organisation);
+			Reward reward = rewardDao.getRewardByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(rewardIdString), organisation);
 			if (reward != null) {
 				log.debug("RewardAdded: " + reward.getId());
 				goal.addReward(reward);
@@ -160,7 +160,7 @@ public class GoalApi {
 		List<Role> roles = new ArrayList<>();
 
 		for (String roleIdString : rolesList) {
-			Role role = roleDao.getRole(ValidateUtils.requireGreaterThenZero(roleIdString), apiKey);
+			Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
 			if (role != null) {
 				roles.add(role);
 			}
@@ -208,7 +208,7 @@ public class GoalApi {
 	@Path("/{id}")
 	@TypeHint(Goal.class)
 	public Response getGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		int goalId = ValidateUtils.requireGreaterThenZero(id);
+		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Goal goal = goalDao.getGoalByIdAndOrganisation(goalId, organisation);
 
@@ -249,7 +249,7 @@ public class GoalApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThenZero(goalId));
+		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThanZero(goalId));
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -345,7 +345,7 @@ public class GoalApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");
 		}
 
-		int goalId = ValidateUtils.requireGreaterThenZero(id);
+		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Goal goal = goalDao.deleteGoalByIdAndOrganisation(goalId, organisation);
 

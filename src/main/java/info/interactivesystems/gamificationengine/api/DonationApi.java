@@ -84,7 +84,7 @@ public class DonationApi {
 		dCall.setName(name);
 		dCall.setBelongsTo(organisation);
 		dCall.setDescription(description);
-		dCall.setGoal(ValidateUtils.requireGreaterThenZero(goal));
+		dCall.setGoal(ValidateUtils.requireGreaterThanZero(goal));
 
 		donationDao.insertDonationCall(dCall);
 
@@ -116,7 +116,7 @@ public class DonationApi {
 			@QueryParam("amount") @ValidPositiveDigit(message = "The amount must be a valid number") String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int id = ValidateUtils.requireGreaterThenZero(dId);
+		int id = ValidateUtils.requireGreaterThanZero(dId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		DonationCall dCall = donationDao.getDonationCall(id);
 
@@ -124,15 +124,15 @@ public class DonationApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such DonationCallId: " + id);
 		}
 
-		int pId = ValidateUtils.requireGreaterThenZero(playerId);
+		int pId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(pId, organisation.getApiKey());
 
 		ValidateUtils.requireNotNull(pId, player);
 
-		if (!player.enoughPrize(ValidateUtils.requireGreaterThenZero(amount))) {
+		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(amount))) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such a donation.");
 		}
-		player.donate(dCall, ValidateUtils.requireGreaterThenZero(amount));
+		player.donate(dCall, ValidateUtils.requireGreaterThanZero(amount));
 
 		return ResponseSurrogate.created(dCall);
 	}
@@ -155,7 +155,7 @@ public class DonationApi {
 	@TypeHint(DonationCall.class)
 	public Response getDonationCall(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int id = ValidateUtils.requireGreaterThenZero(dId);
+		int id = ValidateUtils.requireGreaterThanZero(dId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		DonationCall dCall = donationDao.getDonationCall(id);
 
@@ -187,7 +187,7 @@ public class DonationApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no id transferred");
 		}
 
-		int dId = ValidateUtils.requireGreaterThenZero(id);
+		int dId = ValidateUtils.requireGreaterThanZero(id);
 		DonationCall dCall = donationDao.deleteDonationCall(apiKey, dId);
 
 		ValidateUtils.requireNotNull(dId, dCall);

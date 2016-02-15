@@ -122,7 +122,7 @@ public class TaskApi {
 		List<Role> roles = new ArrayList<>();
 
 		for (String roleIdString : roleIdList) {
-			Role role = roleDao.getRole(ValidateUtils.requireGreaterThenZero(roleIdString), apiKey);
+			Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
 			if (role != null) {
 				roles.add(role);
 			}
@@ -182,7 +182,7 @@ public class TaskApi {
 	public Response getTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int taskId = ValidateUtils.requireGreaterThenZero(id);
+		int taskId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Task task = taskDao.getTaskByIdAndOrganisation(taskId, organisation);
 
@@ -208,7 +208,7 @@ public class TaskApi {
 	public Response deleteTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		int taskId = ValidateUtils.requireGreaterThenZero(id);
+		int taskId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Task task = taskDao.deleteTaskByIdAndOrganisation(taskId, organisation);
 
@@ -250,10 +250,10 @@ public class TaskApi {
 
 		// find player by id and organisation
 		log.debug("Get Player");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
 		// find task by id and organisation
-		int taskId = ValidateUtils.requireGreaterThenZero(id);
+		int taskId = ValidateUtils.requireGreaterThanZero(id);
 		Task task = taskDao.getTaskByIdAndOrganisation(taskId, organisation);
 		ValidateUtils.requireNotNull(taskId, task);
 		log.debug("TaskName: " + task.getTaskName());
@@ -301,7 +301,7 @@ public class TaskApi {
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Task");
 
-		Task task = taskDao.getTask(ValidateUtils.requireGreaterThenZero(id));
+		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(id));
 
 		if ("null".equals(value)) {
 			value = null;

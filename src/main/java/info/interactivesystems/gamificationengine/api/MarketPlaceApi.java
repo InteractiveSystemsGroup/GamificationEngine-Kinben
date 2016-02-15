@@ -148,7 +148,7 @@ public class MarketPlaceApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no marketPlaceId transferred");
 		}
 
-		int id = ValidateUtils.requireGreaterThenZero(marketId);
+		int id = ValidateUtils.requireGreaterThanZero(marketId);
 
 		MarketPlace market = marketPlDao.deleteMarketPlace(id);
 
@@ -194,7 +194,8 @@ public class MarketPlaceApi {
 	@POST
 	@Path("/offer")
 	@TypeHint(Offer.class)
-	public Response createNewOffer(@QueryParam("name") @NotNull String name, @QueryParam("endDate") String endDate,
+	public Response createNewOffer(@QueryParam("name") @NotNull String name, 
+			@QueryParam("endDate") String endDate,
 			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
 			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String allowedRoles, @QueryParam("deadLine") String deadLine,
@@ -204,19 +205,19 @@ public class MarketPlaceApi {
 
 		log.debug("create new Offer called");
 
-		Task task = taskDao.getTask(ValidateUtils.requireGreaterThenZero(taskId));
+		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskId));
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
 		if (!task.isTradeable()) {
 			throw new ApiError(Response.Status.FORBIDDEN, "task is not tradeable");
 		}
 
-		if (ValidateUtils.requireGreaterThenZero(prize) <= 0) {
+		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a real bid!");
 		}
 
-		if (!player.enoughPrize(ValidateUtils.requireGreaterThenZero(prize))) {
+		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(prize))) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such an offer");
 		}
 
@@ -233,19 +234,19 @@ public class MarketPlaceApi {
 		offer.setBelongsTo(organisation);
 		offer.setOfferDate(offerDate);
 		offer.setEndDate(endDateTime);
-		offer.setPrize(ValidateUtils.requireGreaterThenZero(prize));
+		offer.setPrize(ValidateUtils.requireGreaterThanZero(prize));
 		offer.setDeadLine(deadLineTime);
 		offer.setTask(task);
 		offer.setPlayer(player);
 
-		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThenZero(prize));
+		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
 
 		// Find all roles by Id
 		String[] roleIdList = allowedRoles.split(",");
 
 		for (String roleIdString : roleIdList) {
 			log.debug("Role To Add: " + roleIdString);
-			Role role = roleDao.getRoleById(ValidateUtils.requireGreaterThenZero(roleIdString));
+			Role role = roleDao.getRoleById(ValidateUtils.requireGreaterThanZero(roleIdString));
 			if (role != null) {
 				log.debug("Role Added: " + role.getId());
 				offer.addRole(role);
@@ -253,7 +254,7 @@ public class MarketPlaceApi {
 		}
 
 		offer.setBelongsTo(organisation);
-		MarketPlace marketPlace = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThenZero(marketId));
+		MarketPlace marketPlace = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketId));
 		marketPlace.setOffers(marketPlace.addOffer(offer));
 
 		int marketPId = marketPlDao.insertMarketPlace(marketPlace);
@@ -288,18 +289,18 @@ public class MarketPlaceApi {
 
 		log.debug("create New Bid called");
 
-		if (ValidateUtils.requireGreaterThenZero(prize) <= 0) {
+		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a real bid!");
 		}
 
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
-		if (!player.enoughPrize(ValidateUtils.requireGreaterThenZero(prize))) {
+		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(prize))) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such a bid.");
 		}
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThenZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
 		List<Role> roles = offer.getAllowedForRole();
 
 		log.debug("Offer: " + offer.getId() + " " + roles);
@@ -336,7 +337,7 @@ public class MarketPlaceApi {
 		LocalDateTime creationDate = LocalDateTime.now();
 
 		Bid bid = new Bid();
-		bid.setPrize(ValidateUtils.requireGreaterThenZero(prize));
+		bid.setPrize(ValidateUtils.requireGreaterThanZero(prize));
 		bid.setBelongsTo(organisation);
 		bid.setCreationDate(creationDate);
 		bid.setPlayer(player);
@@ -345,9 +346,9 @@ public class MarketPlaceApi {
 
 		bid.setOffer(offer);
 
-		offer.setPrize(offer.getPrize() + ValidateUtils.requireGreaterThenZero(prize));
+		offer.setPrize(offer.getPrize() + ValidateUtils.requireGreaterThanZero(prize));
 
-		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThenZero(prize));
+		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
 
 		log.debug("Bids:");
 		for (Bid b : marketPlDao.getBidsForOffer(offer)) {
@@ -376,7 +377,7 @@ public class MarketPlaceApi {
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
 		List<Offer> offers;
 		offers = marketPlDao.getOffersByPlayer(player);
@@ -416,9 +417,9 @@ public class MarketPlaceApi {
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThenZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
 		List<Offer> matchingOffers;
 
 		if (market.getOffers().size() > 0) {
@@ -457,9 +458,9 @@ public class MarketPlaceApi {
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThenZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
 		List<Offer> matchingOffers;
 
 		if (market.getOffers().size() > 0) {
@@ -469,7 +470,7 @@ public class MarketPlaceApi {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
 			}
 
-			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
 			return ResponseSurrogate.of(recentOffers);
 		}
@@ -502,9 +503,9 @@ public class MarketPlaceApi {
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThenZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
 		List<Offer> matchingOffers;
 
 		if (market.getOffers().size() > 0) {
@@ -513,7 +514,7 @@ public class MarketPlaceApi {
 			if (matchingOffers.size() <= 0) {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for this role");
 			}
-			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThenZero(count));
+			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
 			return ResponseSurrogate.of(highestOffers);
 		}
@@ -539,7 +540,7 @@ public class MarketPlaceApi {
 	public Response getBids(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 	
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThenZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
 		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer);
 
 		for (Bid bid : bidsForOffer) {
@@ -572,7 +573,7 @@ public class MarketPlaceApi {
 		}
 
 		log.debug("offerId aufgerufen");
-		int id = ValidateUtils.requireGreaterThenZero(offerId);
+		int id = ValidateUtils.requireGreaterThanZero(offerId);
 
 		Offer offer = marketPlDao.getOffer(id);
 		log.debug("hole Offer");
@@ -631,8 +632,8 @@ public class MarketPlaceApi {
 		}
 
 		log.debug("offerId aufgerufen");
-		int id = ValidateUtils.requireGreaterThenZero(offerId);
-		int idPlayer = ValidateUtils.requireGreaterThenZero(playerId);
+		int id = ValidateUtils.requireGreaterThanZero(offerId);
+		int idPlayer = ValidateUtils.requireGreaterThanZero(playerId);
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Player player = playerDao.getPlayer(idPlayer, apiKey);
@@ -689,7 +690,7 @@ public class MarketPlaceApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Offer");
 
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThenZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
 
 		if ("null".equals(value)) {
 			value = null;
@@ -772,10 +773,10 @@ public class MarketPlaceApi {
 			throw new ApiError(Response.Status.FORBIDDEN, "no bidId transferred");
 		}
 
-		int id = ValidateUtils.requireGreaterThenZero(bidId);
+		int id = ValidateUtils.requireGreaterThanZero(bidId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(playerId), apiKey);
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThenZero(offerId));
+		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
 
 		List<Bid> bid = marketPlDao.getBidsForPlayerAndOffer(player, offer);
 

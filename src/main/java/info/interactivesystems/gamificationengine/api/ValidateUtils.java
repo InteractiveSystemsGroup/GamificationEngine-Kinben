@@ -30,7 +30,7 @@ public class ValidateUtils {
 	 *         The id that is is tested. 
 	 * @return Validated integer identity.
 	 */
-	public static int requireGreaterThenZero(int id) {
+	public static int requireGreaterThanZero(int id) {
 		if (id <= 0) {
 			throw new ApiError(Response.Status.FORBIDDEN, "transferred integer has to be greater then zero");
 		}
@@ -45,7 +45,7 @@ public class ValidateUtils {
 	 *         The String of id that is tested.
 	 * @return Validated integer identity.
 	 */
-	public static int requireGreaterThenZero(String id) {
-		return requireGreaterThenZero(Integer.valueOf(id));
+	public static int requireGreaterThanZero(String id) {
+		return requireGreaterThanZero(Integer.valueOf(id));
 	}
 }
