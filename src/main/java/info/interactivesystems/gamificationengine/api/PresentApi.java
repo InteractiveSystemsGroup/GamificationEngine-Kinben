@@ -104,10 +104,13 @@ public class PresentApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create New TestMessage called");
-
+		
+		int sendId = ValidateUtils.requireGreaterThenZero(senderId);
+		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
-
+		ValidateUtils.requireNotNull(sendId, sender);
+		
 		List<Player> receivers = new ArrayList<>();
 		receivers = receiverList(receiverIds, apiKey);
 		
@@ -161,9 +164,12 @@ public class PresentApi {
 
 		log.debug("createNew ImageMessage called");
 
+		int sendId = ValidateUtils.requireGreaterThenZero(senderId);
+		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
-
+		ValidateUtils.requireNotNull(sendId, sender);
+		
 		List<Player> receivers = new ArrayList<>();
 		
 		receivers = receiverList(receiverIds, apiKey);
@@ -231,11 +237,10 @@ public class PresentApi {
 
 		log.debug("getboardMessages called");
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
 		
-		if(player == null){
-			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
-		}
+		Player player = playerDao.getPlayer(playId, apiKey);
+		ValidateUtils.requireNotNull(playId, player);
 		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
@@ -272,11 +277,9 @@ public class PresentApi {
 
 		log.debug("getMessages called");
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
-		if(player == null){
-			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
-		}
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		Player player = playerDao.getPlayer(playId, apiKey);
+		ValidateUtils.requireNotNull(playId, player);
 		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
@@ -313,11 +316,9 @@ public class PresentApi {
 
 		log.debug("getImageMessages called");
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
-		if(player == null){
-			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
-		}
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		Player player = playerDao.getPlayer(playId, apiKey);
+		ValidateUtils.requireNotNull(playId, player);
 		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		if (board == null) {
@@ -353,15 +354,11 @@ public class PresentApi {
 
 		log.debug("send a Present called");
 
-		int presId = ValidateUtils.requireGreaterThenZero(presentId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presId), organisation);
-
+		int presId = ValidateUtils.requireGreaterThenZero(presentId);
+		Present present = presentDao.getPresentByIdAndOrganisation(presId, organisation);
 		ValidateUtils.requireNotNull(presId, present);
-//		if (present == null) {
-//			throw new ApiError(Response.Status.NOT_FOUND, "No present to send.");
-//		}
 		
 		log.debug("Receivers player: " + present.getId());
 		
@@ -429,19 +426,18 @@ public class PresentApi {
 
 		log.debug("receive a Present called");
 
+		int presId = ValidateUtils.requireGreaterThenZero(presentId);
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
-
-		if (present == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such present to accept.");
-		}
+		Present present = presentDao.getPresentByIdAndOrganisation(presId, organisation);
+		ValidateUtils.requireNotNull(presId, present);
+		
 		log.debug("present id: " + present.getId());
 
-		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		if(player == null){
-			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
-		}
+		Player player = playerDao.getPlayer(playId, apiKey);
+		ValidateUtils.requireNotNull(playId, player);
 		
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		board.checkBoardExists(board);
@@ -480,7 +476,6 @@ public class PresentApi {
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
-
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to deny.");
 		}
@@ -488,7 +483,6 @@ public class PresentApi {
 		log.debug("present id: " + present.getId());
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
 		if(player == null){
 			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
 		}
@@ -532,7 +526,6 @@ public class PresentApi {
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
-
 		if (accPresent == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
 		}
@@ -540,7 +533,6 @@ public class PresentApi {
 		log.debug("present id: " + accPresent.getId());
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
 		if(player == null){
 			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
 		}
@@ -548,17 +540,9 @@ public class PresentApi {
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		board.checkBoardExists(board);
 		
-		log.debug("unit here");
-		
-		log.debug("Board " + board.getId());
-
 		board.archive(accPresent);
-
-		log.debug("a new message is archived");
-		
 		boardDao.persist(board);
 		
-		log.debug("Persisted Board");
 		return ResponseSurrogate.created(accPresent);
 	}
 
