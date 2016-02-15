@@ -132,8 +132,8 @@ public class PresentAccepted {
 	}
 
 	/**
-	 * This method checks if a accepted present belongs to a specific organisation. Therefore
-	 * it is tested if the organisation's API key matchs the present's API key. 
+	 * This method checks if an accepted present belongs to a specific organisation. Therefore
+	 * it is tested if the organisation's API key matches the present's API key. 
 	 * 
 	 * @param organisation
 	 * 			The organisation object a present may belongs to.

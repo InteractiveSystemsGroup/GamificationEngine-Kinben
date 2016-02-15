@@ -24,7 +24,7 @@ public class ValidateUtils {
 	}
 
 	/**
-	 * Validates whether the assigned value is greater then zero.
+	 * Validates whether the assigned value is greater than zero.
 	 * 
 	 * @param id
 	 *         The id that is is tested. 
@@ -39,7 +39,7 @@ public class ValidateUtils {
 
 	/**
 	 * Parses the assigned String to an integer and validates it whether it is
-	 * greater then zero. Supposes a valid string digit was passed.
+	 * greater than zero. Supposes a valid string digit was passed.
 	 * 
 	 * @param id
 	 *         The String of id that is tested.

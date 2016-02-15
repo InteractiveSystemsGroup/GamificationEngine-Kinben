@@ -109,5 +109,18 @@ public class PresentArchived {
 	public void setAcceptedPresent(PresentAccepted present) {
 		this.acceptedPresent = present;
 	}
+
+	/**
+	 * This method checks if an archived present belongs to a specific organisation. Therefore
+	 * it is tested if the organisation's API key matches the present's API key. 
+	 * 
+	 * @param organisation
+	 * 			The organisation object a present may belongs to.
+	 * @return Boolean value if the API key of the accepted present is the same 
+	 * 			of the tested organisation (true) or not (false).
+	 */
+	public boolean belongsTo(Organisation organisation) {
+		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
+	}
 	
 }

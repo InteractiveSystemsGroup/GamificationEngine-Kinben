@@ -329,5 +329,29 @@ public class Board {
 		}
 		return imMessageList;
 	}
+
+	/**
+	 * This method removes the passed present from the board's list of current presents.
+	 * 
+	 * @param accPresent
+	 * 			The already accepted present that is removed.
+	 * @return The {@link PresentAccepted} which is removed.
+	 * 	
+	 */
+	public PresentAccepted removeAcceptedPresent(PresentAccepted accPresent) {
+		this.getCurrentPresents().remove(accPresent);
+		return accPresent;
+	}
 	
+	/**
+	 * This method removes the passed present from the board's list of archived presents.
+	 * 
+	 * @param archPresent
+	 * 			The already archived present that is removed.
+	 * @return The {@link PresentArchived} which is removed.
+	 */
+	public PresentArchived removeArchivedPresent(PresentArchived archPresent) {
+		this.getArchive().remove(archPresent);
+		return archPresent;
+	}
 }

@@ -109,8 +109,8 @@ public class PresentApi {
 		Player sender = playerDao.getPlayer(ValidateUtils.requireGreaterThenZero(senderId), apiKey);
 
 		List<Player> receivers = new ArrayList<>();
-		
 		receivers = receiverList(receiverIds, apiKey);
+		
 		for (Player player : receivers) {
 			log.debug("Receivers: " + player.getId());
 		} 
@@ -208,42 +208,6 @@ public class PresentApi {
 	}
 	
 	
-	/**
-	 * Removes the specific present with the assigned id from data base. It is checked, if the passed 
-	 * id is a positive number otherwise a message for an invalid number is returned. If the API key 
-	 * is not valid an analogous message is returned.
-	 * 
-	 * @param presentId
-	 *            Required path parameter as integer which uniquely identify the {@link Present}.
-	 * @param apiKey
-	 *            The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
-	 */
-	@DELETE
-	@Path("/{id}")
-	@TypeHint(Present.class)
-	public Response deletePresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		log.debug("delete Present called");
-
-		if (presentId == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no presentId transferred");
-		}
-
-		int id = ValidateUtils.requireGreaterThenZero(presentId);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Present present = presentDao.getPresentByIdAndOrganisation(id, organisation);
-
-		if (present == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such Present: " + presentId);
-		}
-
-		presentDao.deleteP(present);
-
-		return ResponseSurrogate.deleted(present);
-	}
 
 	/**
 	 * This method returns all already accepted messages of a specific player's current presents.  
@@ -389,13 +353,15 @@ public class PresentApi {
 
 		log.debug("send a Present called");
 
+		int presId = ValidateUtils.requireGreaterThenZero(presentId);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presentId), organisation);
+		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThenZero(presId), organisation);
 
-		if (present == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No present to send.");
-		}
+		ValidateUtils.requireNotNull(presId, present);
+//		if (present == null) {
+//			throw new ApiError(Response.Status.NOT_FOUND, "No present to send.");
+//		}
 		
 		log.debug("Receivers player: " + present.getId());
 		
@@ -675,5 +641,127 @@ public class PresentApi {
 		List<PresentArchived> presents = board.getArchive();
 		
 		return ResponseSurrogate.of(presents);
+	}
+	
+	
+	/**
+	 * Removes the specific present with the assigned id from data base. It is checked, if the passed 
+	 * id is a positive number otherwise a message for an invalid number is returned. If the API key 
+	 * is not valid an analogous message is returned.
+	 * 
+	 * @param presentId
+	 *            Required path parameter as integer which uniquely identify the {@link Present}.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
+	 */
+	@DELETE
+	@Path("/{id}")
+	@TypeHint(Present.class)
+	public Response deletePresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("delete Present called");
+
+		int id = ValidateUtils.requireGreaterThenZero(presentId);
+		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
+		Present present = presentDao.getPresentByIdAndOrganisation(id, organisation);
+		ValidateUtils.requireNotNull(id, present);
+
+		presentDao.deletePresent(present);
+
+		return ResponseSurrogate.deleted(present);
+	}
+	
+	/**
+	 * Removes the specific present with the assigned id from data base. It is checked, if the passed 
+	 * id is a positive number otherwise a message for an invalid number is returned. If the API key 
+	 * is not valid an analogous message is returned.
+	 * 
+	 * @param presentId
+	 *            Required path parameter as integer which uniquely identify the {@link Present}.
+	 * @param playerId
+	 * 			The present is removed from the player's board.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
+	 */
+	@DELETE
+	@Path("/{id}/deleteCurrent/{playerId}")
+	@TypeHint(PresentAccepted.class)
+	public Response deleteCurrentPresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("delete Present called");
+
+		int presId = ValidateUtils.requireGreaterThenZero(presentId);
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		
+		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
+		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(presId, organisation);
+		ValidateUtils.requireNotNull(presId, accPresent);
+		
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		ValidateUtils.requireNotNull(playId, player);
+		
+		Board board = boardDao.getBoard(Integer.valueOf(playId), apiKey);
+		board.checkBoardExists(board);
+		
+		//deletes first the present from the list of current presents and than from the database 
+		board.removeAcceptedPresent(accPresent);
+		presentDao.deletePresent(accPresent);
+		boardDao.persist(board);
+		
+		return ResponseSurrogate.deleted(accPresent);
+	}
+	
+	/**
+	 * Removes the specific present with the assigned id from data base and the from the board's list of archived 
+	 * presents. It is checked, if the passed id is a positive number otherwise a message for an invalid number 
+	 * is returned. If the API key is not valid an analogous message is returned.
+	 * 
+	 * @param presentId
+	 *            Required path parameter as integer which uniquely identify the {@link Present}.
+	 * @param playerId
+	 * 			The present is removed from the player's board.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this present belongs to.
+	 * @return {@link Response} of {@link Present} in JSON.
+	 */
+	@DELETE
+	@Path("/{id}/deleteArchived/{playerId}")
+	@TypeHint(PresentArchived.class)
+	public Response deleteArchivedPresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("delete Present called");
+
+		int presId = ValidateUtils.requireGreaterThenZero(presentId);
+		int playId = ValidateUtils.requireGreaterThenZero(playerId);
+		
+		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
+		PresentArchived archPresent = presentDao.getPresentArchivedByIdAndOrganisation(presId, organisation);
+		ValidateUtils.requireNotNull(presId, archPresent);
+		
+		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
+		ValidateUtils.requireNotNull(playId, player);
+		
+		Board board = boardDao.getBoard(Integer.valueOf(playId), apiKey);
+		board.checkBoardExists(board);
+		
+		//deletes first the present from the list of archived presents and than from the database 
+		board.removeArchivedPresent(archPresent);
+		presentDao.deletePresent(archPresent);
+		boardDao.persist(board);
+		
+		return ResponseSurrogate.deleted(archPresent);
 	}
 }
