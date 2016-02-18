@@ -148,6 +148,8 @@ public class PresentApi {
 	 * @param imagePath
 	 *             The path of the image. This field must not be null and the format of the image
 	 *             has to be .jpg or .png.
+	 * @param textMessage
+	 * 			A short text comment that belong to the image.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this image message belongs to.
@@ -227,7 +229,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link Presents}s in JSON.
+	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
 	 * 
 	 */
 	@GET

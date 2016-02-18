@@ -325,6 +325,10 @@ public class RewardApi {
 	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
 	 * API key is returned.  
 	 * 
+	 * @param name
+	 *           The required name of the coins reward.
+	 * @param description
+	 *           Optionally a short text can be set to describe the reward.
 	 * @param amount
 	 *          The required amount of coins greater then zero that can be earned.
 	 * @param apiKey
@@ -360,6 +364,10 @@ public class RewardApi {
 	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
 	 * API key is returned. 
 	 * 
+	 * @param name
+	 *           The required name of the points reward.
+	 * @param description
+	 *           Optionally a short text can be set to describe the reward.
 	 * @param amount
 	 *           The required amount of points greater then zero that can be earned.
 	 * @param apiKey
@@ -395,10 +403,12 @@ public class RewardApi {
 	 * organisation's API key is mandatory otherwise a warning with the hint for a non valid 
 	 * API key is returned. 
 	 * 
+	 *  @param name
+	 *           The required name of the level can be set.
+	 * @param description
+	 *           Optionally a short text can be set to describe the level.
 	 * @param index
 	 *            The required level index greater then zero.
-	 * @param name
-	 *            Optionally a name of the level can be set.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.

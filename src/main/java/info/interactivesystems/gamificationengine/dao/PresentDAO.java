@@ -119,7 +119,7 @@ public class PresentDAO {
 		}
 		
 	}
-	
+
 	/**
 	 * Generic method to remove a present, an accepted or an archived present from
 	 * the database.

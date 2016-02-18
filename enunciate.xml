@@ -21,7 +21,7 @@
   	</api-classes>
   	
   	 <modules>
-	    <docs docsDir="${project.build.directory}/docs" freemarkerTemplate="docs.fmt"></docs>
+	   <docs docsDir="${project.build.directory}/docs" freemarkerTemplate="docs.fmt"></docs> 
 	   <!-- <basic-app disabled="true" />
 	    <jaxb disabled="true" /> 
 	    <jackson disabled="false" />
