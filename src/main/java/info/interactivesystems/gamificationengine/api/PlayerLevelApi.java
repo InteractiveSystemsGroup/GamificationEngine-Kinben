@@ -56,7 +56,7 @@ public class PlayerLevelApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player level belongs to.
-	 * @return {@link Response} of {@link PlayerLevel} in JSON.
+	 * @return Response of PlayerLevel in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -88,7 +88,7 @@ public class PlayerLevelApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player level belongs to.
-	 * @return {@link Response} of {@link PlayerLevel} in JSON.
+	 * @return Response of PlayerLevel in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -118,7 +118,7 @@ public class PlayerLevelApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which the player level belongs to.
-	 * @return {@link Response} of {@link PlayerLevel} in JSON.
+	 * @return Response of PlayerLevel in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -165,7 +165,7 @@ public class PlayerLevelApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player level belongs to.
-	 * @return {@link Response} of {@link PlayerLevel} in JSON.
+	 * @return Response of PlayerLevel in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")

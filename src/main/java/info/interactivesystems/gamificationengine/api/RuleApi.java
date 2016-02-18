@@ -81,7 +81,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} of {@link DoAllTasksRule} or {@link DoAnyTaskRule} in JSON.
+	 * @return Response of DoAllTasksRule or DoAnyTaskRule in JSON.
 	 */
 	@POST
 	@Path("/task")
@@ -159,7 +159,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} of {@link GetPointsRule} in JSON.
+	 * @return Response of GetPointsRule in JSON.
 	 */
 	@POST
 	@Path("/point")
@@ -190,7 +190,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} as {@link List} of {@link GoalRule}s in JSON.
+	 * @return Response as List of GoalRules in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -210,7 +210,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this rule belongs to.
-	 * @return {@link Response} of {@link GoalRule} in JSON.
+	 * @return Response of GoalRule in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -233,7 +233,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this rule belongs to.
-	 * @return {@link Response} of {@link GoalRule} in JSON.
+	 * @return Response of GoalRule in JSON.
 	 */
 	@DELETE
 	@Path("{id}")
@@ -272,7 +272,7 @@ public class RuleApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal rule belongs to.
-	 * @return {@link Response} of {@link GoalRule} in JSON.
+	 * @return Response of GoalRule in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")

@@ -83,7 +83,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.
-	 * @return {@link Response} of {@link PlayerGroup} in JSON
+//	 * @return Response of PlayerGroup in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -134,7 +134,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this group of players belongs to.
-	 * @return {@link Response} of {@link PlayerGroup} in JSON
+	 * @return Response of PlayerGroup in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -174,7 +174,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this role belongs to.
-	 * @return {@link Response} of {@link PlayerGroup} in JSON
+	 * @return Response of PlayerGroup in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -245,7 +245,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.
-	 * @return {@link Response} of {@link PlayerGroup} in JSON.
+	 * @return Response of PlayerGroup in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -275,7 +275,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this group belongs to.
-	 * @return {@link Response} as {@link List} of {@link FinishedGoal}s in JSON.
+	 * @return Response as List of FinishedGoals in JSON.
 	 */
 	@GET
 	@Path("/{id}/goals")
@@ -305,7 +305,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.
-	 * @return {@link Response} of {@link Object} with an byte[] in JSON.
+	 * @return Response of Object with an byte[] in JSON.
 	 */
 	@GET
 	@Path("{id}/avatar")
@@ -338,7 +338,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this group of players belongs to.
-	 * @return {@link Response} of {@link int} in JSON.
+	 * @return Response of int in JSON.
 	 */
 	@GET
 	@Path("/{id}/points")
@@ -368,7 +368,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this group of players belongs to.
-	 * @return {@link Response} of {@link int} in JSON.
+	 * @return Response of int in JSON.
 	 */
 	@GET
 	@Path("/{id}/coins")
@@ -398,7 +398,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this group of players belongs to.
-	 * @return {@link Response} as {@link List} of {@link PermanentReward}s in JSON.
+	 * @return Response as List of PermanentRewards in JSON.
 	 */
 	@GET
 	@Path("/{id}/rewards")
@@ -427,7 +427,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this group belongs to.
-	 * @return {@link Response} as {@link List} of {@link Badge}s in JSON.
+	 * @return Response as List of Badges in JSON.
 	 */
 	@GET
 	@Path("/{id}/badges")
@@ -456,7 +456,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this group belongs to.
-	 * @return {@link Response} as {@link List} of {@link Achievement}s in JSON
+	 * @return Response as List of Achievements in JSON
 	 */
 	@GET
 	@Path("/{id}/achievements")
@@ -487,7 +487,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 * 			 The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.
-	 * @return {@link Response} of {@link PlayerGroup} in JSON.
+	 * @return Response of PlayerGroup in JSON.
 	 */
 	@PUT
 	@Path("/{id}/addPlayers")

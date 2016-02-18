@@ -104,7 +104,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -146,7 +146,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -174,7 +174,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -200,7 +200,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -234,7 +234,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@POST
 	@Path("/{id}/complete/{playerId}")
@@ -292,7 +292,7 @@ public class TaskApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this task belongs to.
-	 * @return {@link Response} of {@link Task} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")

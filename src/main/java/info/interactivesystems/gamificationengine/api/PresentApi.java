@@ -92,7 +92,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this text message belongs to.
-	 * @return {@link Response} of {@link TextMessage} in JSON.
+	 * @return Response of TextMessage in JSON.
 	 */
 	@POST
 	@Path("/textMessage")
@@ -153,7 +153,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this image message belongs to.
-	 * @return {@link Response} of {@link ImageMessage} in JSON.
+	 * @return Response of ImageMessage in JSON.
 	 */
 	@POST
 	@Path("/imageMessage")
@@ -208,7 +208,7 @@ public class PresentApi {
 	 * @param apiKey
 	 * 			The valid query parameter API key affiliated to one specific organisation, 
 	 *        	to which this present belongs to.
-	 * @return
+	 * @return Returns a list of Players.
 	 */
 	private List<Player> receiverList(String commaSeparatedList, String apiKey) {
 		StringUtils.validateAsListOfDigits(commaSeparatedList);
@@ -229,7 +229,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
+	 * @return Response as List of Presents in JSON.
 	 * 
 	 */
 	@GET
@@ -270,7 +270,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the text messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link TextMessage}s in JSON.
+	 * @return Response as List of TextMessages in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/textMessages")
@@ -309,7 +309,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the image messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link ImageMessage}s in JSON.
+	 * @return Response as List of ImageMessages in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/imageMessages")
@@ -348,7 +348,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@POST
 	@Path("/{presentId}/send")
@@ -418,7 +418,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *             The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@POST
 	@Path("/{presentId}/accept/{playerId}")
@@ -465,7 +465,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@POST
 	@Path("/{presentId}/deny/{playerId}")
@@ -515,7 +515,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@POST
 	@Path("/{presentId}/archive/{playerId}")
@@ -560,7 +560,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} as {@link List} of {@link Present}s in JSON.
+	 * @return Response as List of Presents in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/inbox")
@@ -601,7 +601,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the messages belongs to.
-	 * @return {@link Response} as {@link List} of {@link PresentArchived}s in JSON.
+	 * @return Response as List of PresentArchiveds in JSON.
 	 */
 	@GET
 	@Path("/{playerId}/archive")
@@ -642,7 +642,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -675,7 +675,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/deleteCurrent/{playerId}")
@@ -720,7 +720,7 @@ public class PresentApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this present belongs to.
-	 * @return {@link Response} of {@link Present} in JSON.
+	 * @return Response of Present in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/deleteArchived/{playerId}")

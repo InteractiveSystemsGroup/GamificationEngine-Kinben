@@ -104,7 +104,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return A {@link Response} of {@link Goal} in JSON.
+	 * @return A Response of Goal in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -181,7 +181,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return A {@link javax.ws.rs.core.Response} as {@link List} of {@link Goal}s in JSON.
+	 * @return A Response as List of Goals in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -202,7 +202,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link Response} of {@link Goal} in JSON.
+	 * @return Response of Goal in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -238,7 +238,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this role belongs to.
-	 * @return {@link Response} of {@link Goal} in JSON
+	 * @return Response of Goal in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -335,7 +335,7 @@ public class GoalApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link Response} of {@link Goal} in JSON.
+	 * @return Response of Goal in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")

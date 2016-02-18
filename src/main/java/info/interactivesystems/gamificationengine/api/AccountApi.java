@@ -55,7 +55,7 @@ public class AccountApi {
 	 *            A required valid unique email address.
 	 * @param password
 	 *            Required query parameter associated with the email address. 
-	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
+	 * @return A Response of Account in JSON.
 	 */
 	@GET
 	@Path("/")
@@ -90,7 +90,7 @@ public class AccountApi {
 	 * @param lastName
 	 *            Optionally the last name of the Account's owner can be set.
 	 * 
-	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
+	 * @return A Response of Account in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -125,7 +125,7 @@ public class AccountApi {
 	 * @param lastName
 	 *            Optionally the last name of the Account's owner can be set.
 	 * 
-	 * @return A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.
+	 * @return A Response of Account in JSON.
 	 */
 	@PUT
 	@Path("/")

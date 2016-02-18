@@ -68,7 +68,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JSON.
+	 * @return Response of DonationCall in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -106,7 +106,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this call for donations belongs to.
-	 * @return A {@link Response} of {@link DonationCall} in JSON.
+	 * @return A Response of DonationCall in JSON.
 	 */
 	@POST
 	@Path("/{id}/donate/{playerId}")
@@ -148,7 +148,7 @@ public class DonationApi {
 	 * @param apiKey
 	 * 			The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JSON.
+	 * @return Response of DonationCall in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -177,7 +177,7 @@ public class DonationApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this call for donations belongs to.
-	 * @return {@link Response} of {@link DonationCall} in JSON.
+	 * @return  Response of DonationCall in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")

@@ -14,7 +14,7 @@ public class ValidateUtils {
 	 * @param object
 	 *          The object that is tested.
 	 *
-	 * @return validated object identity
+	 * @return Validated object identity
 	 */
 	public static <T> T requireNotNull(int id, T object) {
 		if (object == null) {

@@ -71,7 +71,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this reward belongs to.
-	 * @return {@link Response} as {@link List} of {@link Reward}s in JSON.
+	 * @return Response as List of Rewards in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -93,7 +93,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -131,7 +131,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -188,8 +188,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} with 200 OK and JSON as
-	 *         response type.
+	 * @return Response of Reward with 200 OK and JSON as response type.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -214,8 +213,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} with 200 OK and JSON as
-	 *         response type.
+	 * @return Response a String with all types of a Reward in JSON.
 	 */
 	@GET
 	@Path("/types")
@@ -241,7 +239,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Achievement} in JSON.
+	 * @return Response of Achievement in JSON.
 	 */
 	@POST
 	@Path("/achievement")
@@ -288,7 +286,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Badge} in JSON.
+	 * @return Response of Badge in JSON.
 	 */
 	@POST
 	@Path("/badge")
@@ -334,7 +332,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this reward belongs to.
-	 * @return {@link Response} of {@link Coins} in JSON.
+	 * @return Response of Coins in JSON.
 	 */
 	@POST
 	@Path("/coins")
@@ -373,7 +371,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@POST
 	@Path("/points")
@@ -412,7 +410,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link ReceiveLevel} in JSON.
+	 * @return Response of ReceiveLevel in JSON.
 	 */
 	@POST
 	@Path("/level")
@@ -446,7 +444,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Object} in JSON.
+	 * @return Response of Object in JSON.
 	 */
 	@GET
 	@Path("/achievement/{id}")
@@ -482,7 +480,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@GET
 	@Path("/badge/{id}")
@@ -528,7 +526,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@PUT
 	@Path("/{id}/changeAchievement")
@@ -592,7 +590,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@PUT
 	@Path("/{id}/changeBadge")
@@ -652,7 +650,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *             The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@PUT
 	@Path("/{id}/Points")
@@ -706,7 +704,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *             The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@PUT
 	@Path("/{id}/Coins")
@@ -760,7 +758,7 @@ public class RewardApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this reward belongs to.
-	 * @return {@link Response} of {@link Reward} in JSON.
+	 * @return Response of Reward in JSON.
 	 */
 	@PUT
 	@Path("/{id}/ReceiveLevel")

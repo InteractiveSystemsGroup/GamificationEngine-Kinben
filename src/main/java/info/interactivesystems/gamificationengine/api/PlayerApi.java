@@ -92,7 +92,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player should belong to.
-	 * @return A {@link Response} of {@link Player} in JSON.
+	 * @return A Response of Player in JSON.
 	 */
 	@POST
 	@Path("/")
@@ -132,7 +132,7 @@ public class PlayerApi {
 	 * 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation.
-	 * @return A {@link Response} as {@link List} of {@link Player}s in JSON.
+	 * @return A Response as List of Players in JSON.
 	 */
 	@GET
 	@Path("/*")
@@ -153,7 +153,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -178,7 +178,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} as {@link List} of {@link Player}s in JSON.
+	 * @return Response as List of Players in JSON.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -222,7 +222,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this role belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -329,7 +329,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@PUT
 	@Path("/{id}/contacts")
@@ -363,7 +363,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@PUT
 	@Path("/{id}/roles")
@@ -399,7 +399,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/contacts")
@@ -463,7 +463,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@PUT
 	@Path("{id}/deactivate")
@@ -491,7 +491,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} of {@link Player} in JSON.
+	 * @return Response of Player in JSON.
 	 */
 	@PUT
 	@Path("{id}/activate")
@@ -520,7 +520,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link FinishedGoal}s in JSON.
+	 * @return Response as List of FinishedGoals in JSON.
 	 */
 	@GET
 	@Path("/{id}/goals")
@@ -543,7 +543,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link PermanentReward}s in JSON.
+	 * @return Response as List of PermanentRewards in JSON.
 	 */
 	@GET
 	@Path("/{id}/rewards")
@@ -567,7 +567,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *         The valid query parameter API key affiliated to one specific organisation, 
 	 *         to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link FinishedTask}s in JSON.
+	 * @return Response as List of FinishedTasks in JSON.
 	 */
 	@GET
 	@Path("/{id}/tasks")
@@ -591,7 +591,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Badge}s in JSON.
+	 * @return Response as List of Badges in JSON.
 	 */
 	@GET
 	@Path("/{id}/badges")
@@ -616,7 +616,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Achievement}s in JSON
+	 * @return Response as List of Achievements in JSON
 	 */
 	@GET
 	@Path("/{id}/achievements")
@@ -641,7 +641,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link int} in JSON.
+	 * @return Response of int in JSON.
 	 */
 	@GET
 	@Path("/{id}/points")
@@ -666,7 +666,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this player belongs to.
-	 * @return {@link Response} of {@link int} in JSON.
+	 * @return Response of int in JSON.
 	 */
 	@GET
 	@Path("/{id}/coins")
