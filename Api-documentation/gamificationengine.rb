@@ -131,42 +131,42 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :authority
+    attr_accessor :defaultPort
     # (no documentation provided)
     attr_accessor :content
-    # (no documentation provided)
-    attr_accessor :port
     # (no documentation provided)
     attr_accessor :protocol
     # (no documentation provided)
     attr_accessor :ref
     # (no documentation provided)
-    attr_accessor :userInfo
+    attr_accessor :path
     # (no documentation provided)
-    attr_accessor :host
-    # (no documentation provided)
-    attr_accessor :query
-    # (no documentation provided)
-    attr_accessor :defaultPort
+    attr_accessor :authority
     # (no documentation provided)
     attr_accessor :file
     # (no documentation provided)
-    attr_accessor :path
+    attr_accessor :port
+    # (no documentation provided)
+    attr_accessor :host
+    # (no documentation provided)
+    attr_accessor :userInfo
+    # (no documentation provided)
+    attr_accessor :query
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
+      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
       _h['content'] = content.to_jaxb_json_hash unless content.nil?
-      _h['port'] = port.to_jaxb_json_hash unless port.nil?
       _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
       _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
-      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
-      _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
-      _h['file'] = file.to_jaxb_json_hash unless file.nil?
       _h['path'] = path.to_jaxb_json_hash unless path.nil?
+      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
+      _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
+      _h['query'] = query.to_jaxb_json_hash unless query.nil?
       return _h
     end
 
@@ -177,17 +177,17 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
+      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
       @content = Object.from_json(_o['content']) unless _o['content'].nil?
-      @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
       @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
       @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
-      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
-      @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
-      @file = String.from_json(_o['file']) unless _o['file'].nil?
       @path = String.from_json(_o['path']) unless _o['path'].nil?
+      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
+      @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
+      @query = String.from_json(_o['query']) unless _o['query'].nil?
     end
 
     # constructs a URL from a (parsed) JSON hash
@@ -701,6 +701,81 @@ module Gamificationengine
 
 module Entities
 
+module Present
+
+  # (no documentation provided)
+  class Present 
+
+    # The id of the present as int.
+    attr_accessor :id
+    # The organisation of the present as an object. This parameter must not be null.
+    attr_accessor :belongsTo
+    # The sender of a present.
+    attr_accessor :sender
+    # The list of all players who should receive the present.
+    attr_accessor :receiver
+
+    # the json hash for this Present
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      _h['sender'] = sender.to_jaxb_json_hash unless sender.nil?
+      if !receiver.nil?
+        _ha = Array.new
+        receiver.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['receiver'] = _ha
+      end
+      return _h
+    end
+
+    # the json (string form) for this Present
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this Present with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      @sender = Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_o['sender']) unless _o['sender'].nil?
+      if !_o['receiver'].nil?
+        @receiver = Array.new
+        _oa = _o['receiver']
+        _oa.each { | _item | @receiver.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
+      end
+    end
+
+    # constructs a Present from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
 module Task
 
   # (no documentation provided)
@@ -755,81 +830,6 @@ module Task
     end
 
     # constructs a Task from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
-module Present
-
-  # (no documentation provided)
-  class Present 
-
-    # The id of the present as int.
-    attr_accessor :id
-    # The organisation of the present as an object. This parameter must not be null.
-    attr_accessor :belongsTo
-    # The sender of a present.
-    attr_accessor :sender
-    # The list of all players who should receive the present.
-    attr_accessor :receiver
-
-    # the json hash for this Present
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      _h['sender'] = sender.to_jaxb_json_hash unless sender.nil?
-      if !receiver.nil?
-        _ha = Array.new
-        receiver.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['receiver'] = _ha
-      end
-      return _h
-    end
-
-    # the json (string form) for this Present
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this Present with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      @sender = Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_o['sender']) unless _o['sender'].nil?
-      if !_o['receiver'].nil?
-        @receiver = Array.new
-        _oa = _o['receiver']
-        _oa.each { | _item | @receiver.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
-      end
-    end
-
-    # constructs a Present from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -1760,39 +1760,39 @@ module Time
   class LocalDateTime 
 
     # (no documentation provided)
-    attr_accessor :dayOfYear
-    # (no documentation provided)
-    attr_accessor :nano
-    # (no documentation provided)
-    attr_accessor :dayOfWeek
-    # (no documentation provided)
-    attr_accessor :hour
-    # (no documentation provided)
-    attr_accessor :year
-    # (no documentation provided)
     attr_accessor :monthValue
     # (no documentation provided)
     attr_accessor :second
     # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
     attr_accessor :month
     # (no documentation provided)
+    attr_accessor :nano
+    # (no documentation provided)
     attr_accessor :dayOfMonth
+    # (no documentation provided)
+    attr_accessor :hour
+    # (no documentation provided)
+    attr_accessor :dayOfWeek
+    # (no documentation provided)
+    attr_accessor :minute
+    # (no documentation provided)
+    attr_accessor :dayOfYear
+    # (no documentation provided)
+    attr_accessor :year
 
     # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
-      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
-      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
-      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
-      _h['year'] = year.to_jaxb_json_hash unless year.nil?
       _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
       _h['second'] = second.to_jaxb_json_hash unless second.nil?
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
+      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
+      _h['year'] = year.to_jaxb_json_hash unless year.nil?
       return _h
     end
 
@@ -1803,16 +1803,16 @@ module Time
 
     #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
-      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
-      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
-      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
-      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
       @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
       @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
-      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
       @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
+      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
+      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
+      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
     end
 
     # constructs a LocalDateTime from a (parsed) JSON hash

@@ -3263,7 +3263,7 @@
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to.\r\n//\t * @return Response of PlayerGroup in JSON."
           },
           {
             "name" : "logoPath",

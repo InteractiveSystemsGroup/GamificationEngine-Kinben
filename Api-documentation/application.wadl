@@ -35,7 +35,7 @@ hint for wrong credentials is returned.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Account in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -63,7 +63,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Account in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -90,7 +90,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link javax.ws.rs.core.Response} of {@link Account} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Account in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -119,7 +119,7 @@ to which this call for donations belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link DonationCall} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of DonationCall in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -171,7 +171,7 @@ who is allowed to fulfil the goal. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Goal} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Goal in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -196,7 +196,7 @@ method addManager.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Organisation} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Organisation in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -231,7 +231,7 @@ separated by commas.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -249,7 +249,8 @@ a message for the invalid number is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this group of players belongs to.]]></wadl:doc>
+to which this group of players belongs to.
+//	 * @return Response of PlayerGroup in JSON.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="logoPath" style="query">
             <wadl:doc><![CDATA[Optionally a group logo as a HTTP reference can be passed.]]></wadl:doc>
@@ -263,7 +264,6 @@ separated by commas. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -290,7 +290,7 @@ to which this player level belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerLevel} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerLevel in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -328,7 +328,7 @@ can be received by {@link RewardApi#getRewardTypes}.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -349,7 +349,7 @@ to which this role belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Role} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Role in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -385,7 +385,7 @@ set to not tradeable (false).]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -403,7 +403,7 @@ to which this call for donations belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link DonationCall} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of DonationCall in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -421,7 +421,7 @@ to which this call for donations belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link DonationCall} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of DonationCall in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -439,7 +439,7 @@ to which this goal belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link javax.ws.rs.core.Response} as {@link List} of {@link Goal}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response as List of Goals in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -457,7 +457,7 @@ to which this goal belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Goal} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Goal in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -475,7 +475,7 @@ to which this goal belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Goal} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Goal in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -503,7 +503,7 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {Bid} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Bid in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -530,7 +530,7 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Offer}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -556,7 +556,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} as {@link List} of {@link Offer}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -577,7 +577,7 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} as {@link List} of {@link Offer}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -604,7 +604,7 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Offer}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -623,7 +623,7 @@ to which this marketplace belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {MarketPlace} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of MarketPlace in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -670,7 +670,7 @@ yyyy-MM-dd HH:mm.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {Offer} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -690,7 +690,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} as {@link List} of {@link Organisation}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response as List of Organisations in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -717,7 +717,7 @@ list, a message is given with the hint that she/he is already added.]]></wadl:do
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Organisation} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Organisation in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -738,7 +738,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Organisation} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Organisation in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -755,7 +755,7 @@ is returned.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} as {@link List} of {@link Player}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response as List of Players in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -773,7 +773,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -791,7 +791,7 @@ to which this role belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Player}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Players in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -809,7 +809,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -827,7 +827,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -845,7 +845,7 @@ to which this player level belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerLevel} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerLevel in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -863,7 +863,7 @@ to which this player level belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerLevel} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerLevel in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -900,7 +900,7 @@ field must not be null.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link ImageMessage} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of ImageMessage in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -932,7 +932,7 @@ field must not be null.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link TextMessage} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of TextMessage in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -950,7 +950,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -968,7 +968,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Reward}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Rewards in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -997,7 +997,7 @@ achievement.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Achievement} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Achievement in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1025,7 +1025,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Badge} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Badge in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1052,7 +1052,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Coins} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Coins in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1080,7 +1080,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link ReceiveLevel} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of ReceiveLevel in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1107,7 +1107,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1124,8 +1124,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} with 200 OK and JSON as
-response type.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response a String with all types of a Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1144,7 +1143,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1163,8 +1162,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} with 200 OK and JSON as
-response type.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward with 200 OK and JSON as response type.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1181,7 +1179,7 @@ to which this role belongs to. This field must not be null.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Role}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Roles in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1199,7 +1197,7 @@ to which this role belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Role} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Role in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1217,7 +1215,7 @@ to which this role belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Role} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Role in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1235,7 +1233,7 @@ to which this rule belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link GoalRule}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of GoalRules in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1267,7 +1265,7 @@ which tasks she/he to fulfil.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link GetPointsRule} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of GetPointsRule in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1301,7 +1299,7 @@ This field must not be null.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link DoAllTasksRule} or {@link DoAnyTaskRule} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of DoAllTasksRule or DoAnyTaskRule in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1319,7 +1317,7 @@ to which this rule belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link GoalRule} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of GoalRule in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1337,7 +1335,7 @@ to which this rule belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link GoalRule} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of GoalRule in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1354,7 +1352,7 @@ to which this task belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1372,7 +1370,7 @@ to which this task belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1390,7 +1388,7 @@ to which this task belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1422,7 +1420,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Goal} in JSON]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Goal in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1453,7 +1451,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Offer} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1479,7 +1477,7 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Offer} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1497,7 +1495,7 @@ to which the offer belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Bid}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Bids in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1521,7 +1519,7 @@ she/he earns the prize as a reward.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task#getId} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1539,7 +1537,7 @@ to which this goal belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link MarketPlace} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of MarketPlace in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1557,7 +1555,7 @@ to which the offer belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Offer} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1579,7 +1577,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link Organisation} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of Organisation in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1598,7 +1596,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Achievement}s in JSON]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Achievements in JSON]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1617,7 +1615,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1653,7 +1651,7 @@ and "avatar".]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1672,7 +1670,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Object} with an byte[] in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Object with an byte[] in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1691,7 +1689,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Badge}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Badges in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1710,7 +1708,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of int in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1733,7 +1731,7 @@ separated by commas.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1756,7 +1754,7 @@ separated by commas and must not be null.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1775,7 +1773,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1793,7 +1791,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link FinishedGoal}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of FinishedGoals in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1812,7 +1810,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of int in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1830,7 +1828,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link PermanentReward}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of PermanentRewards in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1852,7 +1850,7 @@ separated by commas.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Player} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1871,7 +1869,7 @@ to which this player belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link FinishedTask}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of FinishedTasks in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1890,7 +1888,7 @@ to which this group belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Achievement}s in JSON]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Achievements in JSON]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1912,7 +1910,7 @@ separated by commas.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1945,7 +1943,7 @@ associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1964,7 +1962,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Object} with an byte[] in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Object with an byte[] in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1983,7 +1981,7 @@ to which this group belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Badge}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Badges in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2002,7 +2000,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of int in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2020,7 +2018,7 @@ to which this group belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link FinishedGoal}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of FinishedGoals in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2039,7 +2037,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link int} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of int in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2058,7 +2056,7 @@ to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link PermanentReward}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of PermanentRewards in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2087,7 +2085,7 @@ associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link PlayerLevel} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of PlayerLevel in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2104,7 +2102,7 @@ to which the messages belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link PresentArchived}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of PresentArchiveds in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2121,7 +2119,7 @@ to which the messages belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Presents in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2138,7 +2136,7 @@ to which the image messages belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link ImageMessage}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of ImageMessages in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2156,7 +2154,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of Presents in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2173,7 +2171,7 @@ to which the text messages belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link TextMessage}s in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response as List of TextMessages in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2190,7 +2188,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2209,7 +2207,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Object} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Object in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2228,7 +2226,7 @@ to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2258,7 +2256,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2288,7 +2286,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2318,7 +2316,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2349,7 +2347,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2380,7 +2378,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Reward} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Reward in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2406,7 +2404,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Role} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Role in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2437,7 +2435,7 @@ points that have to be reached, can't be changed later.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link GoalRule} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of GoalRule in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2468,7 +2466,7 @@ The following names of attributes can be used to change the associated field:
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2490,7 +2488,7 @@ to which this call for donations belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A {@link Response} of {@link DonationCall} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A Response of DonationCall in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2508,7 +2506,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2526,7 +2524,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2543,7 +2541,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2560,7 +2558,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2577,7 +2575,7 @@ to which this present belongs to.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Present in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2601,7 +2599,7 @@ sent.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Task} in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
