@@ -131,42 +131,42 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :ref
+    attr_accessor :authority
     # (no documentation provided)
     attr_accessor :content
     # (no documentation provided)
+    attr_accessor :port
+    # (no documentation provided)
     attr_accessor :protocol
+    # (no documentation provided)
+    attr_accessor :ref
     # (no documentation provided)
     attr_accessor :userInfo
     # (no documentation provided)
-    attr_accessor :query
-    # (no documentation provided)
     attr_accessor :host
     # (no documentation provided)
-    attr_accessor :path
+    attr_accessor :query
+    # (no documentation provided)
+    attr_accessor :defaultPort
     # (no documentation provided)
     attr_accessor :file
     # (no documentation provided)
-    attr_accessor :authority
-    # (no documentation provided)
-    attr_accessor :port
-    # (no documentation provided)
-    attr_accessor :defaultPort
+    attr_accessor :path
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
-      _h['content'] = content.to_jaxb_json_hash unless content.nil?
-      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
-      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
-      _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
-      _h['path'] = path.to_jaxb_json_hash unless path.nil?
-      _h['file'] = file.to_jaxb_json_hash unless file.nil?
       _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
+      _h['content'] = content.to_jaxb_json_hash unless content.nil?
       _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
+      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
+      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['query'] = query.to_jaxb_json_hash unless query.nil?
       _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
+      _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['path'] = path.to_jaxb_json_hash unless path.nil?
       return _h
     end
 
@@ -177,17 +177,17 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
-      @content = Object.from_json(_o['content']) unless _o['content'].nil?
-      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
-      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
-      @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
-      @path = String.from_json(_o['path']) unless _o['path'].nil?
-      @file = String.from_json(_o['file']) unless _o['file'].nil?
       @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
+      @content = Object.from_json(_o['content']) unless _o['content'].nil?
       @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
+      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
+      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @query = String.from_json(_o['query']) unless _o['query'].nil?
       @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
+      @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @path = String.from_json(_o['path']) unless _o['path'].nil?
     end
 
     # constructs a URL from a (parsed) JSON hash
@@ -395,6 +395,78 @@ module Gamificationengine
 
 module Entities
 
+module Present
+
+  # (no documentation provided)
+  class PresentAccepted 
+
+    # The id of the accepted present.
+    attr_accessor :id
+    # The organisation of the accepted present as an object.
+    attr_accessor :belongsTo
+    # The date and time a present was accepted.
+    attr_accessor :date
+    # The present that was accepted.
+    attr_accessor :present
+    # The status of the present. If it was accepted by the player the field is ACCEPT
+    # otherwise DENIED.
+    attr_accessor :status
+
+    # the json hash for this PresentAccepted
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      _h['date'] = date.to_jaxb_json_hash unless date.nil?
+      _h['present'] = present.to_jaxb_json_hash unless present.nil?
+      _h['status'] = status.to_jaxb_json_hash unless status.nil?
+      return _h
+    end
+
+    # the json (string form) for this PresentAccepted
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this PresentAccepted with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      @date = Java::Time::LocalDateTime.from_json(_o['date']) unless _o['date'].nil?
+      @present = Info::Interactivesystems::Gamificationengine::Entities::Present::Present.from_json(_o['present']) unless _o['present'].nil?
+      @status = String.from_json(_o['status']) unless _o['status'].nil?
+    end
+
+    # constructs a PresentAccepted from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
 module Task
 
   # (no documentation provided)
@@ -450,70 +522,57 @@ end
 
 end
 
-module Java
+module Info
 
-module Time
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
+module Rewards
 
   # (no documentation provided)
-  class LocalDateTime 
+  class Reward 
 
-    # (no documentation provided)
-    attr_accessor :hour
-    # (no documentation provided)
-    attr_accessor :month
-    # (no documentation provided)
-    attr_accessor :second
-    # (no documentation provided)
-    attr_accessor :dayOfWeek
-    # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
-    attr_accessor :year
-    # (no documentation provided)
-    attr_accessor :monthValue
-    # (no documentation provided)
-    attr_accessor :nano
-    # (no documentation provided)
-    attr_accessor :dayOfMonth
-    # (no documentation provided)
-    attr_accessor :dayOfYear
+    # The reward&#39;s id as int.
+    attr_accessor :id
+    # The organisation of the reward as an object. The organisation must not be
+    # null.
+    attr_accessor :belongsTo
+    # The value for how long the reward exist.
+    attr_accessor :timeToLive
+    # the achievement&#39;s description
+    attr_accessor :description
+    # The achievement&#39;s name as String.
+    attr_accessor :name
 
-    # the json hash for this LocalDateTime
+    # the json hash for this Reward
     def to_jaxb_json_hash
       _h = {}
-      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
-      _h['month'] = month.to_jaxb_json_hash unless month.nil?
-      _h['second'] = second.to_jaxb_json_hash unless second.nil?
-      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
-      _h['year'] = year.to_jaxb_json_hash unless year.nil?
-      _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
-      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
-      _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      _h['timeToLive'] = timeToLive.to_jaxb_json_hash unless timeToLive.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
-    # the json (string form) for this LocalDateTime
+    # the json (string form) for this Reward
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this LocalDateTime with a json hash
+    #initializes this Reward with a json hash
     def init_jaxb_json_hash(_o)
-      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
-      @month = String.from_json(_o['month']) unless _o['month'].nil?
-      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
-      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
-      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
-      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
-      @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
-      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
-      @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      @timeToLive = Fixnum.from_json(_o['timeToLive']) unless _o['timeToLive'].nil?
+      @description = String.from_json(_o['description']) unless _o['description'].nil?
+      @name = String.from_json(_o['name']) unless _o['name'].nil?
     end
 
-    # constructs a LocalDateTime from a (parsed) JSON hash
+    # constructs a Reward from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -524,6 +583,12 @@ module Time
       end
     end
   end
+
+end
+
+end
+
+end
 
 end
 
@@ -607,6 +672,164 @@ module Goal
     end
 
     # constructs a Goal from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
+module Task
+
+  # (no documentation provided)
+  class Task 
+
+    # int value of the id
+    attr_accessor :id
+    # The organisation object the task belongs to.
+    attr_accessor :belongsTo
+    # The name of the task as String.
+    attr_accessor :taskName
+    # The task&#39;s description as String.
+    attr_accessor :description
+    # List of roles which are allowed to complete the task.
+    attr_accessor :allowedFor
+    # The value it the task is tradeable as boolean.
+    attr_accessor :tradeable
+
+    # the json hash for this Task
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      _h['taskName'] = taskName.to_jaxb_json_hash unless taskName.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      if !allowedFor.nil?
+        _ha = Array.new
+        allowedFor.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['allowedFor'] = _ha
+      end
+      _h['tradeable'] = tradeable.to_jaxb_json_hash unless tradeable.nil?
+      return _h
+    end
+
+    # the json (string form) for this Task
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this Task with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      @taskName = String.from_json(_o['taskName']) unless _o['taskName'].nil?
+      @description = String.from_json(_o['description']) unless _o['description'].nil?
+      if !_o['allowedFor'].nil?
+        @allowedFor = Array.new
+        _oa = _o['allowedFor']
+        _oa.each { | _item | @allowedFor.push Info::Interactivesystems::Gamificationengine::Entities::Role.from_json(_item) }
+      end
+      @tradeable = Boolean.from_json(_o['tradeable']) unless _o['tradeable'].nil?
+    end
+
+    # constructs a Task from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
+module Present
+
+  # (no documentation provided)
+  class Present 
+
+    # The id of the present as int.
+    attr_accessor :id
+    # The organisation of the present as an object. This parameter must not be null.
+    attr_accessor :belongsTo
+    # The sender of a present.
+    attr_accessor :sender
+    # The list of all players who should receive the present.
+    attr_accessor :receiver
+
+    # the json hash for this Present
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      _h['sender'] = sender.to_jaxb_json_hash unless sender.nil?
+      if !receiver.nil?
+        _ha = Array.new
+        receiver.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['receiver'] = _ha
+      end
+      return _h
+    end
+
+    # the json (string form) for this Present
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this Present with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      @sender = Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_o['sender']) unless _o['sender'].nil?
+      if !_o['receiver'].nil?
+        @receiver = Array.new
+        _oa = _o['receiver']
+        _oa.each { | _item | @receiver.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
+      end
+    end
+
+    # constructs a Present from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -819,263 +1042,6 @@ module Gamificationengine
 
 module Entities
 
-module Task
-
-  # (no documentation provided)
-  class Task 
-
-    # int value of the id
-    attr_accessor :id
-    # The organisation object the task belongs to.
-    attr_accessor :belongsTo
-    # The name of the task as String.
-    attr_accessor :taskName
-    # The task&#39;s description as String.
-    attr_accessor :description
-    # List of roles which are allowed to complete the task.
-    attr_accessor :allowedFor
-    # The value it the task is tradeable as boolean.
-    attr_accessor :tradeable
-
-    # the json hash for this Task
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      _h['taskName'] = taskName.to_jaxb_json_hash unless taskName.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      if !allowedFor.nil?
-        _ha = Array.new
-        allowedFor.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['allowedFor'] = _ha
-      end
-      _h['tradeable'] = tradeable.to_jaxb_json_hash unless tradeable.nil?
-      return _h
-    end
-
-    # the json (string form) for this Task
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this Task with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      @taskName = String.from_json(_o['taskName']) unless _o['taskName'].nil?
-      @description = String.from_json(_o['description']) unless _o['description'].nil?
-      if !_o['allowedFor'].nil?
-        @allowedFor = Array.new
-        _oa = _o['allowedFor']
-        _oa.each { | _item | @allowedFor.push Info::Interactivesystems::Gamificationengine::Entities::Role.from_json(_item) }
-      end
-      @tradeable = Boolean.from_json(_o['tradeable']) unless _o['tradeable'].nil?
-    end
-
-    # constructs a Task from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
-module Present
-
-  # (no documentation provided)
-  class Board 
-
-    # The id of the board as int.
-    attr_accessor :id
-    # The organisation of the board as an object. This parameter is required.
-    attr_accessor :belongsTo
-    # All accepted presents as {@link List} of {@link Present}s.
-    attr_accessor :currentPresents
-    # The player who is the owner of the board.
-    attr_accessor :owner
-    # All archives presents as {@link List} of {@link PresentArchived}.
-    attr_accessor :archive
-    # All just sent presents as {@link List} of {@link Present}s.
-    attr_accessor :inBox
-
-    # the json hash for this Board
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      if !currentPresents.nil?
-        _ha = Array.new
-        currentPresents.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['currentPresents'] = _ha
-      end
-      _h['owner'] = owner.to_jaxb_json_hash unless owner.nil?
-      if !archive.nil?
-        _ha = Array.new
-        archive.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['archive'] = _ha
-      end
-      if !inBox.nil?
-        _ha = Array.new
-        inBox.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['inBox'] = _ha
-      end
-      return _h
-    end
-
-    # the json (string form) for this Board
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this Board with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      if !_o['currentPresents'].nil?
-        @currentPresents = Array.new
-        _oa = _o['currentPresents']
-        _oa.each { | _item | @currentPresents.push Info::Interactivesystems::Gamificationengine::Entities::Present::Present.from_json(_item) }
-      end
-      @owner = Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_o['owner']) unless _o['owner'].nil?
-      if !_o['archive'].nil?
-        @archive = Array.new
-        _oa = _o['archive']
-        _oa.each { | _item | @archive.push Info::Interactivesystems::Gamificationengine::Entities::Present::PresentArchived.from_json(_item) }
-      end
-      if !_o['inBox'].nil?
-        @inBox = Array.new
-        _oa = _o['inBox']
-        _oa.each { | _item | @inBox.push Info::Interactivesystems::Gamificationengine::Entities::Present::Present.from_json(_item) }
-      end
-    end
-
-    # constructs a Board from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
-module Present
-
-  # (no documentation provided)
-  class Present 
-
-    # The id of the present as int.
-    attr_accessor :id
-    # The organisation of the present as an object. This parameter must not be null.
-    attr_accessor :belongsTo
-    # The sender of a present.
-    attr_accessor :sender
-    # The list of all players who should receive the present.
-    attr_accessor :receiver
-
-    # the json hash for this Present
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      _h['sender'] = sender.to_jaxb_json_hash unless sender.nil?
-      if !receiver.nil?
-        _ha = Array.new
-        receiver.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['receiver'] = _ha
-      end
-      return _h
-    end
-
-    # the json (string form) for this Present
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this Present with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      @sender = Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_o['sender']) unless _o['sender'].nil?
-      if !_o['receiver'].nil?
-        @receiver = Array.new
-        _oa = _o['receiver']
-        _oa.each { | _item | @receiver.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
-      end
-    end
-
-    # constructs a Present from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
 module Present
 
   # (no documentation provided)
@@ -1087,12 +1053,8 @@ module Present
     attr_accessor :belongsTo
     # The date and time when the present was archived.
     attr_accessor :date
-    # The board where the present is stored.
-    attr_accessor :board
     # The archived present as present object.
-    attr_accessor :present
-    # The status of the archived present.
-    attr_accessor :status
+    attr_accessor :acceptedPresent
 
     # the json hash for this PresentArchived
     def to_jaxb_json_hash
@@ -1100,9 +1062,7 @@ module Present
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
       _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
       _h['date'] = date.to_jaxb_json_hash unless date.nil?
-      _h['board'] = board.to_jaxb_json_hash unless board.nil?
-      _h['present'] = present.to_jaxb_json_hash unless present.nil?
-      _h['status'] = status.to_jaxb_json_hash unless status.nil?
+      _h['acceptedPresent'] = acceptedPresent.to_jaxb_json_hash unless acceptedPresent.nil?
       return _h
     end
 
@@ -1116,9 +1076,7 @@ module Present
       @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
       @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
       @date = Java::Time::LocalDateTime.from_json(_o['date']) unless _o['date'].nil?
-      @board = Info::Interactivesystems::Gamificationengine::Entities::Present::Board.from_json(_o['board']) unless _o['board'].nil?
-      @present = Info::Interactivesystems::Gamificationengine::Entities::Present::Present.from_json(_o['present']) unless _o['present'].nil?
-      @status = String.from_json(_o['status']) unless _o['status'].nil?
+      @acceptedPresent = Info::Interactivesystems::Gamificationengine::Entities::Present::PresentAccepted.from_json(_o['acceptedPresent']) unless _o['acceptedPresent'].nil?
     end
 
     # constructs a PresentArchived from a (parsed) JSON hash
@@ -1151,44 +1109,71 @@ module Gamificationengine
 
 module Entities
 
-module Goal
-
   # (no documentation provided)
-  class GoalRule 
+  class DonationCall 
 
-    # The goal rule&#39;s id as int.
+    # int of the id.
     attr_accessor :id
-    # The organisation of the goal rule as an object.
+    # an organisation object.
     attr_accessor :belongsTo
-    # The name of the goal rule as String.
+    # tThe name of the DonationCall as String.
     attr_accessor :name
-    # The description of the goal rule as String.
+    # The description of DonationCall as String.
     attr_accessor :description
+    # The value of the goal as int.
+    attr_accessor :goal
+    # The value of the current amount of coins as int.
+    attr_accessor :currentAmount
+    # List of player who donated to this call for donations.
+    attr_accessor :donors
+    # boolean
+    # If the predetermined amount of coins is reached (true) or not (false).
+    attr_accessor :goalReached
+    # Boolean value if the predetermined goal is reached (true) or not (false).
+    attr_accessor :reached
 
-    # the json hash for this GoalRule
+    # the json hash for this DonationCall
     def to_jaxb_json_hash
       _h = {}
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
       _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['goal'] = goal.to_jaxb_json_hash unless goal.nil?
+      _h['currentAmount'] = currentAmount.to_jaxb_json_hash unless currentAmount.nil?
+      if !donors.nil?
+        _ha = Array.new
+        donors.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['donors'] = _ha
+      end
+      _h['goalReached'] = goalReached.to_jaxb_json_hash unless goalReached.nil?
+      _h['reached'] = reached.to_jaxb_json_hash unless reached.nil?
       return _h
     end
 
-    # the json (string form) for this GoalRule
+    # the json (string form) for this DonationCall
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this GoalRule with a json hash
+    #initializes this DonationCall with a json hash
     def init_jaxb_json_hash(_o)
       @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
       @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
       @name = String.from_json(_o['name']) unless _o['name'].nil?
       @description = String.from_json(_o['description']) unless _o['description'].nil?
+      @goal = Fixnum.from_json(_o['goal']) unless _o['goal'].nil?
+      @currentAmount = Fixnum.from_json(_o['currentAmount']) unless _o['currentAmount'].nil?
+      if !_o['donors'].nil?
+        @donors = Array.new
+        _oa = _o['donors']
+        _oa.each { | _item | @donors.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
+      end
+      @goalReached = Boolean.from_json(_o['goalReached']) unless _o['goalReached'].nil?
+      @reached = Boolean.from_json(_o['reached']) unless _o['reached'].nil?
     end
 
-    # constructs a GoalRule from a (parsed) JSON hash
+    # constructs a DonationCall from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -1199,8 +1184,6 @@ module Goal
       end
     end
   end
-
-end
 
 end
 
@@ -1429,6 +1412,77 @@ module Gamificationengine
 
 module Entities
 
+module MarketPlace
+
+  # (no documentation provided)
+  class MarketPlace 
+
+    # The markeptlace&#39;s id as int.
+    attr_accessor :id
+    # The organisation of the marketplace as an object.
+    attr_accessor :belongsTo
+    # A list of all existing offers a player can bid for.
+    attr_accessor :offers
+
+    # the json hash for this MarketPlace
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
+      if !offers.nil?
+        _ha = Array.new
+        offers.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['offers'] = _ha
+      end
+      return _h
+    end
+
+    # the json (string form) for this MarketPlace
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this MarketPlace with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
+      if !_o['offers'].nil?
+        @offers = Array.new
+        _oa = _o['offers']
+        _oa.each { | _item | @offers.push Info::Interactivesystems::Gamificationengine::Entities::MarketPlace::Offer.from_json(_item) }
+      end
+    end
+
+    # constructs a MarketPlace from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
   # (no documentation provided)
   class PlayerGroup 
 
@@ -1576,77 +1630,6 @@ module Gamificationengine
 
 module Entities
 
-module MarketPlace
-
-  # (no documentation provided)
-  class MarketPlace 
-
-    # The markeptlace&#39;s id as int.
-    attr_accessor :id
-    # The organisation of the marketplace as an object.
-    attr_accessor :belongsTo
-    # A list of all existing offers a player can bid for.
-    attr_accessor :offers
-
-    # the json hash for this MarketPlace
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      if !offers.nil?
-        _ha = Array.new
-        offers.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['offers'] = _ha
-      end
-      return _h
-    end
-
-    # the json (string form) for this MarketPlace
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this MarketPlace with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      if !_o['offers'].nil?
-        @offers = Array.new
-        _oa = _o['offers']
-        _oa.each { | _item | @offers.push Info::Interactivesystems::Gamificationengine::Entities::MarketPlace::Offer.from_json(_item) }
-      end
-    end
-
-    # constructs a MarketPlace from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
   # (no documentation provided)
   class Account 
 
@@ -1710,71 +1693,44 @@ module Gamificationengine
 
 module Entities
 
+module Goal
+
   # (no documentation provided)
-  class DonationCall 
+  class GoalRule 
 
-    # int of the id.
+    # The goal rule&#39;s id as int.
     attr_accessor :id
-    # an organisation object.
+    # The organisation of the goal rule as an object.
     attr_accessor :belongsTo
-    # tThe name of the DonationCall as String.
+    # The name of the goal rule as String.
     attr_accessor :name
-    # The description of DonationCall as String.
+    # The description of the goal rule as String.
     attr_accessor :description
-    # The value of the goal as int.
-    attr_accessor :goal
-    # The value of the current amount of coins as int.
-    attr_accessor :currentAmount
-    # List of player who donated to this call for donations.
-    attr_accessor :donors
-    # boolean
-    # If the predetermined amount of coins is reached (true) or not (false).
-    attr_accessor :goalReached
-    # Boolean value if the predetermined goal is reached (true) or not (false).
-    attr_accessor :reached
 
-    # the json hash for this DonationCall
+    # the json hash for this GoalRule
     def to_jaxb_json_hash
       _h = {}
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
       _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['goal'] = goal.to_jaxb_json_hash unless goal.nil?
-      _h['currentAmount'] = currentAmount.to_jaxb_json_hash unless currentAmount.nil?
-      if !donors.nil?
-        _ha = Array.new
-        donors.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['donors'] = _ha
-      end
-      _h['goalReached'] = goalReached.to_jaxb_json_hash unless goalReached.nil?
-      _h['reached'] = reached.to_jaxb_json_hash unless reached.nil?
       return _h
     end
 
-    # the json (string form) for this DonationCall
+    # the json (string form) for this GoalRule
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this DonationCall with a json hash
+    #initializes this GoalRule with a json hash
     def init_jaxb_json_hash(_o)
       @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
       @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
       @name = String.from_json(_o['name']) unless _o['name'].nil?
       @description = String.from_json(_o['description']) unless _o['description'].nil?
-      @goal = Fixnum.from_json(_o['goal']) unless _o['goal'].nil?
-      @currentAmount = Fixnum.from_json(_o['currentAmount']) unless _o['currentAmount'].nil?
-      if !_o['donors'].nil?
-        @donors = Array.new
-        _oa = _o['donors']
-        _oa.each { | _item | @donors.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
-      end
-      @goalReached = Boolean.from_json(_o['goalReached']) unless _o['goalReached'].nil?
-      @reached = Boolean.from_json(_o['reached']) unless _o['reached'].nil?
     end
 
-    # constructs a DonationCall from a (parsed) JSON hash
+    # constructs a GoalRule from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -1794,49 +1750,72 @@ end
 
 end
 
-module Info
+end
 
-module Interactivesystems
+module Java
 
-module Gamificationengine
-
-module Entities
-
-module Rewards
+module Time
 
   # (no documentation provided)
-  class Reward 
+  class LocalDateTime 
 
-    # The reward&#39;s id as int.
-    attr_accessor :id
-    # The organisation of the reward as an object. The organisation must not be
-    # null.
-    attr_accessor :belongsTo
-    # The value for how long the reward exist.
-    attr_accessor :timeToLive
+    # (no documentation provided)
+    attr_accessor :dayOfYear
+    # (no documentation provided)
+    attr_accessor :nano
+    # (no documentation provided)
+    attr_accessor :dayOfWeek
+    # (no documentation provided)
+    attr_accessor :hour
+    # (no documentation provided)
+    attr_accessor :year
+    # (no documentation provided)
+    attr_accessor :monthValue
+    # (no documentation provided)
+    attr_accessor :second
+    # (no documentation provided)
+    attr_accessor :minute
+    # (no documentation provided)
+    attr_accessor :month
+    # (no documentation provided)
+    attr_accessor :dayOfMonth
 
-    # the json hash for this Reward
+    # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['belongsTo'] = belongsTo.to_jaxb_json_hash unless belongsTo.nil?
-      _h['timeToLive'] = timeToLive.to_jaxb_json_hash unless timeToLive.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
+      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
+      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
+      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['year'] = year.to_jaxb_json_hash unless year.nil?
+      _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
+      _h['second'] = second.to_jaxb_json_hash unless second.nil?
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
+      _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
       return _h
     end
 
-    # the json (string form) for this Reward
+    # the json (string form) for this LocalDateTime
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this Reward with a json hash
+    #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      @belongsTo = Info::Interactivesystems::Gamificationengine::Entities::Organisation.from_json(_o['belongsTo']) unless _o['belongsTo'].nil?
-      @timeToLive = Fixnum.from_json(_o['timeToLive']) unless _o['timeToLive'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
+      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
+      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
+      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
+      @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
+      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
+      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
+      @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
     end
 
-    # constructs a Reward from a (parsed) JSON hash
+    # constructs a LocalDateTime from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -1847,12 +1826,6 @@ module Rewards
       end
     end
   end
-
-end
-
-end
-
-end
 
 end
 
@@ -2013,6 +1986,8 @@ module Present
 
     # The byte[] of the sent image.
     attr_accessor :imageIcon
+    # String of the message&#39;s short message.
+    attr_accessor :message
 
     # the json hash for this ImageMessage
     def to_jaxb_json_hash
@@ -2022,6 +1997,7 @@ module Present
         imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['imageIcon'] = _ha
       end
+      _h['message'] = message.to_jaxb_json_hash unless message.nil?
       return _h
     end
 
@@ -2033,6 +2009,7 @@ module Present
         _oa = _o['imageIcon']
         _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
       end
+      @message = String.from_json(_o['message']) unless _o['message'].nil?
     end
 
     # constructs a ImageMessage from a (parsed) JSON hash
@@ -2410,10 +2387,6 @@ module Rewards
   # (no documentation provided)
   class Badge < Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward 
 
-    # The badge&#39;s name as String.
-    attr_accessor :name
-    # The descirtopion of the badge.
-    attr_accessor :description
     # The URL of the associated icon.
     attr_accessor :icon
     # Byte[] of the badge&#39;s icon that is stored in the database.
@@ -2422,8 +2395,6 @@ module Rewards
     # the json hash for this Badge
     def to_jaxb_json_hash
       _h = super
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
       if !imageIcon.nil?
         _ha = Array.new
@@ -2436,8 +2407,6 @@ module Rewards
     #initializes this Badge with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-      @name = String.from_json(_o['name']) unless _o['name'].nil?
-      @description = String.from_json(_o['description']) unless _o['description'].nil?
       @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
       if !_o['imageIcon'].nil?
         @imageIcon = Array.new
@@ -2589,10 +2558,6 @@ module Rewards
 
     # byte[] of the achievement&#39;s icon
     attr_accessor :imageIcon
-    # the achievement&#39;s description
-    attr_accessor :description
-    # The achievement&#39;s name as String.
-    attr_accessor :name
     # The URL of the icon.
     attr_accessor :icon
 
@@ -2604,8 +2569,6 @@ module Rewards
         imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['imageIcon'] = _ha
       end
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
       return _h
     end
@@ -2618,8 +2581,6 @@ module Rewards
         _oa = _o['imageIcon']
         _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
       end
-      @description = String.from_json(_o['description']) unless _o['description'].nil?
-      @name = String.from_json(_o['name']) unless _o['name'].nil?
       @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
     end
 

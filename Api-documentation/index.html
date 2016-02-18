@@ -319,6 +319,7 @@ player has.
 </samp></li><li><samp>  /playerGroup/{id}/achievements
 </samp></li><li><samp>  /playerGroup/{id}/points
 </samp></li><li><samp>  /playerGroup/{id}/badges
+</samp></li><li><samp>  /playerGroup/{id}/addPlayers
 </samp></li><li><samp>  /playerGroup/{id}/coins
 </samp></li><li><samp>  /playerGroup/{id}/rewards
 </samp></li><li><samp>  /playerGroup/{id}
@@ -330,6 +331,7 @@ player has.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE, GET
@@ -363,27 +365,33 @@ also be added to a group or the group’s name can be changed.
       <td>  PresentApi
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /present/textMessage
+</samp></li><li><samp>  /present/{playerId}/archive
+</samp></li><li><samp>  /present/{id}/deleteCurrent/{playerId}
+</samp></li><li><samp>  /present/{playerId}/boardMessages
+</samp></li><li><samp>  /present/{playerId}/textMessages
+</samp></li><li><samp>  /present/{presentId}/deny/{playerId}
+</samp></li><li><samp>  /present/{presentId}/send
+</samp></li><li><samp>  /present/{presentId}/archive/{playerId}
 </samp></li><li><samp>  /present/{id}
-</samp></li><li><samp>  /present/imageMessages
-</samp></li><li><samp>  /present/current
-</samp></li><li><samp>  /present/inbox
-</samp></li><li><samp>  /present/send
-</samp></li><li><samp>  /present/boardMessages
-</samp></li><li><samp>  /present/accept
+</samp></li><li><samp>  /present/{playerId}/imageMessages
+</samp></li><li><samp>  /present/{id}/deleteArchived/{playerId}
+</samp></li><li><samp>  /present/{playerId}/inbox
 </samp></li><li><samp>  /present/imageMessage
-</samp></li><li><samp>  /present/archive
-</samp></li><li><samp>  /present/deny
+</samp></li><li><samp>  /present/{presentId}/accept/{playerId}
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  DELETE
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  DELETE
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
-</samp></li><li><samp>  GET
-</samp></li><li><samp>  POST
-</samp></li><li><samp>  POST
-</samp></li><li><samp>  GET, POST
 </samp></li><li><samp>  POST
 </samp></li></ul></td>
       <td>  Players in a gamification application can send presents to each other, whereby
@@ -588,16 +596,6 @@ current account and will be added to the offer’s current prize. Each player ca
 condition that her/his coins are enough otherwise the bid cannot be done.
 </td>
     </tr>
-    <tr class="clickable-row" data-href="json_board.html">
-      <td>  Board
-</td>
-      <td>  A Board serves a player to store presents in three lists: When a present is
-sent to a player firstly it is added to the inBox-list. The player decides if
-she/he accepts the present. If the player does it is added to the list which holds
-the current presents else if it is denied it is removed from the inbox. When the player
-wants to archive a present it is added to the archive list.
-</td>
-    </tr>
     <tr class="clickable-row" data-href="json_coins.html">
       <td>  Coins
 </td>
@@ -787,6 +785,13 @@ an additional list. It is possible to get for one player all her/his text messag
 or all messages with a small image that were created. Furthermore all new presents
 of a player can be requested as well as the accepted and archived presents. All denied
 presents were removed from the in-box.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_presentaccepted.html">
+      <td>  PresentAccepted
+</td>
+      <td>  Presents that are in the in-box of the board a player can accept or deny. If the player
+accept a present its status is set to accepted and an PresentAccepted object is created.
 </td>
     </tr>
     <tr class="clickable-row" data-href="json_presentarchived.html">

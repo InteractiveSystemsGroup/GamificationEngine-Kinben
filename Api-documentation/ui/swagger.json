@@ -113,20 +113,12 @@
         },
         {
           "properties" : {
-            "description" : {
-"description" : "Gets the description of an achievement. This could contains for example the\r\ndifferent tasks which have to be completed to get this achievement.",
-"type" : "string"
-            },
             "icon" : {
 "description" : "Gets the URL of the achievement's icon, but only when it was created.",
 "$ref" : "#/definitions/json_url"
             },
             "imageIcon" : {
 "description" : "Gets the achievement's icon as byte[].",
-"type" : "string"
-            },
-            "name" : {
-"description" : "Gets the name of an achievement which can describe the success in a short\r\nway and can be displayed in the application.",
 "type" : "string"
             }
           }
@@ -147,20 +139,12 @@
         },
         {
           "properties" : {
-            "description" : {
-"description" : "Gets the description of a created badge. This could contain for example\r\nwhich tasks werde completed to get this badge.",
-"type" : "string"
-            },
             "icon" : {
 "description" : "Gets the URL of the badge's icon, when it was created.",
 "$ref" : "#/definitions/json_url"
             },
             "imageIcon" : {
 "description" : "Gets the badge's icon as byte[].",
-"type" : "string"
-            },
-            "name" : {
-"description" : "Gets the name of the badge. The name should be meaningful and connected to\r\nthe completed task(s).",
 "type" : "string"
             }
           }
@@ -199,47 +183,6 @@
             }
           },
       "description" : "A player can give one or more bids for an offer so its total prize gets higher and in order to increase\r\nthe incentive of fulfilling the task. The bidden amount of coins will be subtracted from the bidder’s\r\ncurrent account and will be added to the offer’s current prize. Each player can make several bids on\r\ncondition that her/his coins are enough otherwise the bid cannot be done."
-    }
-    ,
-    "json_board" : {
-      "type" : "object",
-      "title" : "Board",
-          "properties" : {
-            "archive" : {
-"description" : "Gets a list of all archived presents which belongs to one player.",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_presentarchived"
-}
-            },
-            "belongsTo" : {
-"description" : "The organisation the board belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
-            "currentPresents" : {
-"description" : "Gets all current presents of a player. These are presents which were\r\naccepted before.",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_present"
-}
-            },
-            "id" : {
-"description" : "Gets the id of a created board.",
-"type" : "number"
-            },
-            "inBox" : {
-"description" : "Gets all presents which were sent to a player and which the player hasn't neither\r\naccepted nor denied, yet.",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_present"
-}
-            },
-            "owner" : {
-"description" : "Gets the owner of the board, so the owner belongs to.",
-"$ref" : "#/definitions/json_player"
-            }
-          },
-      "description" : "A Board serves a player to store presents in three lists: When a present is\r\nsent to a player firstly it is added to the inBox-list. The player decides if\r\nshe/he accepts the present. If the player does it is added to the list which holds\r\nthe current presents else if it is denied it is removed from the inbox. When the player\r\nwants to archive a present it is added to the archive list."
     }
     ,
     "json_coins" : {
@@ -466,6 +409,10 @@
           "properties" : {
             "imageIcon" : {
 "description" : "Gets the image icon which is sent as a present to a player as byte[].",
+"type" : "string"
+            },
+            "message" : {
+"description" : "Gets the short message of the created image message.",
 "type" : "string"
             }
           }
@@ -905,17 +852,45 @@
       "description" : "A present is a little positive message which one player can send to one or\r\nmore other players. These presents can be an image or a short text message which\r\ncontains for example a little praise. A Board serves a player to send and to store\r\nthese presents in terms of a short text message or an small image. The difference between\r\nthese two messages is as the name suggests, that the text message contains a short\r\ntext and the image message an image. To archive the presents they can be moved to\r\nan additional list. It is possible to get for one player all her/his text messages\r\nor all messages with a small image that were created. Furthermore all new presents\r\nof a player can be requested as well as the accepted and archived presents. All denied\r\npresents were removed from the in-box."
     }
     ,
+    "json_presentaccepted" : {
+      "type" : "object",
+      "title" : "PresentAccepted",
+          "properties" : {
+            "belongsTo" : {
+"description" : "Gets the organisation an accepted present belongs to.",
+"$ref" : "#/definitions/json_organisation"
+            },
+            "date" : {
+"description" : "Gets the date and time a present was accepted by a player.",
+"$ref" : "#/definitions/json_localdatetime"
+            },
+            "id" : {
+"description" : "Gets the id of the accepted present.",
+"type" : "number"
+            },
+            "present" : {
+"description" : "Get the present that is accepted by the player.",
+"$ref" : "#/definitions/json_present"
+            },
+            "status" : {
+"description" : "Sets the status of the present if the player has accepted it or not.",
+"$ref" : "#/definitions/json_status"
+            }
+          },
+      "description" : "Presents that are in the in-box of the board a player can accept or deny. If the player\r\naccept a present its status is set to accepted and an PresentAccepted object is created."
+    }
+    ,
     "json_presentarchived" : {
       "type" : "object",
       "title" : "PresentArchived",
           "properties" : {
+            "acceptedPresent" : {
+"description" : "Gets the present object of the present that is archived.",
+"$ref" : "#/definitions/json_presentaccepted"
+            },
             "belongsTo" : {
 "description" : "Gets the organisation an archived present belongs to.",
 "$ref" : "#/definitions/json_organisation"
-            },
-            "board" : {
-"description" : "Gets the board the present belongs to.",
-"$ref" : "#/definitions/json_board"
             },
             "date" : {
 "description" : "Gets the date and time a present was archived by a player.",
@@ -924,14 +899,6 @@
             "id" : {
 "description" : "Gets the id of the archived present.",
 "type" : "number"
-            },
-            "present" : {
-"description" : "Gets the present object of the present that is archived.",
-"$ref" : "#/definitions/json_present"
-            },
-            "status" : {
-"description" : "Gets the status of the archived present. If it was accepted (ACCEPT)\r\nor not (DENIED).",
-"$ref" : "#/definitions/json_status"
             }
           },
       "description" : "Presents that are accepted a player can archived. If the player archived a present\r\nan PresentArchived object is created."
@@ -971,9 +938,17 @@
 "description" : "Gets the organisation the reward belongs to.",
 "$ref" : "#/definitions/json_organisation"
             },
+            "description" : {
+"description" : "Gets the description of an achievement. This could contains for example the\r\ndifferent tasks which have to be completed to get this achievement.",
+"type" : "string"
+            },
             "id" : {
 "description" : "Gets the id of the reward which was generated by the creation.",
 "type" : "number"
+            },
+            "name" : {
+"description" : "Gets the name of an achievement which can describe the success in a short\r\nway and can be displayed in the application.",
+"type" : "string"
             },
             "timeToLive" : {
 "description" : "Gets the information about how long the reward can exist.",
@@ -1605,7 +1580,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"goalName\", \"isRepeateable\", \"isGroupGoal\", \"rewardId\", \"ruleId\" and \"roles\"."
+            "description" : "The attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"goalName\", \"isRepeateable\", \"isGroupGoal\", \"rewardId\" and \"roles\"."
           },
           {
             "name" : "value",
@@ -1932,17 +1907,10 @@
             "description" : "The initial bid of the offer. This is the prize a player can earn."
           },
           {
-            "name" : "roleIds",
-            "in" : "query",
-            "default" : "null",
-            "type" : "string",
-            "description" : "Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the\r\nprize."
-          },
-          {
             "name" : "taskId",
             "in" : "query",
             "type" : "string",
-            "description" : "The id of the task the offer is associated with. This parameter is required."
+            "description" : "The id of the task the offer is associated with. This parameter is required.\r\n//\t * @param allowedRoles\r\n//\t *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the\r\n//\t *            prize."
           }
         ],
         "responses" : {
@@ -3576,6 +3544,49 @@
       }
     }
     ,
+    "/playerGroup/{id}/addPlayers" : {
+      "put" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Adds one or more players to a group of players. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
+        "operationId" : "resource_PlayerGroupApi_addPlayers_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          },
+          {
+            "name" : "playerIds",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The list of player ids which should be added to the contact list. These ids are\r\nseparated by commas."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/playerGroup/{id}/coins" : {
       "get" : {
         "tags" : [ "PlayerGroupApi" ],
@@ -3938,6 +3949,292 @@
       }
     }
     ,
+    "/present/{playerId}/archive" : {
+      "get" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "This method returns all already archived messages of a specific player's presents.\r\nIf the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_getArchiveMessages_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who owns the board. This field must not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the messages belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_presentarchived"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{id}/deleteCurrent/{playerId}" : {
+      "delete" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "Removes the specific present with the assigned id from data base. It is checked, if the passed\r\nid is a positive number otherwise a message for an invalid number is returned. If the API key\r\nis not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_deleteCurrentPresent_DELETE",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link Present}."
+          },
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The present is removed from the player's board."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_presentaccepted"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{playerId}/boardMessages" : {
+      "get" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "This method returns all already accepted messages of a specific player's current presents.\r\nIf the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_getCurrentBoardMessages_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who owns the board with the current presents. This field\r\nmust not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the messages belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_presentaccepted"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{playerId}/textMessages" : {
+      "get" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "This method returns all text messages of a specific player's current presents.\r\nIf the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_getCurrentTextMessage_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who owns the board with the current presents. This field\r\nmust not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the text messages belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_textmessage"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{presentId}/deny/{playerId}" : {
+      "post" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "With this method a player denies a present. So the present will be deleted from her/his\r\ninbox of the board.",
+        "operationId" : "resource_PresentApi_denyPresent_POST",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who denies the present. This field must not be null."
+          },
+          {
+            "name" : "presentId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The present that is denied. This field must not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_present"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{presentId}/send" : {
+      "post" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "With this method one present is sent to all specified receivers. So the present is stored\r\nin each inbox of the receivers.",
+        "operationId" : "resource_PresentApi_send_POST",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "presentId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The path parameter of the present's id that should be sent to the receivers."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_present"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/present/{presentId}/archive/{playerId}" : {
+      "post" : {
+        "tags" : [ "PresentApi" ],
+        "description" : "With this method on present is archived. So the present is moved from the player's list of\r\ncurrent presents to an list of archived presents on the board.",
+        "operationId" : "resource_PresentApi_archivePresent_POST",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who archived the present. This field must not be null."
+          },
+          {
+            "name" : "presentId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The present that is archived. This field must not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_present"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/present/{id}" : {
       "delete" : {
         "tags" : [ "PresentApi" ],
@@ -3975,24 +4272,24 @@
       }
     }
     ,
-    "/present/imageMessages" : {
+    "/present/{playerId}/imageMessages" : {
       "get" : {
         "tags" : [ "PresentApi" ],
-        "description" : "This method returns all image messages of a specific player's current presents and which are\r\nassociated with the given API key and so all text messages which belong to the associated\r\norganisation. If the API key is not valid an analogous message is returned.",
-        "operationId" : "resource_PresentApi_getImageMessages_GET",
+        "description" : "This method returns all image messages of a specific player's current presents.\r\nIf the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_getCurrentImageMessages_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who owns the board with the current presents. This field\r\nmust not be null."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the image messages belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player who owns the board with the current presents. This field\r\nmust not be null."
           }
         ],
         "responses" : {
@@ -4015,34 +4312,37 @@
       }
     }
     ,
-    "/present/current" : {
-      "get" : {
+    "/present/{id}/deleteArchived/{playerId}" : {
+      "delete" : {
         "tags" : [ "PresentApi" ],
-        "description" : "Returns all presents from player's current presents as list of present-objects.\r\nThese presents were accepted by the player so they were moved from the inbox to the\r\nlist of current presents.",
-        "operationId" : "resource_PresentApi_getCurrent_GET",
+        "description" : "Removes the specific present with the assigned id from data base and the from the board's list of archived\r\npresents. It is checked, if the passed id is a positive number otherwise a message for an invalid number\r\nis returned. If the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PresentApi_deleteArchivedPresent_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link Present}."
+          },
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The present is removed from the player's board."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player whose current presents are returned. This field must not be null."
           }
         ],
         "responses" : {
-          "200" : {
+          "201" : {
             "schema" : {
 "description" : "",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_present"
-}
+"$ref" : "#/definitions/json_presentarchived"
             },
             "headers" : {
             },
@@ -4055,7 +4355,7 @@
       }
     }
     ,
-    "/present/inbox" : {
+    "/present/{playerId}/inbox" : {
       "get" : {
         "tags" : [ "PresentApi" ],
         "description" : "This method returns all presents of a player's inbox associated with the given API key and so\r\nall presents who belong to the associated organisation. If the API key is not valid an analogous\r\nmessage is returned.",
@@ -4063,16 +4363,16 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
             "name" : "playerId",
-            "in" : "query",
+            "in" : "path",
             "type" : "string",
             "description" : "The id of the player whose presents are returned. This field must not be null."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
           }
         ],
         "responses" : {
@@ -4083,126 +4383,6 @@
 "items" : {
   "$ref" : "#/definitions/json_present"
 }
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/present/send" : {
-      "post" : {
-        "tags" : [ "PresentApi" ],
-        "description" : "With this method one present is sent to all specified receivers. So the present is stored\r\nin each inbox of the receivers.",
-        "operationId" : "resource_PresentApi_send_POST",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
-            "name" : "presentId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The path parameter of the present's id that should be sent to the receivers."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_present"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/present/boardMessages" : {
-      "get" : {
-        "tags" : [ "PresentApi" ],
-        "description" : "This method returns all text messages of a specific player's current presents and which are\r\nassociated with the given API key and so all text messages which belong to the associated\r\norganisation. If the API key is not valid an analogous message is returned.",
-        "operationId" : "resource_PresentApi_getTextMessage_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the text messages belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player who owns the board with the current presents. This field\r\nmust not be null."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_present"
-}
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/present/accept" : {
-      "post" : {
-        "tags" : [ "PresentApi" ],
-        "description" : "With this method a player accepts a present. So the present will be moved from her/his inbox\r\nto the list of the player's current presents.",
-        "operationId" : "resource_PresentApi_acceptPresent_POST",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player who accepts the present. This field must not be null."
-          },
-          {
-            "name" : "presentId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The present that is accepted. This field must not be null."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_present"
             },
             "headers" : {
             },
@@ -4245,6 +4425,12 @@
             "in" : "query",
             "type" : "string",
             "description" : "The player ids of the present's receivers. This field must not be null."
+          },
+          {
+            "name" : "text",
+            "in" : "query",
+            "type" : "string",
+            "description" : "A short text comment that belong to the image."
           }
         ],
         "responses" : {
@@ -4264,111 +4450,30 @@
       }
     }
     ,
-    "/present/archive" : {
+    "/present/{presentId}/accept/{playerId}" : {
       "post" : {
         "tags" : [ "PresentApi" ],
-        "description" : "With this method on present is archived. So the present is moved from the player's list of\r\ncurrent presents to an list of archived presents on the board.",
-        "operationId" : "resource_PresentApi_archivePresent_POST",
+        "description" : "With this method a player accepts a present. So the present will be moved from her/his inbox\r\nto the list of the player's current presents.",
+        "operationId" : "resource_PresentApi_acceptPresent_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
           {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
             "name" : "playerId",
-            "in" : "query",
+            "in" : "path",
             "type" : "string",
-            "description" : "The id of the player who archived the present. This field must not be null."
+            "description" : "The id of the player who accepts the present. This field must not be null."
           },
           {
             "name" : "presentId",
-            "in" : "query",
+            "in" : "path",
             "type" : "string",
-            "description" : "The present that is archived. This field must not be null."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_present"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
+            "description" : "The present that is accepted. This field must not be null."
           },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-      ,
-      "get" : {
-        "tags" : [ "PresentApi" ],
-        "description" : "Returns all presents from player's list of archived presents as list of present-objects.\r\nThese presents are accepted presents which the player wanted to archive.",
-        "operationId" : "resource_PresentApi_getArchive_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
           {
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player whose current presents are returned. This field must not be null."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_presentarchived"
-}
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/present/deny" : {
-      "post" : {
-        "tags" : [ "PresentApi" ],
-        "description" : "With this method a player denies a present. So the present will be deleted from her/his\r\ninbox of the board.",
-        "operationId" : "resource_PresentApi_denyPresent_POST",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this present belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player who denies the present. This field must not be null."
-          },
-          {
-            "name" : "presentId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The present that is denied. This field must not be null."
           }
         ],
         "responses" : {
@@ -4879,10 +4984,16 @@
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
           },
           {
+            "name" : "description",
+            "in" : "query",
+            "type" : "string",
+            "description" : "Optionally a short text can be set to describe the level."
+          },
+          {
             "name" : "name",
             "in" : "query",
             "type" : "string",
-            "description" : "Optionally a name of the level can be set."
+            "description" : "The required name of the level can be set."
           }
         ],
         "responses" : {
@@ -4969,6 +5080,18 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
+          },
+          {
+            "name" : "description",
+            "in" : "query",
+            "type" : "string",
+            "description" : "Optionally a short text can be set to describe the reward."
+          },
+          {
+            "name" : "name",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The required name of the coins reward."
           }
         ],
         "responses" : {
@@ -5104,6 +5227,18 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this reward belongs to."
+          },
+          {
+            "name" : "description",
+            "in" : "query",
+            "type" : "string",
+            "description" : "Optionally a short text can be set to describe the reward."
+          },
+          {
+            "name" : "name",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The required name of the points reward."
           }
         ],
         "responses" : {
@@ -5548,7 +5683,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"description\", \"name\" and if it is a GetPointsRule additionally \"points\"."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"description\" and \"name\". The tasks that have to be completed or the amount of\r\npoints that have to be reached, can't be changed later."
           },
           {
             "name" : "value",

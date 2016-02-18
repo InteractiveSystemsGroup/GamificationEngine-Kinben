@@ -299,6 +299,7 @@ player has.
 </samp></li><li><samp>  /playerGroup/{id}/achievements
 </samp></li><li><samp>  /playerGroup/{id}/points
 </samp></li><li><samp>  /playerGroup/{id}/badges
+</samp></li><li><samp>  /playerGroup/{id}/addPlayers
 </samp></li><li><samp>  /playerGroup/{id}/coins
 </samp></li><li><samp>  /playerGroup/{id}/rewards
 </samp></li><li><samp>  /playerGroup/{id}
@@ -310,6 +311,7 @@ player has.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE, GET
@@ -343,27 +345,33 @@ also be added to a group or the group’s name can be changed.
       <td>  PresentApi
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /present/textMessage
+</samp></li><li><samp>  /present/{playerId}/archive
+</samp></li><li><samp>  /present/{id}/deleteCurrent/{playerId}
+</samp></li><li><samp>  /present/{playerId}/boardMessages
+</samp></li><li><samp>  /present/{playerId}/textMessages
+</samp></li><li><samp>  /present/{presentId}/deny/{playerId}
+</samp></li><li><samp>  /present/{presentId}/send
+</samp></li><li><samp>  /present/{presentId}/archive/{playerId}
 </samp></li><li><samp>  /present/{id}
-</samp></li><li><samp>  /present/imageMessages
-</samp></li><li><samp>  /present/current
-</samp></li><li><samp>  /present/inbox
-</samp></li><li><samp>  /present/send
-</samp></li><li><samp>  /present/boardMessages
-</samp></li><li><samp>  /present/accept
+</samp></li><li><samp>  /present/{playerId}/imageMessages
+</samp></li><li><samp>  /present/{id}/deleteArchived/{playerId}
+</samp></li><li><samp>  /present/{playerId}/inbox
 </samp></li><li><samp>  /present/imageMessage
-</samp></li><li><samp>  /present/archive
-</samp></li><li><samp>  /present/deny
+</samp></li><li><samp>  /present/{presentId}/accept/{playerId}
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  DELETE
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  DELETE
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
-</samp></li><li><samp>  GET
-</samp></li><li><samp>  POST
-</samp></li><li><samp>  POST
-</samp></li><li><samp>  GET, POST
 </samp></li><li><samp>  POST
 </samp></li></ul></td>
       <td>  Players in a gamification application can send presents to each other, whereby

@@ -83,21 +83,21 @@ an PresentArchived object is created.</p>
         </thead>
         <tbody>
         <tr>
+          <td>  acceptedPresent
+</td>
+          <td>  <a href="json_presentaccepted.html">PresentAccepted</a>
+
+</td>
+          <td>  Gets the present object of the present that is archived.
+</td>
+        </tr>
+        <tr>
           <td>  belongsTo
 </td>
           <td>  <a href="json_organisation.html">Organisation</a>
 
 </td>
           <td>  Gets the organisation an archived present belongs to.
-</td>
-        </tr>
-        <tr>
-          <td>  board
-</td>
-          <td>  <a href="json_board.html">Board</a>
-
-</td>
-          <td>  Gets the board the present belongs to.
 </td>
         </tr>
         <tr>
@@ -116,25 +116,6 @@ an PresentArchived object is created.</p>
 
 </td>
           <td>  Gets the id of the archived present.
-</td>
-        </tr>
-        <tr>
-          <td>  present
-</td>
-          <td>  <a href="json_present.html">Present</a>
-
-</td>
-          <td>  Gets the present object of the present that is archived.
-</td>
-        </tr>
-        <tr>
-          <td>  status
-</td>
-          <td>  <a href="json_status.html">Status</a>
-
-</td>
-          <td>  Gets the status of the archived present. If it was accepted (ACCEPT)
-or not (DENIED).
 </td>
         </tr>
         </tbody>
@@ -161,18 +142,18 @@ or not (DENIED).
     &quot;apiKey&quot; : &quot;...&quot;
   },
   &quot;date&quot; : {
-    &quot;hour&quot; : 12345.0,
-    &quot;month&quot; : &quot;JANUARY&quot;,
-    &quot;second&quot; : 12345.0,
+    &quot;dayOfYear&quot; : 12345.0,
+    &quot;nano&quot; : 12345.0,
     &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-    &quot;minute&quot; : 12345.0,
+    &quot;hour&quot; : 12345.0,
     &quot;year&quot; : 12345.0,
     &quot;monthValue&quot; : 12345.0,
-    &quot;nano&quot; : 12345.0,
-    &quot;dayOfMonth&quot; : 12345.0,
-    &quot;dayOfYear&quot; : 12345.0
+    &quot;second&quot; : 12345.0,
+    &quot;minute&quot; : 12345.0,
+    &quot;month&quot; : &quot;JANUARY&quot;,
+    &quot;dayOfMonth&quot; : 12345.0
   },
-  &quot;board&quot; : {
+  &quot;acceptedPresent&quot; : {
     &quot;id&quot; : 12345.0,
     &quot;belongsTo&quot; : {
       &quot;id&quot; : 12345.0,
@@ -180,133 +161,26 @@ or not (DENIED).
       &quot;name&quot; : &quot;...&quot;,
       &quot;apiKey&quot; : &quot;...&quot;
     },
-    &quot;currentPresents&quot; : [ {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;sender&quot; : { },
-      &quot;receiver&quot; : [ { }, { } ]
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;sender&quot; : { },
-      &quot;receiver&quot; : [ { }, { } ]
-    } ],
-    &quot;owner&quot; : {
-      &quot;nickname&quot; : &quot;...&quot;,
-      &quot;reference&quot; : &quot;...&quot;,
-      &quot;coins&quot; : 12345.0,
-      &quot;points&quot; : 12345.0,
-      &quot;levelIndex&quot; : 12345.0,
-      &quot;levelLabel&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;avatar&quot; : &quot;...&quot;,
-      &quot;finishedTasks&quot; : [ { }, { } ],
-      &quot;finishedGoals&quot; : [ { }, { } ],
-      &quot;belongsToRoles&quot; : [ { }, { } ],
-      &quot;rewards&quot; : [ { }, { } ],
-      &quot;onlyBadges&quot; : [ { }, { } ],
-      &quot;onlyAchievement&quot; : [ { }, { } ],
-      &quot;contactList&quot; : [ { }, { } ],
-      &quot;active&quot; : true
+    &quot;date&quot; : {
+      &quot;dayOfYear&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;hour&quot; : 12345.0,
+      &quot;year&quot; : 12345.0,
+      &quot;monthValue&quot; : 12345.0,
+      &quot;second&quot; : 12345.0,
+      &quot;minute&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;dayOfMonth&quot; : 12345.0
     },
-    &quot;archive&quot; : [ {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;date&quot; : { },
-      &quot;board&quot; : { },
-      &quot;present&quot; : { },
-      &quot;status&quot; : &quot;ACCEPT&quot;
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;date&quot; : { },
-      &quot;board&quot; : { },
-      &quot;present&quot; : { },
-      &quot;status&quot; : &quot;ACCEPT&quot;
-    } ],
-    &quot;inBox&quot; : [ {
+    &quot;present&quot; : {
       &quot;id&quot; : 12345.0,
       &quot;belongsTo&quot; : { },
       &quot;sender&quot; : { },
       &quot;receiver&quot; : [ { }, { } ]
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;sender&quot; : { },
-      &quot;receiver&quot; : [ { }, { } ]
-    } ]
-  },
-  &quot;present&quot; : {
-    &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
     },
-    &quot;sender&quot; : {
-      &quot;nickname&quot; : &quot;...&quot;,
-      &quot;reference&quot; : &quot;...&quot;,
-      &quot;coins&quot; : 12345.0,
-      &quot;points&quot; : 12345.0,
-      &quot;levelIndex&quot; : 12345.0,
-      &quot;levelLabel&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;avatar&quot; : &quot;...&quot;,
-      &quot;finishedTasks&quot; : [ { }, { } ],
-      &quot;finishedGoals&quot; : [ { }, { } ],
-      &quot;belongsToRoles&quot; : [ { }, { } ],
-      &quot;rewards&quot; : [ { }, { } ],
-      &quot;onlyBadges&quot; : [ { }, { } ],
-      &quot;onlyAchievement&quot; : [ { }, { } ],
-      &quot;contactList&quot; : [ { }, { } ],
-      &quot;active&quot; : true
-    },
-    &quot;receiver&quot; : [ {
-      &quot;nickname&quot; : &quot;...&quot;,
-      &quot;reference&quot; : &quot;...&quot;,
-      &quot;coins&quot; : 12345.0,
-      &quot;points&quot; : 12345.0,
-      &quot;levelIndex&quot; : 12345.0,
-      &quot;levelLabel&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;avatar&quot; : &quot;...&quot;,
-      &quot;finishedTasks&quot; : [ { }, { } ],
-      &quot;finishedGoals&quot; : [ { }, { } ],
-      &quot;belongsToRoles&quot; : [ { }, { } ],
-      &quot;rewards&quot; : [ { }, { } ],
-      &quot;onlyBadges&quot; : [ { }, { } ],
-      &quot;onlyAchievement&quot; : [ { }, { } ],
-      &quot;contactList&quot; : [ { }, { } ],
-      &quot;active&quot; : true
-    }, {
-      &quot;nickname&quot; : &quot;...&quot;,
-      &quot;reference&quot; : &quot;...&quot;,
-      &quot;coins&quot; : 12345.0,
-      &quot;points&quot; : 12345.0,
-      &quot;levelIndex&quot; : 12345.0,
-      &quot;levelLabel&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;avatar&quot; : &quot;...&quot;,
-      &quot;finishedTasks&quot; : [ { }, { } ],
-      &quot;finishedGoals&quot; : [ { }, { } ],
-      &quot;belongsToRoles&quot; : [ { }, { } ],
-      &quot;rewards&quot; : [ { }, { } ],
-      &quot;onlyBadges&quot; : [ { }, { } ],
-      &quot;onlyAchievement&quot; : [ { }, { } ],
-      &quot;contactList&quot; : [ { }, { } ],
-      &quot;active&quot; : true
-    } ]
-  },
-  &quot;status&quot; : &quot;ACCEPT&quot;
+    &quot;status&quot; : &quot;ACCEPT&quot;
+  }
 }</pre>
 
         <footer class="footer">

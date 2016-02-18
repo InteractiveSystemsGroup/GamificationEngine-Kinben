@@ -55,16 +55,18 @@
         <ul class="nav nav-sidebar">
           <li><a href="#resource_PresentApi_createTextMessage_POST">POST /present/textMessage</a></li>
           <li><a href="#resource_PresentApi_createImageMessage_POST">POST /present/imageMessage</a></li>
+          <li><a href="#resource_PresentApi_getCurrentBoardMessages_GET"><abbr title="GET /present/{playerId}/boardMessages">GET /present/{playerId}/boardM...</abbr></a></li>
+          <li><a href="#resource_PresentApi_getCurrentTextMessage_GET"><abbr title="GET /present/{playerId}/textMessages">GET /present/{playerId}/textMe...</abbr></a></li>
+          <li><a href="#resource_PresentApi_getCurrentImageMessages_GET"><abbr title="GET /present/{playerId}/imageMessages">GET /present/{playerId}/imageM...</abbr></a></li>
+          <li><a href="#resource_PresentApi_send_POST">POST /present/{presentId}/send</a></li>
+          <li><a href="#resource_PresentApi_acceptPresent_POST"><abbr title="POST /present/{presentId}/accept/{playerId}">POST /present/{presentId}/acce...</abbr></a></li>
+          <li><a href="#resource_PresentApi_denyPresent_POST"><abbr title="POST /present/{presentId}/deny/{playerId}">POST /present/{presentId}/deny...</abbr></a></li>
+          <li><a href="#resource_PresentApi_archivePresent_POST"><abbr title="POST /present/{presentId}/archive/{playerId}">POST /present/{presentId}/arch...</abbr></a></li>
+          <li><a href="#resource_PresentApi_getInbox_GET">GET /present/{playerId}/inbox</a></li>
+          <li><a href="#resource_PresentApi_getArchiveMessages_GET"><abbr title="GET /present/{playerId}/archive">GET /present/{playerId}/archiv...</abbr></a></li>
           <li><a href="#resource_PresentApi_deletePresent_DELETE">DELETE /present/{id}</a></li>
-          <li><a href="#resource_PresentApi_getTextMessage_GET">GET /present/boardMessages</a></li>
-          <li><a href="#resource_PresentApi_getImageMessages_GET">GET /present/imageMessages</a></li>
-          <li><a href="#resource_PresentApi_send_POST">POST /present/send</a></li>
-          <li><a href="#resource_PresentApi_acceptPresent_POST">POST /present/accept</a></li>
-          <li><a href="#resource_PresentApi_denyPresent_POST">POST /present/deny</a></li>
-          <li><a href="#resource_PresentApi_archivePresent_POST">POST /present/archive</a></li>
-          <li><a href="#resource_PresentApi_getInbox_GET">GET /present/inbox</a></li>
-          <li><a href="#resource_PresentApi_getCurrent_GET">GET /present/current</a></li>
-          <li><a href="#resource_PresentApi_getArchive_GET">GET /present/archive</a></li>
+          <li><a href="#resource_PresentApi_deleteCurrentPresent_DELETE"><abbr title="DELETE /present/{id}/deleteCurrent/{playerId}">DELETE /present/{id}/deleteCur...</abbr></a></li>
+          <li><a href="#resource_PresentApi_deleteArchivedPresent_DELETE"><abbr title="DELETE /present/{id}/deleteArchived/{playerId}">DELETE /present/{id}/deleteArc...</abbr></a></li>
           <li class="divider"></li>
           <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
         </ul>
@@ -112,24 +114,24 @@ invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@81504e7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6ec22efd -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this text message belongs to.</td>
           </tr>
           <tr>
-            <td>content</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@531c3314 -->
+            <td>content</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7ebc2dcf -->
             <td>query</td>
             <td>The content of the text message.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@101beec7 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a81f8b7 -->
             <td>query</td>
             <td>The player who sends the text message as a present to other players. This
 field must not be null.</td>
           </tr>
           <tr>
-            <td>receiverIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@44dc52d3 -->
+            <td>receiverIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@518ffd8b -->
             <td>query</td>
             <td>The player ids of the present's receivers. This field must not be null.</td>
           </tr>
@@ -179,27 +181,32 @@ invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@64ce4493 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e458481 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this image message belongs to.</td>
           </tr>
           <tr>
-            <td>imagePath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@56784f8d -->
+            <td>imagePath</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@318806d3 -->
             <td>query</td>
             <td>The path of the image. This field must not be null and the format of the image
 has to be .jpg or .png.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@19daee53 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@64990415 -->
             <td>query</td>
             <td>The player who sends the image message as a present to other players. This
 field must not be null.</td>
           </tr>
           <tr>
-            <td>receiverIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3fb66d71 -->
+            <td>receiverIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4ad4cea8 -->
             <td>query</td>
             <td>The player ids of the present's receivers. This field must not be null.</td>
+          </tr>
+          <tr>
+            <td>text</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@48b72aff -->
+            <td>query</td>
+            <td>A short text comment that belong to the image.</td>
           </tr>
           </tbody>
         </table>
@@ -224,12 +231,11 @@ field must not be null.</td>
         </table>
       </div>
 
-      <div id="resource_PresentApi_deletePresent_DELETE">
-        <h3>DELETE <small>/present/{id} <!--<a href="./present/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_PresentApi_getCurrentBoardMessages_GET">
+        <h3>GET <small>/present/{playerId}/boardMessages <!--<a href="./present/{playerId}/boardMessages" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>Removes the specific present with the assigned id from data base. It is checked, if the passed
-id is a positive number otherwise a message for an invalid number is returned. If the API key
-is not valid an analogous message is returned.</p>
+        <p>This method returns all already accepted messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -242,15 +248,16 @@ is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@29ca5cc8 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@397803a4 -->
             <td>path</td>
-            <td>Required path parameter as integer which uniquely identify the {@link Present}.</td>
+            <td>The id of the player who owns the board with the current presents. This field
+must not be null.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3dda6a5b -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@156d1132 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
+to which the messages belongs to.</td>
           </tr>
           </tbody>
         </table>
@@ -267,20 +274,19 @@ to which this present belongs to.</td>
           <tbody>
           <tr>
             <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
-            <td><a href="json_present.html">Present</a>
+            <td>array of <a href="json_presentaccepted.html">PresentAccepted</a>
  (JSON)</td>
-            <td rowspan="1">{@link Response} of {@link Present} in JSON.</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link Present}s in JSON.</td>
           </tr>
           </tbody>
         </table>
       </div>
 
-      <div id="resource_PresentApi_getTextMessage_GET">
-        <h3>GET <small>/present/boardMessages <!--<a href="./present/boardMessages" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_PresentApi_getCurrentTextMessage_GET">
+        <h3>GET <small>/present/{playerId}/textMessages <!--<a href="./present/{playerId}/textMessages" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>This method returns all text messages of a specific player's current presents and which are
-associated with the given API key and so all text messages which belong to the associated
-organisation. If the API key is not valid an analogous message is returned.</p>
+        <p>This method returns all text messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -293,16 +299,16 @@ organisation. If the API key is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@73bca3c5 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@79202cb9 -->
+            <td>path</td>
+            <td>The id of the player who owns the board with the current presents. This field
+must not be null.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@83111b0 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the text messages belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7fed9526 -->
-            <td>query</td>
-            <td>The id of the player who owns the board with the current presents. This field
-must not be null.</td>
           </tr>
           </tbody>
         </table>
@@ -319,7 +325,7 @@ must not be null.</td>
           <tbody>
           <tr>
             <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
-            <td>array of <a href="json_present.html">Present</a>
+            <td>array of <a href="json_textmessage.html">TextMessage</a>
  (JSON)</td>
             <td rowspan="1">{@link Response} as {@link List} of {@link TextMessage}s in JSON.</td>
           </tr>
@@ -327,12 +333,11 @@ must not be null.</td>
         </table>
       </div>
 
-      <div id="resource_PresentApi_getImageMessages_GET">
-        <h3>GET <small>/present/imageMessages <!--<a href="./present/imageMessages" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_PresentApi_getCurrentImageMessages_GET">
+        <h3>GET <small>/present/{playerId}/imageMessages <!--<a href="./present/{playerId}/imageMessages" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>This method returns all image messages of a specific player's current presents and which are
-associated with the given API key and so all text messages which belong to the associated
-organisation. If the API key is not valid an analogous message is returned.</p>
+        <p>This method returns all image messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -345,16 +350,16 @@ organisation. If the API key is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@43aba0f -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@71ad4631 -->
+            <td>path</td>
+            <td>The id of the player who owns the board with the current presents. This field
+must not be null.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@cb42db7 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the image messages belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6adc8061 -->
-            <td>query</td>
-            <td>The id of the player who owns the board with the current presents. This field
-must not be null.</td>
           </tr>
           </tbody>
         </table>
@@ -373,14 +378,14 @@ must not be null.</td>
             <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
             <td>array of <a href="json_imagemessage.html">ImageMessage</a>
  (JSON)</td>
-            <td rowspan="1">{@link Response} as {@link List} of {@link TextMessage}s in JSON.</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link ImageMessage}s in JSON.</td>
           </tr>
           </tbody>
         </table>
       </div>
 
       <div id="resource_PresentApi_send_POST">
-        <h3>POST <small>/present/send <!--<a href="./present/send" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+        <h3>POST <small>/present/{presentId}/send <!--<a href="./present/{presentId}/send" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>With this method one present is sent to all specified receivers. So the present is stored
 in each inbox of the receivers.</p>
@@ -396,15 +401,15 @@ in each inbox of the receivers.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7ce8a474 -->
+            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74899d7c -->
+            <td>path</td>
+            <td>The path parameter of the present's id that should be sent to the receivers.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7435aecc -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6f3f5a6a -->
-            <td>query</td>
-            <td>The path parameter of the present's id that should be sent to the receivers.</td>
           </tr>
           </tbody>
         </table>
@@ -430,7 +435,7 @@ to which this present belongs to.</td>
       </div>
 
       <div id="resource_PresentApi_acceptPresent_POST">
-        <h3>POST <small>/present/accept <!--<a href="./present/accept" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+        <h3>POST <small>/present/{presentId}/accept/{playerId} <!--<a href="./present/{presentId}/accept/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>With this method a player accepts a present. So the present will be moved from her/his inbox
 to the list of the player's current presents.</p>
@@ -446,20 +451,20 @@ to the list of the player's current presents.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e047f40 -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@30553f69 -->
-            <td>query</td>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fb2e2b5 -->
+            <td>path</td>
             <td>The id of the player who accepts the present. This field must not be null.</td>
           </tr>
           <tr>
-            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@927f613 -->
-            <td>query</td>
+            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4246b361 -->
+            <td>path</td>
             <td>The present that is accepted. This field must not be null.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7a9cb428 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
           </tr>
           </tbody>
         </table>
@@ -485,7 +490,7 @@ to which this present belongs to.</td>
       </div>
 
       <div id="resource_PresentApi_denyPresent_POST">
-        <h3>POST <small>/present/deny <!--<a href="./present/deny" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+        <h3>POST <small>/present/{presentId}/deny/{playerId} <!--<a href="./present/{presentId}/deny/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>With this method a player denies a present. So the present will be deleted from her/his
 inbox of the board.</p>
@@ -501,20 +506,20 @@ inbox of the board.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c5e0157 -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@13d83e3 -->
-            <td>query</td>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@23863679 -->
+            <td>path</td>
             <td>The id of the player who denies the present. This field must not be null.</td>
           </tr>
           <tr>
-            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@180a4ada -->
-            <td>query</td>
+            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5b59dff6 -->
+            <td>path</td>
             <td>The present that is denied. This field must not be null.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c73b247 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
           </tr>
           </tbody>
         </table>
@@ -540,7 +545,7 @@ to which this present belongs to.</td>
       </div>
 
       <div id="resource_PresentApi_archivePresent_POST">
-        <h3>POST <small>/present/archive <!--<a href="./present/archive" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+        <h3>POST <small>/present/{presentId}/archive/{playerId} <!--<a href="./present/{presentId}/archive/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>With this method on present is archived. So the present is moved from the player's list of
 current presents to an list of archived presents on the board.</p>
@@ -556,20 +561,20 @@ current presents to an list of archived presents on the board.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e2bb0a6 -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4293488d -->
-            <td>query</td>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@33d16e15 -->
+            <td>path</td>
             <td>The id of the player who archived the present. This field must not be null.</td>
           </tr>
           <tr>
-            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2fdcf9a7 -->
-            <td>query</td>
+            <td>presentId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@21f6a3e8 -->
+            <td>path</td>
             <td>The present that is archived. This field must not be null.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@34c56e4f -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
           </tr>
           </tbody>
         </table>
@@ -595,7 +600,7 @@ to which this present belongs to.</td>
       </div>
 
       <div id="resource_PresentApi_getInbox_GET">
-        <h3>GET <small>/present/inbox <!--<a href="./present/inbox" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+        <h3>GET <small>/present/{playerId}/inbox <!--<a href="./present/{playerId}/inbox" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>This method returns all presents of a player's inbox associated with the given API key and so
 all presents who belong to the associated organisation. If the API key is not valid an analogous
@@ -612,66 +617,15 @@ message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@65ca3a1c -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@16971883 -->
-            <td>query</td>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@515131a -->
+            <td>path</td>
             <td>The id of the player whose presents are returned. This field must not be null.</td>
           </tr>
-          </tbody>
-        </table>
-
-        <table class="table">
-          <caption>Response Body</caption>
-          <thead>
           <tr>
-            <th>media type</th>
-            <th>data type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
-            <td>array of <a href="json_present.html">Present</a>
- (JSON)</td>
-            <td rowspan="1">{@link Response} as {@link List} of {@link Present}s in JSON.</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div id="resource_PresentApi_getCurrent_GET">
-        <h3>GET <small>/present/current <!--<a href="./present/current" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
-
-        <p>Returns all presents from player's current presents as list of present-objects.
-These presents were accepted by the player so they were moved from the inbox to the
-list of current presents.</p>
-
-        <table class="table">
-          <caption>Request Parameters</caption>
-          <thead>
-          <tr>
-            <th>name</th>
-            <th>type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4e98fdfc -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3d0c646b -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this present belongs to.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6412449 -->
-            <td>query</td>
-            <td>The id of the player whose current presents are returned. This field must not be null.</td>
           </tr>
           </tbody>
         </table>
@@ -696,11 +650,11 @@ to which this present belongs to.</td>
         </table>
       </div>
 
-      <div id="resource_PresentApi_getArchive_GET">
-        <h3>GET <small>/present/archive <!--<a href="./present/archive" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_PresentApi_getArchiveMessages_GET">
+        <h3>GET <small>/present/{playerId}/archive <!--<a href="./present/{playerId}/archive" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>Returns all presents from player's list of archived presents as list of present-objects.
-These presents are accepted presents which the player wanted to archive.</p>
+        <p>This method returns all already archived messages of a specific player's presents.
+If the API key is not valid an analogous message is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -713,15 +667,15 @@ These presents are accepted presents which the player wanted to archive.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@326ff447 -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.</td>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@297169c1 -->
+            <td>path</td>
+            <td>The id of the player who owns the board. This field must not be null.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c12b189 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3659ddb6 -->
             <td>query</td>
-            <td>The id of the player whose current presents are returned. This field must not be null.</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which the messages belongs to.</td>
           </tr>
           </tbody>
         </table>
@@ -740,7 +694,170 @@ to which this present belongs to.</td>
             <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
             <td>array of <a href="json_presentarchived.html">PresentArchived</a>
  (JSON)</td>
-            <td rowspan="1">{@link Response} as {@link List} of {@link Present}s in JSON.</td>
+            <td rowspan="1">{@link Response} as {@link List} of {@link PresentArchived}s in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PresentApi_deletePresent_DELETE">
+        <h3>DELETE <small>/present/{id} <!--<a href="./present/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes the specific present with the assigned id from data base. It is checked, if the passed
+id is a positive number otherwise a message for an invalid number is returned. If the API key
+is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1bf995a4 -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link Present}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4588858c -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_present.html">Present</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Present} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PresentApi_deleteCurrentPresent_DELETE">
+        <h3>DELETE <small>/present/{id}/deleteCurrent/{playerId} <!--<a href="./present/{id}/deleteCurrent/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes the specific present with the assigned id from data base. It is checked, if the passed
+id is a positive number otherwise a message for an invalid number is returned. If the API key
+is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6795d39d -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link Present}.</td>
+          </tr>
+          <tr>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1fd906b4 -->
+            <td>path</td>
+            <td>The present is removed from the player's board.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@485af45e -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_presentaccepted.html">PresentAccepted</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Present} in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_PresentApi_deleteArchivedPresent_DELETE">
+        <h3>DELETE <small>/present/{id}/deleteArchived/{playerId} <!--<a href="./present/{id}/deleteArchived/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes the specific present with the assigned id from data base and the from the board's list of archived
+presents. It is checked, if the passed id is a positive number otherwise a message for an invalid number
+is returned. If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@49ffbc3c -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the {@link Present}.</td>
+          </tr>
+          <tr>
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f87a5 -->
+            <td>path</td>
+            <td>The present is removed from the player's board.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5784ddb0 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_presentarchived.html">PresentArchived</a>
+ (JSON)</td>
+            <td rowspan="1">{@link Response} of {@link Present} in JSON.</td>
           </tr>
           </tbody>
         </table>

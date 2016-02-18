@@ -115,16 +115,6 @@ current account and will be added to the offer’s current prize. Each player ca
 condition that her/his coins are enough otherwise the bid cannot be done.
 </td>
     </tr>
-    <tr class="clickable-row" data-href="json_board.html">
-      <td>  Board
-</td>
-      <td>  A Board serves a player to store presents in three lists: When a present is
-sent to a player firstly it is added to the inBox-list. The player decides if
-she/he accepts the present. If the player does it is added to the list which holds
-the current presents else if it is denied it is removed from the inbox. When the player
-wants to archive a present it is added to the archive list.
-</td>
-    </tr>
     <tr class="clickable-row" data-href="json_coins.html">
       <td>  Coins
 </td>
@@ -314,6 +304,13 @@ an additional list. It is possible to get for one player all her/his text messag
 or all messages with a small image that were created. Furthermore all new presents
 of a player can be requested as well as the accepted and archived presents. All denied
 presents were removed from the in-box.
+</td>
+    </tr>
+    <tr class="clickable-row" data-href="json_presentaccepted.html">
+      <td>  PresentAccepted
+</td>
+      <td>  Presents that are in the in-box of the board a player can accept or deny. If the player
+accept a present its status is set to accepted and an PresentAccepted object is created.
 </td>
     </tr>
     <tr class="clickable-row" data-href="json_presentarchived.html">

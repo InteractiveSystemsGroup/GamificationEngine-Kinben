@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  <title>Kinben API: MarketPlace</title>
+  <title>Kinben API: PresentAccepted</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Kinben API: MarketPlace</a>
+        <a class="navbar-brand" href="index.html">Kinben API: PresentAccepted</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -61,15 +61,13 @@
         <ol class="breadcrumb" id="top">
           <li class="active dropdown"><a href="index.html">Home</a></li>
           <li class="active dropdown"><a href="syntax_json.html">JSON</a></li>
-          <li class="dropdown"><a href="json_marketplace.html">MarketPlace</a></li>
+          <li class="dropdown"><a href="json_presentaccepted.html">PresentAccepted</a></li>
         </ol>
 
-      <h1 class="page-header">MarketPlace <small>Data Type</small></h1>
+      <h1 class="page-header">PresentAccepted <small>Data Type</small></h1>
 
-      <p>Players can create an offer with a task for the marketplace so another player can
-bid to do this task and get its rewards. Via Bids an initial bid by the creator can be
-raised. To be able to create offers, a marketplace for the organisation is needed.
-If none exists yet, it first has to be created.</p>
+      <p>Presents that are in the in-box of the board a player can accept or deny. If the player
+accept a present its status is set to accepted and an PresentAccepted object is created.</p>
 
       <dl class="dl-horizontal">
       </dl>
@@ -90,7 +88,16 @@ If none exists yet, it first has to be created.</p>
           <td>  <a href="json_organisation.html">Organisation</a>
 
 </td>
-          <td>  Gets the organisation a marketplace belongs to.
+          <td>  Gets the organisation an accepted present belongs to.
+</td>
+        </tr>
+        <tr>
+          <td>  date
+</td>
+          <td>  <a href="json_localdatetime.html">LocalDateTime</a>
+
+</td>
+          <td>  Gets the date and time a present was accepted by a player.
 </td>
         </tr>
         <tr>
@@ -99,16 +106,25 @@ If none exists yet, it first has to be created.</p>
           <td>  number
 
 </td>
-          <td>  Gets the id of a marketplace.
+          <td>  Gets the id of the accepted present.
 </td>
         </tr>
         <tr>
-          <td>  offers
+          <td>  present
 </td>
-          <td>  array of <a href="json_offer.html">Offer</a>
+          <td>  <a href="json_present.html">Present</a>
 
 </td>
-          <td>  Gets all offers of one marketplace, which a player can bid for.
+          <td>  Get the present that is accepted by the player.
+</td>
+        </tr>
+        <tr>
+          <td>  status
+</td>
+          <td>  <a href="json_status.html">Status</a>
+
+</td>
+          <td>  Sets the status of the present if the player has accepted it or not.
 </td>
         </tr>
         </tbody>
@@ -134,70 +150,27 @@ If none exists yet, it first has to be created.</p>
     &quot;name&quot; : &quot;...&quot;,
     &quot;apiKey&quot; : &quot;...&quot;
   },
-  &quot;offers&quot; : [ {
+  &quot;date&quot; : {
+    &quot;dayOfYear&quot; : 12345.0,
+    &quot;nano&quot; : 12345.0,
+    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+    &quot;hour&quot; : 12345.0,
+    &quot;year&quot; : 12345.0,
+    &quot;monthValue&quot; : 12345.0,
+    &quot;second&quot; : 12345.0,
+    &quot;minute&quot; : 12345.0,
+    &quot;month&quot; : &quot;JANUARY&quot;,
+    &quot;dayOfMonth&quot; : 12345.0
+  },
+  &quot;present&quot; : {
     &quot;id&quot; : 12345.0,
-    &quot;offerDate&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
-    },
-    &quot;endDate&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
-    },
-    &quot;deadLine&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
-    },
-    &quot;prize&quot; : 12345.0,
     &quot;belongsTo&quot; : {
       &quot;id&quot; : 12345.0,
       &quot;managers&quot; : [ { }, { } ],
       &quot;name&quot; : &quot;...&quot;,
       &quot;apiKey&quot; : &quot;...&quot;
     },
-    &quot;task&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;taskName&quot; : &quot;...&quot;,
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;allowedFor&quot; : [ { }, { } ],
-      &quot;tradeable&quot; : true
-    },
-    &quot;allowedForRole&quot; : [ {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    } ],
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;player&quot; : {
+    &quot;sender&quot; : {
       &quot;nickname&quot; : &quot;...&quot;,
       &quot;reference&quot; : &quot;...&quot;,
       &quot;coins&quot; : 12345.0,
@@ -216,71 +189,8 @@ If none exists yet, it first has to be created.</p>
       &quot;onlyAchievement&quot; : [ { }, { } ],
       &quot;contactList&quot; : [ { }, { } ],
       &quot;active&quot; : true
-    }
-  }, {
-    &quot;id&quot; : 12345.0,
-    &quot;offerDate&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
     },
-    &quot;endDate&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
-    },
-    &quot;deadLine&quot; : {
-      &quot;dayOfYear&quot; : 12345.0,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;hour&quot; : 12345.0,
-      &quot;year&quot; : 12345.0,
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;minute&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;dayOfMonth&quot; : 12345.0
-    },
-    &quot;prize&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
-    &quot;task&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;taskName&quot; : &quot;...&quot;,
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;allowedFor&quot; : [ { }, { } ],
-      &quot;tradeable&quot; : true
-    },
-    &quot;allowedForRole&quot; : [ {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    } ],
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;player&quot; : {
+    &quot;receiver&quot; : [ {
       &quot;nickname&quot; : &quot;...&quot;,
       &quot;reference&quot; : &quot;...&quot;,
       &quot;coins&quot; : 12345.0,
@@ -299,8 +209,28 @@ If none exists yet, it first has to be created.</p>
       &quot;onlyAchievement&quot; : [ { }, { } ],
       &quot;contactList&quot; : [ { }, { } ],
       &quot;active&quot; : true
-    }
-  } ]
+    }, {
+      &quot;nickname&quot; : &quot;...&quot;,
+      &quot;reference&quot; : &quot;...&quot;,
+      &quot;coins&quot; : 12345.0,
+      &quot;points&quot; : 12345.0,
+      &quot;levelIndex&quot; : 12345.0,
+      &quot;levelLabel&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345.0,
+      &quot;belongsTo&quot; : { },
+      &quot;password&quot; : &quot;...&quot;,
+      &quot;avatar&quot; : &quot;...&quot;,
+      &quot;finishedTasks&quot; : [ { }, { } ],
+      &quot;finishedGoals&quot; : [ { }, { } ],
+      &quot;belongsToRoles&quot; : [ { }, { } ],
+      &quot;rewards&quot; : [ { }, { } ],
+      &quot;onlyBadges&quot; : [ { }, { } ],
+      &quot;onlyAchievement&quot; : [ { }, { } ],
+      &quot;contactList&quot; : [ { }, { } ],
+      &quot;active&quot; : true
+    } ]
+  },
+  &quot;status&quot; : &quot;ACCEPT&quot;
 }</pre>
 
         <footer class="footer">

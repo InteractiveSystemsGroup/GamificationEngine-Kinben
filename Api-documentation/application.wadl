@@ -662,12 +662,11 @@ yyyy-MM-dd HH:mm.]]></wadl:doc>
           <wadl:param name="prize" style="query">
             <wadl:doc><![CDATA[The initial bid of the offer. This is the prize a player can earn.]]></wadl:doc>
           </wadl:param>
-          <wadl:param name="roleIds" style="query">
-            <wadl:doc><![CDATA[Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
-prize.]]></wadl:doc>
-          </wadl:param>
           <wadl:param name="taskId" style="query">
-            <wadl:doc><![CDATA[The id of the task the offer is associated with. This parameter is required.]]></wadl:doc>
+            <wadl:doc><![CDATA[The id of the task the offer is associated with. This parameter is required.
+//	 * @param allowedRoles
+//	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
+//	 *            prize.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -870,138 +869,6 @@ to which this player level belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
-    <wadl:resource path="/present/accept">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method a player accepts a present. So the present will be moved from her/his inbox
-to the list of the player's current presents.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who accepts the present. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="presentId" style="query">
-            <wadl:doc><![CDATA[The present that is accepted. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/archive">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method on present is archived. So the present is moved from the player's list of
-current presents to an list of archived presents on the board.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who archived the present. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="presentId" style="query">
-            <wadl:doc><![CDATA[The present that is archived. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/archive">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Returns all presents from player's list of archived presents as list of present-objects.
-These presents are accepted presents which the player wanted to archive.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player whose current presents are returned. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/boardMessages">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[This method returns all text messages of a specific player's current presents and which are
-associated with the given API key and so all text messages which belong to the associated
-organisation. If the API key is not valid an analogous message is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the text messages belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who owns the board with the current presents. This field
-must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link TextMessage}s in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/current">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Returns all presents from player's current presents as list of present-objects.
-These presents were accepted by the player so they were moved from the inbox to the
-list of current presents.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player whose current presents are returned. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/deny">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method a player denies a present. So the present will be deleted from her/his
-inbox of the board.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who denies the present. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="presentId" style="query">
-            <wadl:doc><![CDATA[The present that is denied. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
     <wadl:resource path="/present/imageMessage">
       <wadl:method name="POST">
         <wadl:doc><![CDATA[Creates a new image message as a present in a gamificated application, so the method
@@ -1028,72 +895,12 @@ field must not be null.]]></wadl:doc>
           <wadl:param name="receiverIds" style="query">
             <wadl:doc><![CDATA[The player ids of the present's receivers. This field must not be null.]]></wadl:doc>
           </wadl:param>
+          <wadl:param name="text" style="query">
+            <wadl:doc><![CDATA[A short text comment that belong to the image.]]></wadl:doc>
+          </wadl:param>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} of {@link ImageMessage} in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/imageMessages">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[This method returns all image messages of a specific player's current presents and which are
-associated with the given API key and so all text messages which belong to the associated
-organisation. If the API key is not valid an analogous message is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the image messages belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who owns the board with the current presents. This field
-must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link TextMessage}s in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/inbox">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[This method returns all presents of a player's inbox associated with the given API key and so
-all presents who belong to the associated organisation. If the API key is not valid an analogous
-message is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player whose presents are returned. This field must not be null.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/present/send">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method one present is sent to all specified receivers. So the present is stored
-in each inbox of the receivers.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this present belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="presentId" style="query">
-            <wadl:doc><![CDATA[The path parameter of the present's id that should be sent to the receivers.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1237,6 +1044,12 @@ API key is returned.]]></wadl:doc>
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
+          <wadl:param name="description" style="query">
+            <wadl:doc><![CDATA[Optionally a short text can be set to describe the reward.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="name" style="query">
+            <wadl:doc><![CDATA[The required name of the coins reward.]]></wadl:doc>
+          </wadl:param>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} of {@link Coins} in JSON.]]></wadl:doc>
@@ -1259,8 +1072,11 @@ API key is returned.]]></wadl:doc>
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.]]></wadl:doc>
           </wadl:param>
+          <wadl:param name="description" style="query">
+            <wadl:doc><![CDATA[Optionally a short text can be set to describe the level.]]></wadl:doc>
+          </wadl:param>
           <wadl:param name="name" style="query">
-            <wadl:doc><![CDATA[Optionally a name of the level can be set.]]></wadl:doc>
+            <wadl:doc><![CDATA[The required name of the level can be set.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -1282,6 +1098,12 @@ API key is returned.]]></wadl:doc>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="description" style="query">
+            <wadl:doc><![CDATA[Optionally a short text can be set to describe the reward.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="name" style="query">
+            <wadl:doc><![CDATA[The required name of the points reward.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -1593,7 +1415,7 @@ to which this role belongs to.]]></wadl:doc>
           <wadl:param name="attribute" style="query">
             <wadl:doc><![CDATA[The attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
-"goalName", "isRepeateable", "isGroupGoal", "rewardId", "ruleId" and "roles".]]></wadl:doc>
+"goalName", "isRepeateable", "isGroupGoal", "rewardId" and "roles".]]></wadl:doc>
           </wadl:param>
           <wadl:param name="value" style="query">
             <wadl:doc><![CDATA[The new value of the attribute.]]></wadl:doc>
@@ -2074,6 +1896,28 @@ to which this group belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/playerGroup/{id}/addPlayers">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[Adds one or more players to a group of players. All ids are checked, if they are positive numbers
+otherwise a message for an invalid number is returned. If the API key is not valid an analogous
+message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="playerIds" style="query">
+            <wadl:doc><![CDATA[The list of player ids which should be added to the contact list. These ids are
+separated by commas.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link PlayerGroup} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/playerGroup/{id}/attributes">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[With this method the fields of a PlayerGroup can be changed. For this the id of the
@@ -2244,6 +2088,109 @@ associated field:
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[{@link Response} of {@link PlayerLevel} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{playerId}/archive">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[This method returns all already archived messages of a specific player's presents.
+If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the messages belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link PresentArchived}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{playerId}/boardMessages">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[This method returns all already accepted messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the messages belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{playerId}/imageMessages">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[This method returns all image messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the image messages belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link ImageMessage}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{playerId}/inbox">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[This method returns all presents of a player's inbox associated with the given API key and so
+all presents who belong to the associated organisation. If the API key is not valid an analogous
+message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link Present}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{playerId}/textMessages">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[This method returns all text messages of a specific player's current presents.
+If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the text messages belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} as {@link List} of {@link TextMessage}s in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{presentId}/send">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[With this method one present is sent to all specified receivers. So the present is stored
+in each inbox of the receivers.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2482,7 +2429,8 @@ to which this goal rule belongs to.]]></wadl:doc>
           <wadl:param name="attribute" style="query">
             <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
-"description", "name" and if it is a GetPointsRule additionally "points".]]></wadl:doc>
+"description" and "name". The tasks that have to be completed or the amount of
+points that have to be reached, can't be changed later.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="value" style="query">
             <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
@@ -2543,6 +2491,93 @@ to which this call for donations belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[A {@link Response} of {@link DonationCall} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{id}/deleteArchived/{playerId}">
+      <wadl:method name="DELETE">
+        <wadl:doc><![CDATA[Removes the specific present with the assigned id from data base and the from the board's list of archived
+presents. It is checked, if the passed id is a positive number otherwise a message for an invalid number
+is returned. If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{id}/deleteCurrent/{playerId}">
+      <wadl:method name="DELETE">
+        <wadl:doc><![CDATA[Removes the specific present with the assigned id from data base. It is checked, if the passed
+id is a positive number otherwise a message for an invalid number is returned. If the API key
+is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{presentId}/accept/{playerId}">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[With this method a player accepts a present. So the present will be moved from her/his inbox
+to the list of the player's current presents.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{presentId}/archive/{playerId}">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[With this method on present is archived. So the present is moved from the player's list of
+current presents to an list of archived presents on the board.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/present/{presentId}/deny/{playerId}">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[With this method a player denies a present. So the present will be deleted from her/his
+inbox of the board.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this present belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[{@link Response} of {@link Present} in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
