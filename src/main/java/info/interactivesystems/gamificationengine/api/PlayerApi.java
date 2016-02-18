@@ -430,7 +430,7 @@ public class PlayerApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this player belongs to.
-	 * @return {@link Response} of {@link Object} with an byte[] in JSON.
+	 * @return Response of Object with an byte[] in JSON.
 	 */
 	@GET
 	@Path("{id}/avatar")
@@ -442,13 +442,9 @@ public class PlayerApi {
 		Player player = playerDao.getPlayer(playerId, apiKey);
 
 		byte[] bytes = player.getAvatar();
-		// Image img;
-		// ImageIcon icon2 = new ImageIcon(image);
-		// img = icon2.getImage();
 
 		return ResponseSurrogate.of(new Object() {
 			public byte[] image = bytes;
-			// public Image image = img;
 		});
 	}
 
