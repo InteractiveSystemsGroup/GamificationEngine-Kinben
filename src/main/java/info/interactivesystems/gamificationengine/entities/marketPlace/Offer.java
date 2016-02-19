@@ -2,12 +2,9 @@ package info.interactivesystems.gamificationengine.entities.marketPlace;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -51,9 +47,6 @@ public class Offer {
 	@ManyToOne
 	private Task task;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private List<Role> allowedForRole;
-
 	// @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	// private List<Bid> bids;
 
@@ -61,10 +54,10 @@ public class Offer {
 	@Fetch(FetchMode.SELECT)
 	private Player player;
 
-	public Offer() {
-		allowedForRole = new ArrayList<>();
-		// bids = new ArrayList<Bid>();
-	}
+//	public Offer() {
+////		allowedForRole = new ArrayList<>();
+//		// bids = new ArrayList<Bid>();
+//	}
 
 	/**
 	 * Gets the id of an offer.
@@ -209,29 +202,6 @@ public class Offer {
 		this.task = task;
 	}
 
-	/**
-	 * Gets the roles to check which player is allowed to fulfil this offer. A player need at least one role
-	 * to complete the task.
-	 * 
-	 * @return A {@link List} of {@link Role}s.
-	 * 			All roles which are allowed to fulfil the offer.
-	 */
-	public List<Role> getAllowedForRole() {
-		return allowedForRole;
-	}
-
-	/**
-	 * Sets a list of roles for the task. Players who have at least one of these
-	 * roles are allowed to fulfil the task and award the prize.
-	 * 
-	 * @param allowedForRole
-	 *            The roles of which a player must have at least one to
-	 *            fulfill this task.
-	 */
-	public void setAllowedForRole(List<Role> allowedForRole) {
-		this.allowedForRole = allowedForRole;
-	}
-
 	// public List<Bid> getBids() {
 	// return bids;
 	// }
@@ -259,17 +229,7 @@ public class Offer {
 		this.name = name;
 	}
 
-	/**
-	 * This method adds a further role to the list of roles. If a player has got
-	 * one of these roles she/he is allowed to fulfil the task.
-	 * 
-	 * @param role
-	 *          The new role which is added to the list of roles.
-	 */
-	public void addRole(Role role) {
-		this.allowedForRole.add(role);
-	}
-
+	
 	// public void addBid(Bid bid) {
 	// bids.add(bid);
 	// }
@@ -307,4 +267,21 @@ public class Offer {
 	public boolean belongsTo(Organisation organisation) {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
+	
+	/**
+	 * When a player does give a bid, the coins of this bid is added to the current prize.
+	 * 
+	 * @param addPrize
+	 * 			Amount by which the current prize of the offer increase.
+	 * @return int
+	 * 			The new prize of the offer.
+	 * 		
+	 */
+	public int addPrize(String addPrize) {
+		this.prize = this.getPrize() + Integer.valueOf(addPrize);
+		return prize;
+	}
 }
+
+
+

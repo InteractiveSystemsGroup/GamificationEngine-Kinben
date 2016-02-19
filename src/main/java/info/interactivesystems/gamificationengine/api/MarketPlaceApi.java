@@ -2,7 +2,6 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
-import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.MarketPlaceDAO;
@@ -19,12 +18,10 @@ import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 import info.interactivesystems.gamificationengine.entities.task.Task;
-import info.interactivesystems.gamificationengine.utils.StringUtils;
+import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -101,7 +98,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this marketplace belongs to.
-	 * @return {@link Response} of {MarketPlace} in JSON.
+	 * @return Response of MarketPlace in JSON.
 	 */
 	@POST
 	@Path("/market")
@@ -112,9 +109,9 @@ public class MarketPlaceApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		if (marketPlDao.getAllMarketPlaceForApiKey(apiKey).size() > 0) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Marketplace does already exists for your organization.");
-		}
+//		if (marketPlDao.getAllMarketPlaceForApiKey(apiKey).size() > 0) {
+//			throw new ApiError(Response.Status.FORBIDDEN, "Marketplace does already exists for your organization.");
+//		}
 
 		MarketPlace marketplace = new MarketPlace();
 		marketplace.setBelongsTo(organisation);
@@ -134,7 +131,7 @@ public class MarketPlaceApi {
 	 * @param apikey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
-	 * @return {@link Response} of {@link MarketPlace} in JSON.
+	 * @return Response of MarketPlace in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/market")
@@ -176,9 +173,6 @@ public class MarketPlaceApi {
 	 *            The initial bid of the offer. This is the prize a player can earn.
 	 * @param taskId
 	 *            The id of the task the offer is associated with. This parameter is required.
-	 * @param allowedRoles
-	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
-	 *            prize. 
 	 * @param deadLine
 	 *            The point of time until the offer is valid. The format of the values is
 	 *            yyyy-MM-dd HH:mm.
@@ -189,7 +183,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this offer belongs to.
-	 * @return {@link Response} of {Offer} in JSON.
+	 * @return Response of Offer in JSON.
 	 */
 	@POST
 	@Path("/offer")
@@ -198,7 +192,8 @@ public class MarketPlaceApi {
 			@QueryParam("endDate") String endDate,
 			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
-			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String allowedRoles, @QueryParam("deadLine") String deadLine,
+//			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String allowedRoles, 
+			@QueryParam("deadLine") String deadLine,
 			@QueryParam("marketId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -206,59 +201,46 @@ public class MarketPlaceApi {
 		log.debug("create new Offer called");
 
 		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskId));
+		ValidateUtils.requireNotNull(Integer.valueOf(taskId), task);
+		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 
 		if (!task.isTradeable()) {
 			throw new ApiError(Response.Status.FORBIDDEN, "task is not tradeable");
 		}
 
+		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(prize))) {
+			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such an offer");
+		}
+		
 		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a real bid!");
 		}
 
-		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(prize))) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such an offer");
-		}
-
-		// set Timestamp for Offer
-		LocalDateTime offerDate = LocalDateTime.now();
-
-		// Parse String in LocalDateTime -> Format:"2014-12-15 12:30";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
-		LocalDateTime deadLineTime = LocalDateTime.parse(deadLine, formatter);
-
 		Offer offer = new Offer();
 		offer.setName(name);
 		offer.setBelongsTo(organisation);
-		offer.setOfferDate(offerDate);
-		offer.setEndDate(endDateTime);
+		offer.setOfferDate(LocalDateTime.now());
+		offer.setEndDate(LocalDateTimeUtil.formatDateAndTime(endDate));
 		offer.setPrize(ValidateUtils.requireGreaterThanZero(prize));
-		offer.setDeadLine(deadLineTime);
+		offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(deadLine));
 		offer.setTask(task);
 		offer.setPlayer(player);
 
+		log.debug("Offer erstellt  ");
 		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
 
-		// Find all roles by Id
-		String[] roleIdList = allowedRoles.split(",");
-
-		for (String roleIdString : roleIdList) {
-			log.debug("Role To Add: " + roleIdString);
-			Role role = roleDao.getRoleById(ValidateUtils.requireGreaterThanZero(roleIdString));
-			if (role != null) {
-				log.debug("Role Added: " + role.getId());
-				offer.addRole(role);
-			}
-		}
-
-		offer.setBelongsTo(organisation);
+		log.debug("Prize angegeben " + player.getCoins());
+		
 		MarketPlace marketPlace = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketId));
-		marketPlace.setOffers(marketPlace.addOffer(offer));
-
-		int marketPId = marketPlDao.insertMarketPlace(marketPlace);
-
+		ValidateUtils.requireNotNull(Integer.valueOf(marketId), marketPlace);
+		
+		marketPlace.addOffer(offer);
+		marketPlDao.insertOffer(offer);
+		
 		return ResponseSurrogate.created(offer);
 	}
 
@@ -277,7 +259,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} of {Bid} in JSON.
+	 * @return Response of Bid in JSON.
 	 */
 	@POST
 	@Path("/bid")
@@ -301,57 +283,36 @@ public class MarketPlaceApi {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
-		List<Role> roles = offer.getAllowedForRole();
+		List<Role> roles = offer.getTask().getAllowedFor();   //getAllowedForRole();
 
 		log.debug("Offer: " + offer.getId() + " " + roles);
 
 		log.debug("Bids:");
-		for (Bid b : marketPlDao.getBidsForOffer(offer)) {
+		for (Bid b : marketPlDao.getBidsForOffer(offer, apiKey)) {
 			log.debug("-" + b.getId());
 		}
-
-		List<Role> matchingRoles;
-
-		if (offer.getAllowedForRole().size() > 0) {
-			log.debug("Offer is restricted by roles");
-			matchingRoles = offer.getAllowedForRole().stream().filter(r -> {
-				if (player.getBelongsToRoles().contains(r)) {
-					log.debug("Player has required Role to create Bid: " + r.getName());
-					return true;
-				} else {
-					return false;
-				}
-			}).collect(Collectors.toList());
-
-			if (matchingRoles.size() > 0) {
-				log.debug("Roles match -> proceed");
-			} else {
-				log.debug("Roles don't match -> error");
-				throw new ApiError(Response.Status.FORBIDDEN, "Roles don't match!");
-			}
-		} else {
-			log.debug("Offer is not restricted by roles");
-		}
-
-		// set current Time for Bid
-		LocalDateTime creationDate = LocalDateTime.now();
 
 		Bid bid = new Bid();
 		bid.setPrize(ValidateUtils.requireGreaterThanZero(prize));
 		bid.setBelongsTo(organisation);
-		bid.setCreationDate(creationDate);
+		bid.setCreationDate(LocalDateTime.now());		//Set current date and time for bid
 		bid.setPlayer(player);
 
 		marketPlDao.insertBid(bid);
 
 		bid.setOffer(offer);
 
-		offer.setPrize(offer.getPrize() + ValidateUtils.requireGreaterThanZero(prize));
+		log.debug("Offerprize before: " + offer.getPrize());
+		
+		offer.addPrize(prize);
+		log.debug("Offerprize after: " + offer.getPrize());
 
-		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
-
+		log.debug("Player coins before: " + player.getCoins());
+		player.spent(Integer.valueOf(prize));
+		log.debug("Player coins after: " + player.getCoins());
+		
 		log.debug("Bids:");
-		for (Bid b : marketPlDao.getBidsForOffer(offer)) {
+		for (Bid b : marketPlDao.getBidsForOffer(offer, apiKey)) {
 			log.debug("-" + b.getId());
 		}
 
@@ -359,35 +320,32 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Gets all offers a specific player has created. If the API key is not valid an analogous message is 
-	 * returned. It is also checked, if the id is a positive number otherwise a message for an invalid 
-	 * number is returned.
+	 * Gets all offers a specific player has created (independent of the marketplace). If the API key is not valid 
+	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
+	 * for an invalid number is returned.
 	 * 
 	 * @param playerId
-	 *            The player whose offers are returned.
+	 *            The player whose created offers are returned.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return A Response as List of Offers in JSON.
 	 */
 	@GET
-	@Path("/getOffers")
+	@Path("/{playerId}/getOffers")
 	@TypeHint(Offer[].class)
 	public Response getPlayerOffers(
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 
 		List<Offer> offers;
-		offers = marketPlDao.getOffersByPlayer(player);
+		offers = marketPlDao.getOffersByPlayer(player, apiKey);
 
 		for (Offer offer : offers) {
 			log.debug("Player: " + player.getId() + "| Offer:" + offer.getId());
-		}
-
-		if (offers.isEmpty()) {
-			throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
 		}
 
 		return ResponseSurrogate.of(offers);
@@ -407,7 +365,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return A {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return A Response as List of Offers in JSON.
 	 */
 	@GET
 	@Path("/getOfferRole")
@@ -423,11 +381,17 @@ public class MarketPlaceApi {
 		List<Offer> matchingOffers;
 
 		if (market.getOffers().size() > 0) {
+			log.debug("Marketplace: " + market.getId());
 			matchingOffers = market.filterOfferByRole(player, player.getBelongsToRoles());
 
+			for (Offer offer : matchingOffers) {
+				log.debug("Result Offer : " + offer.getId());
+			}
+			
 			if (matchingOffers.size() <= 0) {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers fot this role");
 			}
+			
 			return ResponseSurrogate.of(matchingOffers);
 		}
 
@@ -448,7 +412,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return Response as List of Offers in JSON.
 	 */
 	@GET
 	@Path("/getRecentOffers")
@@ -492,7 +456,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the player belongs to.
-	 * @return {@link Response} as {@link List} of {@link Offer}s in JSON.
+	 * @return Response as List of Offers in JSON.
 	 */
 	@GET
 	@Path("/getHighestOffers")
@@ -532,7 +496,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
-	 * @return {@link Response} as {@link List} of {@link Bid}s in JSON.
+	 * @return Response as List of Bids in JSON.
 	 */
 	@GET
 	@Path("/{id}/bids")
@@ -541,10 +505,12 @@ public class MarketPlaceApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 	
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
-		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer);
+		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
+		
+		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer, apiKey);
 
 		for (Bid bid : bidsForOffer) {
-			log.debug("Bid " + bid.getId() + " für Offer: " + offer.getId());
+			log.debug("Bid " + bid.getId() + " with "+ bid.getPrize() + "coins for Offer: " + offer.getId());
 		}
 
 		return ResponseSurrogate.of(bidsForOffer);
@@ -560,13 +526,13 @@ public class MarketPlaceApi {
 	 * @param apikey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
-	 * @return {@link Response} of {@link Offer} in JSON.
+	 * @return Response of Offer in JSON.
 	 */
 	@DELETE
 	@Path("/{id}/offer")
 	@TypeHint(Offer.class)
 	public Response deleteOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
-			@QueryParam("apiKey") @ValidApiKey String apikey) {
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		if (offerId == null) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no offerId transferred");
@@ -578,8 +544,8 @@ public class MarketPlaceApi {
 		Offer offer = marketPlDao.getOffer(id);
 		log.debug("hole Offer");
 
-		if (!marketPlDao.getBidsForOffer(offer).isEmpty()) {
-			for (Bid bid : marketPlDao.getBidsForOffer(offer)) {
+		if (!marketPlDao.getBidsForOffer(offer, apiKey).isEmpty()) {
+			for (Bid bid : marketPlDao.getBidsForOffer(offer, apiKey)) {
 				Player player = bid.getPlayer();
 				player.setCoins(player.getCoins() + bid.getPrize());
 				log.debug("give a bid" + player.getId());
@@ -595,7 +561,6 @@ public class MarketPlaceApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Offer: " + offerId);
 		}
 
-		log.debug("ende Offer");
 		return ResponseSurrogate.deleted(deletedOffer);
 	}
 
@@ -614,7 +579,7 @@ public class MarketPlaceApi {
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
-	 * @return {@link Response} of {@link Task#getId} in JSON.
+	 * @return Response of Task in JSON.
 	 */
 	@POST
 	@Path("/{id}/compOffer")
@@ -673,13 +638,13 @@ public class MarketPlaceApi {
 	 * @param attribute
 	 *            The name of the attribute which should be modified. This parameter is required. 
 	 *            The following names of attributes can be used to change the associated field:
-	 *            "name", "deadline", "enddate" and "playerRoles".
+	 *            "name", "deadline" and "enddate".
 	 * @param value
 	 *            The new value of the attribute. This parameter is required.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
-	 * @return {@link Response} of {@link Offer} in JSON.
+	 * @return Response of Offer in JSON.
 	 */
 	@PUT
 	@Path("/{id}/attributes")
@@ -702,16 +667,11 @@ public class MarketPlaceApi {
 			break;
 
 		case "deadline":
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-			offer.setDeadLine(LocalDateTime.parse(value, formatter));
+			offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(value));
 			break;
 
 		case "enddate":
-			offer.setEndDate(LocalDateTime.parse(value));
-			break;
-
-		case "playerRoles":
-			changePlayerRoles(value, offer, apiKey);
+			offer.setEndDate(LocalDateTimeUtil.formatDateAndTime(value));
 			break;
 
 		default:
@@ -721,70 +681,6 @@ public class MarketPlaceApi {
 		marketPlDao.insertOffer(offer);
 
 		return ResponseSurrogate.updated(offer);
-	}
-
-	/**
-	 * This method converts the string of role ids which are transfered to a list of roles.
-	 * These roles are then set as the new list of an offer's roles to indicate who is allowed to complete
-	 * the associated task. 
-	 * 
-	 * @param value
-	 * 		   	The new values of roles as string separated by commas. This parameter is required.
-	 * @param offer
-	 * 		  	The offer which field of roles will be modified. This parameter should be not null. 
-	 * @param apiKey
-	 *   	   	The valid query parameter API key affiliated to one specific organisation, 
-	 *        	to which this offer belongs to.
-	 */
-	private void changePlayerRoles(@NotNull String value, Offer offer, String apiKey) {
-		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
-		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
-		List<Role> roles = roleDao.getRoles(ids, apiKey);
-		offer.setAllowedForRole(roles);
-	}
-
-	/**
-	 * Removes the bid with the assigned id from data base. It is checked, if the passed id is a 
-	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
-	 * valid an analogous message is returned.
-	 * If the API key is not valid an analogous message is returned. It is also checked, if the ids are
-	 * a positive number otherwise a message for an invalid number is returned.
-	 * 
-	 * 
-	 * @param bidId
-	 *            Required path parameter as integer to uniquely identify the bid. 
-	 * @param playerId
-	 *            The id of the player who has made the bid. This parameter is required.
-	 * @param offerId
-	 *            The id of the offer to which the bid is associated.
-	 * @param apiKey
-	 *            The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which the player belongs to.
-	 * @return {@link Response} of {@link Offer} in JSON.
-	 */
-	@DELETE
-	@Path("/{id}/bid")
-	@TypeHint(Offer.class)
-	public Response deleteBid(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String bidId,
-			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
-			@QueryParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (bidId == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no bidId transferred");
-		}
-
-		int id = ValidateUtils.requireGreaterThanZero(bidId);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
-
-		List<Bid> bid = marketPlDao.getBidsForPlayerAndOffer(player, offer);
-
-		if (bid == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such Offer: " + offerId);
-		}
-
-		return ResponseSurrogate.deleted(offer);
 	}
 
 }

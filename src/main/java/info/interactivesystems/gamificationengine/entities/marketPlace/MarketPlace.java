@@ -106,11 +106,14 @@ public class MarketPlace {
 	 * Adds one new offer to the list of offers.
 	 * 
 	 * @param offer The offer that is added to the list of offers.
-	 * @return The new list of offers of the marketplace.
+	 *
+//	 * @return The new list of offers of the marketplace.
 	 */
-	public List<Offer> addOffer(Offer offer) {
-		offers.add(offer);
-		return offers;
+	public void addOffer(Offer offer) {
+		if(!offers.contains(offer)){
+			this.offers.add(offer);
+		}
+//		return offers;
 	}
 
 	/**
@@ -129,7 +132,8 @@ public class MarketPlace {
 		List<Offer> matchingOffers = new ArrayList<>();
 		for (Offer offer : this.getOffers()) {
 			for (Role r : player.getBelongsToRoles()) {
-				if (offer.getAllowedForRole().contains(r)) {
+//				if (offer.getAllowedForRole().contains(r)) {
+					if (offer.getTask().getAllowedFor().contains(r)) {
 					matchingOffers.add(offer);
 					break;
 				}

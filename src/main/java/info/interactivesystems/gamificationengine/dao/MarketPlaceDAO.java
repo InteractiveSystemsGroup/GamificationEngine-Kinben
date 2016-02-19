@@ -69,14 +69,14 @@ public class MarketPlaceDAO {
 	 *            The offer that is associated with the bids.
 	 * @return A {@link List} of all {@link Bid}s that are associated to a specific player and offer. 
 	 */
-	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
-		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
-		query.setParameter("player", player);
-		query.setParameter("offer", offer);
-		// List<Bid> result = new ArrayList<Bid>();
-		// return result = (List<Bid>)query.getResultList();
-		return query.getResultList();
-	}
+//	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
+//		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
+//		query.setParameter("player", player);
+//		query.setParameter("offer", offer);
+//		// List<Bid> result = new ArrayList<Bid>();
+//		// return result = (List<Bid>)query.getResultList();
+//		return query.getResultList();
+//	}
 
 	/**
 	 * Gets a list of bids for a specific offer.
@@ -85,14 +85,16 @@ public class MarketPlaceDAO {
 	 *            The offer whose bids are requested.
 	 * @return A {@link List} of {@link Bid}s. that are associated to a specific offer.
 	 */
-	public List<Bid> getBidsForOffer(Offer offer) {
-		Query query = em.createQuery("select b from Bid b where b.offer=:offer");
+	public List<Bid> getBidsForOffer(Offer offer, String apiKey) {
+		Query query = em.createQuery("select b from Bid b where b.offer=:offer and b.belongsTo.apiKey=:apiKey");
 		query.setParameter("offer", offer);
+		query.setParameter("apiKey", apiKey);
 
 		// List<Bid> result = new ArrayList<Bid>();
 		// return result = (List<Bid>)query.getResultList();
 		return query.getResultList();
 	}
+	
 
 	/**
 	 * Gets a list of all offers which were created by a specific player.
@@ -101,9 +103,10 @@ public class MarketPlaceDAO {
 	 *            The player who has created offers. 
 	 * @return A {@link List} of {@link Offer}s with all offers a player has created.
 	 */
-	public List<Offer> getOffersByPlayer(Player player) {
-		Query query = em.createQuery("select o from Offer o where o.player=:player");
+	public List<Offer> getOffersByPlayer(Player player, String apiKey) {
+		Query query = em.createQuery("select o from Offer o where o.player=:player and o.belongsTo.apiKey=:apiKey");
 		query.setParameter("player", player);
+		query.setParameter("apiKey", apiKey);
 		return query.getResultList();
 	}
 
