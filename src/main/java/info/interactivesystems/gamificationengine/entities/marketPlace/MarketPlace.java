@@ -194,7 +194,7 @@ public class MarketPlace {
 	 * 			(false).
 	 * @return The list of filtered offers.
 	 */
-	private List<Offer> filterOfferByParam(List<Offer> matchingOffers, int count, Comparator comp, boolean reverse) {
+	private List<Offer> filterOfferByParam(List<Offer> matchingOffers, int count, Comparator<Offer> comp, boolean reverse) {
 		int toIndex;
 
 		if (reverse) {
