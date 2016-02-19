@@ -83,7 +83,7 @@ public class PlayerGroupApi {
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.
-//	 * @return Response of PlayerGroup in JSON.
+	 * @return Response of PlayerGroup in JSON.
 	 */
 	@POST
 	@Path("/")

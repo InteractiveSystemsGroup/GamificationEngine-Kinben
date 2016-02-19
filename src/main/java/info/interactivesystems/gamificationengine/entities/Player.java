@@ -508,6 +508,14 @@ public class Player {
 		return returnList;
 	}
 
+	
+	public void spent(int amount) {
+		if (enoughPrize(amount)) {
+			this.coins -= amount;
+		}
+	}
+	
+	
 	/**
 	 * If a player donates an amount of obtained coins to a specified
 	 * DonationCall, the amount will be subtracted of her/his current amount of
