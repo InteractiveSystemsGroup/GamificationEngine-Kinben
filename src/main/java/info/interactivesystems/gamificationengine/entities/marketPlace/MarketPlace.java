@@ -1,7 +1,6 @@
 package info.interactivesystems.gamificationengine.entities.marketPlace;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.Role;
 
 import java.util.ArrayList;
@@ -116,6 +115,13 @@ public class MarketPlace {
 		}
 	}
 
+	
+	public void removeOffer(Offer offer) {
+		if(offers.contains(offer)){
+			this.offers.remove(offer);
+		}
+	}
+	
 	/**
 	 * This method filters all existing offers in a marketplace by a passed role of a player.
 	 * So a list is returned which contains only offers which at least match one role of 

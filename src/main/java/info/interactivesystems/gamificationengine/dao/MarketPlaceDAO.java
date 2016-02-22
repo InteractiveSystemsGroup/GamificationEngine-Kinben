@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.dao;
 
+import info.interactivesystems.gamificationengine.api.MarketPlaceApi;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
@@ -13,12 +14,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Named
 @Stateless
 public class MarketPlaceDAO {
 
 	@PersistenceContext(unitName = PersistenceUnit.PROJECT)
 	private EntityManager em;
+	
+	private static final Logger log = LoggerFactory.getLogger(MarketPlaceApi.class);
 
 	/**
 	 * Stores a new marketplace in the data base.
@@ -195,16 +203,29 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param offerId
 	 *           The id of the offer that should be removed from the data base.
-	 * @return {@link Offer}
+	 * @return The deleted {@link Offer}.
 	 */
 	public Offer deleteOffer(int offerId, String apiKey) {
 		
 		Offer offer = getOffer(offerId, apiKey);
+		log.debug("delete offer " + offer.getId());
+		
 		if (offer != null) {
 			em.remove(offer);
 		}
-		
 		return offer;
 	}
 
+	/**
+	 * Deletes an bid from the data base.
+	 * 
+	 * @param bid
+	 * 		 The bid that should be removed from the database.
+	 * @return The deleted {@link Bid}.
+	 */
+	public Bid deleteBid(Bid bid) {
+		log.debug("delete bid " + bid.getId());
+		em.remove(bid);
+		return bid;
+	}
 }

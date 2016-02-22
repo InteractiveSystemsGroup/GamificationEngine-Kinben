@@ -561,7 +561,8 @@ public class MarketPlaceApi {
 	}
 	
 	/**
-	 * Gets all available offers for a player ordered by date, recent first.
+	 * Gets all available offers for a player ordered by date, recent first. This can be used if a player wants to see 
+	 * all recent offers she/he can complete. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
 	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -641,7 +642,8 @@ public class MarketPlaceApi {
 	}
 	
 	/**
-	 * Gets all available offers for a player ordered by prize, highest prize first.
+	 * Gets all available offers for a player ordered by prize, highest prize first. This can be used if a player wants to see 
+	 * all offers she/he can complete and get the highest prize.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is 
 	 * a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -717,8 +719,10 @@ public class MarketPlaceApi {
 	}
 
 	/**
-	 * Removes the offer with the assigned id from the data base. It is checked, if the passed id is a 
-	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * Removes the offer with the assigned id from the marketPlace and with it all associated bids.
+	 * Every player who has mad a bid to this offer gets her/his amount of coins back.
+	 * It is checked, if the passed id is a positive number otherwise a message for an invalid number 
+	 * is returned. If the API key is not 
 	 * valid an analogous message is returned.
 	 * 
 	 * @param offerId
@@ -734,26 +738,39 @@ public class MarketPlaceApi {
 	public Response deleteOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("offerId aufgerufen");
 		int offId = ValidateUtils.requireGreaterThanZero(offerId);
 		Offer offer = marketPlDao.getOffer(offId, apiKey);
 		ValidateUtils.requireNotNull(offId, offer);
 		
-
-		if (!marketPlDao.getBidsForOffer(offer, apiKey).isEmpty()) {
-			for (Bid bid : marketPlDao.getBidsForOffer(offer, apiKey)) {
+		int prize = offer.getPrize();
+		int sum = 0;
+		
+		List<Bid> bids = marketPlDao.getBidsForOffer(offer, apiKey);
+		if (!bids.isEmpty()) {
+			for (Bid bid : bids) {
 				Player player = bid.getPlayer();
 				player.setCoins(player.getCoins() + bid.getPrize());
 				log.debug("give a bid" + player.getId());
+				sum = sum + bid.getPrize();
+				log.debug(" Sum = " + sum);
+				marketPlDao.deleteBid(bid);
+			}
+		}
+		
+		List<MarketPlace> markets = marketPlDao.getAllMarketPlaceForApiKey(apiKey);
+		if (!markets.isEmpty()) {
+			for (MarketPlace market : markets) {
+				market.removeOffer(offer);
+				log.debug("Removed from market place  " + market.getId());
 			}
 		}
 
+		Player owner = offer.getPlayer();
+		log.debug("Owners Coins " + owner.getCoins());
+		owner.setCoins(owner.getCoins() + (prize-sum));
+		log.debug("Owners Coins " + owner.getCoins());
+		
 		Offer deletedOffer = marketPlDao.deleteOffer(offId, apiKey);
-
-		log.debug("deleted Offer");
-//		if (deletedOffer == null) {
-//			throw new ApiError(Response.Status.NOT_FOUND, "No such Offer: " + offerId);
-//		}
 
 		return ResponseSurrogate.deleted(deletedOffer);
 	}
@@ -782,7 +799,6 @@ public class MarketPlaceApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("offerId aufgerufen");
 		int idOffer = ValidateUtils.requireGreaterThanZero(offerId);
 		int idPlayer = ValidateUtils.requireGreaterThanZero(playerId);
 
@@ -794,9 +810,6 @@ public class MarketPlaceApi {
 		ValidateUtils.requireNotNull(idOffer, offer);
 		
 		log.debug("get Offer");
-//		if (offer == null) {
-//			throw new ApiError(Response.Status.NOT_FOUND, "No such Offer: " + offerId);
-//		}
 
 		Task task = offer.getTask();
 		log.debug("task" + task.getId());
