@@ -5,10 +5,6 @@ public class Progress {
 	private int current;
 	private int full;
 
-	public Progress() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Progress(int current, int full) {
 		this.current = current;
 		this.full = full;

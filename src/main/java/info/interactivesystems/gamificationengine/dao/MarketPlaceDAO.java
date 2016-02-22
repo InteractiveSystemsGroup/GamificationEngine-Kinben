@@ -60,15 +60,15 @@ public class MarketPlaceDAO {
 	}
 
 
-	/**
-	 * Gets a list of bids for a specific player and offer.
-	 * 
-	 * @param player
-	 *            The player who has made the bids on the offer.
-	 * @param offer
-	 *            The offer that is associated with the bids.
-	 * @return A {@link List} of all {@link Bid}s that are associated to a specific player and offer. 
-	 */
+//	/**
+//	 * Gets a list of bids for a specific player and offer.
+//	 * 
+//	 * @param player
+//	 *            The player who has made the bids on the offer.
+//	 * @param offer
+//	 *            The offer that is associated with the bids.
+//	 * @return A {@link List} of all {@link Bid}s that are associated to a specific player and offer. 
+//	 */
 //	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
 //		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
 //		query.setParameter("player", player);
@@ -89,10 +89,7 @@ public class MarketPlaceDAO {
 		Query query = em.createQuery("select b from Bid b where b.offer=:offer and b.belongsTo.apiKey=:apiKey");
 		query.setParameter("offer", offer);
 		query.setParameter("apiKey", apiKey);
-
-		// List<Bid> result = new ArrayList<Bid>();
-		// return result = (List<Bid>)query.getResultList();
-		return query.getResultList();
+		return (List<Bid>)query.getResultList();
 	}
 	
 
@@ -107,7 +104,7 @@ public class MarketPlaceDAO {
 		Query query = em.createQuery("select o from Offer o where o.player=:player and o.belongsTo.apiKey=:apiKey");
 		query.setParameter("player", player);
 		query.setParameter("apiKey", apiKey);
-		return query.getResultList();
+		return (List<Offer>)query.getResultList();
 	}
 
 	/**
@@ -115,38 +112,66 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param offerId
 	 *            The id of the requested offer.
+	 * @param apiKey 
+	 * 			The API key of the organisation to which the offer belongs to.
 	 * @return The {@link Offer} that is associated with the passed id.
 	 */
-	public Offer getOffer(int offerId) {
-		Offer offer = em.find(Offer.class, offerId);
-		return offer;
+	public Offer getOffer(int offerId, String apiKey) {
+		Query query = em.createQuery("select o from Offer o where o.belongsTo.apiKey=:apiKey and o.id = :id", Offer.class);
+		List list = QueryUtils.configureQuery(query, offerId, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((Offer) list.get(0));
 	}
 
 	/**
-	 * Gets a specific marketplace from the data base that is associated with the id.
-	 * 
-	 * @param marketId
-	 *            The id of the requested marketplace.
-	 * @return The {@link MarketPlace} that is associated with the passed id.
-	 */
-	public MarketPlace getMarketPl(int marketId) {
-		MarketPlace marketPl = em.find(MarketPlace.class, marketId);
-		return marketPl;
-	}
-
-	/**
-	 * Gets a list of all marketplaces which are associated with the passed API key.
+	 * Gets all Offers which are offer of all marketplaces of an organisation.
 	 * 
 	 * @param apiKey
-	 *            The API key of the organisation to which the marketplaces belong to.
-	 * @return The {@link List} of {@link MarketPlace} with all marketplaces that belong to the
-	 * 			passed API key.
+	 * 			The API key of the organisation to which the offers belongs to.
+	 * @return
+	 * 		A List of all Offers, which belongs to the organisation with the associated apiKey.
+	 */
+	public List<Offer> getAllOffers(String apiKey) {
+		Query query = em.createQuery("select o from Offer o where o.belongsTo.apiKey=:apiKey", Offer.class);
+		query.setParameter("apiKey", apiKey);
+
+		return query.getResultList();
+	}
+	
+	
+	
+	/**
+	 * Gets a list of all marketplaces of an organisation which is associated with the passed API key.
+	 * 
+	 * @param apiKey
+	 *            The API key of the organisation to which the marketplaces belongs to.
+	 * @return The {@link List} of {@link MarketPlace}s which belong to the passed API key.
 	 */
 	public List<MarketPlace> getAllMarketPlaceForApiKey(String apiKey) {
 		Query query = em.createQuery("select m from MarketPlace m where m.belongsTo.apiKey=:apiKey", MarketPlace.class);
 		query.setParameter("apiKey", apiKey);
 
 		return query.getResultList();
+	}
+	
+	/**
+	 * Gets a specific marketplace from the data base that is associated with the id and the organisation.
+	 * 
+	 * @param id
+	 * 			The id of the requested marketplace.
+	 * @param apiKey
+	 * 			The API key of the organisation to which the marketplaces belongs to.
+	 * @return The requested {@link MarketPlace} that belongs to the passed id and API key.
+	 */
+	public MarketPlace getMarketplace(int id, String apiKey) {
+		Query query = em.createQuery("select m from MarketPlace m where m.belongsTo.apiKey=:apiKey and m.id = :id", MarketPlace.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((MarketPlace) list.get(0));
 	}
 
 	/**
@@ -156,10 +181,12 @@ public class MarketPlaceDAO {
 	 *          The id of the marketplace that should be removed.
 	 * @return The {@link MarketPlace} that is removed from the database.
 	 */
-	public MarketPlace deleteMarketPlace(int id) {
-		// TODO with organisation-check
-		MarketPlace market = em.find(MarketPlace.class, id);
-		em.remove(market);
+	public MarketPlace deleteMarketPlace(int id, String apiKey) {
+		MarketPlace market = getMarketplace(id, apiKey);
+
+		if (market != null) {
+			em.remove(market);
+		}
 		return market;
 	}
 
@@ -170,9 +197,13 @@ public class MarketPlaceDAO {
 	 *           The id of the offer that should be removed from the data base.
 	 * @return {@link Offer}
 	 */
-	public Offer deleteOffer(int offerId) {
-		Offer offer = getOffer(offerId);
-		em.remove(offer);
+	public Offer deleteOffer(int offerId, String apiKey) {
+		
+		Offer offer = getOffer(offerId, apiKey);
+		if (offer != null) {
+			em.remove(offer);
+		}
+		
 		return offer;
 	}
 

@@ -22,7 +22,9 @@ import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -129,7 +131,7 @@ public class MarketPlaceApi {
 	 * 
 	 * @param marketId
 	 *             Required path parameter as integer which uniquely identify the {@link MarketPlace}.
-	 * @param apikey
+	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
 	 * @return Response of MarketPlace in JSON.
@@ -139,7 +141,7 @@ public class MarketPlaceApi {
 	@TypeHint(MarketPlace.class)
 	public Response deleteMarketPlace(
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
-			@QueryParam("apiKey") @ValidApiKey String apikey) {
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("delete Market");
 		if (marketId == null) {
@@ -148,7 +150,7 @@ public class MarketPlaceApi {
 
 		int id = ValidateUtils.requireGreaterThanZero(marketId);
 
-		MarketPlace market = marketPlDao.deleteMarketPlace(id);
+		MarketPlace market = marketPlDao.deleteMarketPlace(id, apiKey);
 
 		if (market == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such MarketPlace: " + marketId);
@@ -235,7 +237,7 @@ public class MarketPlaceApi {
 
 		log.debug("Prize angegeben " + player.getCoins());
 		
-		MarketPlace marketPlace = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketId));
+		MarketPlace marketPlace = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketId), marketPlace);
 		
 		marketPlace.addOffer(offer);
@@ -283,7 +285,7 @@ public class MarketPlaceApi {
 		}
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
 		
 		log.debug("Bids:");
@@ -317,6 +319,124 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.created(bid);
 	}
 
+	
+	/**
+	 * Gets all offers of an organisation (independent of the marketplace). If the API key is not valid 
+	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
+	 * for an invalid number is returned.
+	 * 
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offers belongs to.
+	 * @return A Response as List of Offers in JSON.
+	 */
+	@GET
+	@Path("/offers/*")
+	@TypeHint(Offer[].class)
+	public Response getAllOffers(
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		List<Offer> offers = marketPlDao.getAllOffers(apiKey);
+		
+		for (Offer offer : offers) {
+			log.debug("| Offer:" + offer.getId());
+		}
+
+		return ResponseSurrogate.of(offers);
+	}
+	
+
+	/**
+	 * Gets all offers of an organisation (depending of the marketplace). If the API key is not valid 
+	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
+	 * for an invalid number is returned.
+	 * 
+	 * @param marketPlId
+	 * 			The marketplace whose offers should be considered.
+	 * @param count
+	 *           Optionally the count of offers that should be returned can be passed. 
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offers belongs to.
+	 * @return A Response as List of Offers in JSON.
+	 */
+	@GET
+	@Path("/offers/market/{marketPlaceId}/*")
+	@TypeHint(Offer[].class)
+	public Response getAllOffersOfMarketPlace(
+			@PathParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId),apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
+		
+		List<Offer> offers = new ArrayList<>();
+		if(count != null){
+			offers = market.getOffers().stream()
+	            .limit(Integer.valueOf(count)).collect(Collectors.toList());
+		}else{
+			offers = market.getOffers();
+		}
+		
+		
+		for (Offer offer : offers) {
+			log.debug("| Offer:" + offer.getId());
+		}
+
+		return ResponseSurrogate.of(offers);
+	}
+	
+	
+	/**
+	 * Gets all offers which are amongst others for a specific role (depending of the marketplace). If the API key is not valid 
+	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
+	 * for an invalid number is returned.
+	 * 
+	 * @param roleId
+	 * 			The roles id for which the offers are searched. 
+	 * @param marketPlId
+	 * 			The marketplace whose offers should be considered.
+	 * @param count
+	 * 			 Optionally the count of offers that should be returned can be passed. 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the offers belongs to.
+	 * @return A Response as List of Offers in JSON.
+	 */
+	@GET
+	@Path("/offers/role")
+	@TypeHint(Offer[].class)
+	public Response getAllOffersForRole(
+			@QueryParam("roleId") @NotNull @ValidPositiveDigit(message = "The role id must be a valid number") String roleId,
+			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		int id = Integer.valueOf(roleId);
+		Role role = roleDao.getRole(id, apiKey);
+		ValidateUtils.requireNotNull(id, role);
+		
+		
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
+		
+		List<Offer> offers = new ArrayList<>();
+		if(count != null){
+			offers = market.filterOfferByRole(Arrays.asList(role)).stream()
+	            .limit(Integer.valueOf(count)).collect(Collectors.toList());
+		}else{
+			offers = market.filterOfferByRole(Arrays.asList(role));
+		}
+		
+		for (Offer offer : offers) {
+			log.debug("| Offer:" + offer.getId());
+		}
+
+		return ResponseSurrogate.of(offers);
+	}
+		
+	
 	/**
 	 * Gets all offers a specific player has created (independent of the marketplace). If the API key is not valid 
 	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
@@ -360,6 +480,8 @@ public class MarketPlaceApi {
 	 *            The player whose roles are checked. This parameter is required.
 	 * @param marketPlId
 	 *            The marketplace whose offers are filtered.
+	 * @param count
+	 * 			 Optionally the count of offers that should be returned can be passed. 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.
@@ -368,28 +490,33 @@ public class MarketPlaceApi {
 	@GET
 	@Path("/{playerId}/getOfferRole")
 	@TypeHint(Offer[].class)
-	public Response getOffersByRole(
+	public Response getOffersByPlayerRole(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId),apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
 		
 		List<Offer> matchingOffers = new ArrayList<Offer>();
 		if (market.getOffers().size() > 0) {
 			log.debug("Marketplace: " + market.getId());
-			matchingOffers = market.filterOfferByRole(player, player.getBelongsToRoles());
+			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-			for (Offer offer : matchingOffers) {
-				log.debug("Result Offer : " + offer.getId());
+//			if (matchingOffers.size() <= 0) {
+//				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers fot this role");
+//			}
+			
+			if(count != null){
+				matchingOffers = matchingOffers.stream().limit(Integer.valueOf(count)).collect(Collectors.toList());
 			}
 			
-			if (matchingOffers.size() <= 0) {
-				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers fot this role");
+			for (Offer offer : matchingOffers) {
+				log.debug("Result Offer : " + offer.getId());
 			}
 			
 			return ResponseSurrogate.of(matchingOffers);
@@ -399,6 +526,40 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.of(matchingOffers);
 	}
 
+	/**
+	 * Gets all offers of the marketplace ordered by date, recent first.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
+	 * a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param marketPlId
+	 *            The marketplace whose offers are filtered.
+	 * @param count
+	 *            Optionally the count of offers that should be returned can be passed. The default value is 10. 
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return Response as List of Offers in JSON.
+	 */
+	@GET
+	@Path("/recentOffers")
+	@TypeHint(Offer[].class)
+	public Response getRecentOffers(
+			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
+		
+
+			List<Offer> recentOffers = market.filterOfferByDate(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
+
+			for (Offer offer : recentOffers) {
+				log.debug("| Offer:" + offer.getId());
+			}
+			return ResponseSurrogate.of(recentOffers);
+	}
+	
 	/**
 	 * Gets all available offers for a player ordered by date, recent first.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is
@@ -416,9 +577,9 @@ public class MarketPlaceApi {
 	 * @return Response as List of Offers in JSON.
 	 */
 	@GET
-	@Path("/{playerId}/getRecentOffers")
+	@Path("/{playerId}/recentOffersRoleFiltered")
 	@TypeHint(Offer[].class)
-	public Response getRecentOffers(@PathParam("playerId") @NotNull @ValidPositiveDigit String playerId,
+	public Response getRecentOffersRoleFiltered(@PathParam("playerId") @NotNull @ValidPositiveDigit String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
@@ -426,25 +587,59 @@ public class MarketPlaceApi {
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 		
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
 		
 		List<Offer> matchingOffers;
-		if (market.getOffers().size() > 0) {
-			matchingOffers = market.filterOfferByRole(player, player.getBelongsToRoles());
+			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-			if (matchingOffers.size() <= 0) {
-				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
-			}
+//			if (matchingOffers.size() <= 0) {
+//				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
+//			}
 
 			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
+			for (Offer offer : recentOffers) {
+				log.debug("| Offer:" + offer.getId());
+			}
 			return ResponseSurrogate.of(recentOffers);
-		}
-
-		throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
 	}
 
+	/**
+	 * Gets all offers of a marketplace ordered by prize, highest prize first.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is 
+	 * a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param marketPlId
+	 *            The marketplace whose offers are filtered.
+	 * @param count
+	 *            Optionally the count of offers that should be returned can be passed. The default value is 10. 
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the player belongs to.
+	 * @return Response as List of Offers in JSON.
+	 */
+	@GET
+	@Path("/highestOffers")
+	@TypeHint(Offer[].class)
+	public Response getHighestOffers(
+			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
+		
+		List<Offer> highestOffers = market.filterOffersByPrize(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
+
+		for (Offer offer : highestOffers) {
+			log.debug("| Offer:" + offer.getId());
+		}
+			
+		return ResponseSurrogate.of(highestOffers);
+
+	}
+	
 	/**
 	 * Gets all available offers for a player ordered by prize, highest prize first.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the player id is 
@@ -462,9 +657,9 @@ public class MarketPlaceApi {
 	 * @return Response as List of Offers in JSON.
 	 */
 	@GET
-	@Path("/{playerId}/getHighestOffers")
+	@Path("/{playerId}/highestOffersRoleFiltered")
 	@TypeHint(Offer[].class)
-	public Response getHighestOffers(
+	public Response getHighestOffersRoleFiltered(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
@@ -473,22 +668,22 @@ public class MarketPlaceApi {
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 		
-		MarketPlace market = marketPlDao.getMarketPl(ValidateUtils.requireGreaterThanZero(marketPlId));
+		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
 		
 		List<Offer> matchingOffers;
-		if (market.getOffers().size() > 0) {
-			matchingOffers = market.filterOfferByRole(player, player.getBelongsToRoles());
+			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
 			if (matchingOffers.size() <= 0) {
 				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for this role");
 			}
 			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
+			for (Offer offer : highestOffers) {
+				log.debug("| Offer:" + offer.getId());
+			}
+			
 			return ResponseSurrogate.of(highestOffers);
-		}
-
-		throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
 	}
 
 	/**
@@ -509,7 +704,7 @@ public class MarketPlaceApi {
 	public Response getBids(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 	
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
 		
 		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer, apiKey);
@@ -528,7 +723,7 @@ public class MarketPlaceApi {
 	 * 
 	 * @param offerId
 	 *            The offer which should be removed. This parameter is required. 
-	 * @param apikey
+	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offer belongs to.
 	 * @return Response of Offer in JSON.
@@ -541,7 +736,7 @@ public class MarketPlaceApi {
 
 		log.debug("offerId aufgerufen");
 		int offId = ValidateUtils.requireGreaterThanZero(offerId);
-		Offer offer = marketPlDao.getOffer(offId);
+		Offer offer = marketPlDao.getOffer(offId, apiKey);
 		ValidateUtils.requireNotNull(offId, offer);
 		
 
@@ -553,7 +748,7 @@ public class MarketPlaceApi {
 			}
 		}
 
-		Offer deletedOffer = marketPlDao.deleteOffer(offId);
+		Offer deletedOffer = marketPlDao.deleteOffer(offId, apiKey);
 
 		log.debug("deleted Offer");
 //		if (deletedOffer == null) {
@@ -595,7 +790,7 @@ public class MarketPlaceApi {
 		Player player = playerDao.getPlayer(idPlayer, apiKey);
 		ValidateUtils.requireNotNull(idPlayer, player);
 		
-		Offer offer = marketPlDao.getOffer(idOffer);
+		Offer offer = marketPlDao.getOffer(idOffer, apiKey);
 		ValidateUtils.requireNotNull(idOffer, offer);
 		
 		log.debug("get Offer");
@@ -649,7 +844,7 @@ public class MarketPlaceApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Offer");
 
-		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId));
+		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
 
 		if ("null".equals(value)) {

@@ -105,7 +105,8 @@ public class MarketPlace {
 	/**
 	 * Adds one new offer to the list of offers.
 	 * 
-	 * @param offer The offer that is added to the list of offers.
+	 * @param offer 
+	 * 			The offer that is added to the list of offers.
 	 *
 //	 * @return The new list of offers of the marketplace.
 	 */
@@ -113,7 +114,6 @@ public class MarketPlace {
 		if(!offers.contains(offer)){
 			this.offers.add(offer);
 		}
-//		return offers;
 	}
 
 	/**
@@ -121,18 +121,16 @@ public class MarketPlace {
 	 * So a list is returned which contains only offers which at least match one role of 
 	 * the player.
 	 *   
-	 * @param player
+	 * @param roles
 	 * 			The player whose roles are checked if they match an offer.
-	 * @param list
 	 * 			The list of Roles which are the hint for filtering.
 	 * @return The list of all offers which are in the marketplace and a player is allowed
 	 * 			to complete.
 	 */
-	public List<Offer> filterOfferByRole(Player player, List<Role> list) {
+	public List<Offer> filterOfferByRole(List<Role> roles) {
 		List<Offer> matchingOffers = new ArrayList<>();
 		for (Offer offer : this.getOffers()) {
-			for (Role r : player.getBelongsToRoles()) {
-//				if (offer.getAllowedForRole().contains(r)) {
+			for (Role r : roles) {
 					if (offer.getTask().getAllowedFor().contains(r)) {
 					matchingOffers.add(offer);
 					break;

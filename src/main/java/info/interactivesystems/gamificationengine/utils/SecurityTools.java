@@ -8,11 +8,11 @@ public class SecurityTools {
 	}
 
 	/**
-	 * Generates api-key by creating a new universal unique identifier (UUID).
+	 * Generates API-Key by creating a new universal unique identifier (UUID).
 	 * TODO: Maybe change this to a encrypted timestamp/salt pair to decrypt
 	 * creation date.
 	 * 
-	 * @return a randomly generated code used as API key
+	 * @return A randomly generated code used as API key
 	 */
 	public static String generateApiKey() {
 		return UUID.randomUUID().toString();
