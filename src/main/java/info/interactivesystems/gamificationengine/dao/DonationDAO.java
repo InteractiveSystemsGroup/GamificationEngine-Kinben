@@ -1,6 +1,8 @@
 package info.interactivesystems.gamificationengine.dao;
 
 import info.interactivesystems.gamificationengine.entities.DonationCall;
+import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class DonationDAO {
 	 */
 	public int insertDonationCall(DonationCall dCall) {
 		em.persist(dCall);
-		em.flush();
+//		em.flush();
 		return dCall.getId();
 	}
 
@@ -40,8 +42,15 @@ public class DonationDAO {
 	 *            The id of the call for donations.
 	 * @return The found {@link DonationCall} or null.
 	 */
-	public DonationCall getDonationCall(int donationCallId) {
-		return em.find(DonationCall.class, donationCallId);
+	public DonationCall getDonationCall(int donationCallId, String apiKey) {
+//		return em.find(DonationCall.class, donationCallId);
+		
+		Query query = em.createQuery("select dC from DonationCall dC where dC.belongsTo.apiKey=:apiKey and dC.id = :id", DonationCall.class);
+		List list = QueryUtils.configureQuery(query, donationCallId, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((DonationCall) list.get(0));
 	}
 
 	/**
@@ -58,6 +67,7 @@ public class DonationDAO {
 		return query.getResultList();
 	}
 
+	
 	/**
 	 * Removes a call for donations from the data base.
 	 * 
@@ -68,9 +78,13 @@ public class DonationDAO {
 	 *            The id of the call for daonations.
 	 * @return {@link DonationCall}.
 	 */
-	public DonationCall deleteDonationCall(String apikey, int dCId) {
-		DonationCall donationCall = getDonationCall(dCId);
-		em.remove(donationCall);
+	public DonationCall deleteDonationCall(String apiKey, int dCId) {
+		DonationCall donationCall = getDonationCall(dCId, apiKey);
+		
+		if (donationCall != null && donationCall.isGoalReached()) {
+			em.remove(donationCall);
+		}
+		
 		return donationCall;
 	}
 

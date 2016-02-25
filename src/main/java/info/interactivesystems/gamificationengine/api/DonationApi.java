@@ -9,6 +9,9 @@ import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.entities.DonationCall;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.utils.Progress;
+
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -74,17 +78,18 @@ public class DonationApi {
 	@Path("/")
 	@TypeHint(DonationCall.class)
 	public Response createDonationCall(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
-			@QueryParam("goal") @ValidPositiveDigit String goal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+			@QueryParam("goalAmount") @NotNull @ValidPositiveDigit String goalAmount,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("create New Donation Call ");
-
+		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		DonationCall dCall = new DonationCall();
 		dCall.setName(name);
 		dCall.setBelongsTo(organisation);
 		dCall.setDescription(description);
-		dCall.setGoal(ValidateUtils.requireGreaterThanZero(goal));
+		dCall.setGoalAmount(ValidateUtils.requireGreaterThanZero(goalAmount));
 
 		donationDao.insertDonationCall(dCall);
 
@@ -92,9 +97,10 @@ public class DonationApi {
 	}
 
 	/**
-	 * With this method a player donates a specific amount of coins if she/he has enough coins. 
-	 * These coins are subtracted from the player's current account and will be added to the Donation
-	 * Call's current amount. If the API key is not valid an analogous message is returned.
+	 * With this method a player donates a specific amount of coins if she/he has enough coins and the given
+	 * amount hasn't been already reached.  
+	 * These coins are subtracted from the player's current account and will be added to the DonationCall's 
+	 * current amount. If the API key is not valid an analogous message is returned.
 	 * It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param dId
@@ -117,23 +123,22 @@ public class DonationApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int id = ValidateUtils.requireGreaterThanZero(dId);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		DonationCall dCall = donationDao.getDonationCall(id);
+		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
+		ValidateUtils.requireNotNull(id, dCall);
 
-		if (dCall == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such DonationCallId: " + id);
+		if(!dCall.checkIsReached()){
+			int pId = ValidateUtils.requireGreaterThanZero(playerId);
+			Player player = playerDao.getPlayer(pId, apiKey);
+			ValidateUtils.requireNotNull(pId, player);
+	
+			if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(amount))) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such a donation.");
+			}
+			player.donate(dCall, ValidateUtils.requireGreaterThanZero(amount));
+	
+		}else{
+			return ResponseSurrogate.of("Call for Donation is already completed");
 		}
-
-		int pId = ValidateUtils.requireGreaterThanZero(playerId);
-		Player player = playerDao.getPlayer(pId, organisation.getApiKey());
-
-		ValidateUtils.requireNotNull(pId, player);
-
-		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(amount))) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such a donation.");
-		}
-		player.donate(dCall, ValidateUtils.requireGreaterThanZero(amount));
-
 		return ResponseSurrogate.created(dCall);
 	}
 
@@ -144,7 +149,7 @@ public class DonationApi {
 	 * otherwise a message for an invalid number is returned.
 	 * 
 	 * @param dId
-	 * 			Required path parameter as integer which uniquely identify the {@link DonationCall}.
+	 * 			Required path parameter as integer which uniquely identify the DonationCall.
 	 * @param apiKey
 	 * 			The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this call for donations belongs to.
@@ -156,18 +161,145 @@ public class DonationApi {
 	public Response getDonationCall(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int id = ValidateUtils.requireGreaterThanZero(dId);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		DonationCall dCall = donationDao.getDonationCall(id);
-
-		if (dCall == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such DonationCallId: " + id);
-		}
+		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
+		ValidateUtils.requireNotNull(id, dCall);
 
 		return ResponseSurrogate.of(dCall);
 	}
+	
+	/**
+	 * Returns the call for donation which are associated with the organisation. If the API key is not 
+	 * valid an analogous message is returned. 
+	 * 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this call for donations belongs to.
+	 * @return Response of List with all DonationCalls of one organisaiton in JSON.
+	 */
+	@GET
+	@Path("/*")
+	@TypeHint(DonationCall[].class)
+	public Response getDonationCalls(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		List<DonationCall> dCalls = donationDao.getDonationCalls(apiKey);
+		return ResponseSurrogate.of(dCalls);
+	}
+		
+	/**
+	 * Returns the progress of an call for donations: the current amount and the amount that should be
+	 * reached. If the API key is not valid an analogous message is returned. It is also checked, if the 
+	 * id is a positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param dId
+	 * 			Required path parameter as integer which uniquely identify the DonationCall.
+	 * @param apiKey
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this call for donations belongs to.
+	 * @return  Returns the current amount and the amount that should be reached in JSON.
+	 */
+	@GET
+	@Path("/{id}/progress")
+	@TypeHint(DonationCall[].class)
+	public Response getProgess(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get progress");
+		
+		int id = ValidateUtils.requireGreaterThanZero(dId);
+		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
+		ValidateUtils.requireNotNull(id, dCall);
+
+		Progress progress = new Progress(dCall.getCurrentAmount(), dCall.getGoalAmount());
+		
+		return ResponseSurrogate.of(progress);
+	}
+	
+	/**
+	 * Returns a list of all donors that have donated to a specific call for donoation. If the API key is 
+	 * not valid an analogous message is returned. It is also checked, if the id is a positive number 
+	 * otherwise a message for an invalid number is returned.
+	 * 
+	 * @param dId
+	 * 			 The id of the call for donations to which all donors should be returned.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this call for donations belongs to.
+	 * @return Returns a list of all donors of a specific call for donations in JSON.
+	 */
+	@GET
+	@Path("/{id}/donors")
+	@TypeHint(DonationCall[].class)
+	public Response getDonors(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		
+		int id = ValidateUtils.requireGreaterThanZero(dId);
+		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
+		ValidateUtils.requireNotNull(id, dCall);
+
+		List<Player> donors = dCall.getDonors();
+		
+		return ResponseSurrogate.of(donors);
+	}
+	
+	/**
+	 * With this method the fields of one specific call for donations can be changed. 
+	 * For this the associated id, the API key of the specific organisation, the 
+	 * name of the field and the new field's value are needed. 
+	 * To modify the name or the description of a call for donation, the new value 
+	 * can be passed.  
+	 * If the API key is not valid an analogous message is returned. It is 
+	 * also checked, if the id is a positive number otherwise a message for 
+	 * an invalid number is returned.
+	 * 
+	 * @param id
+	 *            Required integer which uniquely identify the DonationCall.
+	 * @param attribute
+	 *            The name of the attribute which should be modified. This 
+	 *            parameter is required. The following names of attributes can 
+	 *            be used to change the associated field:
+	 *            "name" and "description"
+	 * @param value
+	 *            The new value of the attribute. This parameter is required.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this call for donations belongs to.
+	 * @return Response of DonationCall in JSON.
+	 */
+	@PUT
+	@Path("/{id}/attributes")
+	@TypeHint(DonationCall.class)
+	public Response changeAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
+			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		log.debug("change Attribute of Player");
+
+		int dCallId = ValidateUtils.requireGreaterThanZero(id);
+
+		DonationCall dCall = donationDao.getDonationCall(dCallId, apiKey); 
+
+		// not: id -> generated & belongsTo -> fixed
+		switch (attribute) {
+		case "name":
+			dCall.setName(value);
+			break;
+
+		case "description":
+			dCall.setDescription(value);
+			break;
+
+
+		default:
+			break;
+		}
+
+		donationDao.insertDonationCall(dCall);
+		return ResponseSurrogate.updated(dCall);
+	}
 
 	/**
-	 * Removes the call for donations with the assigned id from data base. It is checked, if the passed id is a 
+	 * Removes the call for donations with the assigned id from data base. Here it is assumed, that the Call for
+	 * donations is only deleted when its goal to reach is already fulfilled. So every donor dosen't get her/his 
+	 * donation back, because the goal is fulfilled.
+	 * It is checked, if the passed id is a 
 	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
 	 * valid an analogous message is returned.
 	 * 
@@ -182,15 +314,12 @@ public class DonationApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(DonationCall.class)
-	public Response deleteDonationCall(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no id transferred");
-		}
+	public Response deleteDonationCall(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int dId = ValidateUtils.requireGreaterThanZero(id);
 		DonationCall dCall = donationDao.deleteDonationCall(apiKey, dId);
-
 		ValidateUtils.requireNotNull(dId, dCall);
+		
 		return ResponseSurrogate.deleted(dCall);
 	}
 

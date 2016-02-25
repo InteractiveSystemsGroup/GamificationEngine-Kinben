@@ -144,13 +144,14 @@ public class MarketPlaceApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("delete Market");
-		if (marketId == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no marketPlaceId transferred");
-		}
+//		if (marketId == null) {
+//			throw new ApiError(Response.Status.FORBIDDEN, "no marketPlaceId transferred");
+//		}
 
 		int id = ValidateUtils.requireGreaterThanZero(marketId);
 
 		MarketPlace market = marketPlDao.deleteMarketPlace(id, apiKey);
+		ValidateUtils.requireNotNull(id, market);
 
 		if (market == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such MarketPlace: " + marketId);
@@ -417,7 +418,6 @@ public class MarketPlaceApi {
 		Role role = roleDao.getRole(id, apiKey);
 		ValidateUtils.requireNotNull(id, role);
 		
-		
 		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
 		
@@ -507,10 +507,6 @@ public class MarketPlaceApi {
 			log.debug("Marketplace: " + market.getId());
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-//			if (matchingOffers.size() <= 0) {
-//				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers fot this role");
-//			}
-			
 			if(count != null){
 				matchingOffers = matchingOffers.stream().limit(Integer.valueOf(count)).collect(Collectors.toList());
 			}
@@ -522,7 +518,6 @@ public class MarketPlaceApi {
 			return ResponseSurrogate.of(matchingOffers);
 		}
 
-//		throw new ApiError(Response.Status.NOT_FOUND, "There are no offers");
 		return ResponseSurrogate.of(matchingOffers);
 	}
 
@@ -550,14 +545,13 @@ public class MarketPlaceApi {
 
 		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
-		
 
-			List<Offer> recentOffers = market.filterOfferByDate(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
+		List<Offer> recentOffers = market.filterOfferByDate(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
 
-			for (Offer offer : recentOffers) {
-				log.debug("| Offer:" + offer.getId());
-			}
-			return ResponseSurrogate.of(recentOffers);
+		for (Offer offer : recentOffers) {
+			log.debug("| Offer:" + offer.getId());
+		}
+		return ResponseSurrogate.of(recentOffers);
 	}
 	
 	/**
@@ -638,7 +632,6 @@ public class MarketPlaceApi {
 		}
 			
 		return ResponseSurrogate.of(highestOffers);
-
 	}
 	
 	/**

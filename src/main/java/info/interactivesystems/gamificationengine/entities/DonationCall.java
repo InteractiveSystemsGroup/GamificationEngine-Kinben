@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -35,7 +35,8 @@ public class DonationCall {
 
 	private String description;
 
-	private int goal;
+	@NotNull
+	private int goalAmount;
 
 	private int currentAmount;
 
@@ -46,6 +47,10 @@ public class DonationCall {
 
 	public DonationCall() {
 		goalReached = false;
+		currentAmount = 0;
+		
+		donors = new ArrayList<>();
+		
 	}
 
 	/**
@@ -130,8 +135,8 @@ public class DonationCall {
 	 * 
 	 * @return The value of the goal as int.
 	 */
-	public int getGoal() {
-		return goal;
+	public int getGoalAmount() {
+		return goalAmount;
 	}
 
 	/**
@@ -140,8 +145,8 @@ public class DonationCall {
 	 * @param goal
 	 *            The amount of coins that should be reached.
 	 */
-	public void setGoal(int goal) {
-		this.goal = goal;
+	public void setGoalAmount(int goalAmount) {
+		this.goalAmount = goalAmount;
 	}
 
 	/**
@@ -207,8 +212,8 @@ public class DonationCall {
 	 * 
 	 * @return Boolean value if the predetermined goal is reached (true) or not (false).
 	 */
-	public boolean isReached() {
-		if (currentAmount >= goal) {
+	public boolean checkIsReached() {
+		if (currentAmount >= goalAmount) {
 			goalReached = true;
 			return true;
 		} else {
@@ -232,6 +237,6 @@ public class DonationCall {
 		this.currentAmount += amount;
 		this.donors.add(player);
 
-		return this.isReached();
+		return this.checkIsReached();
 	}
 }
