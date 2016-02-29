@@ -77,20 +77,6 @@ public class RewardDAO {
 		return query.getResultList();
 	}
 
-	/**
-	 * Removes a reward from the data base.
-	 * 
-	 * @param id
-	 * 		 The id of the reward which should be deleted.
-	 * @param organisation
-	 * 		 The organisaiton the reward is associated with.
-	 * @return The {@link Reward} that is associated with the passed id and organisation.
-	 */
-	public Reward deleteRewardByIdAndOrganisation(int id, Organisation organisation) {
-		Reward reward = getRewardByIdAndOrganisation(id, organisation);
-		em.remove(reward);
-		return reward;
-	}
 
 	/**
 	 * Gets all rewards with the passed ids which match the also passed API key.
@@ -107,5 +93,23 @@ public class RewardDAO {
 		query.setParameter("apiKey", apiKey);
 		query.setParameter("ids", ids);
 		return query.getResultList();
+	}
+	
+	/**
+	 * Removes a reward from the data base.
+	 * 
+	 * @param id
+	 * 		 The id of the reward which should be deleted.
+	 * @param organisation
+	 * 		 The organisaiton the reward is associated with.
+	 * @return The {@link Reward} that is associated with the passed id and organisation.
+	 */
+	public Reward deleteRewardByIdAndOrganisation(int id, Organisation organisation) {
+		Reward reward = getRewardByIdAndOrganisation(id, organisation);
+		
+		if(reward!=null){
+			em.remove(reward);
+		}
+		return reward;
 	}
 }

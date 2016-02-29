@@ -33,16 +33,30 @@ public class PlayerLevelDAO {
 	/**
 	 * Gets a player level by its id and organisation.
 	 * 
-	 * @param organisationId
-	 * 			The of the organisaiton the player level is associated with.
 	 * @param playerLevelId
 	 * 			The id of the requested player level.
+	 * @param apiKey
+	 * 			   The API key affiliated to one specific organisation, to which
+	 *            the player level belongs to.
 	 * @return The {@link PlayerLevel} which is associated with the passed API key.
 	 */
-	public PlayerLevel getPlayerLevel(String organisationId, int playerLevelId) {
-		return em.find(PlayerLevel.class, playerLevelId);
+	public PlayerLevel getPlayerLevel(int playerLevelId, String apiKey) {
+		Query query = em.createQuery("select pL from PlayerLevel pL where pL.belongsTo.apiKey=:apiKey and pL.id = :id", PlayerLevel.class);
+		List list = QueryUtils.configureQuery(query, playerLevelId, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((PlayerLevel) list.get(0));
 	}
 
+	/**
+	 * Get all player levels of one specific organisation.
+	 * 
+	 * @param apiKey
+	 * 			The API key affiliated to one specific organisation, to which
+	 *            all player levels belongs to.
+	 * @return The list with all player levels of one specific organisation.
+	 */
 	public List<PlayerLevel> getPlayerLevels(String apiKey) {
 		Query query = em.createQuery("select pl from PlayerLevel pl where pl.belongsTo.apiKey=:apiKey");
 		query.setParameter("apiKey", apiKey);
@@ -52,15 +66,20 @@ public class PlayerLevelDAO {
 	/**
 	 * Removes a player level from the data base.
 	 * 
-	 * @param apikey
-	 * 			  The API key of the organisation to which the player level belongs to.
 	 * @param pLId
 	 * 			The id of the requested player level.
+	 * @param apiKey
+	 * 			 The API key affiliated to one specific organisation, to which
+	 *            all player levels belongs to.
 	 * @return The {@link PlayerLevel} which is associated with the passed id and API key.
 	 */
-	public PlayerLevel deletePlayerLevel(String apikey, int pLId) {
-		PlayerLevel playerLevel = getPlayerLevel(apikey, pLId);
-		em.remove(playerLevel);
+	public PlayerLevel deletePlayerLevel(int pLId, String apiKey) {
+		PlayerLevel playerLevel = getPlayerLevel(pLId, apiKey);
+		
+		if (playerLevel != null) {
+			em.remove(playerLevel);
+		}
+		
 		return playerLevel;
 	}
 }

@@ -193,10 +193,7 @@ public class RewardApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(Reward.class)
-	public Response deleteReward(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no rewardId transferred");
-		}
+	public Response deleteReward(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		int rewardId = ValidateUtils.requireGreaterThanZero(id);

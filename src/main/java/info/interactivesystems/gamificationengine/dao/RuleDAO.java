@@ -91,7 +91,10 @@ public class RuleDAO {
 	 */
 	public GoalRule deleteRuleByIdAndOrganisation(int id, Organisation organisation) {
 		GoalRule rule = getRuleByIdAndOrganisation(id, organisation);
-		em.remove(rule);
+		
+		if(rule!=null){
+			em.remove(rule);
+		}
 		return rule;
 	}
 

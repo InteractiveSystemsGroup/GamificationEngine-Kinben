@@ -190,31 +190,6 @@ public class TaskApi {
 		return ResponseSurrogate.of(task);
 	}
 
-	/**
-	 * Removes the task with the assigned id and associated API key from data base. It is checked, 
-	 * if the passed id is a positive number otherwise a message for an invalid number is returned. 
-	 * If the API key is not valid an analogous message is returned.
-	 * 
-	 * @param id
-	 *          Required integer which uniquely identify the {@link Task}.
-	 * @param apiKey
-	 *          The valid query parameter API key affiliated to one specific organisation, 
-	 *          to which this task belongs to.
-	 * @return Response of Task in JSON.
-	 */
-	@DELETE
-	@Path("/{id}")
-	@TypeHint(Task.class)
-	public Response deleteTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		int taskId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Task task = taskDao.deleteTaskByIdAndOrganisation(taskId, organisation);
-
-		ValidateUtils.requireNotNull(taskId, task);
-		return ResponseSurrogate.deleted(task);
-	}
 
 	/**
 	 * This method completes a task with the assigned id and associated API key. The player-id
@@ -356,4 +331,31 @@ public class TaskApi {
 		task.setAllowedFor(roles);
 	}
 
+	
+	/**
+	 * Removes the task with the assigned id and associated API key from data base. It is checked, 
+	 * if the passed id is a positive number otherwise a message for an invalid number is returned. 
+	 * If the API key is not valid an analogous message is returned.
+	 * 
+	 * @param id
+	 *          Required integer which uniquely identify the {@link Task}.
+	 * @param apiKey
+	 *          The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this task belongs to.
+	 * @return Response of Task in JSON.
+	 */
+	@DELETE
+	@Path("/{id}")
+	@TypeHint(Task.class)
+	public Response deleteTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+
+		int taskId = ValidateUtils.requireGreaterThanZero(id);
+		Task task = taskDao.deleteTaskByIdAndOrganisation(taskId, organisation);
+		ValidateUtils.requireNotNull(taskId, task);
+		
+		return ResponseSurrogate.deleted(task);
+	}
 }

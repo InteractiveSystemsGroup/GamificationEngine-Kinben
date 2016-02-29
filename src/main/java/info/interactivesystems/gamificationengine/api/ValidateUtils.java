@@ -32,7 +32,7 @@ public class ValidateUtils {
 	 */
 	public static int requireGreaterThanZero(int id) {
 		if (id <= 0) {
-			throw new ApiError(Response.Status.FORBIDDEN, "transferred integer has to be greater then zero");
+			throw new ApiError(Response.Status.FORBIDDEN, "transferred integer has to be greater than zero");
 		}
 		return id;
 	}

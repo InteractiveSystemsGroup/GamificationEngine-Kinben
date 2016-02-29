@@ -185,7 +185,10 @@ public class PlayerGroupApi {
 		log.debug("change Attribute of PlayerGroup");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		PlayerGroup plGroup = groupDao.getPlayerGroupByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(id), organisation);
+		
+		int groupId = ValidateUtils.requireGreaterThanZero(id);
+		PlayerGroup plGroup = groupDao.getPlayerGroupByIdAndOrganisation(groupId, organisation);
+		ValidateUtils.requireNotNull(groupId, plGroup);
 
 		if ("null".equals(value)) {
 			value = null;
@@ -235,35 +238,6 @@ public class PlayerGroupApi {
 		plGroup.setPlayers(players);
 	}
 
-	/**
-	 * Removes the group with the assigned id from data base. It is checked, if the passed id is a 
-	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
-	 * valid an analogous message is returned.
-	 * 
-	 * @param id
-	 *           Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
-	 * @param apiKey
-	 *           The valid query parameter API key affiliated to one specific organisation, 
-	 *           to which this group of players belongs to.
-	 * @return Response of PlayerGroup in JSON.
-	 */
-	@DELETE
-	@Path("/{id}")
-	@TypeHint(PlayerGroup.class)
-	public Response deletePlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "No GroupId transferred");
-		}
-
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		PlayerGroup plGroup = groupDao.deletePlayerGroupByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(id), organisation);
-
-		if (plGroup == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + plGroup);
-		}
-
-		return ResponseSurrogate.deleted(plGroup);
-	}
 
 	/**
 	 * Returns a list of all already finished goals of a specific group of players. 
@@ -511,5 +485,35 @@ public class PlayerGroupApi {
 		
 		groupDao.insertGroup(group); 
 		return ResponseSurrogate.updated(group);
+	}
+	
+	/**
+	 * Removes the group with the assigned id from data base. It is checked, if the passed id is a 
+	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
+	 * valid an analogous message is returned.
+	 * 
+	 * @param id
+	 *           Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param apiKey
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
+	 * @return Response of PlayerGroup in JSON.
+	 */
+	@DELETE
+	@Path("/{id}")
+	@TypeHint(PlayerGroup.class)
+	public Response deletePlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		if (id == null) {
+			throw new ApiError(Response.Status.FORBIDDEN, "No GroupId transferred");
+		}
+
+		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		PlayerGroup plGroup = groupDao.deletePlayerGroupByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(id), organisation);
+
+		if (plGroup == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + plGroup);
+		}
+
+		return ResponseSurrogate.deleted(plGroup);
 	}
 }

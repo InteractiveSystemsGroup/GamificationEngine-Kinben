@@ -64,7 +64,10 @@ public class PlayerGroupDAO {
 	 */
 	public PlayerGroup deletePlayerGroupByIdAndOrganisation(int groupId, Organisation organisation) {
 		PlayerGroup plGroup = getPlayerGroupByIdAndOrganisation(groupId, organisation);
-		em.remove(plGroup);
+		
+		if(plGroup != null){
+			em.remove(plGroup);
+		}
 		return plGroup;
 	}
 

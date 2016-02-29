@@ -129,6 +129,7 @@ public class PresentDAO {
 	 * @return The Present which is removed.
 	 */
 	public <T> T deletePresent(T present) {
+		
 		em.remove(present);
 		return present;
 	}

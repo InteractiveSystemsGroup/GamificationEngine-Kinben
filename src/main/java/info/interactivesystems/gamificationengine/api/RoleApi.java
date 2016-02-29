@@ -153,7 +153,6 @@ public class RoleApi {
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);
 
-		// not changeable: id -> generated & belongsTo;
 		switch (attribute) {
 		case "name":
 			role.setName(value);
@@ -179,13 +178,10 @@ public class RoleApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(Role.class)
-	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");
-		}
+	public Response delete(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
-		Role role = roleDao.delete(roleId, apiKey);
+		Role role = roleDao.deleteRole(roleId, apiKey);
 
 		ValidateUtils.requireNotNull(roleId, role);
 		return ResponseSurrogate.deleted(role);

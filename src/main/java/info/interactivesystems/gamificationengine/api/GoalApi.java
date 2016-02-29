@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.api;
 
-import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
@@ -167,7 +166,6 @@ public class GoalApi {
 		}
 		goal.setCanCompletedBy(roles);
 
-		// persist Goal
 		goalDao.insertGoal(goal);
 
 		return ResponseSurrogate.created(goal);
@@ -208,11 +206,13 @@ public class GoalApi {
 	@Path("/{id}")
 	@TypeHint(Goal.class)
 	public Response getGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+	
 		Goal goal = goalDao.getGoalByIdAndOrganisation(goalId, organisation);
-
 		ValidateUtils.requireNotNull(goalId, goal);
+		
 		return ResponseSurrogate.of(goal);
 	}
 
@@ -245,11 +245,13 @@ public class GoalApi {
 	@TypeHint(Goal.class)
 	public Response changeGoalAttributes(@PathParam("id") @ValidPositiveDigit String goalId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("change Attribute of Goal");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThanZero(goalId));
+		ValidateUtils.requireNotNull(Integer.valueOf(goalId),goal);
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
 			value = null;
@@ -341,15 +343,13 @@ public class GoalApi {
 	@Path("/{id}")
 	@TypeHint(Goal.class)
 	public Response deleteGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no goalId transferred");
-		}
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
 		Goal goal = goalDao.deleteGoalByIdAndOrganisation(goalId, organisation);
-
 		ValidateUtils.requireNotNull(goalId, goal);
+
 		return ResponseSurrogate.deleted(goal);
 	}
 }

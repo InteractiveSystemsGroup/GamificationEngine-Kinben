@@ -237,9 +237,8 @@ public class Task implements Serializable {
 		// set tempFinishedGoals list to add this to the player at the end
 		// --> avoid transaction errors
 		List<FinishedGoal> finishedPlayerGoalsList = new ArrayList<>();
-		// List<FinishedGoal> finishedGroupGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
-		List<Role> matchingRoles;
+		List<Role> matchingRoles = new ArrayList<>();
 
 		// set Timestamp
 		if (finishedDate == null) {
@@ -259,37 +258,40 @@ public class Task implements Serializable {
 		log.debug("Player Goals: " + player.getFinishedGoals().size());
 
 		// check if task can be completed by player
-		log.debug("Player Roles:");
-		for (Role r : player.getBelongsToRoles()) {
-			log.debug("- " + r.getName());
-		}
+//		log.debug("Player Roles:");
+//		for (Role r : player.getBelongsToRoles()) {
+//			log.debug("- " + r.getName());
+//		}
+//
+//		log.debug("Task Roles:");
+//		for (Role r : task.getAllowedFor()) {
+//			log.debug("- " + r.getName());
+//		}
+//
+//		if (task.getAllowedFor().size() > 0) {
+//			log.debug("Task is restricted by roles");
+//			matchingRoles = task.getAllowedFor().stream().filter(r -> {
+//				if (player.getBelongsToRoles().contains(r)) {
+//					log.debug("Player has required Role to Complete Task: " + r.getName());
+//					return true;
+//				} else {
+//					return false;
+//				}
+//			}).collect(Collectors.toList());
+//
+//			if (matchingRoles.size() > 0) {
+//				log.debug("Roles match -> proceed");
+//			} else {
+//				log.debug("Roles don't match -> error");
+//				throw new ApiError(Response.Status.FORBIDDEN, "Roles don't match!");
+//			}
+//		} else {
+//			log.debug("Task is not restricted by roles");
+//		}
 
-		log.debug("Task Roles:");
-		for (Role r : task.getAllowedFor()) {
-			log.debug("- " + r.getName());
-		}
-
-		if (task.getAllowedFor().size() > 0) {
-			log.debug("Task is restricted by roles");
-			matchingRoles = task.getAllowedFor().stream().filter(r -> {
-				if (player.getBelongsToRoles().contains(r)) {
-					log.debug("Player has required Role to Complete Task: " + r.getName());
-					return true;
-				} else {
-					return false;
-				}
-			}).collect(Collectors.toList());
-
-			if (matchingRoles.size() > 0) {
-				log.debug("Roles match -> proceed");
-			} else {
-				log.debug("Roles don't match -> error");
-				throw new ApiError(Response.Status.FORBIDDEN, "Roles don't match!");
-			}
-		} else {
-			log.debug("Task is not restricted by roles");
-		}
-
+		//new
+		playerIsAllowed(player, task, matchingRoles);
+		
 		List<FinishedTask> playerFinishedTasksList = player.getFinishedTasks();
 		playerFinishedTasksList.add(fTask);
 
@@ -309,7 +311,6 @@ public class Task implements Serializable {
 			log.debug("Rule: " + rule.getName());
 
 			// get goals which contain this rule
-			// for (Goal goal : rule.getGoals()) {
 			for (Goal goal : goalDao.getGoalsByRule(rule)) {
 
 				log.debug("Goal: " + goal.getName());
@@ -485,4 +486,38 @@ public class Task implements Serializable {
 
 	}
 
+	public void playerIsAllowed(Player player, Task task, List<Role> matchingRoles){
+		
+		log.debug("Player Roles:");
+		for (Role r : player.getBelongsToRoles()) {
+			log.debug("- " + r.getName());
+		}
+
+		log.debug("Task Roles:");
+		for (Role r : task.getAllowedFor()) {
+			log.debug("- " + r.getName());
+		}
+
+		if (task.getAllowedFor().size() > 0) {
+			log.debug("Task is restricted by roles");
+			matchingRoles = task.getAllowedFor().stream().filter(r -> {
+				if (player.getBelongsToRoles().contains(r)) {
+					log.debug("Player has required Role to Complete Task: " + r.getName());
+					return true;
+				} else {
+					return false;
+				}
+			}).collect(Collectors.toList());
+
+			if (matchingRoles.size() > 0) {
+				log.debug("Roles match -> proceed");
+			} else {
+				log.debug("Roles don't match -> error");
+				throw new ApiError(Response.Status.FORBIDDEN, "Roles don't match!");
+			}
+		} else {
+			log.debug("Task is not restricted by roles");
+		}
+	}
+	
 }

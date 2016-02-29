@@ -91,7 +91,10 @@ public class GoalDAO {
 	 */
 	public Goal deleteGoalByIdAndOrganisation(int id, Organisation organisation) {
 		Goal goal = getGoalByIdAndOrganisation(id, organisation);
-		em.remove(goal);
+		
+		if(goal!= null){
+			em.remove(goal);
+		}
 		return goal;
 	}
 

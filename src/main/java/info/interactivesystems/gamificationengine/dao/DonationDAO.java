@@ -1,8 +1,6 @@
 package info.interactivesystems.gamificationengine.dao;
 
 import info.interactivesystems.gamificationengine.entities.DonationCall;
-import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 
 import java.util.List;
 
@@ -43,7 +41,6 @@ public class DonationDAO {
 	 * @return The found {@link DonationCall} or null.
 	 */
 	public DonationCall getDonationCall(int donationCallId, String apiKey) {
-//		return em.find(DonationCall.class, donationCallId);
 		
 		Query query = em.createQuery("select dC from DonationCall dC where dC.belongsTo.apiKey=:apiKey and dC.id = :id", DonationCall.class);
 		List list = QueryUtils.configureQuery(query, donationCallId, apiKey);
@@ -71,7 +68,7 @@ public class DonationDAO {
 	/**
 	 * Removes a call for donations from the data base.
 	 * 
-	 * @param apikey
+	 * @param apiKey
 	 *            The API key affiliated to one specific organisation, to which
 	 *            the call for donations belongs to.
 	 * @param dCId

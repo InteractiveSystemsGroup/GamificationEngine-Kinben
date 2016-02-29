@@ -14,8 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -192,7 +190,7 @@ public class MarketPlaceDAO {
 	public MarketPlace deleteMarketPlace(int id, String apiKey) {
 		MarketPlace market = getMarketplace(id, apiKey);
 
-		if (market != null) {
+		if (market != null && market.getOffers().isEmpty()) {
 			em.remove(market);
 		}
 		return market;
@@ -208,7 +206,6 @@ public class MarketPlaceDAO {
 	public Offer deleteOffer(int offerId, String apiKey) {
 		
 		Offer offer = getOffer(offerId, apiKey);
-		log.debug("delete offer " + offer.getId());
 		
 		if (offer != null) {
 			em.remove(offer);

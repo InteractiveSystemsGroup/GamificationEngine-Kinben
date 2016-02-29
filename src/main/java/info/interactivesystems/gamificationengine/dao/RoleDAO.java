@@ -83,7 +83,7 @@ public class RoleDAO {
 	 * 			The API key of the organisation to which the role belongs to. 
 	 * @return The {@link Role} that is associated with the passed id and API key.
 	 */
-	public Role delete(int roleId, String apiKey) {
+	public Role deleteRole(int roleId, String apiKey) {
 		Role role = getRole(roleId, apiKey);
 
 		if (role != null) {

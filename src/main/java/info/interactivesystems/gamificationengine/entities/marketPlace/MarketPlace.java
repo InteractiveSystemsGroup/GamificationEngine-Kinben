@@ -2,6 +2,7 @@ package info.interactivesystems.gamificationengine.entities.marketPlace;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Role;
+import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,8 +107,6 @@ public class MarketPlace {
 	 * 
 	 * @param offer 
 	 * 			The offer that is added to the list of offers.
-	 *
-//	 * @return The new list of offers of the marketplace.
 	 */
 	public void addOffer(Offer offer) {
 		if(!offers.contains(offer)){
@@ -115,7 +114,12 @@ public class MarketPlace {
 		}
 	}
 
-	
+	/**
+	 * Removes an offer from a marketplace's list of offers.
+	 * 
+	 * @param offer
+	 * 			The offer that should be removed.
+	 */
 	public void removeOffer(Offer offer) {
 		if(offers.contains(offer)){
 			this.offers.remove(offer);
@@ -215,4 +219,23 @@ public class MarketPlace {
 
 		return matchingOffers.stream().limit(toIndex).collect(Collectors.toList());
 	}
+
+//	/**
+//	 * 
+//	 * @param task
+//	 * @return
+//	 */
+//	public List<Integer> getOfferIdsToTask(Task task){
+//		
+//		List<Integer> offerIds = new ArrayList<>();
+//		
+//			for(Offer offer : this.offers){
+//				if(offer.getTask().equals(task)){
+//					offerIds.add(offer.getId());
+//				}
+//			}
+//		return offerIds;
+//	}
+	
+	
 }

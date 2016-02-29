@@ -700,7 +700,7 @@ public class PresentApi {
 		Board board = boardDao.getBoard(Integer.valueOf(playId), apiKey);
 		board.checkBoardExists(board);
 		
-		//deletes first the present from the list of current presents and than from the database 
+		//deletes first the present from the list of current presents and then from the database 
 		board.removeAcceptedPresent(accPresent);
 		presentDao.deletePresent(accPresent);
 		boardDao.persist(board);

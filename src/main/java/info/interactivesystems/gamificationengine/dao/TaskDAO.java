@@ -74,7 +74,10 @@ public class TaskDAO {
 	 */
 	public Task deleteTaskByIdAndOrganisation(int id, Organisation organisation) {
 		Task task = getTaskByIdAndOrganisation(id, organisation);
-		em.remove(task);
+		
+		if(task != null){
+			em.remove(task);
+		}
 		return task;
 	}
 

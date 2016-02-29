@@ -216,10 +216,12 @@ public class RuleApi {
 	@Path("/{id}")
 	@TypeHint(GoalRule.class)
 	public Response getRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ruleId, organisation);
 		ValidateUtils.requireNotNull(ruleId, rule);
+		
 		return ResponseSurrogate.of(rule);
 	}
 
@@ -238,16 +240,14 @@ public class RuleApi {
 	@DELETE
 	@Path("{id}")
 	@TypeHint(GoalRule.class)
-	public Response deleteRule(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "no ruleId transferred");
-		}
+	public Response deleteRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
+		
 		GoalRule rule = ruleDao.deleteRuleByIdAndOrganisation(ruleId, organisation);
-
 		ValidateUtils.requireNotNull(ruleId, rule);
+
 		return ResponseSurrogate.deleted(rule);
 	}
 
