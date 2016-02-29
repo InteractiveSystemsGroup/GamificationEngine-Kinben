@@ -139,7 +139,8 @@ public class PlayerGroupApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(PlayerGroup.class)
-	public Response getPlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getPlayerGroup(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		PlayerGroup group = groupDao.getPlayerGroupByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(id), organisation);
@@ -179,7 +180,8 @@ public class PlayerGroupApi {
 	@PUT
 	@Path("/{id}/attributes")
 	@TypeHint(PlayerGroup.class)
-	public Response changePlayerGroupAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
+	public Response changePlayerGroupAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("change Attribute of PlayerGroup");
@@ -284,7 +286,7 @@ public class PlayerGroupApi {
 	@GET
 	@Path("{id}/avatar")
 	@TypeHint(byte[].class)
-	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getAvatar(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("get groups's avatar image");
 
 		int groupId = ValidateUtils.requireGreaterThanZero(id);
@@ -466,7 +468,7 @@ public class PlayerGroupApi {
 	@PUT
 	@Path("/{id}/addPlayers")
 	@TypeHint(Player.class)
-	public Response addPlayers(@PathParam("id") @ValidPositiveDigit String groupIds,
+	public Response addPlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupIds,
 			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("adding players to group called");
@@ -502,10 +504,7 @@ public class PlayerGroupApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(PlayerGroup.class)
-	public Response deletePlayerGroup(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		if (id == null) {
-			throw new ApiError(Response.Status.FORBIDDEN, "No GroupId transferred");
-		}
+	public Response deletePlayerGroup(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		PlayerGroup plGroup = groupDao.deletePlayerGroupByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(id), organisation);

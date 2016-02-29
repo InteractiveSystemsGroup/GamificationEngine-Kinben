@@ -98,7 +98,7 @@ public class PlayerApi {
 	@Path("/")
 	@TypeHint(Player.class)
 	public Response create(@QueryParam("nickname") @NotNull String nickname, @QueryParam("password") @NotNull String password,
-			@QueryParam("reference") String reference, @QueryParam("roleIds") @ValidListOfDigits String playerRoleIds,
+			@QueryParam("reference") String reference, @QueryParam("roleIds") @NotNull @ValidListOfDigits String playerRoleIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("createplayer requested (Params: apiKey = {}, nickname = {}, password = {}", apiKey, nickname, password);
@@ -158,7 +158,7 @@ public class PlayerApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(Player.class)
-	public Response get(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response get(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -182,7 +182,8 @@ public class PlayerApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(Player.class)
-	public Response delete(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response delete(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		ValidateUtils.requireGreaterThanZero(playerId);
@@ -224,7 +225,7 @@ public class PlayerApi {
 	@PUT
 	@Path("/{id}/attributes")
 	@TypeHint(Player.class)
-	public Response changeAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
+	public Response changeAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Player");
 
@@ -366,7 +367,7 @@ public class PlayerApi {
 	@PUT
 	@Path("/{id}/roles")
 	@TypeHint(Player.class)
-	public Response addRoles(@PathParam("id") @ValidPositiveDigit String id,
+	public Response addRoles(@PathParam("id") @NotNull @ValidPositiveDigit String id,
 			@QueryParam("roleIds") @NotNull @ValidListOfDigits String roleIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("adding roles to player");
 
@@ -404,8 +405,9 @@ public class PlayerApi {
 	@DELETE
 	@Path("/{id}/contacts")
 	@TypeHint(Player.class)
-	public Response deleteContact(@PathParam("id") @ValidPositiveDigit String id,
+	public Response deleteContact(@PathParam("id") @NotNull @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("deleting contacts for of a player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
@@ -437,7 +439,7 @@ public class PlayerApi {
 	@GET
 	@Path("{id}/avatar")
 	@TypeHint(byte[].class)
-	public Response getAvatar(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getAvatar(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("get player's avatar image");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
@@ -467,7 +469,7 @@ public class PlayerApi {
 	@PUT
 	@Path("{id}/deactivate")
 	@TypeHint(Player.class)
-	public Response deactivate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response deactivate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("deactivate player called");
 
@@ -496,7 +498,7 @@ public class PlayerApi {
 	@PUT
 	@Path("{id}/activate")
 	@TypeHint(Player.class)
-	public Response activate(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response activate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("activate player called");
 

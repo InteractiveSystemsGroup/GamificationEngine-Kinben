@@ -162,7 +162,7 @@ public class PresentApi {
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The sender id must be a valid number") String senderId,
 			@QueryParam("receiverIds") @NotNull @ValidListOfDigits String receiverIds, 
 			@QueryParam("imagePath") @NotNull String imagePath,
-			@QueryParam("text") @NotNull String textMessage,
+			@QueryParam("text") String textMessage,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("createNew ImageMessage called");

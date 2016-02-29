@@ -98,7 +98,8 @@ public class RewardApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(Reward.class)
-	public Response getReward(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getReward(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		int rewardId = ValidateUtils.requireGreaterThanZero(id);
@@ -216,6 +217,7 @@ public class RewardApi {
 	@Path("/types")
 	@TypeHint(String[].class)
 	public Response getRewardTypes(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		List<String> rewards = Arrays.asList("Achievement", "Badge", "Coins", "Points", "ReceiveLevel");
 		return ResponseSurrogate.of(rewards);
 	}

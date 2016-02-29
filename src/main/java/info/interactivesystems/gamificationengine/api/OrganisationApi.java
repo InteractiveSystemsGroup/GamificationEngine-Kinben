@@ -148,7 +148,7 @@ public class OrganisationApi {
 	@GET
 	@Path("/*")
 	@TypeHint(Organisation[].class)
-	public Response get(@QueryParam("email") @Email String email, @QueryParam("password") @NotNull String password) {
+	public Response get(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
 
@@ -177,7 +177,8 @@ public class OrganisationApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(Organisation.class)
-	public Response get(@PathParam("id") String id, @QueryParam("email") @Email String email, @QueryParam("password") @NotNull String password) {
+	public Response get(@PathParam("id") @NotNull String id, @QueryParam("email") @NotNull@Email String email, 
+			@QueryParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
 
@@ -209,7 +210,7 @@ public class OrganisationApi {
 	@PUT
 	@Path("/{id}/generateapikey")
 	@TypeHint(Organisation.class)
-	public Response generateApiKey(@PathParam("id") String id, @QueryParam("email") @Email String email,
+	public Response generateApiKey(@PathParam("id") @NotNull String id, @QueryParam("email") @Email String email,
 			@QueryParam("password") @NotNull String password) {
 		Notification notification = new Notification();
 

@@ -109,7 +109,8 @@ public class GoalApi {
 	@Path("/")
 	@TypeHint(Goal.class)
 	public Response createNewGoal(@QueryParam("name") @NotNull String name, @QueryParam("repeatable") @DefaultValue("true") String repeatable,
-			@QueryParam("ruleId") @NotNull @ValidPositiveDigit String ruleId, @QueryParam("rewardIds") @ValidListOfDigits String rewardIds,
+			@QueryParam("ruleId") @NotNull @ValidPositiveDigit String ruleId, 
+			@QueryParam("rewardIds") @NotNull @ValidListOfDigits String rewardIds,
 			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String roleIds,
 			@QueryParam("groupGoal") @DefaultValue("false") String isGroupGoal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
@@ -205,7 +206,7 @@ public class GoalApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(Goal.class)
-	public Response getGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getGoal(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
@@ -243,7 +244,8 @@ public class GoalApi {
 	@PUT
 	@Path("/{id}/attributes")
 	@TypeHint(Goal.class)
-	public Response changeGoalAttributes(@PathParam("id") @ValidPositiveDigit String goalId, @QueryParam("attribute") String attribute,
+	public Response changeGoalAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String goalId, 
+			@QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("change Attribute of Goal");
@@ -342,7 +344,8 @@ public class GoalApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(Goal.class)
-	public Response deleteGoal(@PathParam("id") @ValidPositiveDigit @NotNull String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response deleteGoal(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);

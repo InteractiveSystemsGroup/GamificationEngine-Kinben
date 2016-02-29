@@ -117,9 +117,9 @@ public class DonationApi {
 	@POST
 	@Path("/{id}/donate/{playerId}")
 	@TypeHint(DonationCall.class)
-	public Response donate(@PathParam("id") @ValidPositiveDigit(message = "The donation id must be a valid number") String dId,
-			@PathParam("playerId") @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
-			@QueryParam("amount") @ValidPositiveDigit(message = "The amount must be a valid number") String amount,
+	public Response donate(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The donation id must be a valid number") String dId,
+			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("amount") @NotNull @ValidPositiveDigit(message = "The amount must be a valid number") String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int id = ValidateUtils.requireGreaterThanZero(dId);
@@ -158,7 +158,8 @@ public class DonationApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(DonationCall.class)
-	public Response getDonationCall(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getDonationCall(@PathParam("id") @NotNull @ValidPositiveDigit String dId, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int id = ValidateUtils.requireGreaterThanZero(dId);
 		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
@@ -200,7 +201,8 @@ public class DonationApi {
 	@GET
 	@Path("/{id}/progress")
 	@TypeHint(DonationCall[].class)
-	public Response getProgess(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getProgess(@PathParam("id") @NotNull @ValidPositiveDigit String dId, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("get progress");
 		
@@ -228,7 +230,8 @@ public class DonationApi {
 	@GET
 	@Path("/{id}/donors")
 	@TypeHint(DonationCall[].class)
-	public Response getDonors(@PathParam("id") @ValidPositiveDigit String dId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getDonors(@PathParam("id") @NotNull @ValidPositiveDigit String dId, 
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		
 		int id = ValidateUtils.requireGreaterThanZero(dId);
@@ -267,7 +270,8 @@ public class DonationApi {
 	@PUT
 	@Path("/{id}/attributes")
 	@TypeHint(DonationCall.class)
-	public Response changeAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
+	public Response changeAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, 
+			@QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("change Attribute of Player");

@@ -14,6 +14,7 @@ import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.task.Task;
+import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.time.LocalDateTime;
@@ -235,12 +236,11 @@ public class TaskApi {
 
 		if (finishedDate == null || "".equals(finishedDate)) {
 			log.debug("Kein Datum übergeben");
-			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, null);
+			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, null, apiKey);
 		} else {
 			log.debug("Datum übergeben: " + finishedDate);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-			LocalDateTime dateTime = LocalDateTime.parse(finishedDate, formatter);
-			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, dateTime);
+			LocalDateTime dateTime = LocalDateTimeUtil.formatDateAndTime(finishedDate);
+			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, dateTime, apiKey);
 		}
 
 		return ResponseSurrogate.created(task);

@@ -170,7 +170,8 @@ public class PlayerLevelApi {
 	@DELETE
 	@Path("/{id}")
 	@TypeHint(PlayerLevel.class)
-	public Response deletePlayerLevel(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response deletePlayerLevel(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		PlayerLevel playerLevel = playerLevelDao.deletePlayerLevel(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		return ResponseSurrogate.deleted(playerLevel);
 	}

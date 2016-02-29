@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.api;
 
-import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;

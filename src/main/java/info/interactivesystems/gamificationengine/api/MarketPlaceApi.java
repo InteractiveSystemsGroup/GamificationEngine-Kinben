@@ -194,7 +194,7 @@ public class MarketPlaceApi {
 	@TypeHint(Offer.class)
 	public Response createNewOffer(@QueryParam("name") @NotNull String name, 
 			@QueryParam("endDate") String endDate,
-			@QueryParam("prize") @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
+			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
 			@QueryParam("deadLine") String deadLine,
 			@QueryParam("marketId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
@@ -334,8 +334,7 @@ public class MarketPlaceApi {
 	@GET
 	@Path("/offers/*")
 	@TypeHint(Offer[].class)
-	public Response getAllOffers(
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response getAllOffers(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		List<Offer> offers = marketPlDao.getAllOffers(apiKey);
 		
@@ -366,7 +365,7 @@ public class MarketPlaceApi {
 	@TypeHint(Offer[].class)
 	public Response getAllOffersOfMarketPlace(
 			@PathParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
-			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId),apiKey);
@@ -411,7 +410,7 @@ public class MarketPlaceApi {
 	public Response getAllOffersForRole(
 			@QueryParam("roleId") @NotNull @ValidPositiveDigit(message = "The role id must be a valid number") String roleId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
-			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		int id = Integer.valueOf(roleId);
@@ -493,7 +492,7 @@ public class MarketPlaceApi {
 	public Response getOffersByPlayerRole(
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
-			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") String count,
+			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
@@ -806,7 +805,7 @@ public class MarketPlaceApi {
 
 		Task task = offer.getTask();
 		log.debug("task" + task.getId());
-		task.completeTask(organisation, player, ruleDao, goalDao, groupDao, LocalDateTime.now());
+		task.completeTask(organisation, player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
 		log.debug("Task completed");
 
 		int prizeReward = offer.getPrize();

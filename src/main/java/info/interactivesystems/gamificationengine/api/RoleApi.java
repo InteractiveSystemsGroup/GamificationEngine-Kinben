@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.api;
 
-import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
@@ -182,8 +181,8 @@ public class RoleApi {
 
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.deleteRole(roleId, apiKey);
-
 		ValidateUtils.requireNotNull(roleId, role);
+		
 		return ResponseSurrogate.deleted(role);
 	}
 
