@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A player can give one or more bids for an offer so its total prize gets higher and in order to increase 
  * the incentive of fulfilling the task. The bidden amount of coins will be subtracted from the bidder’s 
@@ -21,6 +23,7 @@ import javax.validation.constraints.NotNull;
  * condition that her/his coins are enough otherwise the bid cannot be done.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Bid {
 
 	@Id

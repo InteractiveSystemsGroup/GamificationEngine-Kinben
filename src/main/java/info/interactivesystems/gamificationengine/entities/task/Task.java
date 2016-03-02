@@ -34,6 +34,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The Super Class for different types of Task.
  * 
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
  * of it.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Task implements Serializable {
 
 	private static final long serialVersionUID = 8925734998433033594L;
@@ -225,7 +228,7 @@ public class Task implements Serializable {
 	 *            the value is null the date is set to now.
 	 */
 	public void completeTask(Organisation organisation, Player player, RuleDAO ruleDao, GoalDAO goalDao, PlayerGroupDAO groupDao,
-			LocalDateTime finishedDate) {
+			LocalDateTime finishedDate, String apiKey) {
 
 		if (!player.isActive()) {
 			log.debug("Player is inactive!");
@@ -244,6 +247,7 @@ public class Task implements Serializable {
 		if (finishedDate == null) {
 			finishedDate = LocalDateTime.now();
 		}
+		
 		// LocalDateTime lastDate = null;
 		boolean pointsRecieved = false;
 

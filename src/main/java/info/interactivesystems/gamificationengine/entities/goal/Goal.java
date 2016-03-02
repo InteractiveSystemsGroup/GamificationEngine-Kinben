@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * A Goal comprises one or more tasks and is associated with a goal rule. If the player wants to earn the 
  * connected awards the rule has to be fulfilled. To create a goal some already created components are needed.
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Goal {
 
 	private static final Logger log = LoggerFactory.getLogger(Goal.class);

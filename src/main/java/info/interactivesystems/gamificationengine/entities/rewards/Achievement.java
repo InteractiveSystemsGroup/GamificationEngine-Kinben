@@ -108,4 +108,5 @@ public class Achievement extends PermanentReward {
 			group.addPermanentReward(this);
 		}
 	}
+
 }

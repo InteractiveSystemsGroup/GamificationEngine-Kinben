@@ -71,6 +71,17 @@ public abstract class TaskRule extends GoalRule {
 		tasks.add(task);
 	}
 
+	/**
+	 * This method checks if a rule contains a specific task. If the task is defined in the rule it returns true
+	 * otherwise false.
+	 * 
+	 * @param task
+	 * 			The task which has to be checked.
+	 * @return The boolean value if the task is contained in the task rule (true) or not (false).
+	 */
+	public boolean contains(Task task) {
+		return tasks.contains(task);
+	}
 
 	/**
 	 * Abstract method to get the progress of a TaskRule. Dependent on the type of rule another value is returned.
@@ -94,4 +105,5 @@ public abstract class TaskRule extends GoalRule {
 	 * @return The boolean value if a rule is fulfilled (true) or not(false).
 	 */
 	public abstract boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate);
+	
 }

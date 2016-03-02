@@ -6,7 +6,6 @@ import info.interactivesystems.gamificationengine.entities.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -18,8 +17,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A present is a little positive message which one player can send to one or
@@ -36,6 +36,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "PRESENT_TYPE", discriminatorType = DiscriminatorType.STRING)
+@JsonIgnoreProperties({ "belongsTo" })
 public abstract class Present {
 
 	@Id

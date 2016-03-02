@@ -69,7 +69,7 @@ public class OrganisationApiTest {
 
 	private void mockGetOrganisation(String name) {
 		when(organisationDao.getOrganisation(anyInt())).then(invocation -> {
-			Organisation organisation = new Organisation();
+			Organisation organisation = new Organisation(name);
 			organisation.setName(name);
 			Account account = new Account();
 			account.setEmail("test@example.com");

@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Presents that are accepted a player can archived. If the player archived a present 
  * an PresentArchived object is created. 
  *
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class PresentArchived {
 
 	@Id

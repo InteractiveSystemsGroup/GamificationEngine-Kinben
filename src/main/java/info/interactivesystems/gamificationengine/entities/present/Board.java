@@ -20,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A Board serves a player to store presents in three lists: When a present is
  * sent to a player firstly it is added to the inBox-list. The player decides if
@@ -28,6 +30,7 @@ import javax.ws.rs.core.Response;
  * wants to archive a present it is added to the archive list.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Board {
 
 	@Id
@@ -43,7 +46,6 @@ public class Board {
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "board_inBox")
-//	@JsonIgnore
 	private List<Present> inBox;
 
 	/**

@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Presents that are in the in-box of the board a player can accept or deny. If the player
  * accept a present its status is set to accepted and an PresentAccepted object is created.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class PresentAccepted {
 
 	enum Status {

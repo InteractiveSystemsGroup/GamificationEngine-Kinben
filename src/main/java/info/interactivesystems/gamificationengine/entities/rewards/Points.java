@@ -83,7 +83,8 @@ public class Points extends VolatileReward {
 
 		log.debug("Points recieved -> check all points rules");
 
-		List<GetPointsRule> completedPointsRules = ruleDao.getAllPointsRules().stream().map(r -> (GetPointsRule) r).filter(r -> r.checkRule(player))
+		String apiKey = player.getBelongsTo().getApiKey();
+		List<GetPointsRule> completedPointsRules = ruleDao.getAllPointsRules(apiKey).stream().map(r -> (GetPointsRule) r).filter(r -> r.checkRule(player))
 				.collect(Collectors.toList());
 
 		// for each completed rule
@@ -186,7 +187,8 @@ public class Points extends VolatileReward {
 		log.debug("Group: Points recieved -> check all points rules");
 
 		// TODO check for organisation and check for group goal
-		List<GetPointsRule> completedPointsRules = ruleDao.getAllPointsRules().stream().map(r -> (GetPointsRule) r).filter(r -> r.checkRule(group))
+		String apiKey = group.getBelongsTo().getApiKey();
+		List<GetPointsRule> completedPointsRules = ruleDao.getAllPointsRules(apiKey).stream().map(r -> (GetPointsRule) r).filter(r -> r.checkRule(group))
 				.collect(Collectors.toList());
 
 		// for each completed rule

@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * With an offer a player can create a task for other players. At this point of time an initial bid in terms 
  * of coins is set which is obtained by the person who completes it. The initial bid can be raised by other 
@@ -26,6 +28,7 @@ import org.hibernate.annotations.FetchMode;
  * The particular task is then also added to the player’s list of the finished tasks. 
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Offer {
 
 	@Id

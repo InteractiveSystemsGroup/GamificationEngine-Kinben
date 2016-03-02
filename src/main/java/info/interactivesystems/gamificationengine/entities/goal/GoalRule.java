@@ -13,6 +13,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and 
  * obtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished 
@@ -22,6 +24,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "RULE_TYPE", discriminatorType = DiscriminatorType.STRING)
+@JsonIgnoreProperties({ "belongsTo" })
 public class GoalRule {
 
 	@Id

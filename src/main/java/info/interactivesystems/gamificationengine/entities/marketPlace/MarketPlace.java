@@ -2,7 +2,6 @@ package info.interactivesystems.gamificationengine.entities.marketPlace;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Role;
-import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Players can create an offer with a task for the marketplace so another player can
  * bid to do this task and get its rewards. Via Bids an initial bid by the creator can be
@@ -26,6 +27,7 @@ import javax.persistence.ManyToOne;
  * If none exists yet, it first has to be created.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class MarketPlace {
 
 	@Id
