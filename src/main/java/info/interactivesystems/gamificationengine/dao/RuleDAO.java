@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
 import info.interactivesystems.gamificationengine.entities.task.Task;
@@ -51,7 +50,7 @@ public class RuleDAO {
 	}
 	
 	/**
-	 * Gets all rewards which are associated with the passed API key.
+	 * Gets all rules which are associated with the passed API key.
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the rules belong to. 
@@ -71,16 +70,16 @@ public class RuleDAO {
 	 * 
 	 * @param task
 	 * 			It is checked if the task rules of an organisation contain the task.			
-	 * @param organisation
-	 * 			The organisaiton the rule is associated with.
+	 * @param apiKey
+	 *           The API key of the organisation to which the rules belong to.
 	 * @return A {@link List} of {@link TaskRule}s which contain the passed task and 
 	 * 			are associated with the passed organisation.
 	 */
-	public List<TaskRule> getRulesByTask(Task task, Organisation organisation) {
+	public List<TaskRule> getRulesByTask(Task task, String apiKey) {
 		List<TaskRule> result = new ArrayList<>();
-		Query query = em.createQuery("select r from GoalRule r where RULE_TYPE LIKE :ruleType AND r.belongsTo = :cB");
+		Query query = em.createQuery("select r from GoalRule r where RULE_TYPE LIKE :ruleType AND r.belongsTo.apiKey=:apiKey");
 		query.setParameter("ruleType", "TRULE%");
-		query.setParameter("cB", organisation);
+		query.setParameter("apiKey", apiKey);
 		List<TaskRule> temp = query.getResultList();
 		for (TaskRule rule : temp) {
 			if (rule.getTasks().contains(task)) {

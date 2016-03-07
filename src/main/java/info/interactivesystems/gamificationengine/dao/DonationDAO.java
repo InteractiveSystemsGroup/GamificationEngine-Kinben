@@ -34,7 +34,7 @@ public class DonationDAO {
 	}
 
 	/**
-	 * Gets a call for donations from the data base.
+	 * Gets a specific call for donations from the data base.
 	 * 
 	 * @param donationCallId
 	 *            The id of the call for donations.
@@ -53,7 +53,7 @@ public class DonationDAO {
 	}
 
 	/**
-	 * Gets a list of all calls for donation in the data base.
+	 * Gets a list of all calls for donation of one specific organisaiton in the data base.
 	 * 
 	 * @param apiKey
 	 *            The API key affiliated to one specific organisation, to which

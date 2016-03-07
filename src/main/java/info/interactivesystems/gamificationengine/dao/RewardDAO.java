@@ -32,7 +32,7 @@ public class RewardDAO {
 	/**
 	 * Gets the reward by its id.
 	 * 
-	 * @param rewardId
+	 * @param id
 	 * 			The id of the requested reward.
 	 * @param apiKey
 	 *           The API key of the organisation to which the reward belongs to. 

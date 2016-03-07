@@ -130,7 +130,7 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Gets all Offers which are offer of all marketplaces of an organisation.
+	 * Gets all Offers which can be found on the marketplaces of an organisation.
 	 * 
 	 * @param apiKey
 	 * 			The API key of the organisation to which the offers belong to.
@@ -153,7 +153,7 @@ public class MarketPlaceDAO {
 	 *            The API key of the organisation to which the marketplaces belongs to.
 	 * @return The {@link List} of {@link MarketPlace}s which belong to the passed API key.
 	 */
-	public List<MarketPlace> getAllMarketPlaceForApiKey(String apiKey) {
+	public List<MarketPlace> getAllMarketPlaces(String apiKey) {
 		Query query = em.createQuery("select m from MarketPlace m where m.belongsTo.apiKey=:apiKey", MarketPlace.class);
 		query.setParameter("apiKey", apiKey);
 
@@ -161,7 +161,7 @@ public class MarketPlaceDAO {
 	}
 	
 	/**
-	 * Gets a specific marketplace from the data base that is associated with the id and the organisation.
+	 * Gets a specific marketplace from the data base that is associated with the id and the API key.
 	 * 
 	 * @param id
 	 * 			The id of the requested marketplace.

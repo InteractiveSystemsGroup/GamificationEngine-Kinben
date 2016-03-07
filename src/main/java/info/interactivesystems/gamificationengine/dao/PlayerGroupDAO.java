@@ -68,8 +68,8 @@ public class PlayerGroupDAO {
 	 * 
 	 * @param groupId
 	 * 			The id of the requested group of players.
-	 * @param organisation
-	 * 			The organisaiton the group of players is associated with.
+	 * @param apiKey
+	 *            The API key of the organisation to which the group of group players belongs to.
 	 * @return The {@link PlayerGroup} which is associated with the passed id and API key.
 	 */
 	public PlayerGroup deletePlayerGroup(int groupId, String apiKey) {

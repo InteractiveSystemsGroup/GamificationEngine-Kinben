@@ -1,6 +1,7 @@
 package info.interactivesystems.gamificationengine.dao;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
 
 import java.util.List;
 
@@ -39,7 +40,10 @@ public class OrganisationDAO {
 	 * @return The {@link Organisation} that is associated with the passed id.
 	 */
 	public Organisation getOrganisation(int id) {
-		return em.find(Organisation.class, id);
+		Query query = em.createQuery("select o from Organisation o where o.id = :id", Organisation.class);
+		query.setParameter("id", id);;
+		
+		return ((Organisation) query.getResultList());
 	}
 
 	/**
@@ -50,7 +54,7 @@ public class OrganisationDAO {
 	 * @return The {@link List} of {@link Organisation}s that are associated with the passed email address.
 	 */
 	public List<Organisation> getAllOrganisations(String email) {
-		Query query = em.createQuery("select entity from Organisation entity join entity.managers m  where m.email=:email");
+		Query query = em.createQuery("select entity from Organisation entity join entity.managers m where m.email=:email");
 		query.setParameter("email", email);
 
 		List list = query.getResultList();
