@@ -29,48 +29,6 @@ public class PlayerGroupDAO {
 		return group.getId();
 	}
 
-//	/** 
-//	 * Gets a group of players by its id and organisation.
-//	 * 
-//	 * @param groupId
-//	 * 			The id of the requested group of players.
-//	 * @param organisation
-//	 * 			The organisaiton the group of players is associated with.
-//	 * @return The {@link PlayerGroup} which is associated with the passed id and organisation.
-//	 */
-//	public PlayerGroup getPlayerGroupByIdAndOrganisation(int groupId, Organisation organisation) {
-//		PlayerGroup plGroup = em.find(PlayerGroup.class, groupId);
-//		if (plGroup != null) {
-//			if (plGroup.belongsTo(organisation)) {
-//				return plGroup;
-//			} else {
-//				return null;
-//			}
-//		} else {
-//			return null;
-//		}
-//	}
-//	
-
-	/**
-	 * Removes a group of player from the data base.
-	 * 
-	 * @param groupId
-	 * 			The id of the requested group of players.
-	 * @param organisation
-	 * 			The organisaiton the group of players is associated with.
-	 * @return The {@link PlayerGroup} which is associated with the passed id and API key.
-	 */
-	public PlayerGroup deletePlayerGroup(int groupId, String apiKey) {
-		PlayerGroup plGroup = getPlayerGroup(groupId, apiKey);
-		
-		if(plGroup != null){
-			em.remove(plGroup);
-		}
-		return plGroup;
-	}
-
-	
 	/**
 	 * Gets a group of players by its id and API key.
 	 * 
@@ -103,5 +61,23 @@ public class PlayerGroupDAO {
 
 		return query.getResultList();
 
+	}
+	
+	/**
+	 * Removes a group of player from the data base.
+	 * 
+	 * @param groupId
+	 * 			The id of the requested group of players.
+	 * @param organisation
+	 * 			The organisaiton the group of players is associated with.
+	 * @return The {@link PlayerGroup} which is associated with the passed id and API key.
+	 */
+	public PlayerGroup deletePlayerGroup(int groupId, String apiKey) {
+		PlayerGroup plGroup = getPlayerGroup(groupId, apiKey);
+		
+		if(plGroup != null){
+			em.remove(plGroup);
+		}
+		return plGroup;
 	}
 }

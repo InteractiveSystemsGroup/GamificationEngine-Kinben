@@ -28,7 +28,7 @@ public class BoardDAO extends AbstractDAO<Board> {
 	 * @param playerId
 	 *            The player who owns the board.
 	 * @param apiKey
-	 *            Credential which identifies the board in one organisation.
+	 *             The API key of the organisation to which the board belongs to. 
 	 * @return The board.object of a player.
 	 */
 	public Board getBoard(int playerId, String apiKey) {
@@ -49,10 +49,10 @@ public class BoardDAO extends AbstractDAO<Board> {
 	 * as a list. The API key is needed to identify their boards.
 	 * 
 	 * @param receivers
-	 *            The owners of the boards who sould reveice a present.
+	 *            The owners of the boards who should receive a present.
 	 * @param apiKey
-	 *            Credential which identifies the board in one organisation.
-	 * @return A {@link List} of {@link Board}s that represent all boards of the players who get a present.
+	 *             The API key of the organisation to which the boards belong to. 
+	 * @return A {@link List} of {@link Board}s that represent all boards of the players who will get a present.
 	 */
 	public List<Board> getBoards(List<Player> receivers, String apiKey) {
 		Query query = em.createQuery("select entity from Board entity where entity.owner in (:owners) and entity.belongsTo.apiKey = :apiKey",

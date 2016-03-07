@@ -66,24 +66,6 @@ public class RuleDAO {
 
 
 	/**
-	 * Removes a rule from the data base.
-	 * 
-	 * @param id
-	 * 			The id of the rule which should be deleted.
-	 * @param apiKey
-	 *           The API key of the organisation to which the rule belongs to. 
-	 * @return The {@link GoalRule} that is associated with the passed id and APi key.
-	 */
-	public GoalRule deleteRule(int id, String apiKey) {
-		GoalRule rule = getRule(id, apiKey);
-		
-		if(rule!=null){
-			em.remove(rule);
-		}
-		return rule;
-	}
-
-	/**
 	 * Gets all rules of the type TaskRule which contains the passed task and are associated 
 	 * with the passed organisaion.
 	 * 
@@ -121,5 +103,23 @@ public class RuleDAO {
 		query.setParameter("apiKey", apiKey);
 		
 		return query.getResultList();
+	}
+	
+	/**
+	 * Removes a rule from the data base.
+	 * 
+	 * @param id
+	 * 			The id of the rule which should be deleted.
+	 * @param apiKey
+	 *           The API key of the organisation to which the rule belongs to. 
+	 * @return The {@link GoalRule} that is associated with the passed id and APi key.
+	 */
+	public GoalRule deleteRule(int id, String apiKey) {
+		GoalRule rule = getRule(id, apiKey);
+		
+		if(rule!=null){
+			em.remove(rule);
+		}
+		return rule;
 	}
 }

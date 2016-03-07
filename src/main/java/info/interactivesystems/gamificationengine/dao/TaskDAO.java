@@ -47,6 +47,21 @@ public class TaskDAO {
 		return (Task) query.getResultList();
 	}
 
+
+	/**
+	 * Gets all tasks which are associated with the passed API key.
+	 * 
+	 * @param apiKey
+	 * 			The API key of the organisation to which the tasks belong to. 
+	 * @return A {@link List} of {@link Task}s with all tasks which are associated with the passed 
+	 * 			API key.
+	 */
+	public List<Task> getTasks(String apiKey) {
+		Query query = em.createQuery("select t from Task t join t.belongsTo a where a.apiKey=:apiKey");
+		query.setParameter("apiKey", apiKey);
+		return query.getResultList();
+	}
+	
 	/**
 	 * Removes a task from the data base.
 	 * 
@@ -63,20 +78,6 @@ public class TaskDAO {
 			em.remove(task);
 		}
 		return task;
-	}
-
-	/**
-	 * Gets all tasks which are associated with the passed API key.
-	 * 
-	 * @param apiKey
-	 * 			The API key of the organisation to which the tasks belong to. 
-	 * @return A {@link List} of {@link Task}s with all tasks which are associated with the passed 
-	 * 			API key.
-	 */
-	public List<Task> getTasks(String apiKey) {
-		Query query = em.createQuery("select t from Task t join t.belongsTo a where a.apiKey=:apiKey");
-		query.setParameter("apiKey", apiKey);
-		return query.getResultList();
 	}
 
 }

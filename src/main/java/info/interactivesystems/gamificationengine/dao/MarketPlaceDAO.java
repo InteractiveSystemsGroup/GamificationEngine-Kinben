@@ -85,7 +85,7 @@ public class MarketPlaceDAO {
 	 *            The offer whose bids are requested.
 	 * @param apiKey
 	 *           The API key of the organisation to which the bids belong to. 
-	 * @return A {@link List} of {@link Bid}s. that are associated to a specific offer.
+	 * @return A {@link List} of {@link Bid}s. that are associated to a specific offer and its APi key.
 	 */
 	public List<Bid> getBidsForOffer(Offer offer, String apiKey) {
 		Query query = em.createQuery("select b from Bid b where b.offer=:offer and b.belongsTo.apiKey=:apiKey");
@@ -184,7 +184,7 @@ public class MarketPlaceDAO {
 	 * @param id
 	 *          The id of the marketplace that should be removed.
 	 * @param apiKey
-	 *           The API key of the organisation to which the marketPlave belong to. 
+	 *           The API key of the organisation to which the marketPlace belong to. 
 	 * @return The {@link MarketPlace} that is removed from the database.
 	 */
 	public MarketPlace deleteMarketPlace(int id, String apiKey) {
@@ -197,7 +197,7 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Deletes an offer from the data base.
+	 * Removes an offer from the data base.
 	 * 
 	 * @param offerId
 	 *           The id of the offer that should be removed from the data base.
@@ -216,7 +216,7 @@ public class MarketPlaceDAO {
 	}
 
 	/**
-	 * Deletes an bid from the data base.
+	 * Removes a specific bid from the data base.
 	 * 
 	 * @param bid
 	 * 		 The bid that should be removed from the database.

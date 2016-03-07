@@ -51,7 +51,7 @@ public class PlayerDAO {
 	 *          The id of the requested player.
 	 * @param apiKey
 	 *            The API key of the organisation to which the player belongs to.
-	 * @return The {@link Player} that is associated with the passed id and APi key.
+	 * @return The {@link Player} that is associated with the passed id and API key.
 	 */
 	public Player getPlayer(int id, String apiKey) {
 		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id = :id", Player.class);
@@ -79,24 +79,6 @@ public class PlayerDAO {
 		return query.getResultList();
 	}
 
-	/**
-	 * Removes a player from the data base.
-	 * 
-	 * @param id
-	 *           The id of the player who should be deleted.
-	 * @param apiKey
-	 *           The API key of the organisation to which the player belongs to. 
-	 * @return The {@link Player} that is associated with the passed id and APi key.
-	 */
-	public Player deletePlayer(int id, String apiKey) {
-		Player player = getPlayer(id, apiKey);
-
-		if (player != null) {
-			em.remove(player);
-		}
-
-		return player;
-	}
 
 	/**
 	 * Gets a list of all players who are associated with the passed API key.
@@ -110,5 +92,24 @@ public class PlayerDAO {
 		query.setParameter("apiKey", apiKey);
 
 		return query.getResultList();
+	}
+	
+	/**
+	 * Removes a player from the data base.
+	 * 
+	 * @param id
+	 *           The id of the player who should be deleted.
+	 * @param apiKey
+	 *           The API key of the organisation to which the player belongs to. 
+	 * @return The {@link Player} that is associated with the passed id and API key.
+	 */
+	public Player deletePlayer(int id, String apiKey) {
+		Player player = getPlayer(id, apiKey);
+
+		if (player != null) {
+			em.remove(player);
+		}
+
+		return player;
 	}
 }

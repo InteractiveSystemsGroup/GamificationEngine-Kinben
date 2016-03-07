@@ -63,24 +63,6 @@ public class GoalDAO {
 
 
 	/**
-	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
-	 * 
-	 * @param id
-	 *            The id of the requested goal.
-	 * @param apiKey
-	 *           The API key of the organisation to which the goal belongs to. 
-	 * @return The {@link Goal} that should be deleted.
-	 */
-	public Goal deleteGoal(int id, String apiKey) {
-		Goal goal = getGoal(id, apiKey);
-		
-		if(goal!= null){
-			em.remove(goal);
-		}
-		return goal;
-	}
-
-	/**
 	 * Gets all goals which are associated to a specific rule.
 	 * 
 	 * @param rule
@@ -107,5 +89,23 @@ public class GoalDAO {
 		Query query = em.createQuery("select g from Goal g join g.belongsTo a where a.apiKey=:apiKey");
 		query.setParameter("apiKey", apiKey);
 		return query.getResultList();
+	}
+	
+	/**
+	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
+	 * 
+	 * @param id
+	 *            The id of the requested goal.
+	 * @param apiKey
+	 *           The API key of the organisation to which the goal belongs to. 
+	 * @return The {@link Goal} that should be deleted.
+	 */
+	public Goal deleteGoal(int id, String apiKey) {
+		Goal goal = getGoal(id, apiKey);
+		
+		if(goal!= null){
+			em.remove(goal);
+		}
+		return goal;
 	}
 }

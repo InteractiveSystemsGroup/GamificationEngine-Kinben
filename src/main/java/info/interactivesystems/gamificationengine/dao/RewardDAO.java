@@ -85,7 +85,7 @@ public class RewardDAO {
 	 * @param id
 	 * 		 The id of the reward which should be deleted.
 	 * @param apiKey
-	 *           The API key of the organisation to which the reward belong to. 
+	 *           The API key of the organisation to which the reward belongs to. 
 	 * @return The {@link Reward} that is associated with the passed id and API key.
 	 */
 	public Reward deleteReward(int id, String apiKey) {

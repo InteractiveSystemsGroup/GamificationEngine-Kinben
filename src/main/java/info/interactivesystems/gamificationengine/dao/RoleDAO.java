@@ -64,6 +64,23 @@ public class RoleDAO {
 	}
 
 	/**
+	 * Gets all roles with the passed ids which match the also passed API key.
+	 * 
+	 * @param ids
+	 *			 A comma separated list of role ids.
+	 * @param apiKey
+	 * 			The API key of the organisation to which the roles belong to. 
+	 * @return A {@link List} of {@link Role}s which are associated with the passed 
+	 * 			API key.
+	 */
+	public List<Role> getRoles(List<Integer> ids, String apiKey) {
+		Query query = em.createQuery("select r from Role r where r.belongsTo.apiKey=:apiKey and r.id in (:ids)", Role.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("ids", ids);
+		return query.getResultList();
+	}
+
+	/**
 	 * Removes a role from the data base.
 	 * 		 
 	 * @param roleId
@@ -81,23 +98,4 @@ public class RoleDAO {
 
 		return role;
 	}
-
-	/**
-	 * Gets all roles with the passed ids which match the also passed API key.
-	 * 
-	 * @param ids
-	 *			 A comma separated list of role ids.
-	 * @param apiKey
-	 * 			The API key of the organisation to which the roles belong to. 
-	 * @return A {@link List} of {@link Role}s which are associated with the passed 
-	 * 			API key.
-	 */
-	public List<Role> getRoles(List<Integer> ids, String apiKey) {
-		Query query = em.createQuery("select r from Role r where r.belongsTo.apiKey=:apiKey and r.id in (:ids)", Role.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("ids", ids);
-		return query.getResultList();
-	}
-
-	
 }

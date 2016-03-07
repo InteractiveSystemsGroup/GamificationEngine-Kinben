@@ -38,6 +38,8 @@ public class DonationDAO {
 	 * 
 	 * @param donationCallId
 	 *            The id of the call for donations.
+	 * @param apiKey
+	 *           The API key of the organisation to which the call for donations belongs to. 
 	 * @return The found {@link DonationCall} or null.
 	 */
 	public DonationCall getDonationCall(int donationCallId, String apiKey) {
@@ -68,14 +70,14 @@ public class DonationDAO {
 	/**
 	 * Removes a call for donations from the data base.
 	 * 
+	 * @param dCId
+	 *            The id of the specific call for donations.
 	 * @param apiKey
 	 *            The API key affiliated to one specific organisation, to which
 	 *            the call for donations belongs to.
-	 * @param dCId
-	 *            The id of the call for daonations.
 	 * @return {@link DonationCall}.
 	 */
-	public DonationCall deleteDonationCall(String apiKey, int dCId) {
+	public DonationCall deleteDonationCall(int dCId, String apiKey) {
 		DonationCall donationCall = getDonationCall(dCId, apiKey);
 		
 		if (donationCall != null && donationCall.isGoalReached()) {
