@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Data-access for user of an organisation. All dependent objects (i.e. badges of a user)
+ * Data-access to user of an organisation. All dependent objects (i.e. badges of a user)
  * are implicitly loaded.
  *
  */

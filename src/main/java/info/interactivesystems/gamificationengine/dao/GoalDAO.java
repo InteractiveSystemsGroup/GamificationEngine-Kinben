@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.goal.Goal;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
@@ -50,47 +49,30 @@ public class GoalDAO {
 	 * 
 	 * @param goalId
 	 *            The id of the goal.
+	 * @param apiKey
+	 *           The API key of the organisation to which the goal belongs to. 
 	 * @return The {@link Goal} object or null if it wasn't found.
 	 */
-	public Goal getGoal(int goalId) {
-		return em.find(Goal.class, goalId);
+	public Goal getGoal(int goalId, String apiKey) {
+		Query query = em.createQuery("select g from Goal g where g.belongsTo.apiKey=:apiKey and g.id in (:goal)", Goal.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("goal", goalId);
+
+		return (Goal) query.getResultList();
 	}
 
-	/**
-	 * This method finds a goal by its id and and returns it. The method also 
-	 * checks if it belongs to the passed organisation.
-	 * 
-	 * @param goalId
-	 *            The id of the goal.
-	 * @param organisation
-	 *            The organisation of the goal.
-	 * @return The {@link Goal} or null if the goal dosen't belong to the passed
-	 *        organisation.
-	 */
-	public Goal getGoalByIdAndOrganisation(int goalId, Organisation organisation) {
-		Goal goal = em.find(Goal.class, goalId);
-		if (goal != null) {
-			if (goal.belongsTo(organisation)) {
-				return goal;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
 
 	/**
 	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
 	 * 
 	 * @param id
 	 *            The id of the requested goal.
-	 * @param organisation
-	 *            The organisation the goal belongs to.
-	 * @return {@link Goal}
+	 * @param apiKey
+	 *           The API key of the organisation to which the goal belongs to. 
+	 * @return The {@link Goal} that should be deleted.
 	 */
-	public Goal deleteGoalByIdAndOrganisation(int id, Organisation organisation) {
-		Goal goal = getGoalByIdAndOrganisation(id, organisation);
+	public Goal deleteGoal(int id, String apiKey) {
+		Goal goal = getGoal(id, apiKey);
 		
 		if(goal!= null){
 			em.remove(goal);

@@ -31,17 +31,6 @@ public class RoleDAO {
 	}
 
 	/**
-	 * Gets the role by its id.
-	 * 
-	 * @param roleId
-	 * 			The id of the requested role.
-	 * @return The @link Role} which is associated with the passed id. 
-	 */
-	public Role getRoleById(int roleId) {
-		return em.find(Role.class, roleId);
-	}
-
-	/**
 	 * Gets all roles which are associated with the passed API key.
 	 * 
 	 * @param apiKey
@@ -110,10 +99,5 @@ public class RoleDAO {
 		return query.getResultList();
 	}
 
-	public List<Player> getPlayers(List<Integer> ids, String apiKey) {
-		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id in (:ids)", Player.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("ids", ids);
-		return query.getResultList();
-	}
+	
 }

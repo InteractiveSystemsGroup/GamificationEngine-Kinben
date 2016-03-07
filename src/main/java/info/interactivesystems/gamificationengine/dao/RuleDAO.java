@@ -38,10 +38,16 @@ public class RuleDAO {
 	 * 
 	 * @param ruleId
 	 * 			The id of the requested rule.
-	 * @return The {@link GoalRule} which is associated with the passed id.
+	 * @param apiKey
+	 *           The API key of the organisation to which the rule belongs to. 
+	 * @return The {@link GoalRule} which is associated with the passed id and API key.
 	 */
-	public GoalRule getRule(int ruleId) {
-		return em.find(GoalRule.class, ruleId);
+	public GoalRule getRule(int ruleId, String apiKey) {
+		Query query = em.createQuery("select r from GoalRule r where r.belongsTo.apiKey=:apiKey and r.id in (:ruleId)", GoalRule.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("ruleId", ruleId);
+
+		return (GoalRule) query.getResultList();
 	}
 	
 	/**
@@ -58,39 +64,18 @@ public class RuleDAO {
 		return query.getResultList();
 	}
 
-	/**
-	 * Gets a rule by its id and organisation.
-	 * 
-	 * @param ruleId
-	 * 			The id of the requested rule.
-	 * @param organisation
-	 * 			The organisaiton the rule is associated with.
-	 * @return The {@link GoalRule} which is associated with the passed id and organisation.
-	 */
-	public GoalRule getRuleByIdAndOrganisation(int ruleId, Organisation organisation) {
-		GoalRule rule = em.find(GoalRule.class, ruleId);
-		if (rule != null) {
-			if (rule.belongsTo(organisation)) {
-				return rule;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
 
 	/**
 	 * Removes a rule from the data base.
 	 * 
 	 * @param id
 	 * 			The id of the rule which should be deleted.
-	 * @param organisation
-	 * 			The organisaiton the rule is associated with.
-	 * @return The {@link GoalRule} that is associated with the passed id and organisation.
+	 * @param apiKey
+	 *           The API key of the organisation to which the rule belongs to. 
+	 * @return The {@link GoalRule} that is associated with the passed id and APi key.
 	 */
-	public GoalRule deleteRuleByIdAndOrganisation(int id, Organisation organisation) {
-		GoalRule rule = getRuleByIdAndOrganisation(id, organisation);
+	public GoalRule deleteRule(int id, String apiKey) {
+		GoalRule rule = getRule(id, apiKey);
 		
 		if(rule!=null){
 			em.remove(rule);
@@ -124,13 +109,17 @@ public class RuleDAO {
 	}
 
 	/**
-	 * Gets all rules of the type PointsRule.
+	 * Gets all rules of the type PointsRule of an specific organisation.
 	 * 
+	 * @param apiKey
+	 *           The API key of the organisation to which the point rules belong to. 
 	 * @return A {@link List} of {@link GoalRule}s with all points rules.
 	 */
-	public List<GoalRule> getAllPointsRules() {
-		Query query = em.createQuery("select r from GoalRule r where RULE_TYPE =:ruleType");
+	public List<GoalRule> getAllPointsRules(String apiKey) {
+		Query query = em.createQuery("select r from GoalRule r where RULE_TYPE =:ruleType and r.belongsTo.apiKey=:apiKey");
 		query.setParameter("ruleType", "PRULE");
+		query.setParameter("apiKey", apiKey);
+		
 		return query.getResultList();
 	}
 }

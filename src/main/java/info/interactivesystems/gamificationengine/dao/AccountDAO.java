@@ -32,6 +32,26 @@ public class AccountDAO extends AbstractDAO<Account> {
 	}
 
 	/**
+	 * Gets an account by its email address and password.
+	 * 
+	 * @param email
+	 * 			The valid email address that is unique.
+	 * @param password
+	 * 			The password which is associated to the given email address.
+	 * @return The Account that is associated with the email address
+	 * 		   or null if not found.
+	 */
+	public Account getAccount(String email, String password) {
+		
+		Query query = em.createQuery("select entity from Account entity where entity.email=:email and entity.password=:password", Account.class);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		
+		return (Account) query.getResultList().get(0);
+	}
+
+	
+	/**
 	 * Checks if email and password match.
 	 * 
 	 * @param email

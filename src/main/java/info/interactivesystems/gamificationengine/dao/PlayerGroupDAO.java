@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import java.util.List;
@@ -30,28 +29,28 @@ public class PlayerGroupDAO {
 		return group.getId();
 	}
 
-	/** 
-	 * Gets a group of players by its id and organisation.
-	 * 
-	 * @param groupId
-	 * 			The id of the requested group of players.
-	 * @param organisation
-	 * 			The organisaiton the group of players is associated with.
-	 * @return The {@link PlayerGroup} which is associated with the passed id and organisation.
-	 */
-	public PlayerGroup getPlayerGroupByIdAndOrganisation(int groupId, Organisation organisation) {
-		PlayerGroup plGroup = em.find(PlayerGroup.class, groupId);
-		if (plGroup != null) {
-			if (plGroup.belongsTo(organisation)) {
-				return plGroup;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
-	
+//	/** 
+//	 * Gets a group of players by its id and organisation.
+//	 * 
+//	 * @param groupId
+//	 * 			The id of the requested group of players.
+//	 * @param organisation
+//	 * 			The organisaiton the group of players is associated with.
+//	 * @return The {@link PlayerGroup} which is associated with the passed id and organisation.
+//	 */
+//	public PlayerGroup getPlayerGroupByIdAndOrganisation(int groupId, Organisation organisation) {
+//		PlayerGroup plGroup = em.find(PlayerGroup.class, groupId);
+//		if (plGroup != null) {
+//			if (plGroup.belongsTo(organisation)) {
+//				return plGroup;
+//			} else {
+//				return null;
+//			}
+//		} else {
+//			return null;
+//		}
+//	}
+//	
 
 	/**
 	 * Removes a group of player from the data base.
@@ -60,10 +59,10 @@ public class PlayerGroupDAO {
 	 * 			The id of the requested group of players.
 	 * @param organisation
 	 * 			The organisaiton the group of players is associated with.
-	 * @return The {@link PlayerGroup} which is associated with the passed id and organisation.
+	 * @return The {@link PlayerGroup} which is associated with the passed id and API key.
 	 */
-	public PlayerGroup deletePlayerGroupByIdAndOrganisation(int groupId, Organisation organisation) {
-		PlayerGroup plGroup = getPlayerGroupByIdAndOrganisation(groupId, organisation);
+	public PlayerGroup deletePlayerGroup(int groupId, String apiKey) {
+		PlayerGroup plGroup = getPlayerGroup(groupId, apiKey);
 		
 		if(plGroup != null){
 			em.remove(plGroup);
@@ -81,7 +80,7 @@ public class PlayerGroupDAO {
 	 *            The API key of the organisation to which the group of players belongs to.
 	 * @return The {@link PlayerGroup} that is associated with the passed id and API key.
 	 */
-	public PlayerGroup getPlayergroupByIdAndAPIkey(int id, String apiKey) {
+	public PlayerGroup getPlayerGroup(int id, String apiKey) {
 		Query query = em.createQuery("select g from PlayerGroup g where g.belongsTo.apiKey=:apiKey and g.id = :id", PlayerGroup.class);
 		List list = QueryUtils.configureQuery(query, id, apiKey);
 		if (list.isEmpty()) {
@@ -94,14 +93,11 @@ public class PlayerGroupDAO {
 	/**
 	 * Gets all groups of players which are associated with a specific organisation.
 	 * 
-	 * @param organisation
-	 * 			The organisation to which the groups of players belong to.
-	 * @return The {@link List} of {@link PlayerGroup}s which belong to the passed organisaiton.
+	 * @param apiKey
+	 *            The API key of the organisation to which the group of group players belongs to.
+	 * @return The {@link List} of {@link PlayerGroup}s which belong to the passed API key.
 	 */
-	public List<PlayerGroup> getAllGroupsByOrganisation(Organisation organisation) {
-
-		String apiKey = organisation.getApiKey();
-
+	public List<PlayerGroup> getAllGroups(String apiKey) {
 		Query query = em.createQuery("select g from PlayerGroup g where g.belongsTo.apiKey=:apiKey");
 		query.setParameter("apiKey", apiKey);
 

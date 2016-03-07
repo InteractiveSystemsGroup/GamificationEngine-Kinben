@@ -55,7 +55,7 @@ public class PlayerLevelDAO {
 	 * @param apiKey
 	 * 			The API key affiliated to one specific organisation, to which
 	 *            all player levels belongs to.
-	 * @return The list with all player levels of one specific organisation.
+	 * @return The list with all player levels of one specific API key.
 	 */
 	public List<PlayerLevel> getPlayerLevels(String apiKey) {
 		Query query = em.createQuery("select pl from PlayerLevel pl where pl.belongsTo.apiKey=:apiKey");

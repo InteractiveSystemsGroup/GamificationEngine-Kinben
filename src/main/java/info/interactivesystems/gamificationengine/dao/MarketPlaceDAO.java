@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.api.MarketPlaceApi;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
@@ -14,9 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Named
 @Stateless
 public class MarketPlaceDAO {
@@ -24,8 +20,6 @@ public class MarketPlaceDAO {
 	@PersistenceContext(unitName = PersistenceUnit.PROJECT)
 	private EntityManager em;
 	
-	private static final Logger log = LoggerFactory.getLogger(MarketPlaceApi.class);
-
 	/**
 	 * Stores a new marketplace in the data base.
 	 * 
@@ -89,6 +83,8 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param offer
 	 *            The offer whose bids are requested.
+	 * @param apiKey
+	 *           The API key of the organisation to which the bids belong to. 
 	 * @return A {@link List} of {@link Bid}s. that are associated to a specific offer.
 	 */
 	public List<Bid> getBidsForOffer(Offer offer, String apiKey) {
@@ -104,6 +100,8 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param player
 	 *            The player who has created offers. 
+	 * @param apiKey
+	 *           The API key of the organisation to which the offers belong to. 
 	 * @return A {@link List} of {@link Offer}s with all offers a player has created.
 	 */
 	public List<Offer> getOffersByPlayer(Player player, String apiKey) {
@@ -135,7 +133,7 @@ public class MarketPlaceDAO {
 	 * Gets all Offers which are offer of all marketplaces of an organisation.
 	 * 
 	 * @param apiKey
-	 * 			The API key of the organisation to which the offers belongs to.
+	 * 			The API key of the organisation to which the offers belong to.
 	 * @return
 	 * 		A List of all Offers, which belongs to the organisation with the associated apiKey.
 	 */
@@ -185,6 +183,8 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param id
 	 *          The id of the marketplace that should be removed.
+	 * @param apiKey
+	 *           The API key of the organisation to which the marketPlave belong to. 
 	 * @return The {@link MarketPlace} that is removed from the database.
 	 */
 	public MarketPlace deleteMarketPlace(int id, String apiKey) {
@@ -201,6 +201,8 @@ public class MarketPlaceDAO {
 	 * 
 	 * @param offerId
 	 *           The id of the offer that should be removed from the data base.
+	 * @param apiKey
+	 *           The API key of the organisation to which the offer belongs to. 
 	 * @return The deleted {@link Offer}.
 	 */
 	public Offer deleteOffer(int offerId, String apiKey) {
@@ -221,8 +223,9 @@ public class MarketPlaceDAO {
 	 * @return The deleted {@link Bid}.
 	 */
 	public Bid deleteBid(Bid bid) {
-		log.debug("delete bid " + bid.getId());
-		em.remove(bid);
+		if(bid!=null){
+			em.remove(bid);
+		}
 		return bid;
 	}
 }

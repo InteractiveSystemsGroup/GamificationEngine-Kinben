@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.present.Board;
 import info.interactivesystems.gamificationengine.entities.present.Present;
 import info.interactivesystems.gamificationengine.entities.present.PresentAccepted;
@@ -12,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Named
 @Stateless
@@ -47,77 +47,59 @@ public class PresentDAO {
 	}
 
 	/**
-	 * Gets a present by its id and organisation.
+	 * Gets a present by its id and API key.
 	 * 
 	 * @param presentId
 	 * 			The id of the requested present.
-	 * @param organisation
-	 * 				The organisaiton the group of players is associated with.
-	 * @return The {@link Present} which is associated with the passed id and organisation.
+	 * @param apiKey
+	 * 			The API key of the organisation to which the present belongs to.
+	 * @return The {@link Present} which is associated with the passed id and API key.
 	 */
-	public Present getPresentByIdAndOrganisation(int presentId, Organisation organisation) {
-		Present present = em.find(Present.class, presentId);
-		
-		if (present != null) {
-			if (present.belongsTo(organisation)) {
-				return present;
-			} else {
-				return null;
-			}
-		} else {
+	public Present getPresent(int presentId, String apiKey) {
+		Query query = em.createQuery("select p from Present p where p.belongsTo.apiKey=:apiKey and p.id = :id", Present.class);
+		List list = QueryUtils.configureQuery(query, presentId, apiKey);
+		if (list.isEmpty()) {
 			return null;
 		}
-		
+		return  (Present) list.get(0);
 	}
 	
 	
 	/**
-	 * Gets an accepted present by its id and organisation.
+	 * Gets an accepted present by its id and API key.
 	 * 
 	 * @param presentId
 	 * 			The id of the requested present.
-	 * @param organisation
-	 * 				The organisaiton the group of players is associated with.
-	 * @return The {@link Present} which is associated with the passed id and organisation.
+	 * @param apiKey
+	 * 			The API key of the organisation to which the present belongs to.
+	 * @return The {@link Present} which is associated with the passed id and API key.
 	 */
-	public PresentArchived getPresentArchivedByIdAndOrganisation(int presentId, Organisation organisation) {
-		PresentArchived present = em.find(PresentArchived.class, presentId);
-		
-		if (present != null) {
-			if (present.belongsTo(organisation)) {
-				return present;
-			} else {
-				return null;
-			}
-		} else {
+	public PresentArchived getArchivedPresent(int presentId,  String apiKey) {
+		Query query = em.createQuery("select p from PresentArchived p where p.belongsTo.apiKey=:apiKey and p.id = :id", PresentArchived.class);
+		List list = QueryUtils.configureQuery(query, presentId, apiKey);
+		if (list.isEmpty()) {
 			return null;
 		}
-		
+		return  (PresentArchived) list.get(0);
 	}
 
 	
 	/**
-	 * Gets an archived present by its id and organisation.
+	 * Gets an archived present by its id and API key.
 	 * 
 	 * @param presentId
 	 * 			The id of the requested present.
-	 * @param organisation
-	 * 				The organisaiton the group of players is associated with.
-	 * @return The {@link Present} which is associated with the passed id and organisation.
+	 *@param apiKey
+	 * 			The API key of the organisation to which the present belongs to.
+	 * @return The {@link Present} which is associated with the passed id and API key.
 	 */
-	public PresentAccepted getPresentAcceptedByIdAndOrganisation(int presentId, Organisation organisation) {
-		PresentAccepted present = em.find(PresentAccepted.class, presentId);
-		
-		if (present != null) {
-			if (present.belongsTo(organisation)) {
-				return present;
-			} else {
-				return null;
-			}
-		} else {
+	public PresentAccepted getAcceptedPresent(int presentId, String apiKey) {
+		Query query = em.createQuery("select p from PresentAccepted p where p.belongsTo.apiKey=:apiKey and p.id = :id", PresentAccepted.class);
+		List list = QueryUtils.configureQuery(query, presentId, apiKey);
+		if (list.isEmpty()) {
 			return null;
 		}
-		
+		return  (PresentAccepted) list.get(0);
 	}
 
 	/**
@@ -130,7 +112,9 @@ public class PresentDAO {
 	 */
 	public <T> T deletePresent(T present) {
 		
-		em.remove(present);
+		if (present != null) {
+			em.remove(present);
+		}
 		return present;
 	}
 

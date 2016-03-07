@@ -1,6 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.rewards.Reward;
 
 import java.util.List;
@@ -35,33 +34,18 @@ public class RewardDAO {
 	 * 
 	 * @param rewardId
 	 * 			The id of the requested reward.
-	 * @return The {@link Reward} which is associated with the passed id. 
+	 * @param apiKey
+	 *           The API key of the organisation to which the reward belongs to. 
+	 * @return The {@link Reward} which is associated with the passed id and API key. 
 	 */
-	public Reward getReward(int rewardId) {
-		return em.find(Reward.class, rewardId);
+	public Reward getReward(int id, String apiKey) {
+		Query query = em.createQuery("select r from Reward r where r.belongsTo.apiKey=:apiKey and r.id in (:id)", Reward.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("id", id);
+
+		return (Reward) query.getResultList();
 	}
 
-	/**
-	 * Gets a reward by its id and organisation.
-	 * 
-	 * @param id
-	 * 			The id of the requested reward.
-	 * @param organisation
-	 * 			The organisaiton the reward is associated with.
-	 * @return The {@link Reward} which is associated with the passed id and organisation.
-	 */
-	public Reward getRewardByIdAndOrganisation(int id, Organisation organisation) {
-		Reward reward = em.find(Reward.class, id);
-		if (reward != null)
-			if (reward.belongsTo(organisation)) {
-				return reward;
-			} else {
-				return null;
-			}
-		else {
-			return null;
-		}
-	}
 
 	/**
 	 * Gets all rewards which are associated with the passed API key.
@@ -79,7 +63,7 @@ public class RewardDAO {
 
 
 	/**
-	 * Gets all rewards with the passed ids which match the also passed API key.
+	 * Gets all rewards with the passed ids which match also the passed API key.
 	 * 
 	 * @param ids
 	 * 			A list of reward ids. 
@@ -100,12 +84,12 @@ public class RewardDAO {
 	 * 
 	 * @param id
 	 * 		 The id of the reward which should be deleted.
-	 * @param organisation
-	 * 		 The organisaiton the reward is associated with.
-	 * @return The {@link Reward} that is associated with the passed id and organisation.
+	 * @param apiKey
+	 *           The API key of the organisation to which the reward belong to. 
+	 * @return The {@link Reward} that is associated with the passed id and API key.
 	 */
-	public Reward deleteRewardByIdAndOrganisation(int id, Organisation organisation) {
-		Reward reward = getRewardByIdAndOrganisation(id, organisation);
+	public Reward deleteReward(int id, String apiKey) {
+		Reward reward = getReward(id, apiKey);
 		
 		if(reward!=null){
 			em.remove(reward);
