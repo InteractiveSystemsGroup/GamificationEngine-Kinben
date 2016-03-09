@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * An Account has to be created for at least one manager or developer. It
  * is identified by a unique email address. The password ensures the
@@ -17,6 +19,7 @@ import javax.validation.constraints.NotNull;
  * correct credentials.
  */
 @Entity
+@JsonIgnoreProperties({"password"})
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = -683022088070098L;
@@ -117,5 +120,16 @@ public class Account implements Serializable {
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	/**
+	 * Checks if the passed password is equal to the hashed password.
+	 * 
+	 * @param checkPassword
+	 * 			The password that should be checked.
+	 * @return Returns a boolean value if the passed password is equal to the hashed password (true) else false.
+	 */
+	public boolean checkPassword(String checkPassword) {
+		return this.password.equals(checkPassword);
 	}
 }

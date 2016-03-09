@@ -37,7 +37,7 @@ public class Organisation implements Serializable {
 
 	@NotNull
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Account> managers = new HashSet<>();
+	private Collection<Account> managers;
 
 	private String name;
 
@@ -48,10 +48,12 @@ public class Organisation implements Serializable {
 	public Organisation(String name) {
 		super();
 		this.name = name;
+		managers = new HashSet<Account>();
 	}
 
 	public Organisation() {
 		super();
+		managers = new HashSet<Account>();
 	}
 
 	/**
@@ -140,7 +142,6 @@ public class Organisation implements Serializable {
 	 *            which should be added to the list
 	 */
 	public void addManager(@NotNull Account account) {
-		getManagers().add(account);
-		//this.managers.add(account);
+		this.managers.add(account);
 	}
 }

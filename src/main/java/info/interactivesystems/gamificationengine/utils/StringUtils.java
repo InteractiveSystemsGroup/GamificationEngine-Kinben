@@ -26,6 +26,7 @@ public class StringUtils {
 	}
 
 	/**
+	 * Checks if the passed value is a list of digists.
 	 * 
 	 * @param value
 	 *            The value for validation.
@@ -33,5 +34,21 @@ public class StringUtils {
 	 */
 	public static @NotNull String validateAsListOfDigits(@NotNull @ValidListOfDigits String value) {
 		return value;
+	}
+	
+	/**
+	 * Checks if the passed value is "true", "t", "yes", "y", "sure", "aye", "ja" or "1". If this is the case it is 
+	 * accepted as a value for true and so true is returned else false.
+	 * 
+	 * @param value
+	 * 		The value that should be checked.
+	 * @return
+	 * 		Boolean value if the passed String is 
+	 */
+	public static boolean checkBoolean(String value){
+		boolean result = "true".equalsIgnoreCase(value) || "t".equalsIgnoreCase(value) || "yes".equalsIgnoreCase(value)
+		|| "y".equalsIgnoreCase(value) || "sure".equalsIgnoreCase(value) || "aye".equalsIgnoreCase(value)
+		|| "ja".equalsIgnoreCase(value) || "1".equalsIgnoreCase(value);
+		return result;
 	}
 }
