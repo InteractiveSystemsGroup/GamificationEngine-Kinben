@@ -1,4 +1,4 @@
-package info.interactivesystems.gamificationengine.entities;
+package info.interactivesystems.gamificationengine.entities.donationCall;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
+
 /**
  * A DonationCall represents a call for donations. This could be a real world purpose like a real donation for a
  * charitable purpose or an event for the organisation's employee. Players can donate obtained coins to reach a 
@@ -20,6 +27,7 @@ import javax.validation.constraints.NotNull;
  * implemented by the responsible manager.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class DonationCall {
 
 	@Id
@@ -142,7 +150,7 @@ public class DonationCall {
 	/**
 	 * Sets the value of coins for the goal, that should be reached with donations.
 	 * 
-	 * @param goal
+	 * @param goalAmount
 	 *            The amount of coins that should be reached.
 	 */
 	public void setGoalAmount(int goalAmount) {
