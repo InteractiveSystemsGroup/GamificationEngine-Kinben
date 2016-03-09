@@ -91,19 +91,6 @@ public class DoAllTasksRule extends TaskRule {
 		return uncompletedTasks;
 	}
 
-	/**
-	 * This method checks if a rule contains a specific task. If the task is defined in the rule it returns true
-	 * otherwise false.
-	 * 
-	 * @param task
-	 * 			The task which has to be checked.
-	 * @return The boolean value if the task is contained in the task rule (true) or not (false).
-	 */
-	public boolean contains(Task task) {
-
-		return tasks.contains(task);
-
-	}
 
 	/**
 	 * This method checks if a rule is fulfilled. Therefore the list of all already finished tasks is checked

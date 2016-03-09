@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.dao;
 
+import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
@@ -39,12 +40,13 @@ public class TaskDAO {
 	 *           The API key of the organisation to which the task belongs to. 
 	 * @return The {@link Task} which is associated with the passed id and API key. 
 	 */
-	public Task getTask(int taskId, String apiKey) {
-		Query query = em.createQuery("select t from Task t where t.belongsTo.apiKey=:apiKey and t.id in (:taskId)", GoalRule.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("taskId", taskId);
-
-		return (Task) query.getResultList();
+	public Task getTask(int id, String apiKey) {
+		Query query = em.createQuery("select t from Task t where t.belongsTo.apiKey=:apiKey and t.id=:id", Task.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((Task) list.get(0));
 	}
 
 

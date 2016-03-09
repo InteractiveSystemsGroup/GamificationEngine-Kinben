@@ -226,8 +226,10 @@ public class Task implements Serializable {
 	 * @param finishedDate
 	 *            DateTime when the task has been finished the date time is stored. If 
 	 *            the value is null the date is set to now.
+	 * @param apiKey
+	 *          The API key of the organisation. 
 	 */
-	public void completeTask(Organisation organisation, Player player, RuleDAO ruleDao, GoalDAO goalDao, PlayerGroupDAO groupDao,
+	public void completeTask(Player player, RuleDAO ruleDao, GoalDAO goalDao, PlayerGroupDAO groupDao,
 			LocalDateTime finishedDate, String apiKey) {
 
 		if (!player.isActive()) {
@@ -305,7 +307,7 @@ public class Task implements Serializable {
 		log.debug("Temp Tasks List last item: " + playerFinishedTasksList.get((playerFinishedTasksList.size() - 1)).getFinishedDate());
 
 		// search all rules which contain this task
-		List<TaskRule> rules = ruleDao.getRulesByTask(task, organisation);
+		List<TaskRule> rules = ruleDao.getRulesByTask(task, apiKey);
 
 		log.debug("Rule count: " + rules.size());
 
@@ -315,7 +317,7 @@ public class Task implements Serializable {
 			log.debug("Rule: " + rule.getName());
 
 			// get goals which contain this rule
-			for (Goal goal : goalDao.getGoalsByRule(rule)) {
+			for (Goal goal : goalDao.getGoalsByRule(rule, apiKey)) {
 
 				log.debug("Goal: " + goal.getName());
 
@@ -366,7 +368,7 @@ public class Task implements Serializable {
 				} else {
 
 					// get all groups from player
-					List<PlayerGroup> allGroups = groupDao.getAllGroupsByOrganisation(organisation);
+					List<PlayerGroup> allGroups = groupDao.getAllGroups(apiKey);
 					List<PlayerGroup> playerGroups = new ArrayList<>();
 					List<Role> matchingGroupRoles = new ArrayList<>();
 

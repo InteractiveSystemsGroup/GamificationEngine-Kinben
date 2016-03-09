@@ -67,11 +67,14 @@ public class GoalDAO {
 	 * 
 	 * @param rule
 	 *           The rule to which the goals are associated. 
+	 * @param apiKey
+	 *           The API key of the organisation to which the goal belongs to. 
 	 * @return A {@link List} of all {@link Goal}s which are associated to the specific rule.
 	 */
-	public List<Goal> getGoalsByRule(GoalRule rule) {
+	public List<Goal> getGoalsByRule(GoalRule rule, String apiKey) {
 
-		Query query = em.createQuery("select g from Goal g where g.rule.id =:ruleId");
+		Query query = em.createQuery("select g from Goal g where g.rule.id =:ruleId and g.belongsTo.apiKey=:apiKey");
+		query.setParameter("apiKey", apiKey);
 		query.setParameter("ruleId", rule.getId());
 
 		return query.getResultList();

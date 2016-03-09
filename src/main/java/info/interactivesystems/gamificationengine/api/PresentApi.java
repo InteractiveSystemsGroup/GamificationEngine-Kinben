@@ -242,7 +242,6 @@ public class PresentApi {
 		log.debug("getboardMessages called");
 
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
-		
 		Player player = playerDao.getPlayer(playId, apiKey);
 		ValidateUtils.requireNotNull(playId, player);
 		
@@ -361,7 +360,7 @@ public class PresentApi {
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
-		Present present = presentDao.getPresentByIdAndOrganisation(presId, organisation);
+		Present present = presentDao.getPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, present);
 		
 		log.debug("Receivers player: " + present.getId());
@@ -433,9 +432,7 @@ public class PresentApi {
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
-		Present present = presentDao.getPresentByIdAndOrganisation(presId, organisation);
+		Present present = presentDao.getPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, present);
 		
 		log.debug("present id: " + present.getId());
@@ -477,9 +474,7 @@ public class PresentApi {
 
 		log.debug("deny a Present called");
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
-		Present present = presentDao.getPresentByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(presentId), organisation);
+		Present present = presentDao.getPresent(ValidateUtils.requireGreaterThanZero(presentId), apiKey);
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to deny.");
 		}
@@ -527,9 +522,7 @@ public class PresentApi {
 
 		log.debug("archive a Present called");
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
-		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(presentId), organisation);
+		PresentAccepted accPresent = presentDao.getAcceptedPresent(ValidateUtils.requireGreaterThanZero(presentId), apiKey);
 		if (accPresent == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
 		}
@@ -571,7 +564,6 @@ public class PresentApi {
 		log.debug("get inbox");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
 		if(player == null){
 			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
 		}
@@ -581,7 +573,6 @@ public class PresentApi {
 			board = new Board();
 			board.setOwner(player);
 			board.setBelongsTo(player.getBelongsTo());
-//			boardDao.persist(board);
 		}
 		log.debug("Board " + board.getId());
 
@@ -613,7 +604,6 @@ public class PresentApi {
 		log.debug("get archived Messages called");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
-		
 		if(player == null){
 			throw new ApiError(Response.Status.FORBIDDEN, "a player with this id doesn't exist");
 		}
@@ -653,9 +643,7 @@ public class PresentApi {
 		log.debug("delete Present called");
 
 		int id = ValidateUtils.requireGreaterThanZero(presentId);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		
-		Present present = presentDao.getPresentByIdAndOrganisation(id, organisation);
+		Present present = presentDao.getPresent(id, apiKey);
 		ValidateUtils.requireNotNull(id, present);
 
 		presentDao.deletePresent(present);
@@ -689,9 +677,7 @@ public class PresentApi {
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		
-		PresentAccepted accPresent = presentDao.getPresentAcceptedByIdAndOrganisation(presId, organisation);
+		PresentAccepted accPresent = presentDao.getAcceptedPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, accPresent);
 		
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
@@ -734,9 +720,7 @@ public class PresentApi {
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		
-		PresentArchived archPresent = presentDao.getPresentArchivedByIdAndOrganisation(presId, organisation);
+		PresentArchived archPresent = presentDao.getArchivedPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, archPresent);
 		
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
@@ -745,7 +729,7 @@ public class PresentApi {
 		Board board = boardDao.getBoard(Integer.valueOf(playId), apiKey);
 		board.checkBoardExists(board);
 		
-		//deletes first the present from the list of archived presents and than from the database 
+		//firstly delete the present from the list of archived presents and secondly from the database 
 		board.removeArchivedPresent(archPresent);
 		presentDao.deletePresent(archPresent);
 		boardDao.persist(board);

@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -74,19 +75,21 @@ public class OrganisationApi {
 	@Path("/")
 	@TypeHint(Organisation.class)
 	public Response create(@QueryParam("name") String name, @QueryParam("email") @NotNull @Email String email,
-			@QueryParam("password") @NotNull String password) {
+			@HeaderParam("password") @NotNull String password) {
 
 		log.debug("create organisation requested");
 
-		if (!accountDao.checkCredentials(email, password)) {
+		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
+		if (!accountDao.checkCredentials(email, encryptedPassword)) {
 			throw new CredentialException(email);
 		}
 
-		Organisation organisation = new Organisation();
-		organisation.setName(name);
-		organisation.addManager(accountDao.getAccount(email));
+		Organisation organisation = new Organisation(name);
+		organisation.addManager(accountDao.getAccount(email, encryptedPassword));
 		organisation.setApiKey(SecurityTools.generateApiKey());
 
+		log.debug("Organisation created");
+		
 		organisationDao.insertOrganisation(organisation);
 		return ResponseSurrogate.created(organisation);
 	}
@@ -99,38 +102,40 @@ public class OrganisationApi {
 	 *
 	 * @param manager
 	 *            The required valid email address for the new manager.
-	 * @param email
-	 *            The required valid email.
-	 * @param password
-	 *             Required query parameter associated with the email address. 
-	 *@param apiKey
+	 * @param managerPw
+	 *            The required new password of the new maanger.
+	 * @param firstName
+	 *            Optionally the first name of the Account's owner can be set.
+	 * @param lastName
+	 *            Optionally the last name of the Account's owner can be set. 
+	 * @param apiKey
 	 *			The API key of the organisation to which the manager belongs to.    
 	 * @return A Response of Organisation in JSON.
 	 */
 	@POST
 	@Path("/addManager")
 	@TypeHint(Organisation.class)
-	public Response addManager(@QueryParam("manager") @NotNull @Email String manager, @QueryParam("email") @NotNull @Email String email,
-			@QueryParam("password") @NotNull String password, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+	public Response addManager(@QueryParam("manager") @NotNull @Email String manager, @QueryParam("managerPW") @NotNull String managerPw, 
+			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("add organisation requested");
 
-		if (!accountDao.checkCredentials(email, password)) {
-			throw new CredentialException(email);
-		}
-
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Account account = accountDao.getAccount(manager);
-
-		if (account == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "Account %s not found", email);
+		if(organisation == null){
+			throw new ApiError(Response.Status.NOT_FOUND, "Organisation %s not found");
+		}
+		
+		if (organisation.getManagers().contains(accountDao.getAccount(manager))) {
+			throw new ApiError(Response.Status.NOT_ACCEPTABLE, "Account %s already in managers list", manager);
 		}
 
-		if (organisation.getManagers().contains(account)) {
-			throw new ApiError(Response.Status.NOT_ACCEPTABLE, "Account %s already in managers list", email);
-		}
-
-		organisation.addManager(account);
+		Account newManager = new Account(manager);
+		newManager.setPassword(SecurityTools.encryptWithSHA512(managerPw));
+		newManager.setFirstName(firstName);
+		newManager.setLastName(lastName);
+		
+		organisation.addManager(newManager);
 		return ResponseSurrogate.created(organisation);
 	}
 
@@ -148,11 +153,11 @@ public class OrganisationApi {
 	@GET
 	@Path("/*")
 	@TypeHint(Organisation[].class)
-	public Response get(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password) {
+	public Response get(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
 
-		if (!accountDao.checkCredentials(email, password)) {
+		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
 		}
 
@@ -178,16 +183,15 @@ public class OrganisationApi {
 	@Path("/{id}")
 	@TypeHint(Organisation.class)
 	public Response get(@PathParam("id") @NotNull String id, @QueryParam("email") @NotNull@Email String email, 
-			@QueryParam("password") @NotNull String password) {
+			@HeaderParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");
 
-		if (!accountDao.checkCredentials(email, password)) {
+		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
 		}
 
 		int intId = Integer.valueOf(id);
-
 		Organisation organisation = organisationDao.getOrganisation(intId);
 		return ResponseSurrogate.of(organisation);
 	}
@@ -211,16 +215,16 @@ public class OrganisationApi {
 	@Path("/{id}/generateapikey")
 	@TypeHint(Organisation.class)
 	public Response generateApiKey(@PathParam("id") @NotNull String id, @QueryParam("email") @Email String email,
-			@QueryParam("password") @NotNull String password) {
+			@HeaderParam("password") @NotNull String password) {
+		
 		Notification notification = new Notification();
 
 		log.debug("generate api key requested");
-		if (!accountDao.checkCredentials(email, password)) {
+		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
 		}
 
 		int intId = Integer.valueOf(id);
-
 		Organisation organisation = organisationDao.getOrganisation(intId);
 		organisation.setApiKey(SecurityTools.generateApiKey());
 

@@ -117,8 +117,8 @@ public class RoleApi {
 
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);
-
 		ValidateUtils.requireNotNull(roleId, role);
+
 		return ResponseSurrogate.of(role);
 	}
 
@@ -151,6 +151,7 @@ public class RoleApi {
 
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);
+		ValidateUtils.requireNotNull(roleId, role);
 
 		switch (attribute) {
 		case "name":

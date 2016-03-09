@@ -23,6 +23,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Players can be assigned to a group by its creation or at a later point in time. 
  * For example depending on the respective organization, a group can be a 
@@ -33,6 +35,7 @@ import javax.validation.constraints.NotNull;
  * Like a player, a group can be assigned an image as a logo.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class PlayerGroup {
 
 	@Id

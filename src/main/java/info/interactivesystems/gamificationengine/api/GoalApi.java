@@ -123,24 +123,22 @@ public class GoalApi {
 		log.debug("rewardIds: " + roleIds);
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
+		
 		Goal goal = new Goal();
 		goal.setName(name);
 		goal.setBelongsTo(organisation);
 
 		// Convert String to boolean
-		boolean isRepeatable = "true".equalsIgnoreCase(repeatable) || "t".equalsIgnoreCase(repeatable) || "yes".equalsIgnoreCase(repeatable)
-				|| "y".equalsIgnoreCase(repeatable) || "sure".equalsIgnoreCase(repeatable) || "aye".equalsIgnoreCase(repeatable)
-				|| "ja".equalsIgnoreCase(repeatable) || "1".equalsIgnoreCase(repeatable);
+		boolean isRepeatable = StringUtils.checkBoolean(repeatable);
 		goal.setRepeatable(isRepeatable);
 
-		boolean isPlayerGroupGoal = "true".equalsIgnoreCase(isGroupGoal) || "t".equalsIgnoreCase(isGroupGoal) || "yes".equalsIgnoreCase(isGroupGoal)
-				|| "y".equalsIgnoreCase(isGroupGoal) || "sure".equalsIgnoreCase(isGroupGoal) || "aye".equalsIgnoreCase(isGroupGoal)
-				|| "ja".equalsIgnoreCase(isGroupGoal) || "1".equalsIgnoreCase(isGroupGoal);
+		boolean isPlayerGroupGoal = StringUtils.checkBoolean(isGroupGoal);
 		goal.setPlayerGroupGoal(isPlayerGroupGoal);
 
 		// Get rule object
-		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(ruleId), organisation);
+		int rId = ValidateUtils.requireGreaterThanZero(ruleId);
+		GoalRule rule = ruleDao.getRule(rId, apiKey);
+		ValidateUtils.requireNotNull(rId, rule);
 		goal.setRule(rule);
 
 		// Find all rewards by Id
@@ -148,7 +146,7 @@ public class GoalApi {
 
 		for (String rewardIdString : rewardIdList) {
 			log.debug("RewardToAdd: " + rewardIdString);
-			Reward reward = rewardDao.getRewardByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(rewardIdString), organisation);
+			Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardIdString), apiKey);
 			if (reward != null) {
 				log.debug("RewardAdded: " + reward.getId());
 				goal.addReward(reward);
@@ -209,9 +207,7 @@ public class GoalApi {
 	public Response getGoal(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-	
-		Goal goal = goalDao.getGoalByIdAndOrganisation(goalId, organisation);
+		Goal goal = goalDao.getGoal(goalId, apiKey); 
 		ValidateUtils.requireNotNull(goalId, goal);
 		
 		return ResponseSurrogate.of(goal);
@@ -250,9 +246,7 @@ public class GoalApi {
 		
 		log.debug("change Attribute of Goal");
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
-		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThanZero(goalId));
+		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThanZero(goalId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(goalId),goal);
 
 		if ("null".equals(value) || value != null && value.isEmpty()) {
@@ -274,7 +268,7 @@ public class GoalApi {
 			break;
 
 		case "rewardId":
-			changeRewardIds(value, organisation, goal, apiKey);
+			changeRewardIds(value, goal, apiKey);
 			break;
 
 		case "roles":
@@ -302,7 +296,7 @@ public class GoalApi {
 	 * 			  The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this goal belongs to.
 	 */
-	private void changeRewardIds(@NotNull String value, Organisation organisation, Goal goal, String apiKey) {
+	private void changeRewardIds(@NotNull String value, Goal goal, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
 		List<Reward> rewards = rewardDao.getRewards(ids, apiKey);
@@ -319,8 +313,8 @@ public class GoalApi {
 	 * 			The goal whose field of roles will be modified. This parameter should be not 
 	 * 		  	null. 
 	 * @param apiKey
-	 * 			  The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which this goal belongs to.
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this goal belongs to.
 	 */
 	private void changeRoles(@NotNull String value, Goal goal, @NotNull String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
@@ -348,9 +342,7 @@ public class GoalApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		
-		Goal goal = goalDao.deleteGoalByIdAndOrganisation(goalId, organisation);
+		Goal goal = goalDao.deleteGoal(goalId, apiKey);
 		ValidateUtils.requireNotNull(goalId, goal);
 
 		return ResponseSurrogate.deleted(goal);

@@ -2,6 +2,8 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 
+import java.util.List;
+
 import javax.ws.rs.core.Response;
 
 public class ValidateUtils {
@@ -23,6 +25,17 @@ public class ValidateUtils {
 		return object;
 	}
 
+//	public static <T> T requireNotNullList(List<Integer> id, List<T> object) {
+//		
+//		for (int i = 0; i < object.size(); i++) {
+//			requireNotNull(id.get(i), object.get(i));
+//		}
+//		return (T) object;
+//			
+//	}
+	
+	
+	
 	/**
 	 * Validates whether the assigned value is greater than zero.
 	 * 

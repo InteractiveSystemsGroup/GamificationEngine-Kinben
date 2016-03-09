@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A role describes which members of an organisation is allowed to do or see
  * particular elements of the engine such as to fulfil a particular task and get
@@ -18,7 +20,10 @@ import javax.validation.constraints.NotNull;
  * roles are specific to the respective created organisation. 
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class Role implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

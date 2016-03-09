@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.entities;
 
+import info.interactivesystems.gamificationengine.entities.donationCall.DonationCall;
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.goal.Goal;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
@@ -25,6 +26,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A player represents a user in the gamification application, eg. an employee of an organisation or a customer. 
  * By the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned 
@@ -38,6 +41,7 @@ import javax.validation.constraints.NotNull;
  * player has.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo", "password" })
 public class Player {
 
 	@Id

@@ -54,7 +54,7 @@ public class PlayerDAO {
 	 * @return The {@link Player} that is associated with the passed id and API key.
 	 */
 	public Player getPlayer(int id, String apiKey) {
-		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id = :id", Player.class);
+		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.id=:id", Player.class);
 		List list = QueryUtils.configureQuery(query, id, apiKey);
 		if (list.isEmpty()) {
 			return null;

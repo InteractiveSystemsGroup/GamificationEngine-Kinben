@@ -18,7 +18,6 @@ import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,10 +183,9 @@ public class TaskApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int taskId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		Task task = taskDao.getTaskByIdAndOrganisation(taskId, organisation);
-
+		Task task = taskDao.getTask(taskId, apiKey);
 		ValidateUtils.requireNotNull(taskId, task);
+
 		return ResponseSurrogate.of(task);
 	}
 
@@ -222,25 +220,26 @@ public class TaskApi {
 		log.debug("completeTask called");
 		log.debug("TaskId: " + id);
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
 		// find player by id and organisation
 		log.debug("Get Player");
-		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
-
+		int pId = ValidateUtils.requireGreaterThanZero(playerId);
+		Player player = playerDao.getPlayer(pId, apiKey);
+		ValidateUtils.requireNotNull(pId, player);
+		
 		// find task by id and organisation
 		int taskId = ValidateUtils.requireGreaterThanZero(id);
-		Task task = taskDao.getTaskByIdAndOrganisation(taskId, organisation);
+		Task task = taskDao.getTask(taskId, apiKey);
 		ValidateUtils.requireNotNull(taskId, task);
+		
 		log.debug("TaskName: " + task.getTaskName());
 
 		if (finishedDate == null || "".equals(finishedDate)) {
 			log.debug("Kein Datum übergeben");
-			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, null, apiKey);
+			task.completeTask(player, ruleDao, goalDao, groupDao, null, apiKey);
 		} else {
 			log.debug("Datum übergeben: " + finishedDate);
 			LocalDateTime dateTime = LocalDateTimeUtil.formatDateAndTime(finishedDate);
-			task.completeTask(organisation, player, ruleDao, goalDao, groupDao, dateTime, apiKey);
+			task.completeTask(player, ruleDao, goalDao, groupDao, dateTime, apiKey);
 		}
 
 		return ResponseSurrogate.created(task);
@@ -276,8 +275,10 @@ public class TaskApi {
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Task");
 
-		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(id));
-
+		int taskId = ValidateUtils.requireGreaterThanZero(id);
+		Task task = taskDao.getTask(taskId, apiKey);
+		ValidateUtils.requireNotNull(taskId, task);
+		
 		if ("null".equals(value)) {
 			value = null;
 		}
@@ -350,10 +351,8 @@ public class TaskApi {
 	public Response deleteTask(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String id,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
 		int taskId = ValidateUtils.requireGreaterThanZero(id);
-		Task task = taskDao.deleteTaskByIdAndOrganisation(taskId, organisation);
+		Task task = taskDao.deleteTask(taskId, apiKey);
 		ValidateUtils.requireNotNull(taskId, task);
 		
 		return ResponseSurrogate.deleted(task);

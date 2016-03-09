@@ -149,13 +149,8 @@ public class MarketPlaceApi {
 //		}
 
 		int id = ValidateUtils.requireGreaterThanZero(marketId);
-
 		MarketPlace market = marketPlDao.deleteMarketPlace(id, apiKey);
 		ValidateUtils.requireNotNull(id, market);
-
-		if (market == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such MarketPlace: " + marketId);
-		}
 
 		return ResponseSurrogate.deleted(market);
 	}
@@ -192,7 +187,7 @@ public class MarketPlaceApi {
 	@POST
 	@Path("/offer")
 	@TypeHint(Offer.class)
-	public Response createNewOffer(@QueryParam("name") @NotNull String name, 
+	public Response createOffer(@QueryParam("name") @NotNull String name, 
 			@QueryParam("endDate") String endDate,
 			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The prize must be a valid number") String prize,
 			@QueryParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
@@ -203,26 +198,36 @@ public class MarketPlaceApi {
 
 		log.debug("create new Offer called");
 
-		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskId));
+		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(taskId), task);
+		
+		if (!task.isTradeable()) {
+			throw new ApiError(Response.Status.FORBIDDEN, "Task is not tradeable.");
+		}
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(playerId), player);
 
-		if (!task.isTradeable()) {
-			throw new ApiError(Response.Status.FORBIDDEN, "task is not tradeable");
-		}
-
 		if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(prize))) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such an offer");
+			throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such an offer.");
 		}
 		
 		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a real bid!");
+			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a bid greater than 0.");
 		}
 
+		MarketPlace marketPlace = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketId), apiKey);
+		ValidateUtils.requireNotNull(Integer.valueOf(marketId), marketPlace);
+		
+		List<Offer> oldOffers = marketPlace.getOffers();
+		for(Offer oldOffer : oldOffers){
+			if(oldOffer.getTask().equals(task)){
+				throw new ApiError(Response.Status.FORBIDDEN, "This task is already an offer on the marketplace.");
+			}
+		}
+		
 		Offer offer = new Offer();
 		offer.setName(name);
 		offer.setBelongsTo(organisation);
@@ -233,13 +238,10 @@ public class MarketPlaceApi {
 		offer.setTask(task);
 		offer.setPlayer(player);
 
-		log.debug("Offer erstellt  ");
+		log.debug("Offer created  ");
 		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
 
-		log.debug("Prize angegeben " + player.getCoins());
-		
-		MarketPlace marketPlace = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketId), apiKey);
-		ValidateUtils.requireNotNull(Integer.valueOf(marketId), marketPlace);
+		log.debug("Prize: " + player.getCoins());
 		
 		marketPlace.addOffer(offer);
 		marketPlDao.insertOffer(offer);
@@ -272,10 +274,10 @@ public class MarketPlaceApi {
 			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String prize,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create New Bid called");
+		log.debug("create new Bid called");
 
 		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a real bid!");
+			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a bid greater than 0.");
 		}
 
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerId), apiKey);
@@ -301,7 +303,6 @@ public class MarketPlaceApi {
 		bid.setPlayer(player);
 
 		marketPlDao.insertBid(bid);
-
 		bid.setOffer(offer);
 
 		log.debug("Offerprize before: " + offer.getPrize());
@@ -587,9 +588,9 @@ public class MarketPlaceApi {
 		List<Offer> matchingOffers;
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-//			if (matchingOffers.size() <= 0) {
-//				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for the player roles");
-//			}
+			if (matchingOffers.size() <= 0) {
+				return ResponseSurrogate.of(matchingOffers);
+			}
 
 			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
@@ -669,7 +670,7 @@ public class MarketPlaceApi {
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
 			if (matchingOffers.size() <= 0) {
-				throw new ApiError(Response.Status.NOT_FOUND, "There are no offers for this role");
+				return ResponseSurrogate.of(matchingOffers);
 			}
 			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
@@ -749,7 +750,7 @@ public class MarketPlaceApi {
 			}
 		}
 		
-		List<MarketPlace> markets = marketPlDao.getAllMarketPlaceForApiKey(apiKey);
+		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
 		if (!markets.isEmpty()) {
 			for (MarketPlace market : markets) {
 				market.removeOffer(offer);
@@ -794,7 +795,6 @@ public class MarketPlaceApi {
 		int idOffer = ValidateUtils.requireGreaterThanZero(offerId);
 		int idPlayer = ValidateUtils.requireGreaterThanZero(playerId);
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		Player player = playerDao.getPlayer(idPlayer, apiKey);
 		ValidateUtils.requireNotNull(idPlayer, player);
 		
@@ -804,8 +804,9 @@ public class MarketPlaceApi {
 		log.debug("get Offer");
 
 		Task task = offer.getTask();
+		ValidateUtils.requireNotNull(task.getId(), task);
 		log.debug("task" + task.getId());
-		task.completeTask(organisation, player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
+		task.completeTask(player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
 		log.debug("Task completed");
 
 		int prizeReward = offer.getPrize();

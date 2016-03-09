@@ -16,6 +16,7 @@ import info.interactivesystems.gamificationengine.entities.rewards.Badge;
 import info.interactivesystems.gamificationengine.entities.rewards.PermanentReward;
 import info.interactivesystems.gamificationengine.entities.task.FinishedTask;
 import info.interactivesystems.gamificationengine.utils.ImageUtils;
+import info.interactivesystems.gamificationengine.utils.SecurityTools;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class PlayerApi {
 
 		Player player = new Player();
 		player.setBelongsTo(organisation);
-		player.setPassword(password);
+		player.setPassword(SecurityTools.encryptWithSHA512(password));
 		player.setReference(reference);
 		player.setNickname(nickname);
 		player.setBelongsToRoles(roles);
@@ -186,8 +187,6 @@ public class PlayerApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
-		ValidateUtils.requireGreaterThanZero(playerId);
-
 		Player player = playerDao.deletePlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
 
@@ -308,7 +307,7 @@ public class PlayerApi {
 	private void changeContacts(@NotNull String value, Player player, String apiKey) {
 		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
 		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
-		List<Player> contacts = roleDao.getPlayers(ids, apiKey);
+		List<Player> contacts = playerDao.getPlayers(ids, apiKey);
 		player.setContactList(contacts);
 	}
 
@@ -336,7 +335,7 @@ public class PlayerApi {
 		log.debug("adding contacts to player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
-		List<Player> contactsToAdd = roleDao.getPlayers(list, apiKey);
+		List<Player> contactsToAdd = playerDao.getPlayers(list, apiKey);
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -411,7 +410,7 @@ public class PlayerApi {
 		log.debug("deleting contacts for of a player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
-		List<Player> contactsToDelete = roleDao.getPlayers(list, apiKey);
+		List<Player> contactsToDelete = playerDao.getPlayers(list, apiKey);
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -448,9 +447,7 @@ public class PlayerApi {
 		
 		byte[] bytes = player.getAvatar();
 
-		return ResponseSurrogate.of(new Object() {
-			public byte[] image = bytes;
-		});
+		return ResponseSurrogate.of(bytes);
 	}
 
 	/**
@@ -554,7 +551,11 @@ public class PlayerApi {
 	public Response getRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("getPlayerPermanentRewards requested");
-		List<PermanentReward> pRewards = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getRewards();
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+		ValidateUtils.requireNotNull(playerId, player);
+		
+		List<PermanentReward> pRewards = player.getRewards();
 
 		return ResponseSurrogate.of(pRewards);
 	}
@@ -692,5 +693,30 @@ public class PlayerApi {
 		int coins = player.getCoins();
 
 		return ResponseSurrogate.of(coins);
+	}
+	
+	/**
+	 * Gets a list of all contacts a player has.
+	 * 
+	 * @param id
+	 * 			Required path parameter as integer which uniquely identify the Player.
+	 * @param apiKey
+	 * 			  The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
+	 * @return Response of all player contacts in JSON.
+	 */
+	@GET
+	@Path("/{id}/contacts")
+	@TypeHint(Player[].class)
+	public Response contacts(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get contacts of a player");
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+		ValidateUtils.requireNotNull(playerId, player);
+		
+		List<Player> contacts = player.getContactList();
+
+		return ResponseSurrogate.of(contacts);
 	}
 }

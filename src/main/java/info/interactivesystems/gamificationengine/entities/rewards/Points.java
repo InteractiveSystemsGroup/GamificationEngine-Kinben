@@ -93,7 +93,7 @@ public class Points extends VolatileReward {
 			log.debug("PointsRule: " + rule.getName());
 
 			// get goals which contain this rule
-			for (Goal goal : goalDao.getGoalsByRule(rule)) {
+			for (Goal goal : goalDao.getGoalsByRule(rule, apiKey)) {
 
 				if(!goal.isPlayerGroupGoal()){
 					//Test, if player role match with one role of the goal 
@@ -197,7 +197,7 @@ public class Points extends VolatileReward {
 			log.debug("Group: PointsRule: " + rule.getName());
 
 			// get goals which contain this rule
-			for (Goal goal : goalDao.getGoalsByRule(rule)) {
+			for (Goal goal : goalDao.getGoalsByRule(rule, apiKey)) {
 				
 				if(goal.isPlayerGroupGoal()){
 					//Test, if one player role of the group match with role of the goal 

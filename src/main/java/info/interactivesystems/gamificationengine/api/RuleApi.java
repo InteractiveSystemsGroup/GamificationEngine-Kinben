@@ -107,7 +107,7 @@ public class RuleApi {
 		List<Task> tasks = new ArrayList<>();
 
 		for (String taskIdString : taskIdList) {
-			Task task = taskDao.getTaskByIdAndOrganisation(ValidateUtils.requireGreaterThanZero(taskIdString), organisation);
+			Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskIdString), apiKey);
 			if (task != null) {
 				tasks.add(task);
 			}
@@ -217,8 +217,7 @@ public class RuleApi {
 	public Response getRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		GoalRule rule = ruleDao.getRuleByIdAndOrganisation(ruleId, organisation);
+		GoalRule rule = ruleDao.getRule(ruleId, apiKey);
 		ValidateUtils.requireNotNull(ruleId, rule);
 		
 		return ResponseSurrogate.of(rule);
@@ -242,9 +241,7 @@ public class RuleApi {
 	public Response deleteRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-		
-		GoalRule rule = ruleDao.deleteRuleByIdAndOrganisation(ruleId, organisation);
+		GoalRule rule = ruleDao.deleteRule(ruleId, apiKey);
 		ValidateUtils.requireNotNull(ruleId, rule);
 
 		return ResponseSurrogate.deleted(rule);
@@ -280,10 +277,9 @@ public class RuleApi {
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		log.debug("change Attribute of Rule");
 
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
-		GoalRule rule = ruleDao.getRule(ruleId);
+		GoalRule rule = ruleDao.getRule(ruleId, apiKey);
+		ValidateUtils.requireNotNull(ruleId, rule);
 
 		if ("null".equals(value)) {
 			value = null;

@@ -1,8 +1,10 @@
 package info.interactivesystems.gamificationengine.api;
 
+import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.exeption.CredentialException;
 import info.interactivesystems.gamificationengine.dao.AccountDAO;
 import info.interactivesystems.gamificationengine.entities.Account;
+import info.interactivesystems.gamificationengine.utils.SecurityTools;
 
 import java.util.Optional;
 
@@ -10,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -44,35 +47,6 @@ public class AccountApi {
 	@Inject
 	AccountDAO accountDao;
 
-	/**
-	 * Returns an account corresponding to the given email address but only
-	 * if the combination with password is correct. By the creation of an 
-	 * organisation this email address is connected with it. 
-	 * So the method requires valid credentials otherwise a warning with the 
-	 * hint for wrong credentials is returned.
-	 *
-	 * @param email
-	 *            A required valid unique email address.
-	 * @param password
-	 *            Required query parameter associated with the email address. 
-	 * @return A Response of Account in JSON.
-	 */
-	@GET
-	@Path("/")
-	@TypeHint(Account.class)
-	public Response get(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password) {
-
-		log.debug("get account requested");
-
-		if (!accountDao.checkCredentials(email, password)) {
-			log.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
-			throw new CredentialException(email);
-		}
-
-		Account account = accountDao.getAccount(email);
-		log.debug("Account requested: %s", account);
-		return ResponseSurrogate.of(account);
-	}
 
 	/**
 	 * Creates a new account. For this an unique email address and a 
@@ -89,7 +63,6 @@ public class AccountApi {
 	 *            Optionally the first name of the Account's owner can be set.
 	 * @param lastName
 	 *            Optionally the last name of the Account's owner can be set.
-	 * 
 	 * @return A Response of Account in JSON.
 	 */
 	@POST
@@ -100,8 +73,12 @@ public class AccountApi {
 
 		log.debug("create account requested");
 
+		if(accountDao.getAccount(email)!=null){
+			throw new ApiError(Response.Status.FORBIDDEN, "This mail address is already used.");
+		}
+		
 		Account account = new Account(email);
-		account.setPassword(password);
+		account.setPassword(SecurityTools.encryptWithSHA512(password));
 		account.setFirstName(firstName);
 		account.setLastName(lastName);
 		accountDao.persist(account);
@@ -110,6 +87,39 @@ public class AccountApi {
 		return ResponseSurrogate.created(account);
 	}
 
+	
+	/**
+	 * Returns an account corresponding to the given email address but only
+	 * if the combination with password is correct. By the creation of an 
+	 * organisation this email address is connected with it. 
+	 * So the method requires valid credentials otherwise a warning with the 
+	 * hint for wrong credentials is returned.
+	 *
+	 * @param email
+	 *            A required valid unique email address.
+	 * @param password
+	 *            Required query parameter associated with the email address. 
+	 * @return A Response of Account in JSON.
+	 */
+	@GET
+	@Path("/")
+	@TypeHint(Account.class)
+	public Response get(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password) {
+
+		log.debug("get account requested");
+
+		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
+		
+		if (!accountDao.checkCredentials(email, encryptedPassword)) {
+			log.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
+			throw new CredentialException(email);
+		}
+
+		Account account = accountDao.getAccount(email, encryptedPassword);
+		log.debug("Account requested: %s", account);
+		return ResponseSurrogate.of(account);
+	}
+	
 	/**
 	 * Updates the first and last name of an existing account. For this the 
 	 * specific email address and associated password are mandatory.
@@ -130,18 +140,19 @@ public class AccountApi {
 	@PUT
 	@Path("/")
 	@TypeHint(Account.class)
-	public Response update(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password,
+	public Response update(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password,
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
 
 		log.debug("update account requested");
-
-		if (!accountDao.checkCredentials(email, password)) {
+		
+		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
+		if (!accountDao.checkCredentials(email, encryptedPassword)) {
 			log.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
 			throw new CredentialException(email);
 		}
 
-		Account account = accountDao.getAccount(email);
-		Optional.ofNullable(password).ifPresent(account::setPassword);
+		Account account = accountDao.getAccount(email, encryptedPassword);
+		Optional.ofNullable(encryptedPassword).ifPresent(account::setPassword);
 		Optional.ofNullable(firstName).ifPresent(account::setFirstName);
 		Optional.ofNullable(lastName).ifPresent(account::setLastName);
 		accountDao.persist(account);

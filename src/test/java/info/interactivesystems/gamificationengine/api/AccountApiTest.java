@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import info.interactivesystems.gamificationengine.api.exeption.CredentialException;
 import info.interactivesystems.gamificationengine.dao.AccountDAO;
 import info.interactivesystems.gamificationengine.entities.Account;
+import info.interactivesystems.gamificationengine.utils.SecurityTools;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -49,7 +50,7 @@ public class AccountApiTest {
 	@Test
 	public void testGetAccountCredentialsOk() {
 		String email = "test@example.com";
-		String password = "123456";
+		String password = SecurityTools.encryptWithSHA512("123456");
 
 		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> true);
 		mockGetAccount(email, password);
@@ -75,8 +76,8 @@ public class AccountApiTest {
 
 	@Test(expected = CredentialException.class)
 	public void testGetAccountCredentialsWrong() {
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> false);
-		mockGetAccount(null, null);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
+		mockGetAccount(null, SecurityTools.encryptWithSHA512(null));
 
 		Response response = accountApi.get(null, null);
 		ResponseSurrogate<Account> entity = (ResponseSurrogate<Account>) response.getEntity();
@@ -87,7 +88,7 @@ public class AccountApiTest {
 	@Test
 	public void testCreateAccount() {
 		String email = "test@example.com";
-		String password = "123456";
+		String password = SecurityTools.encryptWithSHA512("123456");
 
 		Response response = accountApi.create(email, password, null, null);
 		ResponseSurrogate<Account> entity = (ResponseSurrogate<Account>) response.getEntity();
@@ -99,7 +100,7 @@ public class AccountApiTest {
 	@Test
 	public void testCreateAccountNotAnEmail() throws NoSuchMethodException {
 		String wrongEmail = "not an email";
-		String password = "123456";
+		String password = SecurityTools.encryptWithSHA512("123456");
 
 		Method method = AccountApi.class.getMethod("create", String.class, String.class, String.class, String.class);
 

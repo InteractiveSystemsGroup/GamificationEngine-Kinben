@@ -41,12 +41,13 @@ public class RuleDAO {
 	 *           The API key of the organisation to which the rule belongs to. 
 	 * @return The {@link GoalRule} which is associated with the passed id and API key.
 	 */
-	public GoalRule getRule(int ruleId, String apiKey) {
-		Query query = em.createQuery("select r from GoalRule r where r.belongsTo.apiKey=:apiKey and r.id in (:ruleId)", GoalRule.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("ruleId", ruleId);
-
-		return (GoalRule) query.getResultList();
+	public GoalRule getRule(int id, String apiKey) {
+		Query query = em.createQuery("select r from GoalRule r where r.belongsTo.apiKey=:apiKey and r.id=:id)", GoalRule.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((GoalRule) list.get(0));
 	}
 	
 	/**

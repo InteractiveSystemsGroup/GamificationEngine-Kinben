@@ -6,11 +6,15 @@ import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDi
 import info.interactivesystems.gamificationengine.dao.DonationDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerDAO;
-import info.interactivesystems.gamificationengine.entities.DonationCall;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.donationCall.Donation;
+import info.interactivesystems.gamificationengine.entities.donationCall.DonationCall;
+import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
+import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 import info.interactivesystems.gamificationengine.utils.Progress;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -67,7 +71,7 @@ public class DonationApi {
 	 *           The short name of the call for donation.
 	 * @param description
 	 *            The longer description of the call for donation. This can contain the its purpose.
-	 * @param goal
+	 * @param goalAmount
 	 *            The amount of coins that should be reached to fulfil this donation.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
@@ -131,11 +135,22 @@ public class DonationApi {
 			Player player = playerDao.getPlayer(pId, apiKey);
 			ValidateUtils.requireNotNull(pId, player);
 	
-			if (!player.enoughPrize(ValidateUtils.requireGreaterThanZero(amount))) {
+			int donationAmount = ValidateUtils.requireGreaterThanZero(Integer.valueOf(amount));
+			
+			if (!player.enoughPrize(donationAmount)) {
 				throw new ApiError(Response.Status.FORBIDDEN, "Not enough coins for such a donation.");
 			}
-			player.donate(dCall, ValidateUtils.requireGreaterThanZero(amount));
-	
+			player.donate(dCall, donationAmount);
+			
+			Donation donation = new Donation();
+			donation.setBelongsTo(dCall.getBelongsTo());
+			donation.setAmount(donationAmount);
+			donation.setPlayer(player);
+			donation.setCreationDate(LocalDateTime.now());
+			donation.setDonationCall(dCall);
+			
+			donationDao.insertDonation(donation);
+			
 		}else{
 			return ResponseSurrogate.of("Call for Donation is already completed");
 		}
@@ -233,7 +248,6 @@ public class DonationApi {
 	public Response getDonors(@PathParam("id") @NotNull @ValidPositiveDigit String dId, 
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		
 		int id = ValidateUtils.requireGreaterThanZero(dId);
 		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
 		ValidateUtils.requireNotNull(id, dCall);
@@ -241,6 +255,37 @@ public class DonationApi {
 		List<Player> donors = dCall.getDonors();
 		
 		return ResponseSurrogate.of(donors);
+	}
+	
+	/**
+	 * Gets a list of all donations which were made for a specific call for donations. 
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the offer id is a 
+	 * positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param donationCallId
+	 *           The call for Donation whose donations are returned. This parameter is required.
+	 * @param apiKey
+	 *            The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the call for donations belongs to.
+	 * @return Response as List of Donations in JSON.
+	 */
+	@GET
+	@Path("/{id}/donations")
+	@TypeHint(Donation[].class)
+	public Response getDonations(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String donationCallId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+	
+		int dId = ValidateUtils.requireGreaterThanZero(donationCallId);
+		DonationCall dCall = donationDao.getDonationCall(dId, apiKey); 
+		ValidateUtils.requireNotNull(dId, dCall);
+		
+		List<Donation> donations = donationDao.getDonationsForDonationCall(dCall, apiKey); 
+
+		for (Donation donation : donations) {
+			log.debug("Donation " + donation.getId() + " with "+ donation.getAmount() + "coins for: " + dCall.getId());
+		}
+
+		return ResponseSurrogate.of(donations);
 	}
 	
 	/**
@@ -277,8 +322,8 @@ public class DonationApi {
 		log.debug("change Attribute of Player");
 
 		int dCallId = ValidateUtils.requireGreaterThanZero(id);
-
 		DonationCall dCall = donationDao.getDonationCall(dCallId, apiKey); 
+		ValidateUtils.requireNotNull(dCallId, dCall);
 
 		// not: id -> generated & belongsTo -> fixed
 		switch (attribute) {
@@ -300,12 +345,11 @@ public class DonationApi {
 	}
 
 	/**
-	 * Removes the call for donations with the assigned id from data base. Here it is assumed, that the Call for
-	 * donations is only deleted when its goal to reach is already fulfilled. So every donor dosen't get her/his 
-	 * donation back, because the goal is fulfilled.
-	 * It is checked, if the passed id is a 
-	 * positive number otherwise a message for an invalid number is returned. If the API key is not 
-	 * valid an analogous message is returned.
+	 * Removes the call for donations with the assigned id from data base. If the goal of call for donations isn't
+	 * reached, first all donors get their donations back and then in a second step the call for donation itself is 
+	 * removed from the database. Else if the goal is already reached, the call for donation is deleted.
+	 * It is checked, if the passed id is a positive number otherwise a message for an invalid number is returned.
+	 * If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param id
 	 *          Required path parameter as integer which uniquely identify the {@link DonationCall} that
@@ -321,8 +365,21 @@ public class DonationApi {
 	public Response deleteDonationCall(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int dId = ValidateUtils.requireGreaterThanZero(id);
-		DonationCall dCall = donationDao.deleteDonationCall(apiKey, dId);
+		DonationCall dCall = donationDao.getDonationCall(dId, apiKey);
 		ValidateUtils.requireNotNull(dId, dCall);
+		
+		if(!dCall.isGoalReached()){
+			List<Donation> donations = donationDao.getDonationsForDonationCall(dCall, apiKey);
+			if(!donations.isEmpty()){
+				for (Donation donation : donations) {
+					Player player = donation.getPlayer();
+					player.setCoins(player.getCoins() + donation.getAmount());
+					donationDao.deleteDonation(donation);
+				}
+			}
+		}
+
+		dCall = donationDao.deleteDonationCall(dId, apiKey);
 		
 		return ResponseSurrogate.deleted(dCall);
 	}

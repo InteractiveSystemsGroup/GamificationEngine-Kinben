@@ -7,11 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 /**
  * A player level shows the status of the player. This can be a number or a status like a titel.
  * After the Player completed a task her/his level can advance if the conditions are fulfilled.
  */
 @Entity
+@JsonIgnoreProperties({ "belongsTo" })
 public class PlayerLevel {
 
 	@Id

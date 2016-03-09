@@ -84,7 +84,7 @@ public class GetPointsRule extends GoalRule {
 	 */
 	public Progress getProgress(Player player) {
 
-		Progress progress = new Progress(player.getPoints(), getPoints());
+		Progress progress = new Progress(player.getPoints(), this.getPoints());
 		return progress;
 	}
 

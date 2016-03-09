@@ -95,8 +95,11 @@ public class PlayerLevelApi {
 	@TypeHint(PlayerLevel.class)
 	public Response getPlayerLevel(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		PlayerLevel pL = playerLevelDao.getPlayerLevel(ValidateUtils.requireGreaterThanZero(id), apiKey);
-		return ResponseSurrogate.of(pL);
+		int pLId = ValidateUtils.requireGreaterThanZero(id);
+		PlayerLevel pLevel = playerLevelDao.getPlayerLevel(pLId, apiKey);
+		ValidateUtils.requireNotNull(pLId, pLevel);
+		
+		return ResponseSurrogate.of(pLevel);
 	}
 
 	/**
@@ -125,13 +128,14 @@ public class PlayerLevelApi {
 	@TypeHint(PlayerLevel.class)
 	public Response changePlayerLevelAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
 		log.debug("change Attribute of PlayerLevel");
-
-		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		int levelId = ValidateUtils.requireGreaterThanZero(id);
 		PlayerLevel playerLevel = playerLevelDao.getPlayerLevel(levelId, apiKey);
-
+		ValidateUtils.requireNotNull(levelId, playerLevel);
+		
+		
 		if ("null".equals(value)) {
 			value = null;
 		}

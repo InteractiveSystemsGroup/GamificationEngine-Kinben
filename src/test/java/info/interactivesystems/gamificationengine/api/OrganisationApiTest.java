@@ -11,6 +11,7 @@ import info.interactivesystems.gamificationengine.dao.AccountDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.entities.Account;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.utils.SecurityTools;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -55,7 +56,7 @@ public class OrganisationApiTest {
 	@Test
 	public void testGetOrganisationCredentialsOk() {
 
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> true);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
 		mockGetOrganisation("Test Organisation");
 
 		Response response = organisationApi.get("1", null, null);
@@ -82,7 +83,7 @@ public class OrganisationApiTest {
 
 	@Test(expected = CredentialException.class)
 	public void testGetOrganisationCredentialsWrong() {
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> false);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
 		mockGetOrganisation("Test Organisation");
 
 		Response response = organisationApi.get("1", null, null);
@@ -93,7 +94,7 @@ public class OrganisationApiTest {
 
 	@Test(expected = CredentialException.class)
 	public void testGenerateApiKeyCredentialsWrong() {
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> false);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
 		mockGetOrganisation("Test Organisation");
 
 		Response response = organisationApi.generateApiKey("1", null, null);
@@ -105,7 +106,7 @@ public class OrganisationApiTest {
 	@Test
 	public void testGenerateApiKey() {
 
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> true);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
 		mockGetOrganisation("Test Organisation");
 
 		Response response = organisationApi.generateApiKey("1", null, null);
@@ -119,7 +120,7 @@ public class OrganisationApiTest {
 		String name = "Test Organisation";
 		String email = "test@example.com";
 
-		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> true);
+		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
 		Response response = organisationApi.create(name, email, null);
 		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
 

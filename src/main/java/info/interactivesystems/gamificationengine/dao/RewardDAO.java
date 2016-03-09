@@ -39,11 +39,12 @@ public class RewardDAO {
 	 * @return The {@link Reward} which is associated with the passed id and API key. 
 	 */
 	public Reward getReward(int id, String apiKey) {
-		Query query = em.createQuery("select r from Reward r where r.belongsTo.apiKey=:apiKey and r.id in (:id)", Reward.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("id", id);
-
-		return (Reward) query.getResultList();
+		Query query = em.createQuery("select r from Reward r where r.belongsTo.apiKey=:apiKey and r.id=:id", Reward.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((Reward) list.get(0));
 	}
 
 
