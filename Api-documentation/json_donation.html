@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  <title>Kinben API: Organisation</title>
+  <title>Kinben API: Donation</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Kinben API: Organisation</a>
+        <a class="navbar-brand" href="index.html">Kinben API: Donation</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -61,21 +61,12 @@
         <ol class="breadcrumb" id="top">
           <li class="active dropdown"><a href="index.html">Home</a></li>
           <li class="active dropdown"><a href="syntax_json.html">JSON</a></li>
-          <li class="dropdown"><a href="json_organisation.html">Organisation</a></li>
+          <li class="dropdown"><a href="json_donation.html">Donation</a></li>
         </ol>
 
-      <h1 class="page-header">Organisation <small>Data Type</small></h1>
+      <h1 class="page-header">Donation <small>Data Type</small></h1>
 
-      <p>An Organisation represents for example a specific company or an association which
-represents a group of people belonging together and which are participating in the
-gamification process.
-An Organisation possessed an generated API key which is needed for all further interactions
-because all database entries are associated with this unique key and so with the respective
-organisation. The API key is uniquely in the whole application. It
-may be changed, for this reason it has no primary key.
-When an Organisation is created it has to be connected with an account. Each organisation
-may be managed by many people, but at least by one who is added to the list of the manager
-of the respective organisation and so also the Account.</p>
+      <p></p>
 
       <dl class="dl-horizontal">
       </dl>
@@ -91,12 +82,21 @@ of the respective organisation and so also the Account.</p>
         </thead>
         <tbody>
         <tr>
-          <td>  apiKey
+          <td>  amount
 </td>
-          <td>  string
+          <td>  number
 
 </td>
-          <td>  Gets the organisation's unique API key and returns it.
+          <td>  
+</td>
+        </tr>
+        <tr>
+          <td>  creationDate
+</td>
+          <td>  <a href="json_localdatetime.html">LocalDateTime</a>
+
+</td>
+          <td>  
 </td>
         </tr>
         <tr>
@@ -105,26 +105,16 @@ of the respective organisation and so also the Account.</p>
           <td>  number
 
 </td>
-          <td>  Gets the organisation's id.
+          <td>  
 </td>
         </tr>
         <tr>
-          <td>  managers
+          <td>  player
 </td>
-          <td>  array of <a href="json_account.html">Account</a>
+          <td>  <a href="json_player.html">Player</a>
 
 </td>
-          <td>  Gets all accounts of the organisation which are associated to this organisation.
-Each account belongs to a manager.
-</td>
-        </tr>
-        <tr>
-          <td>  name
-</td>
-          <td>  string
-
-</td>
-          <td>  Gets the organisation's name and returns it as a String.
+          <td>  
 </td>
         </tr>
         </tbody>
@@ -134,17 +124,97 @@ Each account belongs to a manager.
 
       <pre class="prettyprint lang-js">{
   &quot;id&quot; : 12345.0,
-  &quot;managers&quot; : [ {
-    &quot;email&quot; : &quot;...&quot;,
-    &quot;firstName&quot; : &quot;...&quot;,
-    &quot;lastName&quot; : &quot;...&quot;
-  }, {
-    &quot;email&quot; : &quot;...&quot;,
-    &quot;firstName&quot; : &quot;...&quot;,
-    &quot;lastName&quot; : &quot;...&quot;
-  } ],
-  &quot;name&quot; : &quot;...&quot;,
-  &quot;apiKey&quot; : &quot;...&quot;
+  &quot;amount&quot; : 12345.0,
+  &quot;creationDate&quot; : {
+    &quot;dayOfYear&quot; : 12345.0,
+    &quot;minute&quot; : 12345.0,
+    &quot;year&quot; : 12345.0,
+    &quot;hour&quot; : 12345.0,
+    &quot;month&quot; : &quot;JANUARY&quot;,
+    &quot;monthValue&quot; : 12345.0,
+    &quot;nano&quot; : 12345.0,
+    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+    &quot;dayOfMonth&quot; : 12345.0,
+    &quot;second&quot; : 12345.0
+  },
+  &quot;player&quot; : {
+    &quot;nickname&quot; : &quot;...&quot;,
+    &quot;reference&quot; : &quot;...&quot;,
+    &quot;coins&quot; : 12345.0,
+    &quot;points&quot; : 12345.0,
+    &quot;levelIndex&quot; : 12345.0,
+    &quot;levelLabel&quot; : &quot;...&quot;,
+    &quot;id&quot; : 12345.0,
+    &quot;avatar&quot; : &quot;...&quot;,
+    &quot;finishedTasks&quot; : [ {
+      &quot;id&quot; : 12345.0,
+      &quot;finishedDate&quot; : { },
+      &quot;task&quot; : { }
+    }, {
+      &quot;id&quot; : 12345.0,
+      &quot;finishedDate&quot; : { },
+      &quot;task&quot; : { }
+    } ],
+    &quot;finishedGoals&quot; : [ {
+      &quot;id&quot; : 12345.0,
+      &quot;finishedDate&quot; : { },
+      &quot;goal&quot; : { }
+    }, {
+      &quot;id&quot; : 12345.0,
+      &quot;finishedDate&quot; : { },
+      &quot;goal&quot; : { }
+    } ],
+    &quot;belongsToRoles&quot; : [ {
+      &quot;id&quot; : 12345.0,
+      &quot;name&quot; : &quot;...&quot;
+    }, {
+      &quot;id&quot; : 12345.0,
+      &quot;name&quot; : &quot;...&quot;
+    } ],
+    &quot;rewards&quot; : [ {
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    }, {
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    } ],
+    &quot;onlyBadges&quot; : [ {
+      &quot;icon&quot; : { },
+      &quot;imageIcon&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    }, {
+      &quot;icon&quot; : { },
+      &quot;imageIcon&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    } ],
+    &quot;onlyAchievement&quot; : [ {
+      &quot;imageIcon&quot; : &quot;...&quot;,
+      &quot;icon&quot; : { },
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    }, {
+      &quot;imageIcon&quot; : &quot;...&quot;,
+      &quot;icon&quot; : { },
+      &quot;id&quot; : 12345.0,
+      &quot;timeToLive&quot; : 12345.0,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;
+    } ],
+    &quot;contactList&quot; : [ { }, { } ],
+    &quot;active&quot; : true
+  }
 }</pre>
 
         <footer class="footer">

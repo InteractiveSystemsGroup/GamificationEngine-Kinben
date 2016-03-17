@@ -85,15 +85,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
         </thead>
         <tbody>
         <tr>
-          <td>  belongsTo
-</td>
-          <td>  <a href="json_organisation.html">Organisation</a>
-
-</td>
-          <td>  Gets the organisation a bid belongs to.
-</td>
-        </tr>
-        <tr>
           <td>  creationDate
 </td>
           <td>  <a href="json_localdatetime.html">LocalDateTime</a>
@@ -145,34 +136,18 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
 
       <pre class="prettyprint lang-js">{
   &quot;id&quot; : 12345.0,
-  &quot;belongsTo&quot; : {
-    &quot;id&quot; : 12345.0,
-    &quot;managers&quot; : [ {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    }, {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    } ],
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;apiKey&quot; : &quot;...&quot;
-  },
   &quot;prize&quot; : 12345.0,
   &quot;creationDate&quot; : {
-    &quot;monthValue&quot; : 12345.0,
-    &quot;second&quot; : 12345.0,
-    &quot;month&quot; : &quot;JANUARY&quot;,
-    &quot;nano&quot; : 12345.0,
-    &quot;dayOfMonth&quot; : 12345.0,
-    &quot;hour&quot; : 12345.0,
-    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-    &quot;minute&quot; : 12345.0,
     &quot;dayOfYear&quot; : 12345.0,
-    &quot;year&quot; : 12345.0
+    &quot;minute&quot; : 12345.0,
+    &quot;year&quot; : 12345.0,
+    &quot;hour&quot; : 12345.0,
+    &quot;month&quot; : &quot;JANUARY&quot;,
+    &quot;monthValue&quot; : 12345.0,
+    &quot;nano&quot; : 12345.0,
+    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+    &quot;dayOfMonth&quot; : 12345.0,
+    &quot;second&quot; : 12345.0
   },
   &quot;player&quot; : {
     &quot;nickname&quot; : &quot;...&quot;,
@@ -182,13 +157,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
     &quot;levelIndex&quot; : 12345.0,
     &quot;levelLabel&quot; : &quot;...&quot;,
     &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
-    &quot;password&quot; : &quot;...&quot;,
     &quot;avatar&quot; : &quot;...&quot;,
     &quot;finishedTasks&quot; : [ {
       &quot;id&quot; : 12345.0,
@@ -210,22 +178,18 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
     } ],
     &quot;belongsToRoles&quot; : [ {
       &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
+      &quot;name&quot; : &quot;...&quot;
     }, {
       &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
+      &quot;name&quot; : &quot;...&quot;
     } ],
     &quot;rewards&quot; : [ {
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
     }, {
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
@@ -234,7 +198,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
       &quot;icon&quot; : { },
       &quot;imageIcon&quot; : &quot;...&quot;,
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
@@ -242,7 +205,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
       &quot;icon&quot; : { },
       &quot;imageIcon&quot; : &quot;...&quot;,
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
@@ -251,7 +213,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
       &quot;imageIcon&quot; : &quot;...&quot;,
       &quot;icon&quot; : { },
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
@@ -259,7 +220,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
       &quot;imageIcon&quot; : &quot;...&quot;,
       &quot;icon&quot; : { },
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;timeToLive&quot; : 12345.0,
       &quot;description&quot; : &quot;...&quot;,
       &quot;name&quot; : &quot;...&quot;
@@ -270,65 +230,49 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
   &quot;offer&quot; : {
     &quot;id&quot; : 12345.0,
     &quot;offerDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfMonth&quot; : 12345.0,
-      &quot;hour&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;minute&quot; : 12345.0,
       &quot;dayOfYear&quot; : 12345.0,
-      &quot;year&quot; : 12345.0
+      &quot;minute&quot; : 12345.0,
+      &quot;year&quot; : 12345.0,
+      &quot;hour&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;monthValue&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfMonth&quot; : 12345.0,
+      &quot;second&quot; : 12345.0
     },
     &quot;endDate&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfMonth&quot; : 12345.0,
-      &quot;hour&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;minute&quot; : 12345.0,
       &quot;dayOfYear&quot; : 12345.0,
-      &quot;year&quot; : 12345.0
+      &quot;minute&quot; : 12345.0,
+      &quot;year&quot; : 12345.0,
+      &quot;hour&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;monthValue&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfMonth&quot; : 12345.0,
+      &quot;second&quot; : 12345.0
     },
     &quot;deadLine&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfMonth&quot; : 12345.0,
-      &quot;hour&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;minute&quot; : 12345.0,
       &quot;dayOfYear&quot; : 12345.0,
-      &quot;year&quot; : 12345.0
+      &quot;minute&quot; : 12345.0,
+      &quot;year&quot; : 12345.0,
+      &quot;hour&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;monthValue&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfMonth&quot; : 12345.0,
+      &quot;second&quot; : 12345.0
     },
     &quot;prize&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
     &quot;task&quot; : {
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;taskName&quot; : &quot;...&quot;,
       &quot;description&quot; : &quot;...&quot;,
       &quot;allowedFor&quot; : [ { }, { } ],
       &quot;tradeable&quot; : true
     },
-    &quot;allowedForRole&quot; : [ {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    }, {
-      &quot;id&quot; : 12345.0,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;belongsTo&quot; : { }
-    } ],
     &quot;name&quot; : &quot;...&quot;,
     &quot;player&quot; : {
       &quot;nickname&quot; : &quot;...&quot;,
@@ -338,8 +282,6 @@ condition that her/his coins are enough otherwise the bid cannot be done.</p>
       &quot;levelIndex&quot; : 12345.0,
       &quot;levelLabel&quot; : &quot;...&quot;,
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
-      &quot;password&quot; : &quot;...&quot;,
       &quot;avatar&quot; : &quot;...&quot;,
       &quot;finishedTasks&quot; : [ { }, { } ],
       &quot;finishedGoals&quot; : [ { }, { } ],

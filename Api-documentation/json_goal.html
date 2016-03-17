@@ -91,16 +91,6 @@ people can complete the goal.</p>
         </thead>
         <tbody>
         <tr>
-          <td>  belongsTo
-</td>
-          <td>  <a href="json_organisation.html">Organisation</a>
-
-</td>
-          <td>  The organisation the goal belongs to. This parameter must
-not be null
-</td>
-        </tr>
-        <tr>
           <td>  canCompletedBy
 </td>
           <td>  array of <a href="json_role.html">Role</a>
@@ -172,31 +162,9 @@ by the player who completes the goal.
 
       <pre class="prettyprint lang-js">{
   &quot;id&quot; : 12345.0,
-  &quot;belongsTo&quot; : {
-    &quot;id&quot; : 12345.0,
-    &quot;managers&quot; : [ {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    }, {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    } ],
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;apiKey&quot; : &quot;...&quot;
-  },
   &quot;name&quot; : &quot;...&quot;,
   &quot;rule&quot; : {
     &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
     &quot;name&quot; : &quot;...&quot;,
     &quot;description&quot; : &quot;...&quot;
   },
@@ -204,45 +172,21 @@ by the player who completes the goal.
   &quot;playerGroupGoal&quot; : true,
   &quot;rewards&quot; : [ {
     &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
     &quot;timeToLive&quot; : 12345.0,
     &quot;description&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;
   }, {
     &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
     &quot;timeToLive&quot; : 12345.0,
     &quot;description&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;
   } ],
   &quot;canCompletedBy&quot; : [ {
     &quot;id&quot; : 12345.0,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    }
+    &quot;name&quot; : &quot;...&quot;
   }, {
     &quot;id&quot; : 12345.0,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    }
+    &quot;name&quot; : &quot;...&quot;
   } ]
 }</pre>
 

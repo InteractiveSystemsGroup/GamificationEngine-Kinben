@@ -92,10 +92,6 @@
             "lastName" : {
 "description" : "Gets the last name of the Account user.",
 "type" : "string"
-            },
-            "password" : {
-"description" : "Gets the password for the Account.",
-"type" : "string"
             }
           },
       "description" : "An Account has to be created for at least one manager or developer. It\r\nis identified by a unique email address. The password ensures the\r\nidentity. Optionally an account may have information about the user in form\r\nof her/his first name and last name.\r\nIt is possible to change the password, the first name or last name\r\nat a later point of time. In addition to creating an account another\r\npossible request is to get the created account but only with the\r\ncorrect credentials."
@@ -157,10 +153,6 @@
       "type" : "object",
       "title" : "Bid",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation a bid belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "creationDate" : {
 "description" : "Gets the exact date and time, when the bid was made.",
 "$ref" : "#/definitions/json_localdatetime"
@@ -222,14 +214,34 @@
       "description" : ""
     }
     ,
+    "json_donation" : {
+      "type" : "object",
+      "title" : "Donation",
+          "properties" : {
+            "amount" : {
+"description" : "",
+"type" : "number"
+            },
+            "creationDate" : {
+"description" : "",
+"$ref" : "#/definitions/json_localdatetime"
+            },
+            "id" : {
+"description" : "",
+"type" : "number"
+            },
+            "player" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
+            }
+          },
+      "description" : ""
+    }
+    ,
     "json_donationcall" : {
       "type" : "object",
       "title" : "DonationCall",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation which the DonationCall belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "currentAmount" : {
 "description" : "Gets the current value of the donated and collected coins.",
 "type" : "number"
@@ -245,7 +257,7 @@
   "$ref" : "#/definitions/json_player"
 }
             },
-            "goal" : {
+            "goalAmount" : {
 "description" : "Gets the goal of an DonationCall. This is represented by an amount of coins that should be reached.",
 "type" : "number"
             },
@@ -260,10 +272,6 @@
             "name" : {
 "description" : "Gets the name of a DonationCall.",
 "type" : "string"
-            },
-            "reached" : {
-"description" : "Tests if the current amount of coins reaches the predetermined goal.",
-"type" : "boolean"
             }
           },
       "description" : "A DonationCall represents a call for donations. This could be a real world purpose like a real donation for a\r\ncharitable purpose or an event for the organisation's employee. Players can donate obtained coins to reach a\r\nparticular amount of coins. If the required amount is reached, the goal is reached and the purpose can be\r\nimplemented by the responsible manager."
@@ -332,10 +340,6 @@
       "type" : "object",
       "title" : "Goal",
           "properties" : {
-            "belongsTo" : {
-"description" : "The organisation the goal belongs to. This parameter must\r\nnot be null",
-"$ref" : "#/definitions/json_organisation"
-            },
             "canCompletedBy" : {
 "description" : "Gets all a roles to check if a player is allowed to fulfil a goal. Therefore a player has to own\r\nat least one of these roles.",
 "type" : "array",
@@ -378,10 +382,6 @@
       "type" : "object",
       "title" : "GoalRule",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation a goal rule belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "description" : {
 "description" : "Gets the description of a goal rule.",
 "type" : "string"
@@ -473,10 +473,6 @@
       "type" : "object",
       "title" : "MarketPlace",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation a marketplace belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "id" : {
 "description" : "Gets the id of a marketplace.",
 "type" : "number"
@@ -516,17 +512,6 @@
       "type" : "object",
       "title" : "Offer",
           "properties" : {
-            "allowedForRole" : {
-"description" : "Gets the roles to check which player is allowed to fulfil this offer. A player need at least one role\r\nto complete the task.",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_role"
-}
-            },
-            "belongsTo" : {
-"description" : "Gets the organisation an offer belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "deadLine" : {
 "description" : "Gets the exact date and time, when the task of an offer should be\r\nfinished.",
 "$ref" : "#/definitions/json_localdatetime"
@@ -615,10 +600,6 @@
 "description" : "Gets the avatar of a player as byte[].",
 "type" : "string"
             },
-            "belongsTo" : {
-"description" : "Gets the organisation a player belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "belongsToRoles" : {
 "description" : "Gets all roles a player has.",
 "type" : "array",
@@ -681,10 +662,6 @@
   "$ref" : "#/definitions/json_badge"
 }
             },
-            "password" : {
-"description" : "Gets the password of a player.",
-"type" : "string"
-            },
             "points" : {
 "description" : "Gets the current amount of points a player has obtained.",
 "type" : "number"
@@ -708,10 +685,6 @@
       "type" : "object",
       "title" : "PlayerGroup",
           "properties" : {
-            "belongsTo" : {
-"description" : "The organisation the group belongs to. This parameter must\r\nnot be null",
-"$ref" : "#/definitions/json_organisation"
-            },
             "coins" : {
 "description" : "Gets the current amount of coins a group of players has obtained.",
 "type" : "number"
@@ -783,10 +756,6 @@
       "type" : "object",
       "title" : "PlayerLevel",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation which the player level belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "id" : {
 "description" : "Gets the id of the player level.",
 "type" : "number"
@@ -829,10 +798,6 @@
       "type" : "object",
       "title" : "Present",
           "properties" : {
-            "belongsTo" : {
-"description" : "The organisation the present belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "id" : {
 "description" : "Gets the id of the created present.",
 "type" : "number"
@@ -856,10 +821,6 @@
       "type" : "object",
       "title" : "PresentAccepted",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation an accepted present belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "date" : {
 "description" : "Gets the date and time a present was accepted by a player.",
 "$ref" : "#/definitions/json_localdatetime"
@@ -887,10 +848,6 @@
             "acceptedPresent" : {
 "description" : "Gets the present object of the present that is archived.",
 "$ref" : "#/definitions/json_presentaccepted"
-            },
-            "belongsTo" : {
-"description" : "Gets the organisation an archived present belongs to.",
-"$ref" : "#/definitions/json_organisation"
             },
             "date" : {
 "description" : "Gets the date and time a present was archived by a player.",
@@ -934,10 +891,6 @@
       "type" : "object",
       "title" : "Reward",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation the reward belongs to.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "description" : {
 "description" : "Gets the description of an achievement. This could contains for example the\r\ndifferent tasks which have to be completed to get this achievement.",
 "type" : "string"
@@ -962,10 +915,6 @@
       "type" : "object",
       "title" : "Role",
           "properties" : {
-            "belongsTo" : {
-"description" : "Gets the organisation which the role belongs to and in which a player can\r\nhave this role.",
-"$ref" : "#/definitions/json_organisation"
-            },
             "id" : {
 "description" : "Gets the id of a role.",
 "type" : "number"
@@ -1029,10 +978,6 @@
 "items" : {
   "$ref" : "#/definitions/json_role"
 }
-            },
-            "belongsTo" : {
-"description" : "Gets the organisation a task belongs to.",
-"$ref" : "#/definitions/json_organisation"
             },
             "description" : {
 "description" : "Gets the description of a task.",
@@ -1162,41 +1107,6 @@
   },
   "paths": {
     "/account" : {
-      "get" : {
-        "tags" : [ "AccountApi" ],
-        "description" : "Returns an account corresponding to the given email address but only\r\nif the combination with password is correct. By the creation of an\r\norganisation this email address is connected with it.\r\nSo the method requires valid credentials otherwise a warning with the\r\nhint for wrong credentials is returned.",
-        "operationId" : "resource_AccountApi_get_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "email",
-            "in" : "query",
-            "type" : "string",
-            "description" : "A required valid unique email address."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query parameter associated with the email address."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_account"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-      ,
       "post" : {
         "tags" : [ "AccountApi" ],
         "description" : "Creates a new account. For this an unique email address and a\r\npassword are mandatory. By the creation of an organisation this\r\nemail address is connected with it. Optionally the first and last\r\nname can also be set.",
@@ -1244,12 +1154,53 @@
         }
       }
       ,
+      "get" : {
+        "tags" : [ "AccountApi" ],
+        "description" : "Returns an account corresponding to the given email address but only\r\nif the combination with password is correct. By the creation of an\r\norganisation this email address is connected with it.\r\nSo the method requires valid credentials otherwise a warning with the\r\nhint for wrong credentials is returned.",
+        "operationId" : "resource_AccountApi_get_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query parameter associated with the email address."
+          },
+          {
+            "name" : "email",
+            "in" : "query",
+            "type" : "string",
+            "description" : "A required valid unique email address."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_account"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+      ,
       "put" : {
         "tags" : [ "AccountApi" ],
         "description" : "Updates the first and last name of an existing account. For this the\r\nspecific email address and associated password are mandatory.\r\nOtherwise a warning with the hint for wrong credentials is returned.",
         "operationId" : "resource_AccountApi_update_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query parameter to connect it with the given\r\nemail address."
+          },
           {
             "name" : "email",
             "in" : "query",
@@ -1267,12 +1218,6 @@
             "in" : "query",
             "type" : "string",
             "description" : "Optionally the last name of the Account's owner can be set."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
           }
         ],
         "responses" : {
@@ -1317,6 +1262,120 @@
       }
     }
     ,
+    "/donation/{id}/donations" : {
+      "get" : {
+        "tags" : [ "DonationApi" ],
+        "description" : "Gets a list of all donations which were made for a specific call for donations.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the offer id is a\r\npositive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_DonationApi_getDonations_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The call for Donation whose donations are returned. This parameter is required."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the call for donations belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_donation"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/donation/{id}/progress" : {
+      "get" : {
+        "tags" : [ "DonationApi" ],
+        "description" : "Returns the progress of an call for donations: the current amount and the amount that should be\r\nreached. If the API key is not valid an analogous message is returned. It is also checked, if the\r\nid is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_DonationApi_getProgess_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the DonationCall."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this call for donations belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_donationcall"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/donation/*" : {
+      "get" : {
+        "tags" : [ "DonationApi" ],
+        "description" : "Returns the call for donation which are associated with the organisation. If the API key is not\r\nvalid an analogous message is returned.",
+        "operationId" : "resource_DonationApi_getDonationCalls_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this call for donations belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_donationcall"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/donation/{id}" : {
       "get" : {
         "tags" : [ "DonationApi" ],
@@ -1328,7 +1387,7 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link DonationCall}."
+            "description" : "Required path parameter as integer which uniquely identify the DonationCall."
           },
           {
             "name" : "apiKey",
@@ -1355,7 +1414,7 @@
       ,
       "delete" : {
         "tags" : [ "DonationApi" ],
-        "description" : "Removes the call for donations with the assigned id from data base. It is checked, if the passed id is a\r\npositive number otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.",
+        "description" : "Removes the call for donations with the assigned id from data base. If the goal of call for donations isn't\r\nreached, first all donors get their donations back and then in a second step the call for donation itself is\r\nremoved from the database. Else if the goal is already reached, the call for donation is deleted.\r\nIt is checked, if the passed id is a positive number otherwise a message for an invalid number is returned.\r\nIf the API key is not valid an analogous message is returned.",
         "operationId" : "resource_DonationApi_deleteDonationCall_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -1389,6 +1448,46 @@
       }
     }
     ,
+    "/donation/{id}/donors" : {
+      "get" : {
+        "tags" : [ "DonationApi" ],
+        "description" : "Returns a list of all donors that have donated to a specific call for donoation. If the API key is\r\nnot valid an analogous message is returned. It is also checked, if the id is a positive number\r\notherwise a message for an invalid number is returned.",
+        "operationId" : "resource_DonationApi_getDonors_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the call for donations to which all donors should be returned."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this call for donations belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_donationcall"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/donation" : {
       "post" : {
         "tags" : [ "DonationApi" ],
@@ -1409,7 +1508,7 @@
             "description" : "The longer description of the call for donation. This can contain the its purpose."
           },
           {
-            "name" : "goal",
+            "name" : "goalAmount",
             "in" : "query",
             "type" : "string",
             "description" : "The amount of coins that should be reached to fulfil this donation."
@@ -1441,7 +1540,7 @@
     "/donation/{id}/donate/{playerId}" : {
       "post" : {
         "tags" : [ "DonationApi" ],
-        "description" : "With this method a player donates a specific amount of coins if she/he has enough coins.\r\nThese coins are subtracted from the player's current account and will be added to the Donation\r\nCall's current amount. If the API key is not valid an analogous message is returned.\r\nIt is also checked, if the id is a positive number otherwise a message for an invalid number is returned.",
+        "description" : "With this method a player donates a specific amount of coins if she/he has enough coins and the given\r\namount hasn't been already reached.\r\nThese coins are subtracted from the player's current account and will be added to the DonationCall's\r\ncurrent amount. If the API key is not valid an analogous message is returned.\r\nIt is also checked, if the id is a positive number otherwise a message for an invalid number is returned.",
         "operationId" : "resource_DonationApi_donate_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -1468,6 +1567,55 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this call for donations belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_donationcall"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/donation/{id}/attributes" : {
+      "put" : {
+        "tags" : [ "DonationApi" ],
+        "description" : "With this method the fields of one specific call for donations can be changed.\r\nFor this the associated id, the API key of the specific organisation, the\r\nname of the field and the new field's value are needed.\r\nTo modify the name or the description of a call for donation, the new value\r\ncan be passed.\r\nIf the API key is not valid an analogous message is returned. It is\r\nalso checked, if the id is a positive number otherwise a message for\r\nan invalid number is returned.",
+        "operationId" : "resource_DonationApi_changeAttributes_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required integer which uniquely identify the DonationCall."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this call for donations belongs to."
+          },
+          {
+            "name" : "attribute",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The name of the attribute which should be modified. This\r\nparameter is required. The following names of attributes can\r\nbe used to change the associated field:\r\n\"name\" and \"description\""
+          },
+          {
+            "name" : "value",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The new value of the attribute. This parameter is required."
           }
         ],
         "responses" : {
@@ -1712,56 +1860,19 @@
       }
     }
     ,
-    "/marketPlace/{id}/compOffer" : {
-      "post" : {
-        "tags" : [ "MarketPlaceApi" ],
-        "description" : "If an offer is fulfilled by a player, this request can be used to complete the offer. With this request\r\nthe player with the passed id represents the player who fulfilled the task so she/he gets the prize as a\r\nreward.\r\nIt is checked, if all passed ids are a positive number otherwise a message for an invalid number is\r\nreturned. If the API key is not valid an analogous message is returned.",
-        "operationId" : "resource_MarketPlaceApi_completeOffer_POST",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "The offer id which was finished. This parameter is required."
-          },
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The id of the player who has completed the task that was associated with the offer. So\r\nshe/he earns the prize as a reward."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_task"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/marketPlace/getHighestOffers" : {
+    "/marketPlace/{playerId}/recentOffersRoleFiltered" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "Gets all available offers for a player ordered by prize, highest prize first.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_MarketPlaceApi_getHighestOffers_GET",
+        "description" : "Gets all available offers for a player ordered by date, recent first. This can be used if a player wants to see\r\nall recent offers she/he can complete.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getRecentOffersRoleFiltered_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The player whose roles are checked. This parameter is required."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -1780,12 +1891,6 @@
             "in" : "query",
             "type" : "string",
             "description" : "The marketplace whose offers are filtered."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The player whose roles are checked. This parameter is required."
           }
         ],
         "responses" : {
@@ -1808,7 +1913,130 @@
       }
     }
     ,
-    "/marketPlace/bid" : {
+    "/marketPlace/{id}/compOffer/{playerId}" : {
+      "post" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "If an offer is fulfilled by a player, this request can be used to complete the offer. With this request\r\nthe player with the passed id represents the player who fulfilled the task so she/he gets the prize as a\r\nreward.\r\nIt is checked, if all passed ids are a positive number otherwise a message for an invalid number is\r\nreturned. If the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_MarketPlaceApi_completeOffer_POST",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The offer id which was finished. This parameter is required."
+          },
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player who has completed the task that was associated with the offer. So\r\nshe/he earns the prize as a reward."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          },
+          {
+            "name" : "marketId",
+            "in" : "query",
+            "type" : "string",
+            "description" : ""
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_task"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/marketPlace/{playerId}/getOffers" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "Gets all offers a specific player has created (independent of the marketplace). If the API key is not valid\r\nan analogous message is returned. It is also checked, if the id is a positive number otherwise a message\r\nfor an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getPlayerOffers_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The player whose created offers are returned."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/marketPlace/offers/*" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "Gets all offers of an organisation (independent of the marketplace). If the API key is not valid\r\nan analogous message is returned. It is also checked, if the id is a positive number otherwise a message\r\nfor an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getAllOffers_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the offers belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/marketPlace/{playerId}/bid/{offerId}" : {
       "post" : {
         "tags" : [ "MarketPlaceApi" ],
         "description" : "With this method a player makes a bid to an offer. So a new bid is created and therefore an id is\r\ngenerated. The id of the player is needed to indicate who has made the bid and id of the offer to identify\r\nfor which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so\r\nthe offer's prize is raised.",
@@ -1816,22 +2044,22 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
-          },
-          {
             "name" : "offerId",
-            "in" : "query",
+            "in" : "path",
             "type" : "string",
             "description" : "The offer the player has bidden for. This parameter is required."
           },
           {
             "name" : "playerId",
-            "in" : "query",
+            "in" : "path",
             "type" : "string",
             "description" : "The player who has done the bid. This parameter is required."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
           },
           {
             "name" : "prize",
@@ -1861,7 +2089,7 @@
       "post" : {
         "tags" : [ "MarketPlaceApi" ],
         "description" : "Creates a new group of offer and so the method generates the offer-id. The organisation's API key is\r\nmandatory otherwise a warning with the hint for a non valid API key is returned.\r\nBy the creation the name, the prize which represents the initial bid and id of the task the offer\r\nis associated should be passed.\r\nAdditionally the id of the player who creates the offer and the id of the marketplace should be passed.\r\nOptionally it can be defined when the offer ends and until the task should be done.",
-        "operationId" : "resource_MarketPlaceApi_createNewOffer_POST",
+        "operationId" : "resource_MarketPlaceApi_createOffer_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
           {
@@ -1910,7 +2138,7 @@
             "name" : "taskId",
             "in" : "query",
             "type" : "string",
-            "description" : "The id of the task the offer is associated with. This parameter is required.\r\n//\t * @param allowedRoles\r\n//\t *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the\r\n//\t *            prize."
+            "description" : "The id of the task the offer is associated with. This parameter is required."
           }
         ],
         "responses" : {
@@ -1967,6 +2195,59 @@
       }
     }
     ,
+    "/marketPlace/offers/role" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "Gets all offers which are amongst others for a specific role (depending of the marketplace). If the API key is not valid\r\nan analogous message is returned. It is also checked, if the id is a positive number otherwise a message\r\nfor an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getAllOffersForRole_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the offers belongs to."
+          },
+          {
+            "name" : "count",
+            "in" : "query",
+            "default" : "10",
+            "type" : "string",
+            "description" : "Optionally the count of offers that should be returned can be passed."
+          },
+          {
+            "name" : "marketPlaceId",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The marketplace whose offers should be considered."
+          },
+          {
+            "name" : "roleId",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The roles id for which the offers are searched."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/marketPlace/{id}/bids" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
@@ -2007,46 +2288,6 @@
       }
     }
     ,
-    "/marketPlace/getOffers" : {
-      "get" : {
-        "tags" : [ "MarketPlaceApi" ],
-        "description" : "Gets all offers a specific player has created. If the API key is not valid an analogous message is\r\nreturned. It is also checked, if the id is a positive number otherwise a message for an invalid\r\nnumber is returned.",
-        "operationId" : "resource_MarketPlaceApi_getPlayerOffers_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The player whose offers are returned."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"type" : "array",
-"items" : {
-  "$ref" : "#/definitions/json_offer"
-}
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
     "/marketPlace/{id}/attributes" : {
       "put" : {
         "tags" : [ "MarketPlaceApi" ],
@@ -2070,7 +2311,7 @@
             "name" : "attribute",
             "in" : "query",
             "type" : "string",
-            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"deadline\", \"enddate\" and \"playerRoles\"."
+            "description" : "The name of the attribute which should be modified. This parameter is required.\r\nThe following names of attributes can be used to change the associated field:\r\n\"name\", \"deadline\" and \"enddate\"."
           },
           {
             "name" : "value",
@@ -2127,30 +2368,31 @@
       }
     }
     ,
-    "/marketPlace/getOfferRole" : {
+    "/marketPlace/recentOffers" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "Gets the allowed offers for a specific player. The player is identified by her/his passed id and API key.\r\nThe offers are filtered by the roles a player has so only offers are in the returned list which are\r\nassociated with at least one role a player has.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the ids are a\r\npositive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_MarketPlaceApi_getOffersByRole_GET",
+        "description" : "Gets all offers of the marketplace ordered by date, recent first.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getRecentOffers_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
           {
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
+          },
+          {
+            "name" : "count",
+            "in" : "query",
+            "default" : "10",
+            "type" : "string",
+            "description" : "Optionally the count of offers that should be returned can be passed. The default value is 10."
           },
           {
             "name" : "marketPlaceId",
             "in" : "query",
             "type" : "string",
             "description" : "The marketplace whose offers are filtered."
-          },
-          {
-            "name" : "playerId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The player whose roles are checked. This parameter is required."
           }
         ],
         "responses" : {
@@ -2173,13 +2415,72 @@
       }
     }
     ,
-    "/marketPlace/getRecentOffers" : {
+    "/marketPlace/{playerId}/getOfferRole" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "Gets all available offers for a player ordered by date, recent first.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_MarketPlaceApi_getRecentOffers_GET",
+        "description" : "Gets the allowed offers for a specific player. The player is identified by her/his passed id and API key.\r\nThe offers are filtered by the roles a player has so only offers are in the returned list which are\r\nassociated with at least one role a player has.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the ids are a\r\npositive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getOffersByPlayerRole_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The player whose roles are checked. This parameter is required."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          },
+          {
+            "name" : "count",
+            "in" : "query",
+            "default" : "10",
+            "type" : "string",
+            "description" : "Optionally the count of offers that should be returned can be passed."
+          },
+          {
+            "name" : "marketPlaceId",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The marketplace whose offers are filtered."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/marketPlace/{playerId}/highestOffersRoleFiltered" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "Gets all available offers for a player ordered by prize, highest prize first. This can be used if a player wants to see\r\nall offers she/he can complete and get the highest prize.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getHighestOffersRoleFiltered_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "playerId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The player whose roles are checked. This parameter is required."
+          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -2198,12 +2499,53 @@
             "in" : "query",
             "type" : "string",
             "description" : "The marketplace whose offers are filtered."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/marketPlace/offers/market/{marketPlaceId}/*" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "Gets all offers of an organisation (depending of the marketplace). If the API key is not valid\r\nan analogous message is returned. It is also checked, if the id is a positive number otherwise a message\r\nfor an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getAllOffersOfMarketPlace_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "marketPlaceId",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The marketplace whose offers should be considered."
           },
           {
-            "name" : "playerId",
+            "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "The player whose roles are checked. This parameter is required."
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the offers belongs to."
+          },
+          {
+            "name" : "count",
+            "in" : "query",
+            "default" : "10",
+            "type" : "string",
+            "description" : "Optionally the count of offers that should be returned can be passed."
           }
         ],
         "responses" : {
@@ -2229,7 +2571,7 @@
     "/marketPlace/{id}/offer" : {
       "delete" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "Removes the offer with the assigned id from the data base. It is checked, if the passed id is a\r\npositive number otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.",
+        "description" : "Removes the offer with the assigned id from the marketPlace and with it all associated bids.\r\nEvery player who has mad a bid to this offer gets her/his amount of coins back.\r\nIt is checked, if the passed id is a positive number otherwise a message for an invalid number\r\nis returned. If the API key is not\r\nvalid an analogous message is returned.",
         "operationId" : "resource_MarketPlaceApi_deleteOffer_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2263,19 +2605,13 @@
       }
     }
     ,
-    "/marketPlace/{id}/bid" : {
-      "delete" : {
+    "/marketPlace/highestOffers" : {
+      "get" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "Removes the bid with the assigned id from data base. It is checked, if the passed id is a\r\npositive number otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the ids are\r\na positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_MarketPlaceApi_deleteBid_DELETE",
+        "description" : "Gets all offers of a marketplace ordered by prize, highest prize first.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the player id is\r\na positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_MarketPlaceApi_getHighestOffers_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "Required path parameter as integer to uniquely identify the bid."
-          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -2283,23 +2619,27 @@
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
           },
           {
-            "name" : "offerId",
+            "name" : "count",
             "in" : "query",
+            "default" : "10",
             "type" : "string",
-            "description" : "The id of the offer to which the bid is associated."
+            "description" : "Optionally the count of offers that should be returned can be passed. The default value is 10."
           },
           {
-            "name" : "playerId",
+            "name" : "marketPlaceId",
             "in" : "query",
             "type" : "string",
-            "description" : "The id of the player who has made the bid. This parameter is required."
+            "description" : "The marketplace whose offers are filtered."
           }
         ],
         "responses" : {
-          "201" : {
+          "200" : {
             "schema" : {
 "description" : "",
-"$ref" : "#/definitions/json_offer"
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
             },
             "headers" : {
             },
@@ -2326,10 +2666,16 @@
             "description" : "The API key of the organisation to which the manager belongs to."
           },
           {
-            "name" : "email",
+            "name" : "firstName",
             "in" : "query",
             "type" : "string",
-            "description" : "The required valid email."
+            "description" : "Optionally the first name of the Account's owner can be set."
+          },
+          {
+            "name" : "lastName",
+            "in" : "query",
+            "type" : "string",
+            "description" : "Optionally the last name of the Account's owner can be set."
           },
           {
             "name" : "manager",
@@ -2338,10 +2684,10 @@
             "description" : "The required valid email address for the new manager."
           },
           {
-            "name" : "password",
+            "name" : "managerPW",
             "in" : "query",
             "type" : "string",
-            "description" : "Required query parameter associated with the email address."
+            "description" : "The required new password of the new maanger."
           }
         ],
         "responses" : {
@@ -2369,6 +2715,12 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query param associated with the email address."
+          },
+          {
             "name" : "email",
             "in" : "query",
             "type" : "string",
@@ -2379,12 +2731,6 @@
             "in" : "query",
             "type" : "string",
             "description" : "The name of the developer or the manager of the account."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query param associated with the email address."
           }
         ],
         "responses" : {
@@ -2412,6 +2758,12 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query parameter to connect it with the given\r\nemail address."
+          },
+          {
             "name" : "id",
             "in" : "path",
             "type" : "string",
@@ -2422,12 +2774,6 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid email address."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
           }
         ],
         "responses" : {
@@ -2455,6 +2801,12 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query parameter to connect it with the given\r\nemail address."
+          },
+          {
             "name" : "id",
             "in" : "path",
             "type" : "string",
@@ -2465,12 +2817,6 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid email address."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
           }
         ],
         "responses" : {
@@ -2498,16 +2844,16 @@
         "produces" : [ "application/json" ],
         "parameters" : [
           {
+            "name" : "password",
+            "in" : "header",
+            "type" : "string",
+            "description" : "Required query param to connect it with the given\r\nemail address."
+          },
+          {
             "name" : "email",
             "in" : "query",
             "type" : "string",
             "description" : "A required valid email address."
-          },
-          {
-            "name" : "password",
-            "in" : "query",
-            "type" : "string",
-            "description" : "Required query param to connect it with the given\r\nemail address."
           }
         ],
         "responses" : {
@@ -2861,6 +3207,44 @@
           }
         }
       }
+      ,
+      "get" : {
+        "tags" : [ "PlayerApi" ],
+        "description" : "Gets a list of all contacts a player has.",
+        "operationId" : "resource_PlayerApi_contacts_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the Player."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_player"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
     }
     ,
     "/player/{id}/badges" : {
@@ -2920,7 +3304,7 @@
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this role belongs to."
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
           },
           {
             "name" : "attribute",
@@ -3263,7 +3647,7 @@
             "name" : "apiKey",
             "in" : "query",
             "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to.\r\n//\t * @return Response of PlayerGroup in JSON."
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
           },
           {
             "name" : "logoPath",

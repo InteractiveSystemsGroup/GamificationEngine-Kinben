@@ -92,15 +92,6 @@ an PresentArchived object is created.</p>
 </td>
         </tr>
         <tr>
-          <td>  belongsTo
-</td>
-          <td>  <a href="json_organisation.html">Organisation</a>
-
-</td>
-          <td>  Gets the organisation an archived present belongs to.
-</td>
-        </tr>
-        <tr>
           <td>  date
 </td>
           <td>  <a href="json_localdatetime.html">LocalDateTime</a>
@@ -125,57 +116,34 @@ an PresentArchived object is created.</p>
 
       <pre class="prettyprint lang-js">{
   &quot;id&quot; : 12345.0,
-  &quot;belongsTo&quot; : {
-    &quot;id&quot; : 12345.0,
-    &quot;managers&quot; : [ {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    }, {
-      &quot;email&quot; : &quot;...&quot;,
-      &quot;password&quot; : &quot;...&quot;,
-      &quot;firstName&quot; : &quot;...&quot;,
-      &quot;lastName&quot; : &quot;...&quot;
-    } ],
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;apiKey&quot; : &quot;...&quot;
-  },
   &quot;date&quot; : {
-    &quot;monthValue&quot; : 12345.0,
-    &quot;second&quot; : 12345.0,
-    &quot;month&quot; : &quot;JANUARY&quot;,
-    &quot;nano&quot; : 12345.0,
-    &quot;dayOfMonth&quot; : 12345.0,
-    &quot;hour&quot; : 12345.0,
-    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-    &quot;minute&quot; : 12345.0,
     &quot;dayOfYear&quot; : 12345.0,
-    &quot;year&quot; : 12345.0
+    &quot;minute&quot; : 12345.0,
+    &quot;year&quot; : 12345.0,
+    &quot;hour&quot; : 12345.0,
+    &quot;month&quot; : &quot;JANUARY&quot;,
+    &quot;monthValue&quot; : 12345.0,
+    &quot;nano&quot; : 12345.0,
+    &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+    &quot;dayOfMonth&quot; : 12345.0,
+    &quot;second&quot; : 12345.0
   },
   &quot;acceptedPresent&quot; : {
     &quot;id&quot; : 12345.0,
-    &quot;belongsTo&quot; : {
-      &quot;id&quot; : 12345.0,
-      &quot;managers&quot; : [ { }, { } ],
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;apiKey&quot; : &quot;...&quot;
-    },
     &quot;date&quot; : {
-      &quot;monthValue&quot; : 12345.0,
-      &quot;second&quot; : 12345.0,
-      &quot;month&quot; : &quot;JANUARY&quot;,
-      &quot;nano&quot; : 12345.0,
-      &quot;dayOfMonth&quot; : 12345.0,
-      &quot;hour&quot; : 12345.0,
-      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
-      &quot;minute&quot; : 12345.0,
       &quot;dayOfYear&quot; : 12345.0,
-      &quot;year&quot; : 12345.0
+      &quot;minute&quot; : 12345.0,
+      &quot;year&quot; : 12345.0,
+      &quot;hour&quot; : 12345.0,
+      &quot;month&quot; : &quot;JANUARY&quot;,
+      &quot;monthValue&quot; : 12345.0,
+      &quot;nano&quot; : 12345.0,
+      &quot;dayOfWeek&quot; : &quot;MONDAY&quot;,
+      &quot;dayOfMonth&quot; : 12345.0,
+      &quot;second&quot; : 12345.0
     },
     &quot;present&quot; : {
       &quot;id&quot; : 12345.0,
-      &quot;belongsTo&quot; : { },
       &quot;sender&quot; : { },
       &quot;receiver&quot; : [ { }, { } ]
     },

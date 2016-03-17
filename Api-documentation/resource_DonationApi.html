@@ -56,6 +56,11 @@
           <li><a href="#resource_DonationApi_createDonationCall_POST">POST /donation</a></li>
           <li><a href="#resource_DonationApi_donate_POST"><abbr title="POST /donation/{id}/donate/{playerId}">POST /donation/{id}/donate/{pl...</abbr></a></li>
           <li><a href="#resource_DonationApi_getDonationCall_GET">GET /donation/{id}</a></li>
+          <li><a href="#resource_DonationApi_getDonationCalls_GET">GET /donation/*</a></li>
+          <li><a href="#resource_DonationApi_getProgess_GET">GET /donation/{id}/progress</a></li>
+          <li><a href="#resource_DonationApi_getDonors_GET">GET /donation/{id}/donors</a></li>
+          <li><a href="#resource_DonationApi_getDonations_GET">GET /donation/{id}/donations</a></li>
+          <li><a href="#resource_DonationApi_changeAttributes_PUT">PUT /donation/{id}/attributes</a></li>
           <li><a href="#resource_DonationApi_deleteDonationCall_DELETE">DELETE /donation/{id}</a></li>
           <li class="divider"></li>
           <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
@@ -98,23 +103,23 @@ should be reached.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@28a04676 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@61ed5ebd -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this call for donations belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@aefa8cf -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@26098496 -->
             <td>query</td>
             <td>The longer description of the call for donation. This can contain the its purpose.</td>
           </tr>
           <tr>
-            <td>goal</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4d14d78e -->
+            <td>goalAmount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@219ae09a -->
             <td>query</td>
             <td>The amount of coins that should be reached to fulfil this donation.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@8574022 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2ee03bd -->
             <td>query</td>
             <td>The short name of the call for donation.</td>
           </tr>
@@ -144,9 +149,10 @@ to which this call for donations belongs to.</td>
       <div id="resource_DonationApi_donate_POST">
         <h3>POST <small>/donation/{id}/donate/{playerId} <!--<a href="./donation/{id}/donate/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>With this method a player donates a specific amount of coins if she/he has enough coins.
-These coins are subtracted from the player's current account and will be added to the Donation
-Call's current amount. If the API key is not valid an analogous message is returned.
+        <p>With this method a player donates a specific amount of coins if she/he has enough coins and the given
+amount hasn't been already reached.
+These coins are subtracted from the player's current account and will be added to the DonationCall's
+current amount. If the API key is not valid an analogous message is returned.
 It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.</p>
 
         <table class="table">
@@ -160,22 +166,22 @@ It is also checked, if the id is a positive number otherwise a message for an in
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@22ee34a8 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@97dbdeb -->
             <td>path</td>
             <td>The id of the call for donations to which a player donates. This path parameter is required.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@553059ea -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@633aa566 -->
             <td>path</td>
             <td>The id of the player who donates. This path parameter is required.</td>
           </tr>
           <tr>
-            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e734c65 -->
+            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@155207ab -->
             <td>query</td>
             <td>The amount of coins which the player donates.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c174dd9 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@67530d57 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this call for donations belongs to.</td>
@@ -221,12 +227,12 @@ otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5f8f7387 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@32576b3 -->
             <td>path</td>
-            <td>Required path parameter as integer which uniquely identify the {@link DonationCall}.</td>
+            <td>Required path parameter as integer which uniquely identify the DonationCall.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@8279e95 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3582e224 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this call for donations belongs to.</td>
@@ -254,11 +260,10 @@ to which this call for donations belongs to.</td>
         </table>
       </div>
 
-      <div id="resource_DonationApi_deleteDonationCall_DELETE">
-        <h3>DELETE <small>/donation/{id} <!--<a href="./donation/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_DonationApi_getDonationCalls_GET">
+        <h3>GET <small>/donation/* <!--<a href="./donation/*" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>Removes the call for donations with the assigned id from data base. It is checked, if the passed id is a
-positive number otherwise a message for an invalid number is returned. If the API key is not
+        <p>Returns the call for donation which are associated with the organisation. If the API key is not
 valid an analogous message is returned.</p>
 
         <table class="table">
@@ -272,13 +277,283 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3eeb49d9 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4f2e5e9f -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_donationcall.html">DonationCall</a>
+ (JSON)</td>
+            <td rowspan="1">Response of List with all DonationCalls of one organisaiton in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_DonationApi_getProgess_GET">
+        <h3>GET <small>/donation/{id}/progress <!--<a href="./donation/{id}/progress" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns the progress of an call for donations: the current amount and the amount that should be
+reached. If the API key is not valid an analogous message is returned. It is also checked, if the
+id is a positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@45a76423 -->
+            <td>path</td>
+            <td>Required path parameter as integer which uniquely identify the DonationCall.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@339af323 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_donationcall.html">DonationCall</a>
+ (JSON)</td>
+            <td rowspan="1">Returns the current amount and the amount that should be reached in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_DonationApi_getDonors_GET">
+        <h3>GET <small>/donation/{id}/donors <!--<a href="./donation/{id}/donors" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns a list of all donors that have donated to a specific call for donoation. If the API key is
+not valid an analogous message is returned. It is also checked, if the id is a positive number
+otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@efd8969 -->
+            <td>path</td>
+            <td>The id of the call for donations to which all donors should be returned.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@58f44690 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_donationcall.html">DonationCall</a>
+ (JSON)</td>
+            <td rowspan="1">Returns a list of all donors of a specific call for donations in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_DonationApi_getDonations_GET">
+        <h3>GET <small>/donation/{id}/donations <!--<a href="./donation/{id}/donations" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Gets a list of all donations which were made for a specific call for donations.
+If the API key is not valid an analogous message is returned. It is also checked, if the offer id is a
+positive number otherwise a message for an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@260cb7d1 -->
+            <td>path</td>
+            <td>The call for Donation whose donations are returned. This parameter is required.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@42eb5bd8 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which the call for donations belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_donation.html">Donation</a>
+ (JSON)</td>
+            <td rowspan="1">Response as List of Donations in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_DonationApi_changeAttributes_PUT">
+        <h3>PUT <small>/donation/{id}/attributes <!--<a href="./donation/{id}/attributes" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>With this method the fields of one specific call for donations can be changed.
+For this the associated id, the API key of the specific organisation, the
+name of the field and the new field's value are needed.
+To modify the name or the description of a call for donation, the new value
+can be passed.
+If the API key is not valid an analogous message is returned. It is
+also checked, if the id is a positive number otherwise a message for
+an invalid number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@203f342d -->
+            <td>path</td>
+            <td>Required integer which uniquely identify the DonationCall.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a05267c -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.</td>
+          </tr>
+          <tr>
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@19f4a0d2 -->
+            <td>query</td>
+            <td>The name of the attribute which should be modified. This
+parameter is required. The following names of attributes can
+be used to change the associated field:
+"name" and "description"</td>
+          </tr>
+          <tr>
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1590daf -->
+            <td>query</td>
+            <td>The new value of the attribute. This parameter is required.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_donationcall.html">DonationCall</a>
+ (JSON)</td>
+            <td rowspan="1">Response of DonationCall in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_DonationApi_deleteDonationCall_DELETE">
+        <h3>DELETE <small>/donation/{id} <!--<a href="./donation/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes the call for donations with the assigned id from data base. If the goal of call for donations isn't
+reached, first all donors get their donations back and then in a second step the call for donation itself is
+removed from the database. Else if the goal is already reached, the call for donation is deleted.
+It is checked, if the passed id is a positive number otherwise a message for an invalid number is returned.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@589edff5 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link DonationCall} that
 should be deleted.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@a8caba7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2bdb345c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this call for donations belongs to.</td>

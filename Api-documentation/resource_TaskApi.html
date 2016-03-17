@@ -56,9 +56,9 @@
           <li><a href="#resource_TaskApi_createNewTask_POST">POST /task</a></li>
           <li><a href="#resource_TaskApi_getTasks_GET">GET /task/*</a></li>
           <li><a href="#resource_TaskApi_getTask_GET">GET /task/{id}</a></li>
-          <li><a href="#resource_TaskApi_deleteTask_DELETE">DELETE /task/{id}</a></li>
           <li><a href="#resource_TaskApi_completeTask_POST"><abbr title="POST /task/{id}/complete/{playerId}">POST /task/{id}/complete/{play...</abbr></a></li>
           <li><a href="#resource_TaskApi_changeTaskAttributes_PUT">PUT /task/{id}/attributes</a></li>
+          <li><a href="#resource_TaskApi_deleteTask_DELETE">DELETE /task/{id}</a></li>
           <li class="divider"></li>
           <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
         </ul>
@@ -113,34 +113,34 @@ invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5b161fd -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5d94734f -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this task belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70b6a25e -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5b347d37 -->
             <td>query</td>
             <td>Optional a short description can be set. This can be for example explain what
 a player has to do to complete the task.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@30ed2bf5 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5125f6d3 -->
             <td>query</td>
             <td>The name of the task. This parameter is required.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e5d0a9c -->
+            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1a461ccd -->
             <td>query</td>
             <td>Optionally a list of role ids separated by commas who are allowed to fulfil the
 task.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>tradeable</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6dd8f206 -->
+            <td>tradeable</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@64b60ac1 -->
             <td>query</td>
             <td>This field specifies whether the task is tradeable or not. The default value is
 set to not tradeable (false).</td>
@@ -186,7 +186,7 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@28b909b1 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c131ea5 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this task belongs to.</td>
@@ -232,63 +232,12 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@71d22dd0 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@627ee09a -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link Task}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@278dc09c -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this task belongs to.</td>
-          </tr>
-          </tbody>
-        </table>
-
-        <table class="table">
-          <caption>Response Body</caption>
-          <thead>
-          <tr>
-            <th>media type</th>
-            <th>data type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
-            <td><a href="json_task.html">Task</a>
- (JSON)</td>
-            <td rowspan="1">Response of Task in JSON.</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div id="resource_TaskApi_deleteTask_DELETE">
-        <h3>DELETE <small>/task/{id} <!--<a href="./task/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
-
-        <p>Removes the task with the assigned id and associated API key from data base. It is checked,
-if the passed id is a positive number otherwise a message for an invalid number is returned.
-If the API key is not valid an analogous message is returned.</p>
-
-        <table class="table">
-          <caption>Request Parameters</caption>
-          <thead>
-          <tr>
-            <th>name</th>
-            <th>type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@d6f4ea9 -->
-            <td>path</td>
-            <td>Required integer which uniquely identify the {@link Task}.</td>
-          </tr>
-          <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6dfb2a34 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4874286c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this task belongs to.</td>
@@ -335,23 +284,23 @@ time and date is also stored when the task was officially be done.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@da726f6 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c40c3a1 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Task}.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@44678efe -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@182200ba -->
             <td>path</td>
             <td>The if ot the player who has completed the task. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@338a9add -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@d4d4914 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this task belongs to.</td>
           </tr>
           <tr>
-            <td>finishedDate</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@714ac12 -->
+            <td>finishedDate</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@64933799 -->
             <td>query</td>
             <td>Optionally the local tate time can be passed when the task was finished. If the
 value is null, the finshedDate is set to the time and date when the query was
@@ -403,27 +352,78 @@ the ids are a positive number otherwise a message for an invalid number is retur
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@33b0ba90 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7e54bd61 -->
             <td>path</td>
             <td>The id of the task that should be changed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4bd8c266 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@767b45c1 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this task belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c63f5b2 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1119a7f3 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "taskName", "description", "tradeable" and "roles".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@e35b810 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6c4b75b6 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td><a href="json_task.html">Task</a>
+ (JSON)</td>
+            <td rowspan="1">Response of Task in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="resource_TaskApi_deleteTask_DELETE">
+        <h3>DELETE <small>/task/{id} <!--<a href="./task/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Removes the task with the assigned id and associated API key from data base. It is checked,
+if the passed id is a positive number otherwise a message for an invalid number is returned.
+If the API key is not valid an analogous message is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@372f72eb -->
+            <td>path</td>
+            <td>Required integer which uniquely identify the {@link Task}.</td>
+          </tr>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1bd67c82 -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which this task belongs to.</td>
           </tr>
           </tbody>
         </table>

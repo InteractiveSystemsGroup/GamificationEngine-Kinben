@@ -20,28 +20,6 @@
     </wadl:resource>
 
     <wadl:resource path="/account">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Returns an account corresponding to the given email address but only
-if the combination with password is correct. By the creation of an
-organisation this email address is connected with it.
-So the method requires valid credentials otherwise a warning with the
-hint for wrong credentials is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="email" style="query">
-            <wadl:doc><![CDATA[A required valid unique email address.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
-            <wadl:doc><![CDATA[Required query parameter associated with the email address.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[A Response of Account in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/account">
       <wadl:method name="POST">
         <wadl:doc><![CDATA[Creates a new account. For this an unique email address and a
 password are mandatory. By the creation of an organisation this
@@ -70,11 +48,37 @@ email address.]]></wadl:doc>
     </wadl:resource>
 
     <wadl:resource path="/account">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns an account corresponding to the given email address but only
+if the combination with password is correct. By the creation of an
+organisation this email address is connected with it.
+So the method requires valid credentials otherwise a warning with the
+hint for wrong credentials is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="password" style="header">
+            <wadl:doc><![CDATA[Required query parameter associated with the email address.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="email" style="query">
+            <wadl:doc><![CDATA[A required valid unique email address.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response of Account in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/account">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[Updates the first and last name of an existing account. For this the
 specific email address and associated password are mandatory.
 Otherwise a warning with the hint for wrong credentials is returned.]]></wadl:doc>
         <wadl:request>
+          <wadl:param name="password" style="header">
+            <wadl:doc><![CDATA[Required query parameter to connect it with the given
+email address.]]></wadl:doc>
+          </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[A required valid email address.]]></wadl:doc>
           </wadl:param>
@@ -83,10 +87,6 @@ Otherwise a warning with the hint for wrong credentials is returned.]]></wadl:do
           </wadl:param>
           <wadl:param name="lastName" style="query">
             <wadl:doc><![CDATA[Optionally the last name of the Account's owner can be set.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
-            <wadl:doc><![CDATA[Required query parameter to connect it with the given
-email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -111,7 +111,7 @@ to which this call for donations belongs to.]]></wadl:doc>
           <wadl:param name="description" style="query">
             <wadl:doc><![CDATA[The longer description of the call for donation. This can contain the its purpose.]]></wadl:doc>
           </wadl:param>
-          <wadl:param name="goal" style="query">
+          <wadl:param name="goalAmount" style="query">
             <wadl:doc><![CDATA[The amount of coins that should be reached to fulfil this donation.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="name" style="query">
@@ -185,14 +185,14 @@ authentication otherwise a warning with the hint for wrong credentials is return
 All further Accounts which should be associated to this organisation are added with the
 method addManager.]]></wadl:doc>
         <wadl:request>
+          <wadl:param name="password" style="header">
+            <wadl:doc><![CDATA[Required query param associated with the email address.]]></wadl:doc>
+          </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[The required valid email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="name" style="query">
             <wadl:doc><![CDATA[The name of the developer or the manager of the account.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
-            <wadl:doc><![CDATA[Required query param associated with the email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -249,8 +249,7 @@ a message for the invalid number is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this group of players belongs to.
-//	 * @return Response of PlayerGroup in JSON.]]></wadl:doc>
+to which this group of players belongs to.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="logoPath" style="query">
             <wadl:doc><![CDATA[Optionally a group logo as a HTTP reference can be passed.]]></wadl:doc>
@@ -264,6 +263,7 @@ separated by commas. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -391,6 +391,23 @@ set to not tradeable (false).]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/donation/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns the call for donation which are associated with the organisation. If the API key is not
+valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of List with all DonationCalls of one organisaiton in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/donation/{id}">
       <wadl:method name="GET">
         <wadl:doc><![CDATA[Returns the call for donation which is associated with the passed id. If the API key is not
@@ -411,9 +428,11 @@ to which this call for donations belongs to.]]></wadl:doc>
 
     <wadl:resource path="/donation/{id}">
       <wadl:method name="DELETE">
-        <wadl:doc><![CDATA[Removes the call for donations with the assigned id from data base. It is checked, if the passed id is a
-positive number otherwise a message for an invalid number is returned. If the API key is not
-valid an analogous message is returned.]]></wadl:doc>
+        <wadl:doc><![CDATA[Removes the call for donations with the assigned id from data base. If the goal of call for donations isn't
+reached, first all donors get their donations back and then in a second step the call for donation itself is
+removed from the database. Else if the goal is already reached, the call for donation is deleted.
+It is checked, if the passed id is a positive number otherwise a message for an invalid number is returned.
+If the API key is not valid an analogous message is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -481,37 +500,9 @@ to which this goal belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
-    <wadl:resource path="/marketPlace/bid">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method a player makes a bid to an offer. So a new bid is created and therefore an id is
-generated. The id of the player is needed to indicate who has made the bid and id of the offer to identify
-for which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so
-the offer's prize is raised.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="offerId" style="query">
-            <wadl:doc><![CDATA[The offer the player has bidden for. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The player who has done the bid. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="prize" style="query">
-            <wadl:doc><![CDATA[The amount of the bid. This is added to the current prize. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[Response of Bid in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/marketPlace/getHighestOffers">
+    <wadl:resource path="/marketPlace/highestOffers">
       <wadl:method name="GET">
-        <wadl:doc><![CDATA[Gets all available offers for a player ordered by prize, highest prize first.
+        <wadl:doc><![CDATA[Gets all offers of a marketplace ordered by prize, highest prize first.
 If the API key is not valid an analogous message is returned. It is also checked, if the player id is
 a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
         <wadl:request>
@@ -524,83 +515,6 @@ to which the player belongs to.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="marketPlaceId" style="query">
             <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The player whose roles are checked. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/marketPlace/getOfferRole">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Gets the allowed offers for a specific player. The player is identified by her/his passed id and API key.
-The offers are filtered by the roles a player has so only offers are in the returned list which are
-associated with at least one role a player has.
-If the API key is not valid an analogous message is returned. It is also checked, if the ids are a
-positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="marketPlaceId" style="query">
-            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The player whose roles are checked. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/marketPlace/getOffers">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Gets all offers a specific player has created. If the API key is not valid an analogous message is
-returned. It is also checked, if the id is a positive number otherwise a message for an invalid
-number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The player whose offers are returned.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/marketPlace/getRecentOffers">
-      <wadl:method name="GET">
-        <wadl:doc><![CDATA[Gets all available offers for a player ordered by date, recent first.
-If the API key is not valid an analogous message is returned. It is also checked, if the player id is
-a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="count" style="query">
-            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed. The default value is 10.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="marketPlaceId" style="query">
-            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The player whose roles are checked. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -663,14 +577,35 @@ yyyy-MM-dd HH:mm.]]></wadl:doc>
             <wadl:doc><![CDATA[The initial bid of the offer. This is the prize a player can earn.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="taskId" style="query">
-            <wadl:doc><![CDATA[The id of the task the offer is associated with. This parameter is required.
-//	 * @param allowedRoles
-//	 *            Optionally the roles can be passed to indicate who is allowed to fulfil the task and earn the
-//	 *            prize.]]></wadl:doc>
+            <wadl:doc><![CDATA[The id of the task the offer is associated with. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/recentOffers">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all offers of the marketplace ordered by date, recent first.
+If the API key is not valid an analogous message is returned. It is also checked, if the player id is
+a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed. The default value is 10.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketPlaceId" style="query">
+            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -681,12 +616,12 @@ yyyy-MM-dd HH:mm.]]></wadl:doc>
         <wadl:doc><![CDATA[Returns all organisations which are associated with the combination of the two
 query parameters. Otherwise an exception is sent that the given credentials are wrong.]]></wadl:doc>
         <wadl:request>
-          <wadl:param name="email" style="query">
-            <wadl:doc><![CDATA[A required valid email address.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
+          <wadl:param name="password" style="header">
             <wadl:doc><![CDATA[Required query param to connect it with the given
 email address.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="email" style="query">
+            <wadl:doc><![CDATA[A required valid email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -706,14 +641,17 @@ list, a message is given with the hint that she/he is already added.]]></wadl:do
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The API key of the organisation to which the manager belongs to.]]></wadl:doc>
           </wadl:param>
-          <wadl:param name="email" style="query">
-            <wadl:doc><![CDATA[The required valid email.]]></wadl:doc>
+          <wadl:param name="firstName" style="query">
+            <wadl:doc><![CDATA[Optionally the first name of the Account's owner can be set.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="lastName" style="query">
+            <wadl:doc><![CDATA[Optionally the last name of the Account's owner can be set.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="manager" style="query">
             <wadl:doc><![CDATA[The required valid email address for the new manager.]]></wadl:doc>
           </wadl:param>
-          <wadl:param name="password" style="query">
-            <wadl:doc><![CDATA[Required query parameter associated with the email address.]]></wadl:doc>
+          <wadl:param name="managerPW" style="query">
+            <wadl:doc><![CDATA[The required new password of the new maanger.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -729,12 +667,12 @@ list, a message is given with the hint that she/he is already added.]]></wadl:do
 Additionally the email address and the associated password are mandatory and have to be
 correct otherwise an exception is returned that the given credentials are wrong.]]></wadl:doc>
         <wadl:request>
-          <wadl:param name="email" style="query">
-            <wadl:doc><![CDATA[The valid email address.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
+          <wadl:param name="password" style="header">
             <wadl:doc><![CDATA[Required query parameter to connect it with the given
 email address.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="email" style="query">
+            <wadl:doc><![CDATA[The valid email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -1394,6 +1332,92 @@ to which this task belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/donation/{id}/attributes">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[With this method the fields of one specific call for donations can be changed.
+For this the associated id, the API key of the specific organisation, the
+name of the field and the new field's value are needed.
+To modify the name or the description of a call for donation, the new value
+can be passed.
+If the API key is not valid an analogous message is returned. It is
+also checked, if the id is a positive number otherwise a message for
+an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="attribute" style="query">
+            <wadl:doc><![CDATA[The name of the attribute which should be modified. This
+parameter is required. The following names of attributes can
+be used to change the associated field:
+"name" and "description"]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="value" style="query">
+            <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of DonationCall in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/donation/{id}/donations">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets a list of all donations which were made for a specific call for donations.
+If the API key is not valid an analogous message is returned. It is also checked, if the offer id is a
+positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the call for donations belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response as List of Donations in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/donation/{id}/donors">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns a list of all donors that have donated to a specific call for donoation. If the API key is
+not valid an analogous message is returned. It is also checked, if the id is a positive number
+otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Returns a list of all donors of a specific call for donations in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/donation/{id}/progress">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns the progress of an call for donations: the current amount and the amount that should be
+reached. If the API key is not valid an analogous message is returned. It is also checked, if the
+id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this call for donations belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Returns the current amount and the amount that should be reached in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/goal/{id}/attributes">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[With this method the fields of one specific goal can be changed. For this the goal id, the API key of
@@ -1426,6 +1450,51 @@ The following names of attributes can be used to change the associated field:
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/marketPlace/offers/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all offers of an organisation (independent of the marketplace). If the API key is not valid
+an analogous message is returned. It is also checked, if the id is a positive number otherwise a message
+for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the offers belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/offers/role">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all offers which are amongst others for a specific role (depending of the marketplace). If the API key is not valid
+an analogous message is returned. It is also checked, if the id is a positive number otherwise a message
+for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the offers belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketPlaceId" style="query">
+            <wadl:doc><![CDATA[The marketplace whose offers should be considered.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="roleId" style="query">
+            <wadl:doc><![CDATA[The roles id for which the offers are searched.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/marketPlace/{id}/attributes">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[With this method the fields of an Offer can be changed. For this the id of the offer, the API key of
@@ -1444,36 +1513,10 @@ to which the offer belongs to.]]></wadl:doc>
           <wadl:param name="attribute" style="query">
             <wadl:doc><![CDATA[The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
-"name", "deadline", "enddate" and "playerRoles".]]></wadl:doc>
+"name", "deadline" and "enddate".]]></wadl:doc>
           </wadl:param>
           <wadl:param name="value" style="query">
             <wadl:doc><![CDATA[The new value of the attribute. This parameter is required.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[Response of Offer in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
-    <wadl:resource path="/marketPlace/{id}/bid">
-      <wadl:method name="DELETE">
-        <wadl:doc><![CDATA[Removes the bid with the assigned id from data base. It is checked, if the passed id is a
-positive number otherwise a message for an invalid number is returned. If the API key is not
-valid an analogous message is returned.
-If the API key is not valid an analogous message is returned. It is also checked, if the ids are
-a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which the player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="offerId" style="query">
-            <wadl:doc><![CDATA[The id of the offer to which the bid is associated.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who has made the bid. This parameter is required.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -1501,30 +1544,6 @@ to which the offer belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
-    <wadl:resource path="/marketPlace/{id}/compOffer">
-      <wadl:method name="POST">
-        <wadl:doc><![CDATA[If an offer is fulfilled by a player, this request can be used to complete the offer. With this request
-the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a
-reward.
-It is checked, if all passed ids are a positive number otherwise a message for an invalid number is
-returned. If the API key is not valid an analogous message is returned.]]></wadl:doc>
-        <wadl:request>
-          <wadl:param name="apiKey" style="query">
-            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this player belongs to.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="playerId" style="query">
-            <wadl:doc><![CDATA[The id of the player who has completed the task that was associated with the offer. So
-she/he earns the prize as a reward.]]></wadl:doc>
-          </wadl:param>
-        </wadl:request>
-        <wadl:response>
-          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-
     <wadl:resource path="/marketPlace/{id}/market">
       <wadl:method name="DELETE">
         <wadl:doc><![CDATA[Removes the marketplace with the assigned id from data base. It is checked, if the passed id is a
@@ -1545,8 +1564,10 @@ to which this goal belongs to.]]></wadl:doc>
 
     <wadl:resource path="/marketPlace/{id}/offer">
       <wadl:method name="DELETE">
-        <wadl:doc><![CDATA[Removes the offer with the assigned id from the data base. It is checked, if the passed id is a
-positive number otherwise a message for an invalid number is returned. If the API key is not
+        <wadl:doc><![CDATA[Removes the offer with the assigned id from the marketPlace and with it all associated bids.
+Every player who has mad a bid to this offer gets her/his amount of coins back.
+It is checked, if the passed id is a positive number otherwise a message for an invalid number
+is returned. If the API key is not
 valid an analogous message is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
@@ -1561,6 +1582,100 @@ to which the offer belongs to.]]></wadl:doc>
       </wadl:method>
     </wadl:resource>
 
+    <wadl:resource path="/marketPlace/{playerId}/getOfferRole">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets the allowed offers for a specific player. The player is identified by her/his passed id and API key.
+The offers are filtered by the roles a player has so only offers are in the returned list which are
+associated with at least one role a player has.
+If the API key is not valid an analogous message is returned. It is also checked, if the ids are a
+positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketPlaceId" style="query">
+            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/{playerId}/getOffers">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all offers a specific player has created (independent of the marketplace). If the API key is not valid
+an analogous message is returned. It is also checked, if the id is a positive number otherwise a message
+for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/{playerId}/highestOffersRoleFiltered">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all available offers for a player ordered by prize, highest prize first. This can be used if a player wants to see
+all offers she/he can complete and get the highest prize.
+If the API key is not valid an analogous message is returned. It is also checked, if the player id is
+a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed. The default value is 10.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketPlaceId" style="query">
+            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/{playerId}/recentOffersRoleFiltered">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all available offers for a player ordered by date, recent first. This can be used if a player wants to see
+all recent offers she/he can complete.
+If the API key is not valid an analogous message is returned. It is also checked, if the player id is
+a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed. The default value is 10.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketPlaceId" style="query">
+            <wadl:doc><![CDATA[The marketplace whose offers are filtered.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response as List of Offers in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
     <wadl:resource path="/organisation/{id}/generateapikey">
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[Generates an API key for the given organisation which matches the id, email address and the
@@ -1568,12 +1683,12 @@ associated password. Otherwise an exception is returned that the given credentia
 If the API key field is already set the method resets it and replaced it with the new generated
 API key.]]></wadl:doc>
         <wadl:request>
-          <wadl:param name="email" style="query">
-            <wadl:doc><![CDATA[The valid email address.]]></wadl:doc>
-          </wadl:param>
-          <wadl:param name="password" style="query">
+          <wadl:param name="password" style="header">
             <wadl:doc><![CDATA[Required query parameter to connect it with the given
 email address.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="email" style="query">
+            <wadl:doc><![CDATA[The valid email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -1637,7 +1752,7 @@ an invalid number is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
-to which this role belongs to.]]></wadl:doc>
+to which this player belongs to.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="attribute" style="query">
             <wadl:doc><![CDATA[The name of the attribute which should be modified. This
@@ -1755,6 +1870,22 @@ separated by commas and must not be null.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response of Player in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/player/{id}/contacts">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets a list of all contacts a player has.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this player belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of all player contacts in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2474,9 +2605,10 @@ The following names of attributes can be used to change the associated field:
 
     <wadl:resource path="/donation/{id}/donate/{playerId}">
       <wadl:method name="POST">
-        <wadl:doc><![CDATA[With this method a player donates a specific amount of coins if she/he has enough coins.
-These coins are subtracted from the player's current account and will be added to the Donation
-Call's current amount. If the API key is not valid an analogous message is returned.
+        <wadl:doc><![CDATA[With this method a player donates a specific amount of coins if she/he has enough coins and the given
+amount hasn't been already reached.
+These coins are subtracted from the player's current account and will be added to the DonationCall's
+current amount. If the API key is not valid an analogous message is returned.
 It is also checked, if the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="amount" style="query">
@@ -2489,6 +2621,51 @@ to which this call for donations belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[A Response of DonationCall in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/{id}/compOffer/{playerId}">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[If an offer is fulfilled by a player, this request can be used to complete the offer. With this request
+the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a
+reward.
+It is checked, if all passed ids are a positive number otherwise a message for an invalid number is
+returned. If the API key is not valid an analogous message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="marketId" style="query">
+            <wadl:doc><![CDATA[]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/{playerId}/bid/{offerId}">
+      <wadl:method name="POST">
+        <wadl:doc><![CDATA[With this method a player makes a bid to an offer. So a new bid is created and therefore an id is
+generated. The id of the player is needed to indicate who has made the bid and id of the offer to identify
+for which she/he has bidden. The prize of the bid is needed to add it to the current amount of coins so
+the offer's prize is raised.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="prize" style="query">
+            <wadl:doc><![CDATA[The amount of the bid. This is added to the current prize. This parameter is required.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of Bid in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2600,6 +2777,27 @@ sent.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response of Task in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/offers/market/{marketPlaceId}/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Gets all offers of an organisation (depending of the marketplace). If the API key is not valid
+an analogous message is returned. It is also checked, if the id is a positive number otherwise a message
+for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the offers belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="count" style="query">
+            <wadl:doc><![CDATA[Optionally the count of offers that should be returned can be passed.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[A Response as List of Offers in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>

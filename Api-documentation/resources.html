@@ -115,13 +115,23 @@ correct credentials.
     <tr class="clickable-row" data-href="resource_DonationApi.html">
       <td>  DonationApi
 </td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /donation/{id}
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /donation/{id}/donations
+</samp></li><li><samp>  /donation/{id}/progress
+</samp></li><li><samp>  /donation/*
+</samp></li><li><samp>  /donation/{id}
+</samp></li><li><samp>  /donation/{id}/donors
 </samp></li><li><samp>  /donation
 </samp></li><li><samp>  /donation/{id}/donate/{playerId}
+</samp></li><li><samp>  /donation/{id}/attributes
 </samp></li></ul></td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  DELETE, GET
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  DELETE, GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  PUT
 </samp></li></ul></td>
       <td>  A donation stands for a real world purpose. This could be for example a real donation for a
 charitable purpose or an event for the organisation’s employees like the arrangement for the
@@ -158,21 +168,27 @@ possible to change the roles so different people can complete the goal.
     <tr class="clickable-row" data-href="resource_MarketPlaceApi.html">
       <td>  MarketPlaceApi
 </td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /marketPlace/{id}/compOffer
-</samp></li><li><samp>  /marketPlace/getHighestOffers
-</samp></li><li><samp>  /marketPlace/bid
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /marketPlace/{playerId}/recentOffersRoleFiltered
+</samp></li><li><samp>  /marketPlace/{id}/compOffer/{playerId}
+</samp></li><li><samp>  /marketPlace/{playerId}/getOffers
+</samp></li><li><samp>  /marketPlace/offers/*
+</samp></li><li><samp>  /marketPlace/{playerId}/bid/{offerId}
 </samp></li><li><samp>  /marketPlace/offer
 </samp></li><li><samp>  /marketPlace/{id}/market
+</samp></li><li><samp>  /marketPlace/offers/role
 </samp></li><li><samp>  /marketPlace/{id}/bids
-</samp></li><li><samp>  /marketPlace/getOffers
 </samp></li><li><samp>  /marketPlace/{id}/attributes
 </samp></li><li><samp>  /marketPlace/market
-</samp></li><li><samp>  /marketPlace/getOfferRole
-</samp></li><li><samp>  /marketPlace/getRecentOffers
+</samp></li><li><samp>  /marketPlace/recentOffers
+</samp></li><li><samp>  /marketPlace/{playerId}/getOfferRole
+</samp></li><li><samp>  /marketPlace/{playerId}/highestOffersRoleFiltered
+</samp></li><li><samp>  /marketPlace/offers/market/{marketPlaceId}/*
 </samp></li><li><samp>  /marketPlace/{id}/offer
-</samp></li><li><samp>  /marketPlace/{id}/bid
+</samp></li><li><samp>  /marketPlace/highestOffers
 </samp></li></ul></td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  GET
+</samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
 </samp></li><li><samp>  POST
@@ -183,8 +199,10 @@ possible to change the roles so different people can complete the goal.
 </samp></li><li><samp>  POST
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE
-</samp></li><li><samp>  DELETE
+</samp></li><li><samp>  GET
 </samp></li></ul></td>
       <td>  The marketplace gives players the opportunity to offer tasks that have to be completed by their colleagues
 so that they are able to fulfil those tasks and obtain the respective reward. Upon creation of a task, an
@@ -261,7 +279,7 @@ of the respective organisation and so also the Account.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
-</samp></li><li><samp>  DELETE, PUT
+</samp></li><li><samp>  DELETE, GET, PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  DELETE, GET

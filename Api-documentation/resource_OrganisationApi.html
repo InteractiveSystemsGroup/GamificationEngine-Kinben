@@ -103,19 +103,19 @@ method addManager.</p>
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3280d567 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@68d318a7 -->
+            <td>header</td>
+            <td>Required query param associated with the email address.</td>
+          </tr>
+          <tr>
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@aad38f9 -->
             <td>query</td>
             <td>The required valid email address.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7f028bfe -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@63fb2163 -->
             <td>query</td>
             <td>The name of the developer or the manager of the account.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a50c746 -->
-            <td>query</td>
-            <td>Required query param associated with the email address.</td>
           </tr>
           </tbody>
         </table>
@@ -159,24 +159,29 @@ list, a message is given with the hint that she/he is already added.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@b93075c -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@58439f82 -->
             <td>query</td>
             <td>The API key of the organisation to which the manager belongs to.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f0cd0a4 -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2825b20d -->
             <td>query</td>
-            <td>The required valid email.</td>
+            <td>Optionally the first name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>manager</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@543af1c0 -->
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b2c3d00 -->
+            <td>query</td>
+            <td>Optionally the last name of the Account's owner can be set.</td>
+          </tr>
+          <tr>
+            <td>manager</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@71e6ed3f -->
             <td>query</td>
             <td>The required valid email address for the new manager.</td>
           </tr>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@80c66f6 -->
+            <td>managerPW</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@359dc30e -->
             <td>query</td>
-            <td>Required query parameter associated with the email address.</td>
+            <td>The required new password of the new maanger.</td>
           </tr>
           </tbody>
         </table>
@@ -218,15 +223,15 @@ query parameters. Otherwise an exception is sent that the given credentials are 
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1bb6294c -->
-            <td>query</td>
-            <td>A required valid email address.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4266536e -->
-            <td>query</td>
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@30adaa6a -->
+            <td>header</td>
             <td>Required query param to connect it with the given
 email address.</td>
+          </tr>
+          <tr>
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1ac34542 -->
+            <td>query</td>
+            <td>A required valid email address.</td>
           </tr>
           </tbody>
         </table>
@@ -269,20 +274,20 @@ correct otherwise an exception is returned that the given credentials are wrong.
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@41511e13 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5c8adc30 -->
+            <td>header</td>
+            <td>Required query parameter to connect it with the given
+email address.</td>
+          </tr>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7d4f11c -->
             <td>path</td>
             <td>The path parameter of the organisation, that should be returned.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a01eb19 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5af7f576 -->
             <td>query</td>
             <td>The valid email address.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@574b5c -->
-            <td>query</td>
-            <td>Required query parameter to connect it with the given
-email address.</td>
           </tr>
           </tbody>
         </table>
@@ -326,20 +331,20 @@ API key.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70da951b -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a1e523f -->
+            <td>header</td>
+            <td>Required query parameter to connect it with the given
+email address.</td>
+          </tr>
+          <tr>
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@50ff7e10 -->
             <td>path</td>
             <td>The path parameter of the organisation, for which the API key should be generated.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3932bc95 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70033902 -->
             <td>query</td>
             <td>The valid email address.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1ccec189 -->
-            <td>query</td>
-            <td>Required query parameter to connect it with the given
-email address.</td>
           </tr>
           </tbody>
         </table>

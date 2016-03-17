@@ -53,8 +53,8 @@
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar" id="apinav">
         <ul class="nav nav-sidebar">
-          <li><a href="#resource_AccountApi_get_GET">GET /account</a></li>
           <li><a href="#resource_AccountApi_create_POST">POST /account</a></li>
+          <li><a href="#resource_AccountApi_get_GET">GET /account</a></li>
           <li><a href="#resource_AccountApi_update_PUT">PUT /account</a></li>
           <li class="divider"></li>
           <li class="text-right"><a href="#top"><small>Back to Top</small></a></li>
@@ -79,14 +79,13 @@ at a later point of time. In addition to creating an account another
 possible request is to get the created account but only with the
 correct credentials.</p>
 
-      <div id="resource_AccountApi_get_GET">
-        <h3>GET <small>/account <!--<a href="./account" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_AccountApi_create_POST">
+        <h3>POST <small>/account <!--<a href="./account" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>Returns an account corresponding to the given email address but only
-if the combination with password is correct. By the creation of an
-organisation this email address is connected with it.
-So the method requires valid credentials otherwise a warning with the
-hint for wrong credentials is returned.</p>
+        <p>Creates a new account. For this an unique email address and a
+password are mandatory. By the creation of an organisation this
+email address is connected with it. Optionally the first and last
+name can also be set.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -99,14 +98,25 @@ hint for wrong credentials is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@69ee6140 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@713d649d -->
             <td>query</td>
-            <td>A required valid unique email address.</td>
+            <td>A required valid email address.</td>
           </tr>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@21053c2a -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@57d68ca1 -->
             <td>query</td>
-            <td>Required query parameter associated with the email address.</td>
+            <td>Optionally the first name of the Account's owner can be set.</td>
+          </tr>
+          <tr>
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@67a2c057 -->
+            <td>query</td>
+            <td>Optionally the last name of the Account's owner can be set.</td>
+          </tr>
+          <tr>
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@36dff93d -->
+            <td>query</td>
+            <td>Required query parameter to connect it with the given
+email address.</td>
           </tr>
           </tbody>
         </table>
@@ -131,13 +141,14 @@ hint for wrong credentials is returned.</p>
         </table>
       </div>
 
-      <div id="resource_AccountApi_create_POST">
-        <h3>POST <small>/account <!--<a href="./account" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+      <div id="resource_AccountApi_get_GET">
+        <h3>GET <small>/account <!--<a href="./account" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
-        <p>Creates a new account. For this an unique email address and a
-password are mandatory. By the creation of an organisation this
-email address is connected with it. Optionally the first and last
-name can also be set.</p>
+        <p>Returns an account corresponding to the given email address but only
+if the combination with password is correct. By the creation of an
+organisation this email address is connected with it.
+So the method requires valid credentials otherwise a warning with the
+hint for wrong credentials is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -150,25 +161,14 @@ name can also be set.</p>
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@680ea94f -->
-            <td>query</td>
-            <td>A required valid email address.</td>
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c5c6af7 -->
+            <td>header</td>
+            <td>Required query parameter associated with the email address.</td>
           </tr>
           <tr>
-            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74d8830f -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4f8c4859 -->
             <td>query</td>
-            <td>Optionally the first name of the Account's owner can be set.</td>
-          </tr>
-          <tr>
-            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6e2618b5 -->
-            <td>query</td>
-            <td>Optionally the last name of the Account's owner can be set.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@66ca8d37 -->
-            <td>query</td>
-            <td>Required query parameter to connect it with the given
-email address.</td>
+            <td>A required valid unique email address.</td>
           </tr>
           </tbody>
         </table>
@@ -211,25 +211,25 @@ Otherwise a warning with the hint for wrong credentials is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7b930470 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e5d8987 -->
+            <td>header</td>
+            <td>Required query parameter to connect it with the given
+email address.</td>
+          </tr>
+          <tr>
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@77829960 -->
             <td>query</td>
             <td>A required valid email address.</td>
           </tr>
           <tr>
-            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b6320f6 -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@38c64eb5 -->
             <td>query</td>
             <td>Optionally the first name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@155e6a9f -->
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@15a50774 -->
             <td>query</td>
             <td>Optionally the last name of the Account's owner can be set.</td>
-          </tr>
-          <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@274ffe36 -->
-            <td>query</td>
-            <td>Required query parameter to connect it with the given
-email address.</td>
           </tr>
           </tbody>
         </table>
