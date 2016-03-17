@@ -53,12 +53,13 @@ public class GoalDAO {
 	 *           The API key of the organisation to which the goal belongs to. 
 	 * @return The {@link Goal} object or null if it wasn't found.
 	 */
-	public Goal getGoal(int goalId, String apiKey) {
-		Query query = em.createQuery("select g from Goal g where g.belongsTo.apiKey=:apiKey and g.id in (:goal)", Goal.class);
-		query.setParameter("apiKey", apiKey);
-		query.setParameter("goal", goalId);
-
-		return (Goal) query.getResultList();
+	public Goal getGoal(int id, String apiKey) {
+		Query query = em.createQuery("select g from Goal g where g.belongsTo.apiKey=:apiKey and g.id=:id", Goal.class);
+		List list = QueryUtils.configureQuery(query, id, apiKey);
+		if (list.isEmpty()) {
+			return null;
+		}
+		return (Goal) list.get(0);
 	}
 
 

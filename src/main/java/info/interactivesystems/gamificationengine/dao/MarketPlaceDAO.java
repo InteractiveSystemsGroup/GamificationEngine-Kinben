@@ -121,7 +121,7 @@ public class MarketPlaceDAO {
 	 * @return The {@link Offer} that is associated with the passed id.
 	 */
 	public Offer getOffer(int offerId, String apiKey) {
-		Query query = em.createQuery("select o from Offer o where o.belongsTo.apiKey=:apiKey and o.id = :id", Offer.class);
+		Query query = em.createQuery("select o from Offer o where o.belongsTo.apiKey=:apiKey and o.id =:id", Offer.class);
 		List list = QueryUtils.configureQuery(query, offerId, apiKey);
 		if (list.isEmpty()) {
 			return null;

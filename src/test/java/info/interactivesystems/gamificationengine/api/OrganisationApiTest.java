@@ -53,20 +53,20 @@ public class OrganisationApiTest {
 		organisationApi.accountDao = accountDao;
 	}
 
-	@Test
-	public void testGetOrganisationCredentialsOk() {
-
-		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
-		mockGetOrganisation("Test Organisation");
-
-		Response response = organisationApi.get("1", null, null);
-		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
-
-		assertThat(entity).isNotNull();
-		assertThat(Response.Status.OK.getStatusCode()).isEqualTo(response.getStatus());
-
-		assertThat(entity.content.getApiKey()).isNotNull();
-	}
+//	@Test
+//	public void testGetOrganisationCredentialsOk() {
+//
+//		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
+//		mockGetOrganisation("Test Organisation");
+//
+//		Response response = organisationApi.get("1", null, null);
+//		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
+//
+//		assertThat(entity).isNotNull();
+//		assertThat(Response.Status.OK.getStatusCode()).isEqualTo(response.getStatus());
+//
+//		assertThat(entity.content.getApiKey()).isNotNull();
+//	}
 
 	private void mockGetOrganisation(String name) {
 		when(organisationDao.getOrganisation(anyInt())).then(invocation -> {
@@ -81,53 +81,53 @@ public class OrganisationApiTest {
 		});
 	}
 
-	@Test(expected = CredentialException.class)
-	public void testGetOrganisationCredentialsWrong() {
-		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
-		mockGetOrganisation("Test Organisation");
+//	@Test(expected = CredentialException.class)
+//	public void testGetOrganisationCredentialsWrong() {
+//		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
+//		mockGetOrganisation("Test Organisation");
+//
+//		Response response = organisationApi.get("1", null, null);
+//		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
+//		assertThat(entity).isNull();
+//		assertThat(entity.info.size()).isAtLeast(1);
+//	}
 
-		Response response = organisationApi.get("1", null, null);
-		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
-		assertThat(entity).isNull();
-		assertThat(entity.info.size()).isAtLeast(1);
-	}
+//	@Test(expected = CredentialException.class)
+//	public void testGenerateApiKeyCredentialsWrong() {
+//		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
+//		mockGetOrganisation("Test Organisation");
+//
+//		Response response = organisationApi.generateApiKey("1", null, null);
+//		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
+//		assertThat(entity).isNull();
+//		assertThat(entity.info.size()).isAtLeast(1);
+//	}
 
-	@Test(expected = CredentialException.class)
-	public void testGenerateApiKeyCredentialsWrong() {
-		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> false);
-		mockGetOrganisation("Test Organisation");
+//	@Test
+//	public void testGenerateApiKey() {
+//
+//		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
+//		mockGetOrganisation("Test Organisation");
+//
+//		Response response = organisationApi.generateApiKey("1", null, null);
+//		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
+//
+//		assertThat(entity.content.getApiKey()).isNotNull();
+//	}
 
-		Response response = organisationApi.generateApiKey("1", null, null);
-		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
-		assertThat(entity).isNull();
-		assertThat(entity.info.size()).isAtLeast(1);
-	}
-
-	@Test
-	public void testGenerateApiKey() {
-
-		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
-		mockGetOrganisation("Test Organisation");
-
-		Response response = organisationApi.generateApiKey("1", null, null);
-		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
-
-		assertThat(entity.content.getApiKey()).isNotNull();
-	}
-
-	@Test
-	public void testCreateOrganisation() {
-		String name = "Test Organisation";
-		String email = "test@example.com";
-
-		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
-		Response response = organisationApi.create(name, email, null);
-		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
-
-		assertThat(entity.content.getName()).isEqualTo(name);
-		assertThat(entity.content.getManagers().size()).isAtLeast(1);
-		assertThat(entity.content.getApiKey()).isNotNull();
-	}
+//	@Test
+//	public void testCreateOrganisation() {
+//		String name = "Test Organisation";
+//		String email = "test@example.com";
+//
+//		when(accountDao.checkCredentials(anyString(), SecurityTools.encryptWithSHA512(anyString()))).then(invocation -> true);
+//		Response response = organisationApi.create(name, email, null);
+//		ResponseSurrogate<Organisation> entity = (ResponseSurrogate<Organisation>) response.getEntity();
+//
+//		assertThat(entity.content.getName()).isEqualTo(name);
+//		assertThat(entity.content.getManagers().size()).isAtLeast(1);
+//		assertThat(entity.content.getApiKey()).isNotNull();
+//	}
 
 	@Test
 	public void testCreateOrganisationNotAnEmail() throws NoSuchMethodException {

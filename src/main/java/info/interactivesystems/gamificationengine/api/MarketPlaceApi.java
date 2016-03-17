@@ -790,11 +790,13 @@ public class MarketPlaceApi {
 	@TypeHint(Task.class)
 	public Response completeOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
+			@QueryParam("marketId") @NotNull @ValidPositiveDigit String marketId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int idOffer = ValidateUtils.requireGreaterThanZero(offerId);
 		int idPlayer = ValidateUtils.requireGreaterThanZero(playerId);
-
+		int idMarket = ValidateUtils.requireGreaterThanZero(marketId);
+		
 		Player player = playerDao.getPlayer(idPlayer, apiKey);
 		ValidateUtils.requireNotNull(idPlayer, player);
 		
@@ -802,20 +804,32 @@ public class MarketPlaceApi {
 		ValidateUtils.requireNotNull(idOffer, offer);
 		
 		log.debug("get Offer");
+		
+		MarketPlace market = marketPlDao.getMarketplace(idMarket, apiKey);
+		ValidateUtils.requireNotNull(idMarket, market);
+		
+		List<Offer> offers = market.getOffers();
+		if(offers.contains(offer)){
+			Task task = offer.getTask();
+			ValidateUtils.requireNotNull(task.getId(), task);
+			log.debug("task" + task.getId());
+			task.completeTask(player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
+			log.debug("Task completed");
 
-		Task task = offer.getTask();
-		ValidateUtils.requireNotNull(task.getId(), task);
-		log.debug("task" + task.getId());
-		task.completeTask(player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
-		log.debug("Task completed");
+			int prizeReward = offer.getPrize();
+			player.setCoins(player.getCoins() + prizeReward);
 
-		int prizeReward = offer.getPrize();
-		player.setCoins(player.getCoins() + prizeReward);
-
-		log.debug("reward awarded");
-		playerDao.insert(player);
-
-		return ResponseSurrogate.created("Task " + task.getId() + "completed.");
+			log.debug("reward awarded");
+			playerDao.insert(player);
+			
+			offers.remove(offer);
+			marketPlDao.insertMarketPlace(market);
+			log.debug("offer removed form marketplace");
+			
+			return ResponseSurrogate.created("Task " + task.getId() + "completed.");
+		}
+	
+		return ResponseSurrogate.created("Offer " + offerId + " not completed.");
 	}
 
 	/**

@@ -182,7 +182,7 @@ public class OrganisationApi {
 	@GET
 	@Path("/{id}")
 	@TypeHint(Organisation.class)
-	public Response get(@PathParam("id") @NotNull String id, @QueryParam("email") @NotNull@Email String email, 
+	public Response get(@PathParam("id") @NotNull String id, @QueryParam("email") @NotNull @Email String email, 
 			@HeaderParam("password") @NotNull String password) {
 
 		log.debug("get organisation requested");

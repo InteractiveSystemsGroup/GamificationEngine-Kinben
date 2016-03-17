@@ -39,11 +39,9 @@ public class Bid {
 	private LocalDateTime creationDate;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	// @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Player player;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	// @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Offer offer;
 
 	/**

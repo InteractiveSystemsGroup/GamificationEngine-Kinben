@@ -2,8 +2,6 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 
-import java.util.List;
-
 import javax.ws.rs.core.Response;
 
 public class ValidateUtils {

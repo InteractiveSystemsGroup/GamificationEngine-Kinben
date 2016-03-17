@@ -10,8 +10,6 @@ import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.donationCall.Donation;
 import info.interactivesystems.gamificationengine.entities.donationCall.DonationCall;
-import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
-import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 import info.interactivesystems.gamificationengine.utils.Progress;
 
 import java.time.LocalDateTime;
