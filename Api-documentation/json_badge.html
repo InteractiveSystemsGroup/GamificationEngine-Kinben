@@ -93,15 +93,6 @@ award a specific badge only once.</p>
           <td>  Gets the URL of the badge's icon, when it was created.
 </td>
         </tr>
-        <tr>
-          <td>  imageIcon
-</td>
-          <td>  string
-
-</td>
-          <td>  Gets the badge's icon as byte[].
-</td>
-        </tr>
         </tbody>
         <tr>
           <td colspan="3"><h5 class="text-muted">Properties inherited from <a href="json_reward.html">Reward</a></h5></td>
@@ -140,19 +131,18 @@ way and can be displayed in the application.</td>
 
       <pre class="prettyprint lang-js">{
   &quot;icon&quot; : {
-    &quot;content&quot; : { },
-    &quot;defaultPort&quot; : 12345.0,
-    &quot;path&quot; : &quot;...&quot;,
     &quot;ref&quot; : &quot;...&quot;,
-    &quot;protocol&quot; : &quot;...&quot;,
-    &quot;host&quot; : &quot;...&quot;,
-    &quot;query&quot; : &quot;...&quot;,
-    &quot;authority&quot; : &quot;...&quot;,
     &quot;userInfo&quot; : &quot;...&quot;,
+    &quot;protocol&quot; : &quot;...&quot;,
+    &quot;query&quot; : &quot;...&quot;,
     &quot;file&quot; : &quot;...&quot;,
-    &quot;port&quot; : 12345.0
+    &quot;host&quot; : &quot;...&quot;,
+    &quot;path&quot; : &quot;...&quot;,
+    &quot;defaultPort&quot; : 12345.0,
+    &quot;content&quot; : { },
+    &quot;port&quot; : 12345.0,
+    &quot;authority&quot; : &quot;...&quot;
   },
-  &quot;imageIcon&quot; : &quot;...&quot;,
   &quot;id&quot; : 12345.0,
   &quot;timeToLive&quot; : 12345.0,
   &quot;description&quot; : &quot;...&quot;,

@@ -54,6 +54,7 @@
       <div class="col-sm-3 col-md-2 sidebar" id="apinav">
         <ul class="nav nav-sidebar">
           <li><a href="#resource_PlayerLevelApi_createNewPlayerLevel_POST">POST /playerLevel</a></li>
+          <li><a href="#resource_PlayerLevelApi_getPlayerLevels_GET">GET /playerLevel/*</a></li>
           <li><a href="#resource_PlayerLevelApi_getPlayerLevel_GET">GET /playerLevel/{id}</a></li>
           <li><a href="#resource_PlayerLevelApi_changePlayerLevelAttributes_PUT"><abbr title="PUT /playerLevel/{id}/attributes">PUT /playerLevel/{id}/attribut...</abbr></a></li>
           <li><a href="#resource_PlayerLevelApi_deletePlayerLevel_DELETE">DELETE /playerLevel/{id}</a></li>
@@ -94,18 +95,18 @@ invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@57cbbb3a -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6ca218c0 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player level belongs to.</td>
           </tr>
           <tr>
-            <td>levelIndex</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1367f745 -->
+            <td>levelIndex</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d3564ca -->
             <td>query</td>
             <td>The index of the level. This parameter is required.</td>
           </tr>
           <tr>
-            <td>levelName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@35c7f84b -->
+            <td>levelName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@28616014 -->
             <td>query</td>
             <td>The name of the player level. This parameter is required.</td>
           </tr>
@@ -132,6 +133,53 @@ to which this player level belongs to.</td>
         </table>
       </div>
 
+      <div id="resource_PlayerLevelApi_getPlayerLevels_GET">
+        <h3>GET <small>/playerLevel/* <!--<a href="./playerLevel/*" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
+
+        <p>Returns all player level which are associated with the passed API key.
+If the API key is not valid an analogous message is returned. It is also
+checked, if the id is a positive number otherwise a message for an invalid
+number is returned.</p>
+
+        <table class="table">
+          <caption>Request Parameters</caption>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4467b65f -->
+            <td>query</td>
+            <td>The valid query parameter API key affiliated to one specific organisation,
+to which the player levels belongs to.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <caption>Response Body</caption>
+          <thead>
+          <tr>
+            <th>media type</th>
+            <th>data type</th>
+            <th>description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
+            <td>array of <a href="json_playerlevel.html">PlayerLevel</a>
+ (JSON)</td>
+            <td rowspan="1">Response of all PlayerLevels in JSON.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div id="resource_PlayerLevelApi_getPlayerLevel_GET">
         <h3>GET <small>/playerLevel/{id} <!--<a href="./playerLevel/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
@@ -150,12 +198,12 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7cfa45a0 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@387fd20b -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerLevel}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7662336e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e6ae2fa -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player level belongs to.</td>
@@ -203,18 +251,18 @@ the ids are a positive number otherwise a message for an invalid number is retur
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a132f38 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1da854e3 -->
             <td>path</td>
             <td>The id of the player level that should be changed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@509c8191 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6484cc47 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player level belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7ee50967 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@222db556 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the
@@ -222,7 +270,7 @@ associated field:
 "levelName" and "levelIndex".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@19fbbc96 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4bb9eedb -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -267,12 +315,12 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a522a7e -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@14e9a403 -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link PlayerLevel}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6ef6b8ac -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@56cdb42d -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player level belongs to.</td>

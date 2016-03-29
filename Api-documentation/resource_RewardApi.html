@@ -114,7 +114,7 @@ message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1a1bd78 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@48437814 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -161,12 +161,12 @@ is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74055479 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6960494 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@63212098 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@50605606 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -214,38 +214,39 @@ of coins or points.</p>
           </thead>
           <tbody>
           <tr>
-            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@44db402b -->
+            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70c27e00 -->
             <td>query</td>
             <td>If the type is a volatile reward like points or coins this parameter is used
 to represent their amount.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@481d6fb5 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@23922bd4 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@16655c53 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@15962996 -->
             <td>query</td>
             <td>Optionally the description of the reward as String.</td>
           </tr>
           <tr>
-            <td>icon</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7caa8be7 -->
+            <td>icon</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47949d44 -->
             <td>query</td>
             <td>If the type is a permanent reward like a badge or achievement this parameter
 represents the URL of the associated image.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@626e4641 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@24c5c9c8 -->
             <td>query</td>
             <td>A string that represents the name of the reward.</td>
           </tr>
           <tr>
-            <td>type</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@41aded7e -->
+            <td>type</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@163b9a0f -->
             <td>query</td>
             <td>The required type of the reward. A list of available reward types
-can be received by {@link RewardApi#getRewardTypes}.</td>
+can be received by {@link RewardApi#getRewardTypes}. The value of
+field can be "Achievement", "Badge", "Coins", "Points" and "ReceiveLevel".</td>
           </tr>
           </tbody>
         </table>
@@ -289,13 +290,13 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7d96b6dc -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3245cbc7 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward} which sould be
 deleted.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@554bff3a -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@51580e76 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -340,7 +341,7 @@ can created. If the API key is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4507e79c -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5b59061c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -387,23 +388,23 @@ the achievement.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6b6f345f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@11f8149a -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@23875fb8 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@dffee91 -->
             <td>query</td>
             <td>Optionally a short text can be set to describe the achievement.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@293fc6dd -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c456ae6 -->
             <td>query</td>
             <td>The required name of the achievement.</td>
           </tr>
           <tr>
-            <td>url</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@537eff61 -->
+            <td>url</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@f3fe694 -->
             <td>query</td>
             <td>Optionally the URL of an image can be set that is associated with the
 achievement.</td>
@@ -450,23 +451,23 @@ the badge.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4121f49d -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5e327f2d -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5842099e -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2ccb991c -->
             <td>query</td>
             <td>Optionally a short text can be set to describe the badge.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@f9c3565 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1beed439 -->
             <td>query</td>
             <td>The required name of the badge.</td>
           </tr>
           <tr>
-            <td>url</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2bbd4600 -->
+            <td>url</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6b159a96 -->
             <td>query</td>
             <td>Optionally the URL of an image can be set that is associated with the badge.</td>
           </tr>
@@ -511,23 +512,23 @@ API key is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@65f6caf6 -->
+            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@26135bce -->
             <td>query</td>
             <td>The required amount of coins greater then zero that can be earned.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d30312f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@56602569 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@43e90ef1 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b427c80 -->
             <td>query</td>
             <td>Optionally a short text can be set to describe the reward.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@225cdca -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7cc49054 -->
             <td>query</td>
             <td>The required name of the coins reward.</td>
           </tr>
@@ -572,23 +573,23 @@ API key is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@51571602 -->
+            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40b57929 -->
             <td>query</td>
             <td>The required amount of points greater then zero that can be earned.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7dc2fc4e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@17a9473b -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7657fb81 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f278f32 -->
             <td>query</td>
             <td>Optionally a short text can be set to describe the reward.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5a30331c -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6739eeb2 -->
             <td>query</td>
             <td>The required name of the points reward.</td>
           </tr>
@@ -634,23 +635,23 @@ API key is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@33bec95e -->
+            <td>amount</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c2ebf4d -->
             <td>query</td>
             <td>The required level index greater then zero.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@597473eb -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5163a16c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@10b600b7 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@52beea6d -->
             <td>query</td>
             <td>Optionally a short text can be set to describe the level.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b45796e -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7adac2f6 -->
             <td>query</td>
             <td>The required name of the level can be set.</td>
           </tr>
@@ -696,12 +697,12 @@ an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@ef4bd61 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f7de37 -->
             <td>path</td>
             <td>The required reward id.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74e57c7f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4fd377e4 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -748,12 +749,12 @@ number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@54f669ec -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6a1b11f1 -->
             <td>path</td>
             <td>The required reward id.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3418e415 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@46faa336 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
@@ -804,25 +805,25 @@ the id is a positive number otherwise a message for an invalid number is returne
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1fac4842 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7b41cbb8 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4075d94c -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2ff9ef63 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@272b61a7 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1ddfe7f4 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "name", "description" and "icon".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@54e0011b -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@eaf046a -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -872,25 +873,25 @@ the id is a positive number otherwise a message for an invalid number is returne
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@29f3bd9d -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7b46120c -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47a2ae56 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b2478f0 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b78d95c -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@79a6dc27 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "name", "description" and "icon".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fc4fff1 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@f5c0b2d -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -939,25 +940,25 @@ the id is a positive number otherwise a message for an invalid number is returne
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5befa8c1 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4441aeb8 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@96d7df4 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7c9aad38 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@74a2e7bc -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@33921168 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "amount".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3c51b5ae -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5c786154 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -1006,25 +1007,25 @@ the id is a positive number otherwise a message for an invalid number is returne
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1a5ebb45 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1585300d -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@783ef727 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3c5fbce8 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b42609b -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1f65e35a -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "amount".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a0f4a98 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@884323 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -1073,25 +1074,25 @@ the id is a positive number otherwise a message for an invalid number is returne
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@45e4580f -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3c311e67 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Reward}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4aec185b -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7dc84df5 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this reward belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4222ff25 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4d071e25 -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "amount" and "name".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@12292673 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@fd4ddfd -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>

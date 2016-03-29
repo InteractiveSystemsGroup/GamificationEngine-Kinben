@@ -127,42 +127,42 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :content
-    # (no documentation provided)
-    attr_accessor :defaultPort
-    # (no documentation provided)
-    attr_accessor :path
-    # (no documentation provided)
     attr_accessor :ref
-    # (no documentation provided)
-    attr_accessor :protocol
-    # (no documentation provided)
-    attr_accessor :host
-    # (no documentation provided)
-    attr_accessor :query
-    # (no documentation provided)
-    attr_accessor :authority
     # (no documentation provided)
     attr_accessor :userInfo
     # (no documentation provided)
+    attr_accessor :protocol
+    # (no documentation provided)
+    attr_accessor :query
+    # (no documentation provided)
     attr_accessor :file
     # (no documentation provided)
+    attr_accessor :host
+    # (no documentation provided)
+    attr_accessor :path
+    # (no documentation provided)
+    attr_accessor :defaultPort
+    # (no documentation provided)
+    attr_accessor :content
+    # (no documentation provided)
     attr_accessor :port
+    # (no documentation provided)
+    attr_accessor :authority
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['content'] = content.to_jaxb_json_hash unless content.nil?
-      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
-      _h['path'] = path.to_jaxb_json_hash unless path.nil?
       _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
-      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
-      _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
       _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
+      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
+      _h['query'] = query.to_jaxb_json_hash unless query.nil?
       _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['path'] = path.to_jaxb_json_hash unless path.nil?
+      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
+      _h['content'] = content.to_jaxb_json_hash unless content.nil?
       _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
       return _h
     end
 
@@ -173,17 +173,17 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @content = Object.from_json(_o['content']) unless _o['content'].nil?
-      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
-      @path = String.from_json(_o['path']) unless _o['path'].nil?
       @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
-      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
-      @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
       @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
+      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
+      @query = String.from_json(_o['query']) unless _o['query'].nil?
       @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @path = String.from_json(_o['path']) unless _o['path'].nil?
+      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
+      @content = Object.from_json(_o['content']) unless _o['content'].nil?
       @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
     end
 
     # constructs a URL from a (parsed) JSON hash
@@ -900,8 +900,6 @@ module Entities
     attr_accessor :levelLabel
     # The player&#39;s id as int.
     attr_accessor :id
-    # The player&#39;s avatar as byte[].
-    attr_accessor :avatar
     # List of all finished Tasks a player has completed.
     attr_accessor :finishedTasks
     # List of all completed Goals.
@@ -929,11 +927,6 @@ module Entities
       _h['levelIndex'] = levelIndex.to_jaxb_json_hash unless levelIndex.nil?
       _h['levelLabel'] = levelLabel.to_jaxb_json_hash unless levelLabel.nil?
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      if !avatar.nil?
-        _ha = Array.new
-        avatar.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['avatar'] = _ha
-      end
       if !finishedTasks.nil?
         _ha = Array.new
         finishedTasks.each { | _item | _ha.push _item.to_jaxb_json_hash }
@@ -987,11 +980,6 @@ module Entities
       @levelIndex = Fixnum.from_json(_o['levelIndex']) unless _o['levelIndex'].nil?
       @levelLabel = String.from_json(_o['levelLabel']) unless _o['levelLabel'].nil?
       @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      if !_o['avatar'].nil?
-        @avatar = Array.new
-        _oa = _o['avatar']
-        _oa.each { | _item | @avatar.push Fixnum.from_json(_item) }
-      end
       if !_o['finishedTasks'].nil?
         @finishedTasks = Array.new
         _oa = _o['finishedTasks']
@@ -1302,149 +1290,6 @@ module Gamificationengine
 
 module Entities
 
-  # (no documentation provided)
-  class PlayerGroup 
-
-    # a name of the group as String.
-    attr_accessor :name
-    # a list of all players.
-    attr_accessor :players
-    # The list of already finished goals.
-    attr_accessor :finishedGoals
-    # Current amount of points this group owns as int.
-    attr_accessor :points
-    # The group&#39;s id as int.
-    attr_accessor :id
-    # Byte[] of the group&#39;s image&#39;s content.
-    attr_accessor :groupLogo
-    # The amount of obtained coins as int.
-    attr_accessor :coins
-    # List of all obtained permanent rewards.
-    attr_accessor :rewards
-    # A List of all obtained Badges as List.
-    attr_accessor :onlyBadges
-    # A List of all obtained Achievements as List.
-    attr_accessor :onlyAchievement
-    # Level index returned as int.
-    attr_accessor :levelIndex
-    # The name of the player&#39;s current level as String.
-    attr_accessor :levelLabel
-
-    # the json hash for this PlayerGroup
-    def to_jaxb_json_hash
-      _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      if !players.nil?
-        _ha = Array.new
-        players.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['players'] = _ha
-      end
-      if !finishedGoals.nil?
-        _ha = Array.new
-        finishedGoals.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['finishedGoals'] = _ha
-      end
-      _h['points'] = points.to_jaxb_json_hash unless points.nil?
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      if !groupLogo.nil?
-        _ha = Array.new
-        groupLogo.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['groupLogo'] = _ha
-      end
-      _h['coins'] = coins.to_jaxb_json_hash unless coins.nil?
-      if !rewards.nil?
-        _ha = Array.new
-        rewards.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['rewards'] = _ha
-      end
-      if !onlyBadges.nil?
-        _ha = Array.new
-        onlyBadges.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['onlyBadges'] = _ha
-      end
-      if !onlyAchievement.nil?
-        _ha = Array.new
-        onlyAchievement.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['onlyAchievement'] = _ha
-      end
-      _h['levelIndex'] = levelIndex.to_jaxb_json_hash unless levelIndex.nil?
-      _h['levelLabel'] = levelLabel.to_jaxb_json_hash unless levelLabel.nil?
-      return _h
-    end
-
-    # the json (string form) for this PlayerGroup
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this PlayerGroup with a json hash
-    def init_jaxb_json_hash(_o)
-      @name = String.from_json(_o['name']) unless _o['name'].nil?
-      if !_o['players'].nil?
-        @players = Array.new
-        _oa = _o['players']
-        _oa.each { | _item | @players.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
-      end
-      if !_o['finishedGoals'].nil?
-        @finishedGoals = Array.new
-        _oa = _o['finishedGoals']
-        _oa.each { | _item | @finishedGoals.push Info::Interactivesystems::Gamificationengine::Entities::Goal::FinishedGoal.from_json(_item) }
-      end
-      @points = Fixnum.from_json(_o['points']) unless _o['points'].nil?
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      if !_o['groupLogo'].nil?
-        @groupLogo = Array.new
-        _oa = _o['groupLogo']
-        _oa.each { | _item | @groupLogo.push Fixnum.from_json(_item) }
-      end
-      @coins = Fixnum.from_json(_o['coins']) unless _o['coins'].nil?
-      if !_o['rewards'].nil?
-        @rewards = Array.new
-        _oa = _o['rewards']
-        _oa.each { | _item | @rewards.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward.from_json(_item) }
-      end
-      if !_o['onlyBadges'].nil?
-        @onlyBadges = Array.new
-        _oa = _o['onlyBadges']
-        _oa.each { | _item | @onlyBadges.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Badge.from_json(_item) }
-      end
-      if !_o['onlyAchievement'].nil?
-        @onlyAchievement = Array.new
-        _oa = _o['onlyAchievement']
-        _oa.each { | _item | @onlyAchievement.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Achievement.from_json(_item) }
-      end
-      @levelIndex = Fixnum.from_json(_o['levelIndex']) unless _o['levelIndex'].nil?
-      @levelLabel = String.from_json(_o['levelLabel']) unless _o['levelLabel'].nil?
-    end
-
-    # constructs a PlayerGroup from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
 module MarketPlace
 
   # (no documentation provided)
@@ -1495,6 +1340,137 @@ module MarketPlace
   end
 
 end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
+  # (no documentation provided)
+  class PlayerGroup 
+
+    # a name of the group as String.
+    attr_accessor :name
+    # a list of all players.
+    attr_accessor :players
+    # The list of already finished goals.
+    attr_accessor :finishedGoals
+    # Current amount of points this group owns as int.
+    attr_accessor :points
+    # The group&#39;s id as int.
+    attr_accessor :id
+    # The amount of obtained coins as int.
+    attr_accessor :coins
+    # List of all obtained permanent rewards.
+    attr_accessor :rewards
+    # A List of all obtained Badges as List.
+    attr_accessor :onlyBadges
+    # A List of all obtained Achievements as List.
+    attr_accessor :onlyAchievement
+    # Level index returned as int.
+    attr_accessor :levelIndex
+    # The name of the player&#39;s current level as String.
+    attr_accessor :levelLabel
+
+    # the json hash for this PlayerGroup
+    def to_jaxb_json_hash
+      _h = {}
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      if !players.nil?
+        _ha = Array.new
+        players.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['players'] = _ha
+      end
+      if !finishedGoals.nil?
+        _ha = Array.new
+        finishedGoals.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['finishedGoals'] = _ha
+      end
+      _h['points'] = points.to_jaxb_json_hash unless points.nil?
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['coins'] = coins.to_jaxb_json_hash unless coins.nil?
+      if !rewards.nil?
+        _ha = Array.new
+        rewards.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['rewards'] = _ha
+      end
+      if !onlyBadges.nil?
+        _ha = Array.new
+        onlyBadges.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['onlyBadges'] = _ha
+      end
+      if !onlyAchievement.nil?
+        _ha = Array.new
+        onlyAchievement.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['onlyAchievement'] = _ha
+      end
+      _h['levelIndex'] = levelIndex.to_jaxb_json_hash unless levelIndex.nil?
+      _h['levelLabel'] = levelLabel.to_jaxb_json_hash unless levelLabel.nil?
+      return _h
+    end
+
+    # the json (string form) for this PlayerGroup
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this PlayerGroup with a json hash
+    def init_jaxb_json_hash(_o)
+      @name = String.from_json(_o['name']) unless _o['name'].nil?
+      if !_o['players'].nil?
+        @players = Array.new
+        _oa = _o['players']
+        _oa.each { | _item | @players.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
+      end
+      if !_o['finishedGoals'].nil?
+        @finishedGoals = Array.new
+        _oa = _o['finishedGoals']
+        _oa.each { | _item | @finishedGoals.push Info::Interactivesystems::Gamificationengine::Entities::Goal::FinishedGoal.from_json(_item) }
+      end
+      @points = Fixnum.from_json(_o['points']) unless _o['points'].nil?
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      @coins = Fixnum.from_json(_o['coins']) unless _o['coins'].nil?
+      if !_o['rewards'].nil?
+        @rewards = Array.new
+        _oa = _o['rewards']
+        _oa.each { | _item | @rewards.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward.from_json(_item) }
+      end
+      if !_o['onlyBadges'].nil?
+        @onlyBadges = Array.new
+        _oa = _o['onlyBadges']
+        _oa.each { | _item | @onlyBadges.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Badge.from_json(_item) }
+      end
+      if !_o['onlyAchievement'].nil?
+        @onlyAchievement = Array.new
+        _oa = _o['onlyAchievement']
+        _oa.each { | _item | @onlyAchievement.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Achievement.from_json(_item) }
+      end
+      @levelIndex = Fixnum.from_json(_o['levelIndex']) unless _o['levelIndex'].nil?
+      @levelLabel = String.from_json(_o['levelLabel']) unless _o['levelLabel'].nil?
+    end
+
+    # constructs a PlayerGroup from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
 
 end
 
@@ -1744,21 +1720,21 @@ module Time
   class LocalDateTime 
 
     # (no documentation provided)
-    attr_accessor :dayOfYear
-    # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
     attr_accessor :year
     # (no documentation provided)
-    attr_accessor :hour
-    # (no documentation provided)
-    attr_accessor :month
-    # (no documentation provided)
-    attr_accessor :monthValue
+    attr_accessor :dayOfYear
     # (no documentation provided)
     attr_accessor :nano
     # (no documentation provided)
+    attr_accessor :month
+    # (no documentation provided)
+    attr_accessor :hour
+    # (no documentation provided)
+    attr_accessor :monthValue
+    # (no documentation provided)
     attr_accessor :dayOfWeek
+    # (no documentation provided)
+    attr_accessor :minute
     # (no documentation provided)
     attr_accessor :dayOfMonth
     # (no documentation provided)
@@ -1767,14 +1743,14 @@ module Time
     # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['year'] = year.to_jaxb_json_hash unless year.nil?
-      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
-      _h['month'] = month.to_jaxb_json_hash unless month.nil?
-      _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
       _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
+      _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
       _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
       _h['second'] = second.to_jaxb_json_hash unless second.nil?
       return _h
@@ -1787,14 +1763,14 @@ module Time
 
     #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
-      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
-      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
-      @month = String.from_json(_o['month']) unless _o['month'].nil?
-      @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
       @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
+      @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
       @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
+      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
       @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
     end
@@ -2373,18 +2349,11 @@ module Rewards
 
     # The URL of the associated icon.
     attr_accessor :icon
-    # Byte[] of the badge&#39;s icon that is stored in the database.
-    attr_accessor :imageIcon
 
     # the json hash for this Badge
     def to_jaxb_json_hash
       _h = super
       _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
-      if !imageIcon.nil?
-        _ha = Array.new
-        imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['imageIcon'] = _ha
-      end
       return _h
     end
 
@@ -2392,11 +2361,6 @@ module Rewards
     def init_jaxb_json_hash(_o)
       super _o
       @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
-      if !_o['imageIcon'].nil?
-        @imageIcon = Array.new
-        _oa = _o['imageIcon']
-        _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
-      end
     end
 
     # constructs a Badge from a (parsed) JSON hash
@@ -2540,19 +2504,12 @@ module Rewards
   # (no documentation provided)
   class Achievement < Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward 
 
-    # byte[] of the achievement&#39;s icon
-    attr_accessor :imageIcon
     # The URL of the icon.
     attr_accessor :icon
 
     # the json hash for this Achievement
     def to_jaxb_json_hash
       _h = super
-      if !imageIcon.nil?
-        _ha = Array.new
-        imageIcon.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['imageIcon'] = _ha
-      end
       _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
       return _h
     end
@@ -2560,11 +2517,6 @@ module Rewards
     #initializes this Achievement with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-      if !_o['imageIcon'].nil?
-        @imageIcon = Array.new
-        _oa = _o['imageIcon']
-        _oa.each { | _item | @imageIcon.push Fixnum.from_json(_item) }
-      end
       @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
     end
 

@@ -215,6 +215,9 @@ roles are positive numbers otherwise a message for the invalid number is returne
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
 to which this player should belong to.]]></wadl:doc>
           </wadl:param>
+          <wadl:param name="avatar" style="query">
+            <wadl:doc><![CDATA[The url]]></wadl:doc>
+          </wadl:param>
           <wadl:param name="nickname" style="query">
             <wadl:doc><![CDATA[The query parameter of the player's nickname. This field must not be null.]]></wadl:doc>
           </wadl:param>
@@ -324,7 +327,8 @@ represents the URL of the associated image.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="type" style="query">
             <wadl:doc><![CDATA[The required type of the reward. A list of available reward types
-can be received by {@link RewardApi#getRewardTypes}.]]></wadl:doc>
+can be received by {@link RewardApi#getRewardTypes}. The value of
+field can be "Achievement", "Badge", "Coins", "Points" and "ReceiveLevel".]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
@@ -766,6 +770,25 @@ to which this group of players belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerLevel/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns all player level which are associated with the passed API key.
+If the API key is not valid an analogous message is returned. It is also
+checked, if the id is a positive number otherwise a message for an invalid
+number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which the player levels belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of all PlayerLevels in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2639,7 +2662,7 @@ returned. If the API key is not valid an analogous message is returned.]]></wadl
 to which this player belongs to.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="marketId" style="query">
-            <wadl:doc><![CDATA[]]></wadl:doc>
+            <wadl:doc><![CDATA[The marketplace whose offer is completed.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>

@@ -112,10 +112,6 @@
             "icon" : {
 "description" : "Gets the URL of the achievement's icon, but only when it was created.",
 "$ref" : "#/definitions/json_url"
-            },
-            "imageIcon" : {
-"description" : "Gets the achievement's icon as byte[].",
-"type" : "string"
             }
           }
         }
@@ -138,10 +134,6 @@
             "icon" : {
 "description" : "Gets the URL of the badge's icon, when it was created.",
 "$ref" : "#/definitions/json_url"
-            },
-            "imageIcon" : {
-"description" : "Gets the badge's icon as byte[].",
-"type" : "string"
             }
           }
         }
@@ -596,10 +588,6 @@
 "description" : "Checks if a player is active in the gamificated application. This is needed for example\r\nto complete a task.",
 "type" : "boolean"
             },
-            "avatar" : {
-"description" : "Gets the avatar of a player as byte[].",
-"type" : "string"
-            },
             "belongsToRoles" : {
 "description" : "Gets all roles a player has.",
 "type" : "array",
@@ -695,10 +683,6 @@
 "items" : {
   "$ref" : "#/definitions/json_finishedgoal"
 }
-            },
-            "groupLogo" : {
-"description" : "Gets the logo of a group as a byte[].",
-"type" : "string"
             },
             "id" : {
 "description" : "Gets the id of the group.",
@@ -1942,7 +1926,7 @@
             "name" : "marketId",
             "in" : "query",
             "type" : "string",
-            "description" : ""
+            "description" : "The marketplace whose offer is completed."
           }
         ],
         "responses" : {
@@ -3084,6 +3068,12 @@
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player should belong to."
           },
           {
+            "name" : "avatar",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The url"
+          },
+          {
             "name" : "nickname",
             "in" : "query",
             "type" : "string",
@@ -4212,6 +4202,40 @@
       }
     }
     ,
+    "/playerLevel/*" : {
+      "get" : {
+        "tags" : [ "PlayerLevelApi" ],
+        "description" : "Returns all player level which are associated with the passed API key.\r\nIf the API key is not valid an analogous message is returned. It is also\r\nchecked, if the id is a positive number otherwise a message for an invalid\r\nnumber is returned.",
+        "operationId" : "resource_PlayerLevelApi_getPlayerLevels_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player levels belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_playerlevel"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/playerLevel/{id}" : {
       "get" : {
         "tags" : [ "PlayerLevelApi" ],
@@ -5016,7 +5040,7 @@
             "name" : "type",
             "in" : "query",
             "type" : "string",
-            "description" : "The required type of the reward. A list of available reward types\r\ncan be received by {@link RewardApi#getRewardTypes}."
+            "description" : "The required type of the reward. A list of available reward types\r\ncan be received by {@link RewardApi#getRewardTypes}. The value of\r\nfield can be \"Achievement\", \"Badge\", \"Coins\", \"Points\" and \"ReceiveLevel\"."
           }
         ],
         "responses" : {
