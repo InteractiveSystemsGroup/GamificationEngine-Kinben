@@ -7,11 +7,12 @@ import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 
 import java.net.URL;
 
-import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * The achievement class contains an image and a description for a documentary
@@ -22,13 +23,15 @@ import javax.persistence.Lob;
  */
 @Entity
 @DiscriminatorValue("RewAchieve")
+@JsonIgnoreProperties({ "belongsTo", "imageIcon" })
 public class Achievement extends PermanentReward {
 
 
 	private URL icon;
 	
 	@Lob
-	@Basic(fetch = FetchType.LAZY)
+//	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "BLOB")
 	private byte[] imageIcon;
 
 

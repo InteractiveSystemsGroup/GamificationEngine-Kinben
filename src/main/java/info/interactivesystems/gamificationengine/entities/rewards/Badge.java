@@ -12,6 +12,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The badge class serves as a Reward-subclass that represents a distinct icon.
  * It should be used as a an instantly recognizable visual reference to an badge
@@ -20,6 +22,7 @@ import javax.persistence.Lob;
  */
 @Entity
 @DiscriminatorValue("RewBadge")
+@JsonIgnoreProperties({ "belongsTo", "imageIcon" })
 public class Badge extends PermanentReward {
 
 

@@ -9,12 +9,15 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The ReceiveLevel class is a Reward-subclass that allocates a specific level
  * to a player which can serve as a status.
  */
 @Entity
 @DiscriminatorValue("RewRLevel")
+@JsonIgnoreProperties({ "belongsTo" })
 public class ReceiveLevel extends VolatileReward {
 
 	@NotNull
