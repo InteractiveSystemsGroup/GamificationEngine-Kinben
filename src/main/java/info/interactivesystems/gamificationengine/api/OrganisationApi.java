@@ -207,8 +207,7 @@ public class OrganisationApi {
 	 * @param email
 	 *           The valid email address. 
 	 * @param password
-	 *            Required query parameter to connect it with the given 
-	 *            email address.
+	 *            Required query parameter to connect it with the given email address.
 	 * @return A Response of Organisation in JSON.
 	 */
 	@PUT

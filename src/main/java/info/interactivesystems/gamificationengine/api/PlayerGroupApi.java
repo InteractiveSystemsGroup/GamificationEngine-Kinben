@@ -149,6 +149,25 @@ public class PlayerGroupApi {
 
 		return ResponseSurrogate.of(group);
 	}
+	
+	/**
+	 * Returns all group of players associated with the passed API key. If the API key is not 
+	 * valid an analogous message is returned. It is also checked, if the player id is a 
+	 * positive number otherwise a message for an invalid number is returned.
+	 * 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this group of players belongs to.
+	 * @return Response of PlayerGroup in JSON.
+	 */
+	@GET
+	@Path("/*")
+	@TypeHint(PlayerGroup[].class)
+	public Response getAll(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		List<PlayerGroup> groups = groupDao.getAllGroups(apiKey);
+		return ResponseSurrogate.of(groups);
+	}
 
 	/**
 	 * With this method the fields of a PlayerGroup can be changed. For this the id of the 
@@ -448,7 +467,7 @@ public class PlayerGroupApi {
 	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous 
 	 * message is returned.
 	 * 
-	 * @param groupIds
+	 * @param groupId
 	 * 			 Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
 	 * @param playerIds
 	 * 			 The list of player ids which should be added to the contact list. These ids are 
@@ -461,7 +480,7 @@ public class PlayerGroupApi {
 	@PUT
 	@Path("/{id}/addPlayers")
 	@TypeHint(Player.class)
-	public Response addPlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupIds,
+	public Response addPlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupId,
 			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		log.debug("adding players to group called");
@@ -469,14 +488,55 @@ public class PlayerGroupApi {
 		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
 		List<Player> playersToAdd = playerDao.getPlayers(listplayIds, apiKey); 
 
-		int groupId = ValidateUtils.requireGreaterThanZero(groupIds);
-		PlayerGroup group = groupDao.getPlayerGroup(groupId, apiKey);
+		int idGroup = ValidateUtils.requireGreaterThanZero(groupId);
+		PlayerGroup group = groupDao.getPlayerGroup(idGroup, apiKey);
 		
 		if (group == null) {
-			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + groupId);
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + idGroup);
 		}
 		
 		group.addPlayers(playersToAdd); 
+		
+		groupDao.insertGroup(group); 
+		return ResponseSurrogate.updated(group);
+	}
+	
+	
+	/**
+	 * Removes one or more players from a group of players. All ids are checked, if they are positive numbers
+	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous 
+	 * message is returned.
+	 * 
+	 * @param groupId
+	 * 			 Required path parameter as integer which uniquely identify the {@link PlayerGroup}.
+	 * @param playerIds
+	 * 			 The list of player ids which should be removed from the contact list. These ids are 
+	 *           separated by commas.	
+	 * @param apiKey
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this group of players belongs to.
+	 * @return Response of PlayerGroup in JSON.
+	 * 
+	 */
+	@PUT
+	@Path("/{id}/removePlayers")
+	@TypeHint(Player.class)
+	public Response removePlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupId,
+			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		log.debug("removing players of a group called");
+
+		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
+		List<Player> playersToRemove = playerDao.getPlayers(listplayIds, apiKey); 
+
+		int idGroup = ValidateUtils.requireGreaterThanZero(groupId);
+		PlayerGroup group = groupDao.getPlayerGroup(idGroup, apiKey);
+		
+		if (group == null) {
+			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + idGroup);
+		}
+		
+		group.removePlayers(playersToRemove); 
 		
 		groupDao.insertGroup(group); 
 		return ResponseSurrogate.updated(group);

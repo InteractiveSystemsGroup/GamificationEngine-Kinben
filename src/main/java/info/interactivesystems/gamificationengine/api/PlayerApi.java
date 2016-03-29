@@ -19,6 +19,8 @@ import info.interactivesystems.gamificationengine.utils.ImageUtils;
 import info.interactivesystems.gamificationengine.utils.SecurityTools;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,6 +92,8 @@ public class PlayerApi {
 	 * @param reference
 	 *            Optionally the player's reference as string map to a customers user
 	 *            identifier.
+	 * @param avatar           
+	 * 			  The url
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player should belong to.
@@ -100,6 +104,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response create(@QueryParam("nickname") @NotNull String nickname, @QueryParam("password") @NotNull String password,
 			@QueryParam("reference") String reference, @QueryParam("roleIds") @NotNull @ValidListOfDigits String playerRoleIds,
+			@QueryParam("avatar") String avatar,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		log.debug("createplayer requested (Params: apiKey = {}, nickname = {}, password = {}", apiKey, nickname, password);
@@ -121,6 +126,14 @@ public class PlayerApi {
 		player.setReference(reference);
 		player.setNickname(nickname);
 		player.setBelongsToRoles(roles);
+		
+		if (avatar != null) {
+			try {
+				player.setAvatar(ImageUtils.imageToByte(avatar));
+			} catch (Exception e) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Failed to store the avatar in the database.");
+			}
+		}
 
 		playerDao.insert(player);
 		return ResponseSurrogate.created(player);
@@ -255,7 +268,11 @@ public class PlayerApi {
 			break;
 
 		case "avatar":
-			player.setAvatar(ImageUtils.imageToByte(value));
+			try {
+				player.setAvatar(ImageUtils.imageToByte(value));
+			} catch (Exception e) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Failed to store the avatar in the database.");
+			} 
 			break;
 
 		default:

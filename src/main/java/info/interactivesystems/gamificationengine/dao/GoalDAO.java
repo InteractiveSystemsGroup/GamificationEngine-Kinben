@@ -47,7 +47,7 @@ public class GoalDAO {
 	/**
 	 * Gets an goal from the data base.
 	 * 
-	 * @param goalId
+	 * @param id
 	 *            The id of the goal.
 	 * @param apiKey
 	 *           The API key of the organisation to which the goal belongs to. 

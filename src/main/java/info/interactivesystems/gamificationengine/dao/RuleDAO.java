@@ -35,7 +35,7 @@ public class RuleDAO {
 	/**
 	 * Gets the rule by its id.
 	 * 
-	 * @param ruleId
+	 * @param id
 	 * 			The id of the requested rule.
 	 * @param apiKey
 	 *           The API key of the organisation to which the rule belongs to. 

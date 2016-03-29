@@ -779,7 +779,9 @@ public class MarketPlaceApi {
 	 *            The offer id which was finished. This parameter is required. 
 	 * @param playerId
 	 *            The id of the player who has completed the task that was associated with the offer. So 
-	 *            she/he earns the prize as a reward. 
+	 *            she/he earns the prize as a reward.
+	 * @param marketId
+	 * 			  The marketplace whose offer is completed.		 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player belongs to.

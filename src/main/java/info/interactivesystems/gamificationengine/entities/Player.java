@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * player has.
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo", "password" })
+@JsonIgnoreProperties({ "belongsTo", "password", "avatar" })
 public class Player {
 
 	@Id

@@ -117,7 +117,8 @@ public class RewardApi {
 	 * 
 	 * @param type
 	 *          The required type of the reward. A list of available reward types
-	 *            can be received by {@link RewardApi#getRewardTypes}.
+	 *            can be received by {@link RewardApi#getRewardTypes}. The value of 
+	 *            field can be "Achievement", "Badge", "Coins", "Points" and "ReceiveLevel".
 	 * @param name
 	 *           A string that represents the name of the reward.
 	 * @param amount
@@ -461,9 +462,7 @@ public class RewardApi {
 
 		return ResponseSurrogate.of(new Object() {
 			public byte[] bits = image;
-			// public Image image = img;
 		});
-
 	}
 
 	/**
@@ -497,7 +496,6 @@ public class RewardApi {
 
 		return ResponseSurrogate.of(new Object() {
 			public byte[] bits = image;
-			// public Image image = img;
 		});
 
 	}
@@ -553,7 +551,13 @@ public class RewardApi {
 				break;
 
 			case "icon":
-				((Achievement) reward).setImageIcon(ImageUtils.imageToByte(value));
+				try {
+					URL icon = new URL(value);
+					((Achievement) reward).setIcon(icon);
+					((Achievement) reward).setImageIcon(ImageUtils.imageToByte(value));
+				} catch (MalformedURLException e) {
+					throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
+				}
 				break;
 			}
 		} else {
@@ -614,7 +618,13 @@ public class RewardApi {
 				break;
 
 			case "icon":
-				((Badge) reward).setImageIcon(ImageUtils.imageToByte(value));
+				try {
+					URL icon = new URL(value);
+					((Badge) reward).setIcon(icon);
+					((Badge) reward).setImageIcon(ImageUtils.imageToByte(value));
+				} catch (MalformedURLException e) {
+					throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
+				}
 				break;
 			}
 		} else {

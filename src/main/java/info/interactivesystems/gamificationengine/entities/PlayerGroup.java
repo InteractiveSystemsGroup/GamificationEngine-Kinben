@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Like a player, a group can be assigned an image as a logo.
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "groupLogo" })
 public class PlayerGroup {
 
 	@Id
@@ -398,6 +398,21 @@ public class PlayerGroup {
 		for(Player player : newPlayer){
 			if(!players.contains(player)){
 				players.add(player);
+			}
+		}
+	}
+	
+	/**
+	 * This method removes one or more players of the group's list of current players, but only if they
+	 * are in this list already.
+	 * 
+	 * @param oldPlayer
+	 * 			The players that should be removed from the list of players.
+	 */
+	public void removePlayers(List<Player> oldPlayer){
+		for(Player player : oldPlayer){
+			if(players.contains(player)){
+				players.remove(player);
 			}
 		}
 	}

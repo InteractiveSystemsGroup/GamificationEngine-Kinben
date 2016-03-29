@@ -7,6 +7,8 @@ import info.interactivesystems.gamificationengine.dao.PlayerLevelDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.PlayerLevel;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -78,6 +80,26 @@ public class PlayerLevelApi {
 		return ResponseSurrogate.created(pL);
 	}
 
+	/**
+	 * Returns all player level which are associated with the passed API key.
+	 * If the API key is not valid an analogous message is returned. It is also 
+	 * checked, if the id is a positive number otherwise a message for an invalid
+	 * number is returned.
+	 * 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the player levels belongs to.
+	 * @return Response of all PlayerLevels in JSON.
+	 */
+	@GET
+	@Path("/*")
+	@TypeHint(PlayerLevel[].class)
+	public Response getPlayerLevels(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		List<PlayerLevel> pLevels = playerLevelDao.getPlayerLevels(apiKey);
+		return ResponseSurrogate.of(pLevels);
+	}
+	
 	/**
 	 * Returns the player level associated with the passed id. If the API key is not 
 	 * valid an analogous message is returned. It is also checked, if the id is a 

@@ -213,8 +213,6 @@ public class Task implements Serializable {
 	 * Also the method tests if the player isn't deactivated because then she/he isn't 
 	 * allowed to complete tasks.
 	 * 
-	 * @param organisation
-	 *            The organisation for that the task was created and belongs to.
 	 * @param player
 	 *            The player who completed the task. This parameter must not be null.
 	 * @param ruleDao

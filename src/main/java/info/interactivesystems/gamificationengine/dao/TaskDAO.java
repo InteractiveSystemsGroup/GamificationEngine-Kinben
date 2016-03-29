@@ -1,7 +1,5 @@
 package info.interactivesystems.gamificationengine.dao;
 
-import info.interactivesystems.gamificationengine.entities.Player;
-import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.List;
@@ -34,7 +32,7 @@ public class TaskDAO {
 	/**
 	 * Gets the task by its id.
 	 * 
-	 * @param taskId
+	 * @param id
 	 * 			The id of the requested task.
 	 * @param apiKey
 	 *           The API key of the organisation to which the task belongs to. 
