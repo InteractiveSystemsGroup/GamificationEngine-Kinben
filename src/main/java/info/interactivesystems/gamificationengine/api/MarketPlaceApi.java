@@ -44,6 +44,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 /**
@@ -232,11 +233,15 @@ public class MarketPlaceApi {
 		offer.setName(name);
 		offer.setBelongsTo(organisation);
 		offer.setOfferDate(LocalDateTime.now());
-		offer.setEndDate(LocalDateTimeUtil.formatDateAndTime(endDate));
 		offer.setPrize(ValidateUtils.requireGreaterThanZero(prize));
-		offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(deadLine));
 		offer.setTask(task);
 		offer.setPlayer(player);
+		if(endDate!=null){
+			offer.setEndDate(LocalDateTimeUtil.formatDateAndTime(endDate));
+		}
+		if(deadLine!=null){
+			offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(deadLine));
+		}
 
 		log.debug("Offer created  ");
 		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
@@ -895,4 +900,26 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.updated(offer);
 	}
 
+	
+	@GET
+	@Path("/offers/{taskId}/*")
+	@TypeHint(Offer[].class)
+	@JsonIgnoreProperties({ "player" })
+	public Response getAllOffersByTask(
+			@PathParam("taskId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String taskId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		int idTask = ValidateUtils.requireGreaterThanZero(taskId);
+		Task task = taskDao.getTask(idTask, apiKey);
+		
+		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
+		List<Integer> matchingOffers = new ArrayList();
+		
+		for (Offer offer : offers) {
+			log.debug("| Offer:" + offer.getId());
+			matchingOffers.add(offer.getId());
+		}
+
+		return ResponseSurrogate.of(matchingOffers);
+	}
 }

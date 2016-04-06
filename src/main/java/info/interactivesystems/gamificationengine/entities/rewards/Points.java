@@ -71,7 +71,6 @@ public class Points extends VolatileReward {
 	@Override
 	public void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao) {
 
-		LocalDateTime lastDate = null;
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
@@ -124,7 +123,7 @@ public class Points extends VolatileReward {
 					if(oldFinishedGoals.isEmpty()){
 						// goal has not yet been finished
 						log.debug("Points Goal: is NOT on finished Goals list");
-						// check if goal/rule is completed after lastDate
+						// check if points are reached
 						if (rule.checkRule(player)) {
 							// add goal to tempFinishedGoals list
 							log.debug("Points Goal: Rule is completed! -> add to fGoalsList (temp)");
@@ -174,7 +173,6 @@ public class Points extends VolatileReward {
 	@Override
 	public void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao) {
 
-		LocalDateTime lastDate = null;
 		LocalDateTime finishedDate = LocalDateTime.now();
 		List<FinishedGoal> fGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
@@ -186,7 +184,7 @@ public class Points extends VolatileReward {
 
 		log.debug("Group: Points recieved -> check all points rules");
 
-		// TODO check for organisation and check for group goal
+		//  check for organisation and check for group goal
 		String apiKey = group.getBelongsTo().getApiKey();
 		List<GetPointsRule> completedPointsRules = ruleDao.getAllPointsRules(apiKey).stream().map(r -> (GetPointsRule) r).filter(r -> r.checkRule(group))
 				.collect(Collectors.toList());
@@ -232,7 +230,7 @@ public class Points extends VolatileReward {
 					if(oldFinishedGoals.isEmpty()){
 						// goal has not yet been finished
 						log.debug("Group: Points Goal: is NOT on finished Goals list");
-						// check if goal/rule is completed after lastDate
+						// check if points are reached
 						if (rule.checkRule(group)) {
 							// add goal to tempFinishedGoals list
 							log.debug("Group: Points Goal: Rule is completed! -> add to fGoalsList (temp)");

@@ -231,14 +231,12 @@ public class Task implements Serializable {
 			LocalDateTime finishedDate, String apiKey) {
 
 		if (!player.isActive()) {
-			log.debug("Player is inactive!");
 			throw new ApiError(Response.Status.FORBIDDEN, "Player is inactive!");
 		}
 
 		Task task = this;
 
-		// set tempFinishedGoals list to add this to the player at the end
-		// --> avoid transaction errors
+		// set tempFinishedGoals list to add this to the player at the end --> avoid transaction errors
 		List<FinishedGoal> finishedPlayerGoalsList = new ArrayList<>();
 		List<Reward> recievedRewards = new ArrayList<>();
 		List<Role> matchingRoles = new ArrayList<>();
@@ -248,61 +246,21 @@ public class Task implements Serializable {
 			finishedDate = LocalDateTime.now();
 		}
 		
-		// LocalDateTime lastDate = null;
 		boolean pointsRecieved = false;
 
 		FinishedTask fTask = new FinishedTask();
 		fTask.setTask(task);
 		fTask.setFinishedDate(finishedDate);
 
-		log.debug("Player Name: " + player.getNickname());
-		log.debug("Player Points: " + player.getPoints());
-		log.debug("Player Currency: " + player.getCoins());
-		log.debug("Player Tasks: " + player.getFinishedTasks().size());
-		log.debug("Player Goals: " + player.getFinishedGoals().size());
+		logPlayerDetails(player);
 
 		// check if task can be completed by player
-//		log.debug("Player Roles:");
-//		for (Role r : player.getBelongsToRoles()) {
-//			log.debug("- " + r.getName());
-//		}
-//
-//		log.debug("Task Roles:");
-//		for (Role r : task.getAllowedFor()) {
-//			log.debug("- " + r.getName());
-//		}
-//
-//		if (task.getAllowedFor().size() > 0) {
-//			log.debug("Task is restricted by roles");
-//			matchingRoles = task.getAllowedFor().stream().filter(r -> {
-//				if (player.getBelongsToRoles().contains(r)) {
-//					log.debug("Player has required Role to Complete Task: " + r.getName());
-//					return true;
-//				} else {
-//					return false;
-//				}
-//			}).collect(Collectors.toList());
-//
-//			if (matchingRoles.size() > 0) {
-//				log.debug("Roles match -> proceed");
-//			} else {
-//				log.debug("Roles don't match -> error");
-//				throw new ApiError(Response.Status.FORBIDDEN, "Roles don't match!");
-//			}
-//		} else {
-//			log.debug("Task is not restricted by roles");
-//		}
-
-		//new
 		playerIsAllowed(player, task, matchingRoles);
 		
 		List<FinishedTask> playerFinishedTasksList = player.getFinishedTasks();
 		playerFinishedTasksList.add(fTask);
 
-		log.debug("Player Tasks: " + player.getFinishedTasks().size());
-		log.debug("Player Tasks last item: " + player.getFinishedTasks().get(player.getFinishedTasks().size() - 1).getFinishedDate());
-		log.debug("Temp Tasks List: " + playerFinishedTasksList.size());
-		log.debug("Temp Tasks List last item: " + playerFinishedTasksList.get((playerFinishedTasksList.size() - 1)).getFinishedDate());
+		logTasks(player, playerFinishedTasksList);
 
 		// search all rules which contain this task
 		List<TaskRule> rules = ruleDao.getRulesByTask(task, apiKey);
@@ -317,18 +275,7 @@ public class Task implements Serializable {
 			// get goals which contain this rule
 			for (Goal goal : goalDao.getGoalsByRule(rule, apiKey)) {
 
-				log.debug("Goal: " + goal.getName());
-
-				// check if goal can be completed by player
-				log.debug("Player Roles:");
-				for (Role r : player.getBelongsToRoles()) {
-					log.debug("- " + r.getName());
-				}
-
-				log.debug("Goal Roles:");
-				for (Role r : goal.getCanCompletedBy()) {
-					log.debug("- " + r.getName());
-				}
+				logGoalandRoleNames(goal, player);
 
 				if (goal.getCanCompletedBy().size() > 0) {
 					log.debug("Goal is restricted by roles");
@@ -383,11 +330,9 @@ public class Task implements Serializable {
 
 						// get finished tasks from all players
 						List<FinishedTask> groupFinishedTasksList = new ArrayList<>();
-
 						for (Player p : group.getPlayers()) {
 							groupFinishedTasksList.addAll(p.getFinishedTasks());
 						}
-
 						
 						//Test, if one player role of the group match with role of the goal 
 						if (goal.getCanCompletedBy().size() > 0) {
@@ -395,13 +340,12 @@ public class Task implements Serializable {
 							
 							for(Player everyGroupPlayer : group.getPlayers()){
 									matchingGroupRoles.addAll(goal.getCanCompletedBy().stream().filter(r -> {
-								
-									if (everyGroupPlayer.getBelongsToRoles().contains(r)) {
-										log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
-										return true;
-									} else {
-										return false;
-									}
+										if (everyGroupPlayer.getBelongsToRoles().contains(r)) {
+											log.debug("Player has required Role to Complete Pointgoal: " + r.getName());
+											return true;
+										} else {
+											return false;
+										}
 								}).collect(Collectors.toList()));
 							}
 								
@@ -416,8 +360,7 @@ public class Task implements Serializable {
 						}			
 						
 						
-						// check if goal is completed and add it to
-						// finishedGoals of group
+						// check if goal is completed and add it to finishedGoals of group
 						FinishedGoal tempFinishedGoal = goal.checkGoal(groupFinishedGoals, groupFinishedTasksList, rule);
 						if (tempFinishedGoal != null) {
 							// add goal to finishedGoals list
@@ -426,11 +369,7 @@ public class Task implements Serializable {
 							// add rewards to group
 							for (Reward r : goal.getRewards()) {
 								log.debug("Add Reward to group");
-//								r.addReward(group, goalDao, ruleDao);
-
-								//Test for Awardings Rewards
 								if(r instanceof Points){
-//									((Points) r).addReward(group, player, goalDao, ruleDao);
 									((Points) r).addReward(group, goalDao, ruleDao);
 								} else {
 									r.addReward(group, goalDao, ruleDao);
@@ -485,9 +424,39 @@ public class Task implements Serializable {
 			reward.addReward(player, goalDao, ruleDao);
 		}
 
+		logPlayerDetails(player);
+	}
+
+	
+	private void logPlayerDetails(Player player) {
+		log.debug("Player Name: " + player.getNickname());
 		log.debug("Player Points: " + player.getPoints());
 		log.debug("Player Currency: " + player.getCoins());
+		log.debug("Player Tasks: " + player.getFinishedTasks().size());
+		log.debug("Player Goals: " + player.getFinishedGoals().size());
+	}
 
+	private void logGoalandRoleNames(Goal goal, Player player) {
+		log.debug("Goal: " + goal.getName());
+
+		// check if goal can be completed by player
+		log.debug("Player Roles:");
+		for (Role r : player.getBelongsToRoles()) {
+			log.debug("- " + r.getName());
+		}
+
+		log.debug("Goal Roles:");
+		for (Role r : goal.getCanCompletedBy()) {
+			log.debug("- " + r.getName());
+		}
+		
+	}
+
+	private void logTasks(Player player, List<FinishedTask> playerFinishedTasksList) {
+		log.debug("Player Tasks: " + player.getFinishedTasks().size());
+		log.debug("Player Tasks last item: " + player.getFinishedTasks().get(player.getFinishedTasks().size() - 1).getFinishedDate());
+		log.debug("Temp Tasks List: " + playerFinishedTasksList.size());
+		log.debug("Temp Tasks List last item: " + playerFinishedTasksList.get((playerFinishedTasksList.size() - 1)).getFinishedDate());
 	}
 
 	public void playerIsAllowed(Player player, Task task, List<Role> matchingRoles){

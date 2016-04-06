@@ -262,13 +262,17 @@ public class Goal {
 	 * This method checks if a goal is completed after a task is finished. Therefore it is also checked if the
 	 * goal is repeatable. If it is is can be fulfilled one more time otherwise the method stops.
 	 *  
-	 * @param oldFinishedGoals The list of all goal a player has completed, yet.
-	 * @param finishedTasksList The list of all already finished tasks of a player.
-	 * @param rule The goal rule which is associated with the goal and indicates when the goal is completed.
+	 * @param oldFinishedGoals 
+	 * 				The list of all goal a player has completed, yet.
+	 * @param finishedTasksList 
+	 * 				The list of all already finished tasks of a player.
+	 * @param rule 
+	 * 				The goal rule which is associated with the goal and indicates when the goal is completed.
 	 * @return The just finished goal when the player hasn't finished it yet or if the goal can be finished one 
 	 * 		more time otherwise null is returned. 
 	 */
-	public FinishedGoal checkGoal(List<FinishedGoal> oldFinishedGoals, List<FinishedTask> finishedTasksList, TaskRule rule) {
+	public FinishedGoal checkGoal(List<FinishedGoal> oldFinishedGoals, List<FinishedTask> finishedTasksList, 
+			TaskRule rule) {
 
 		Goal goal = this;
 
@@ -284,7 +288,7 @@ public class Goal {
 				// get finishedDate of last goal
 				log.debug("Goal: is repeatable");
 				lastDate = oldFinishedGoals.get(oldFinishedGoals.size() - 1).getFinishedDate();
-				log.debug("Goal: last finish: " + lastDate);
+				log.debug("Goal: last finished: " + lastDate);
 			} else {
 				log.debug("Goal: is not repeatable -> break");
 				return null;
@@ -316,4 +320,13 @@ public class Goal {
 		return null;
 	}
 
+	public static void logGoalDetails(String name, String repeatable, String ruleId, String rewardIds, String roleIds, String isGroupGoal, String apiKey) {
+		log.debug("createNewGoal apiKey");
+		log.debug("apiKey: " + apiKey);
+		log.debug("name: " + name);
+		log.debug("repeatable: " + repeatable);
+		log.debug("ruleId: " + ruleId);
+		log.debug("rewardIds: " + rewardIds);
+		log.debug("rewardIds: " + roleIds);
+	}
 }

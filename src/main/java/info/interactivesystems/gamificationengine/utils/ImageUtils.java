@@ -36,7 +36,7 @@ public class ImageUtils {
 				byteImage = baos.toByteArray();
 
 			} catch (IOException e) {
-				throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
+				throw new ApiError(Response.Status.FORBIDDEN, "No valid url was transferred");
 			}
 		}else{
 			throw new ApiError(Response.Status.FORBIDDEN, "The image format has to be .png or .jpg");

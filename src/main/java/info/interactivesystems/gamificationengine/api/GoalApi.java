@@ -114,13 +114,7 @@ public class GoalApi {
 			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String roleIds,
 			@QueryParam("groupGoal") @DefaultValue("false") String isGroupGoal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNewGoal apiKey");
-		log.debug("apiKey: " + apiKey);
-		log.debug("name: " + name);
-		log.debug("repeatable: " + repeatable);
-		log.debug("ruleId: " + ruleId);
-		log.debug("rewardIds: " + rewardIds);
-		log.debug("rewardIds: " + roleIds);
+		Goal.logGoalDetails(name, repeatable, ruleId, rewardIds, roleIds, isGroupGoal, apiKey);
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		
@@ -169,6 +163,7 @@ public class GoalApi {
 
 		return ResponseSurrogate.created(goal);
 	}
+
 
 	/**
 	 * Returns all goals which are associated with the given API key and so are belonging to the organisation.

@@ -44,7 +44,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class RoleApi {
 
-	private static final Logger log = LoggerFactory.getLogger(GoalApi.class);
+	private static final Logger log = LoggerFactory.getLogger(RoleApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;

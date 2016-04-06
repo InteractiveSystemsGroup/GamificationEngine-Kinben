@@ -89,16 +89,9 @@ public class RuleApi {
 			@QueryParam("description") String description, @QueryParam("tasks") @NotNull @ValidListOfDigits String taskIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNewTaskRule called");
-		log.debug("Type: " + type);
-		log.debug("ApiKey: " + apiKey);
-		log.debug("Name: " + name);
-		log.debug("Description: " + description);
-		log.debug("TaskIds: " + taskIds);
+		TaskRule.logTaskRuleDetails(type, apiKey, name, description, taskIds);
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
-		log.debug("Organisation: " + organisation);
 
 		TaskRule rule;
 
@@ -138,6 +131,7 @@ public class RuleApi {
 
 		return ResponseSurrogate.created(rule);
 	}
+
 
 	/**
 	 * Creates a new points rule. By the creation the amount of points which has to be reached to fulfil the 
@@ -275,7 +269,8 @@ public class RuleApi {
 	@TypeHint(GoalRule.class)
 	public Response changeRuleAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("change Attribute of Rule");
+		
+		log.debug("change attribute of rule");
 
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		GoalRule rule = ruleDao.getRule(ruleId, apiKey);
@@ -285,7 +280,6 @@ public class RuleApi {
 			value = null;
 		}
 
-		// not changeable: id -> generated & belongsTo;
 		switch (attribute) {
 		case "description":
 			rule.setDescription(value);

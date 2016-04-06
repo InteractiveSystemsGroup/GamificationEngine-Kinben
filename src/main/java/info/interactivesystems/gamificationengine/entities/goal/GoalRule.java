@@ -1,6 +1,10 @@
 package info.interactivesystems.gamificationengine.entities.goal;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.utils.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -12,6 +16,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -128,5 +135,17 @@ public class GoalRule {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
-
+	public static void checkRulesForTask(List<TaskRule> rules){
+		List<Integer> ids = getRuleIds(rules);
+		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
+	}
+	
+	public static List<Integer> getRuleIds(List<TaskRule> rules){
+		List<Integer> ids = new ArrayList<>();
+		for (TaskRule rule : rules) {
+			ids.add(rule.getId());
+		}
+		return ids;
+	}
+	
 }

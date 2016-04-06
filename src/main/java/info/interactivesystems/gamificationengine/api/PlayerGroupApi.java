@@ -17,7 +17,6 @@ import info.interactivesystems.gamificationengine.entities.rewards.PermanentRewa
 import info.interactivesystems.gamificationengine.utils.ImageUtils;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -55,7 +54,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerGroupApi {
 
-	private static final Logger log = LoggerFactory.getLogger(GoalApi.class);
+	private static final Logger log = LoggerFactory.getLogger(PlayerGroupApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -91,33 +90,19 @@ public class PlayerGroupApi {
 	public Response createNewGroup(@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds,
 			@QueryParam("name") @NotNull String groupName, @QueryParam("logoPath") String logoPath, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("created new Group");
-
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		PlayerGroup group = new PlayerGroup();
 		group.setName(groupName);
 
-		// Find all Players by Id
-		String[] playerIdList = playerIds.split(",");
-		List<Player> players = new ArrayList<>();
-
-		for (String playerIdString : playerIdList) {
-			log.debug("Player To Add: " + playerIdString);
-			Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerIdString), apiKey);
-			if (player != null) {
-				log.debug("Player added: " + player.getId());
-				players.add(player);
-			}
-		}
-
+		List<Player> players = group.parseIdsToPlayer_List(playerIds, playerDao, apiKey);
 		group.setPlayers(players);
+
 		group.setBelongsTo(organisation);
 		if (logoPath != null) {
 			group.setGroupLogo(ImageUtils.imageToByte(logoPath));
 		}
 
-		// persist Group
 		groupDao.insertGroup(group);
 
 		return ResponseSurrogate.created(group);

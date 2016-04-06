@@ -4,6 +4,7 @@ import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Bid;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
 import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
+import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.List;
 
@@ -111,6 +112,14 @@ public class MarketPlaceDAO {
 		return (List<Offer>)query.getResultList();
 	}
 
+	// TODO test
+	public List<Offer> getOffersByTask(Task task, String apiKey) {
+		Query query = em.createQuery("select o from Offer o where o.task=:task and o.belongsTo.apiKey=:apiKey");
+		query.setParameter("task", task);
+		query.setParameter("apiKey", apiKey);
+		return (List<Offer>)query.getResultList();
+	}
+	
 	/**
 	 * Gets a specific offer from the data base by its id.
 	 * 

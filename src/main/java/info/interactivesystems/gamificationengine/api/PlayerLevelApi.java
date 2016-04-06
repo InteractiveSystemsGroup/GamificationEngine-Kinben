@@ -36,7 +36,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerLevelApi {
 
-	private static final Logger log = LoggerFactory.getLogger(TaskApi.class);
+	private static final Logger log = LoggerFactory.getLogger(PlayerLevelApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;

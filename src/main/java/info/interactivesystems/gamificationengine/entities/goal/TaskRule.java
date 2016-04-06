@@ -13,6 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A TaskRule defines the combination of tasks until a goal is fulfilled. So for a defined sample of tasks 
  * either all of them have to be fulfilled (type: DoAllTaskRule) which corresponds an AND-expression, or 
@@ -25,6 +28,8 @@ import javax.persistence.ManyToMany;
 // @MappedSuperclass
 public abstract class TaskRule extends GoalRule {
 
+	private static final Logger log = LoggerFactory.getLogger(TaskRule.class);
+	
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	// @JoinTable(name = "GoalRule_Task", joinColumns = @JoinColumn(name =
 	// "GoalRule_id"), inverseJoinColumns = @JoinColumn(name = "tasks_id"))
@@ -106,4 +111,12 @@ public abstract class TaskRule extends GoalRule {
 	 */
 	public abstract boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate);
 	
+	public static void logTaskRuleDetails(String type, String apiKey, String name, String description, String taskIds) {
+		log.debug("createNewTaskRule called");
+		log.debug("Type: " + type);
+		log.debug("ApiKey: " + apiKey);
+		log.debug("Name: " + name);
+		log.debug("Description: " + description);
+		log.debug("TaskIds: " + taskIds);
+	}
 }

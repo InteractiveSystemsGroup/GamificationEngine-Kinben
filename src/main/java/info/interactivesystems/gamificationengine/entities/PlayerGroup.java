@@ -1,5 +1,8 @@
 package info.interactivesystems.gamificationengine.entities;
 
+import info.interactivesystems.gamificationengine.api.GoalApi;
+import info.interactivesystems.gamificationengine.api.ValidateUtils;
+import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.goal.Goal;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
@@ -23,6 +26,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -38,6 +44,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({ "belongsTo", "groupLogo" })
 public class PlayerGroup {
 
+	private static final Logger log = LoggerFactory.getLogger(GoalApi.class);
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -415,5 +423,29 @@ public class PlayerGroup {
 				players.remove(player);
 			}
 		}
+	}
+	
+	/**
+	 * This method 
+	 * 
+	 * @param playerIds
+	 * @param playerDao
+	 * @param apiKey
+	 * @return
+	 */
+	public List<Player> parseIdsToPlayer_List(String playerIds,PlayerDAO playerDao, String apiKey){
+		// Find all Players by Id
+		String[] playerIdList = playerIds.split(",");
+		List<Player> players = new ArrayList<>();
+
+		for (String playerIdString : playerIdList) {
+			log.debug("Player To Add: " + playerIdString);
+			Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerIdString), apiKey);
+			if (player != null) {
+				log.debug("Player added: " + player.getId());
+				players.add(player);
+			}
+		}
+		return players;
 	}
 }
