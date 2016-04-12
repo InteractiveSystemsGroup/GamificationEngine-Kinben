@@ -127,41 +127,41 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :ref
-    # (no documentation provided)
     attr_accessor :userInfo
     # (no documentation provided)
     attr_accessor :protocol
     # (no documentation provided)
     attr_accessor :query
     # (no documentation provided)
-    attr_accessor :file
-    # (no documentation provided)
-    attr_accessor :host
-    # (no documentation provided)
-    attr_accessor :path
+    attr_accessor :ref
     # (no documentation provided)
     attr_accessor :defaultPort
     # (no documentation provided)
+    attr_accessor :port
+    # (no documentation provided)
+    attr_accessor :host
+    # (no documentation provided)
+    attr_accessor :file
+    # (no documentation provided)
     attr_accessor :content
     # (no documentation provided)
-    attr_accessor :port
+    attr_accessor :path
     # (no documentation provided)
     attr_accessor :authority
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
       _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
       _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
       _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['file'] = file.to_jaxb_json_hash unless file.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
-      _h['path'] = path.to_jaxb_json_hash unless path.nil?
+      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
       _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
-      _h['content'] = content.to_jaxb_json_hash unless content.nil?
       _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['content'] = content.to_jaxb_json_hash unless content.nil?
+      _h['path'] = path.to_jaxb_json_hash unless path.nil?
       _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
       return _h
     end
@@ -173,16 +173,16 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
       @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
       @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
       @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @file = String.from_json(_o['file']) unless _o['file'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
-      @path = String.from_json(_o['path']) unless _o['path'].nil?
+      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
       @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
-      @content = Object.from_json(_o['content']) unless _o['content'].nil?
       @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @content = Object.from_json(_o['content']) unless _o['content'].nil?
+      @path = String.from_json(_o['path']) unless _o['path'].nil?
       @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
     end
 
@@ -1720,39 +1720,39 @@ module Time
   class LocalDateTime 
 
     # (no documentation provided)
-    attr_accessor :year
-    # (no documentation provided)
-    attr_accessor :dayOfYear
-    # (no documentation provided)
-    attr_accessor :nano
-    # (no documentation provided)
-    attr_accessor :month
-    # (no documentation provided)
-    attr_accessor :hour
+    attr_accessor :second
     # (no documentation provided)
     attr_accessor :monthValue
-    # (no documentation provided)
-    attr_accessor :dayOfWeek
     # (no documentation provided)
     attr_accessor :minute
     # (no documentation provided)
     attr_accessor :dayOfMonth
     # (no documentation provided)
-    attr_accessor :second
+    attr_accessor :dayOfWeek
+    # (no documentation provided)
+    attr_accessor :hour
+    # (no documentation provided)
+    attr_accessor :dayOfYear
+    # (no documentation provided)
+    attr_accessor :month
+    # (no documentation provided)
+    attr_accessor :nano
+    # (no documentation provided)
+    attr_accessor :year
 
     # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
-      _h['year'] = year.to_jaxb_json_hash unless year.nil?
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
-      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
-      _h['month'] = month.to_jaxb_json_hash unless month.nil?
-      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['second'] = second.to_jaxb_json_hash unless second.nil?
       _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
-      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
       _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
-      _h['second'] = second.to_jaxb_json_hash unless second.nil?
+      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
+      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
+      _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
+      _h['year'] = year.to_jaxb_json_hash unless year.nil?
       return _h
     end
 
@@ -1763,16 +1763,16 @@ module Time
 
     #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
-      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
-      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
-      @month = String.from_json(_o['month']) unless _o['month'].nil?
-      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
       @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
-      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
       @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
       @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
-      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
+      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
+      @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
+      @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
+      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
     end
 
     # constructs a LocalDateTime from a (parsed) JSON hash

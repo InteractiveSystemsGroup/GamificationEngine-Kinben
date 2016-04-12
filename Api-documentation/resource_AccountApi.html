@@ -77,7 +77,9 @@ of her/his first name and last name.
 It is possible to change the password, the first name or last name
 at a later point of time. In addition to creating an account another
 possible request is to get the created account but only with the
-correct credentials.</p>
+correct credentials.
+In the response of all requests the hashed password isn't returned because
+of security reasons.</p>
 
       <div id="resource_AccountApi_create_POST">
         <h3>POST <small>/account <!--<a href="./account" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
@@ -85,7 +87,9 @@ correct credentials.</p>
         <p>Creates a new account. For this an unique email address and a
 password are mandatory. By the creation of an organisation this
 email address is connected with it. Optionally the first and last
-name can also be set.</p>
+name can also be set.
+In the response the password isn't returned because of security
+reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -98,22 +102,22 @@ name can also be set.</p>
           </thead>
           <tbody>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@8486f87 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5d081faf -->
             <td>query</td>
             <td>A required valid email address.</td>
           </tr>
           <tr>
-            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b52027b -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fb30ff6 -->
             <td>query</td>
             <td>Optionally the first name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@764924 -->
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@37d661c0 -->
             <td>query</td>
             <td>Optionally the last name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@28e43c3d -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@19770ab9 -->
             <td>query</td>
             <td>Required query parameter to connect it with the given
 email address.</td>
@@ -148,7 +152,9 @@ email address.</td>
 if the combination with password is correct. By the creation of an
 organisation this email address is connected with it.
 So the method requires valid credentials otherwise a warning with the
-hint for wrong credentials is returned.</p>
+hint for wrong credentials is returned.
+In the response the password isn't returned because of security
+reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -161,12 +167,12 @@ hint for wrong credentials is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@639b5af1 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@49f9b5f -->
             <td>header</td>
-            <td>Required query parameter associated with the email address.</td>
+            <td>Required header parameter associated with the email address.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6851cd23 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7324e885 -->
             <td>query</td>
             <td>A required valid unique email address.</td>
           </tr>
@@ -198,7 +204,9 @@ hint for wrong credentials is returned.</p>
 
         <p>Updates the first and last name of an existing account. For this the
 specific email address and associated password are mandatory.
-Otherwise a warning with the hint for wrong credentials is returned.</p>
+Otherwise a warning with the hint for wrong credentials is returned.
+In the response the password isn't returned because of security
+reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -211,23 +219,23 @@ Otherwise a warning with the hint for wrong credentials is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5adc8664 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@77785f40 -->
             <td>header</td>
-            <td>Required query parameter to connect it with the given
+            <td>Required header parameter to connect it with the given
 email address.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@53d05cd6 -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@56fba1d4 -->
             <td>query</td>
             <td>A required valid email address.</td>
           </tr>
           <tr>
-            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6a25c88f -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e468d37 -->
             <td>query</td>
             <td>Optionally the first name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c7b383d -->
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7a7238ba -->
             <td>query</td>
             <td>Optionally the last name of the Account's owner can be set.</td>
           </tr>

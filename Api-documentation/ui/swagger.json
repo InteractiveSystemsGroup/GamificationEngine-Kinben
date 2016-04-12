@@ -8,7 +8,7 @@
   "tags" : [
     {
       "name" : "AccountApi",
-      "description" : "An Account has to be created for at least one manager or developer. It\r\nis identified by a unique email address. The password ensures the\r\nidentity. Optionally an account may have information about the user in form\r\nof her/his first name and last name.\r\nIt is possible to change the password, the first name or last name\r\nat a later point of time. In addition to creating an account another\r\npossible request is to get the created account but only with the\r\ncorrect credentials."
+      "description" : "An Account has to be created for at least one manager or developer. It\r\nis identified by a unique email address. The password ensures the\r\nidentity. Optionally an account may have information about the user in form\r\nof her/his first name and last name.\r\nIt is possible to change the password, the first name or last name\r\nat a later point of time. In addition to creating an account another\r\npossible request is to get the created account but only with the\r\ncorrect credentials.\r\nIn the response of all requests the hashed password isn't returned because\r\nof security reasons."
     }
     ,
     {
@@ -33,12 +33,12 @@
     ,
     {
       "name" : "OrganisationApi",
-      "description" : "An Organisation represents for example a specific company or an association which\r\nrepresents a group of people belonging together and which are participating in the\r\ngamification process.\r\nAn Organisation possessed an generated API key which is needed for all further interactions\r\nbecause all database entries are associated with this unique key and so with the respective\r\norganisation. The API key is uniquely in the whole application. It\r\nmay be changed, for this reason it has no primary key.\r\nWhen an Organisation is created it has to be connected with an account. Each organisation\r\nmay be managed by many people, but at least by one who is added to the list of the manager\r\nof the respective organisation and so also the Account."
+      "description" : "An Organisation represents for example a specific company or an association which\r\nrepresents a group of people belonging together and which are participating in the\r\ngamification process.\r\nAn Organisation possessed an generated API key which is needed for all further interactions\r\nbecause all database entries are associated with this unique key and so with the respective\r\norganisation. The API key is uniquely in the whole application. It\r\nmay be changed, for this reason it has no primary key.\r\nWhen an Organisation is created it has to be connected with an account. Each organisation\r\nmay be managed by many people, but at least by one who is added to the list of the manager\r\nof the respective organisation and so also the Account.\r\nIn the response of all requests the account's password isn't returned because of security\r\nreasons."
     }
     ,
     {
       "name" : "PlayerApi",
-      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of\r\na level is set to \"0\". These can be raised by fulfilling tasks in the gamification application. Furthermore\r\na player can have an avatar, by specifying the path of an image previously uploaded to a server.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create\r\nand to delete a player it is possible to get one particular player of one specific organisation by her/his\r\nassociated id or all players of the organisation. The avatar of one player can also be requested. To display\r\nthe status of a player ancillary the already finished goals and finished tasks it can be requested all earned\r\npermanent rewards. If only one status element is needed, the current points, coins, badges or achievements\r\ncan be gotten instead.\r\nEach player can also have a list of contacts which represent other players in the same organisation, so players\r\ncan send them little presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has."
+      "description" : "A player represents a user in the gamification application, eg. an employee of an organisation or a customer.\r\nBy the creation, each player is assigned a nickname and certain roles. Each player has a list for his earned\r\nrewards, already finished Goals and finished Tasks. The initial value of possible points, coins and index of\r\na level is set to \"0\". These can be raised by fulfilling tasks in the gamification application. Furthermore\r\na player can have an avatar, by specifying the path of an image previously uploaded to a server.\r\nA player can be set active or can be deactivated so that she/he cannot complete tasks. In addition to create\r\nand to delete a player it is possible to get one particular player of one specific organisation by her/his\r\nassociated id or all players of the organisation. The avatar of one player can also be requested. To display\r\nthe status of a player ancillary the already finished goals and finished tasks it can be requested all earned\r\npermanent rewards. If only one status element is needed, the current points, coins, badges or achievements\r\ncan be gotten instead.\r\nEach player can also have a list of contacts which represent other players in the same organisation, so players\r\ncan send them little presents.\r\nAt a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a\r\nplayer has.\r\nIn the responses the player's password and avatar isn't returned because of security reasons respectively overload.\r\nTo get the avatar of a player the method getAvatar can be called."
     }
     ,
     {
@@ -387,7 +387,7 @@
 "type" : "string"
             }
           },
-      "description" : "With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and\r\nobtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished\r\ngoals. If the goal can also be done by a group it is also added to its list of finished goals. There are two types\r\nof rules that can be defined: a TaskRule or a PointsRule."
+      "description" : "With a GoalRule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and\r\nto obtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished\r\ngoals. If the goal can also be done by a group it is also added to its list of finished goals. There are two types\r\nof rules that can be defined: a TaskRule or a PointsRule."
     }
     ,
     "json_imagemessage" : {
@@ -1093,7 +1093,7 @@
     "/account" : {
       "post" : {
         "tags" : [ "AccountApi" ],
-        "description" : "Creates a new account. For this an unique email address and a\r\npassword are mandatory. By the creation of an organisation this\r\nemail address is connected with it. Optionally the first and last\r\nname can also be set.",
+        "description" : "Creates a new account. For this an unique email address and a\r\npassword are mandatory. By the creation of an organisation this\r\nemail address is connected with it. Optionally the first and last\r\nname can also be set.\r\nIn the response the password isn't returned because of security\r\nreasons.",
         "operationId" : "resource_AccountApi_create_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -1140,7 +1140,7 @@
       ,
       "get" : {
         "tags" : [ "AccountApi" ],
-        "description" : "Returns an account corresponding to the given email address but only\r\nif the combination with password is correct. By the creation of an\r\norganisation this email address is connected with it.\r\nSo the method requires valid credentials otherwise a warning with the\r\nhint for wrong credentials is returned.",
+        "description" : "Returns an account corresponding to the given email address but only\r\nif the combination with password is correct. By the creation of an\r\norganisation this email address is connected with it.\r\nSo the method requires valid credentials otherwise a warning with the\r\nhint for wrong credentials is returned.\r\nIn the response the password isn't returned because of security\r\nreasons.",
         "operationId" : "resource_AccountApi_get_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -1148,7 +1148,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query parameter associated with the email address."
+            "description" : "Required header parameter associated with the email address."
           },
           {
             "name" : "email",
@@ -1175,7 +1175,7 @@
       ,
       "put" : {
         "tags" : [ "AccountApi" ],
-        "description" : "Updates the first and last name of an existing account. For this the\r\nspecific email address and associated password are mandatory.\r\nOtherwise a warning with the hint for wrong credentials is returned.",
+        "description" : "Updates the first and last name of an existing account. For this the\r\nspecific email address and associated password are mandatory.\r\nOtherwise a warning with the hint for wrong credentials is returned.\r\nIn the response the password isn't returned because of security\r\nreasons.",
         "operationId" : "resource_AccountApi_update_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -1183,7 +1183,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
+            "description" : "Required header parameter to connect it with the given\r\nemail address."
           },
           {
             "name" : "email",
@@ -2505,6 +2505,46 @@
       }
     }
     ,
+    "/marketPlace/offers/{taskId}/*" : {
+      "get" : {
+        "tags" : [ "MarketPlaceApi" ],
+        "description" : "",
+        "operationId" : "resource_MarketPlaceApi_getAllOffersByTask_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "taskId",
+            "in" : "path",
+            "type" : "string",
+            "description" : ""
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : ""
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_offer"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
     "/marketPlace/offers/market/{marketPlaceId}/*" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
@@ -2639,7 +2679,7 @@
     "/organisation/addManager" : {
       "post" : {
         "tags" : [ "OrganisationApi" ],
-        "description" : "Adds a new developer to the organisation's list of manager. The email address and\r\npassword are mandatory for authentication otherwise a warning with the hint for\r\nwrong credentials is returned. If the manager who should be added is already in the\r\nlist, a message is given with the hint that she/he is already added.",
+        "description" : "Adds a new developer to the organisation's list of manager. The email address and\r\npassword are mandatory for authentication otherwise a warning with the hint for\r\nwrong credentials is returned. If the manager who should be added is already in the\r\nlist, a message is given with the hint that she/he is already added.\r\nIn the response the account's password isn't returned because of security reasons.",
         "operationId" : "resource_OrganisationApi_addManager_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2694,7 +2734,7 @@
     "/organisation" : {
       "post" : {
         "tags" : [ "OrganisationApi" ],
-        "description" : "Creates a new organisation. The email address and password of one Account are used\r\nto connect it with this organisation. So the email address and password are mandatory for\r\nauthentication otherwise a warning with the hint for wrong credentials is returned.\r\nAll further Accounts which should be associated to this organisation are added with the\r\nmethod addManager.",
+        "description" : "Creates a new organisation. The email address and password of one Account are used\r\nto connect it with this organisation. So the email address and password are mandatory for\r\nauthentication otherwise a warning with the hint for wrong credentials is returned.\r\nAll further Accounts which should be associated to this organisation are added with the\r\nmethod addManager.\r\nIn the response the account's password isn't returned because of security reasons.",
         "operationId" : "resource_OrganisationApi_create_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2702,7 +2742,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query param associated with the email address."
+            "description" : "Required header parameter associated with the email address."
           },
           {
             "name" : "email",
@@ -2737,7 +2777,7 @@
     "/organisation/{id}" : {
       "get" : {
         "tags" : [ "OrganisationApi" ],
-        "description" : "Returns a specific organisation which id is equal to the transfered path parameter.\r\nAdditionally the email address and the associated password are mandatory and have to be\r\ncorrect otherwise an exception is returned that the given credentials are wrong.",
+        "description" : "Returns a specific organisation which id is equal to the transfered path parameter.\r\nAdditionally the email address and the associated password are mandatory and have to be\r\ncorrect otherwise an exception is returned that the given credentials are wrong.\r\nIn the response the account's password isn't returned because of security reasons.",
         "operationId" : "resource_OrganisationApi_get_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2745,7 +2785,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
+            "description" : "Required header parameter to connect it with the given\r\nemail address."
           },
           {
             "name" : "id",
@@ -2780,7 +2820,7 @@
     "/organisation/{id}/generateapikey" : {
       "put" : {
         "tags" : [ "OrganisationApi" ],
-        "description" : "Generates an API key for the given organisation which matches the id, email address and the\r\nassociated password. Otherwise an exception is returned that the given credentials are wrong.\r\nIf the API key field is already set the method resets it and replaced it with the new generated\r\nAPI key.",
+        "description" : "Generates an API key for the given organisation which matches the id, email address and the\r\nassociated password. Otherwise an exception is returned that the given credentials are wrong.\r\nIf the API key field is already set the method resets it and replaced it with the new generated\r\nAPI key.\r\nIn the response the account's password isn't returned because of security reasons.",
         "operationId" : "resource_OrganisationApi_generateApiKey_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2788,7 +2828,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query parameter to connect it with the given\r\nemail address."
+            "description" : "Required header parameter to connect it with the given email address."
           },
           {
             "name" : "id",
@@ -2823,7 +2863,7 @@
     "/organisation/*" : {
       "get" : {
         "tags" : [ "OrganisationApi" ],
-        "description" : "Returns all organisations which are associated with the combination of the two\r\nquery parameters. Otherwise an exception is sent that the given credentials are wrong.",
+        "description" : "Returns all organisations which are associated with the combination of the two\r\nquery parameters. Otherwise an exception is sent that the given credentials are wrong.\r\nIn the response the account's password isn't returned because of security reasons.",
         "operationId" : "resource_OrganisationApi_get_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2831,7 +2871,7 @@
             "name" : "password",
             "in" : "header",
             "type" : "string",
-            "description" : "Required query param to connect it with the given\r\nemail address."
+            "description" : "Required header parameter to connect it with the given email address."
           },
           {
             "name" : "email",
@@ -3020,7 +3060,7 @@
     "/player/{id}/activate" : {
       "put" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Activates a player with the associated id and API key so this player is allowed to complete\r\ntasks.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
+        "description" : "Activates a player with the associated id and API key so this player is allowed to complete\r\ntasks.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_activate_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3057,7 +3097,7 @@
     "/player" : {
       "post" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Creates a new player and so the method generates the player-id. The organisation's API key\r\nis mandatory otherwise a warning with the hint for a non valid API key is returned.\r\nThe player can choose a password for her/his account. By the creation some initial\r\nroles can be set which can also be changed at a later point of time. By default every\r\ncreated player is active until she/he is deactivated. It is checked, if the id of the\r\nroles are positive numbers otherwise a message for the invalid number is returned.",
+        "description" : "Creates a new player and so the method generates the player-id. The organisation's API key\r\nis mandatory otherwise a warning with the hint for a non valid API key is returned.\r\nThe player can choose a password for her/his account. By the creation some initial\r\nroles can be set which can also be changed at a later point of time. By default every\r\ncreated player is active until she/he is deactivated. It is checked, if the id of the\r\nroles are positive numbers otherwise a message for the invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_create_POST",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3118,7 +3158,7 @@
     "/player/{id}/contacts" : {
       "put" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Adds one or more contacts to the current player's contact list. A contact represents another\r\nplayer in the gamification application. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
+        "description" : "Adds one or more contacts to the current player's contact list. A contact represents another\r\nplayer in the gamification application. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_addContacts_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3159,7 +3199,7 @@
       ,
       "delete" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Removes one or more contacts from the currents player's contact list. A contact represents another\r\nplayer in the gamification application. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
+        "description" : "Removes one or more contacts from the currents player's contact list. A contact represents another\r\nplayer in the gamification application. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_deleteContact_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3200,7 +3240,7 @@
       ,
       "get" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Gets a list of all contacts a player has.",
+        "description" : "Gets a list of all contacts a player has.\r\nIn the response the players' password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_contacts_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3280,7 +3320,7 @@
     "/player/{id}/attributes" : {
       "put" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "With this method the fields of one specific player can be changed. For\r\nthis the player id, the API key of the specific organisation, the\r\nname of the field and the new field's value are needed.\r\nTo modify the password, the reference and the nickname the new string has\r\nto be transfered with the attribute field. For a new avatar the path of\r\nnew image is needed in the attribute parameter. The format of the image\r\nhas to be .jpg or .png. A new list of roles and contacts can be transfered\r\nwhen their ids are separated by commas.\r\nIf the API key is not valid an analogous message is returned. It is\r\nalso checked, if the id is a positive number otherwise a message for\r\nan invalid number is returned.",
+        "description" : "With this method the fields of one specific player can be changed. For\r\nthis the player id, the API key of the specific organisation, the\r\nname of the field and the new field's value are needed.\r\nTo modify the password, the reference and the nickname the new string has\r\nto be transfered with the attribute field. For a new avatar the path of\r\nnew image is needed in the attribute parameter. The format of the image\r\nhas to be .jpg or .png. A new list of roles and contacts can be transfered\r\nwhen their ids are separated by commas.\r\nIf the API key is not valid an analogous message is returned. It is\r\nalso checked, if the id is a positive number otherwise a message for\r\nan invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_changeAttributes_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3329,7 +3369,7 @@
     "/player/{id}" : {
       "get" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "This method gets one specific player who is identified by the given id and the API key.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\nid is a positive number otherwise a message for an invalid number is returned.",
+        "description" : "This method gets one specific player who is identified by the given id and the API key.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\nid is a positive number otherwise a message for an invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_get_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3364,7 +3404,7 @@
       ,
       "delete" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Removes a specific player from the data base who is identified by the given id and the\r\nAPI key. If the API key is not valid an analogous message is returned. It is also checked,\r\nif the id is a positive number otherwise a message for an invalid number is returned.",
+        "description" : "Removes a specific player from the data base who is identified by the given id and the\r\nAPI key. If the API key is not valid an analogous message is returned. It is also checked,\r\nif the id is a positive number otherwise a message for an invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_delete_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3441,7 +3481,7 @@
     "/player/*" : {
       "get" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "This method collects all players associated with the given API key and so all players who\r\nbelong to the associated organisation. If the API key is not valid an analogous message\r\nis returned.",
+        "description" : "This method collects all players associated with the given API key and so all players who\r\nbelong to the associated organisation. If the API key is not valid an analogous message\r\nis returned.\r\nIn the response the players' password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_getAll_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3475,7 +3515,7 @@
     "/player/{id}/roles" : {
       "put" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Adds one or more roles to the current player's list of roles. All ids are checked, if they are\r\npositive numbers otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.",
+        "description" : "Adds one or more roles to the current player's list of roles. All ids are checked, if they are\r\npositive numbers otherwise a message for an invalid number is returned. If the API key is not\r\nvalid an analogous message is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_addRoles_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3592,7 +3632,7 @@
     "/player/{id}/deactivate" : {
       "put" : {
         "tags" : [ "PlayerApi" ],
-        "description" : "Deactivates a player with the associated id and API key. So this player cannot complete a task\r\nuntil she/he is set active again.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
+        "description" : "Deactivates a player with the associated id and API key. So this player cannot complete a task\r\nuntil she/he is set active again.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.\r\nIn the response the player's password and avatar isn't returned because of security\r\nreasons respectively overhead.",
         "operationId" : "resource_PlayerApi_deactivate_PUT",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -3607,6 +3647,206 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/points" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns the current amount of points associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupPoints_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "number"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/addPlayers" : {
+      "put" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Adds one or more players to a group of players. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
+        "operationId" : "resource_PlayerGroupApi_addPlayers_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          },
+          {
+            "name" : "playerIds",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The list of player ids which should be added to the contact list. These ids are\r\nseparated by commas."
+          }
+        ],
+        "responses" : {
+          "201" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/coins" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns the current amount of coins associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupCoins_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "number"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/rewards" : {
+      "get" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Returns a list of all already awarded rewards associated with the group of players of the\r\ngiven id.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\ngroup id is a positive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_PlayerGroupApi_getPlayerGroupRewards_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_permanentreward"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/playerGroup/{id}/removePlayers" : {
+      "put" : {
+        "tags" : [ "PlayerGroupApi" ],
+        "description" : "Removes one or more players from a group of players. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
+        "operationId" : "resource_PlayerGroupApi_removePlayers_PUT",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
+          },
+          {
+            "name" : "playerIds",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The list of player ids which should be removed from the contact list. These ids are\r\nseparated by commas."
           }
         ],
         "responses" : {
@@ -3841,43 +4081,6 @@
       }
     }
     ,
-    "/playerGroup/{id}/points" : {
-      "get" : {
-        "tags" : [ "PlayerGroupApi" ],
-        "description" : "Returns the current amount of points associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
-        "operationId" : "resource_PlayerGroupApi_getPlayerGroupPoints_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
-          },
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"type" : "number"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
     "/playerGroup/{id}/badges" : {
       "get" : {
         "tags" : [ "PlayerGroupApi" ],
@@ -3918,99 +4121,13 @@
       }
     }
     ,
-    "/playerGroup/{id}/addPlayers" : {
-      "put" : {
-        "tags" : [ "PlayerGroupApi" ],
-        "description" : "Adds one or more players to a group of players. All ids are checked, if they are positive numbers\r\notherwise a message for an invalid number is returned. If the API key is not valid an analogous\r\nmessage is returned.",
-        "operationId" : "resource_PlayerGroupApi_addPlayers_PUT",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
-          },
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
-          },
-          {
-            "name" : "playerIds",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The list of player ids which should be added to the contact list. These ids are\r\nseparated by commas."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_player"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/playerGroup/{id}/coins" : {
+    "/playerGroup/*" : {
       "get" : {
         "tags" : [ "PlayerGroupApi" ],
-        "description" : "Returns the current amount of coins associated with the group of players of the passed id. If\r\nthe API key is not valid an analogous message is returned. It is also checked, if\r\nthe group id is a positive number otherwise a message for an invalid number is\r\nreturned.",
-        "operationId" : "resource_PlayerGroupApi_getPlayerGroupCoins_GET",
+        "description" : "Returns all group of players associated with the passed API key. If the API key is not\r\nvalid an analogous message is returned. It is also checked, if the player id is a\r\npositive number otherwise a message for an invalid number is returned.",
+        "operationId" : "resource_PlayerGroupApi_getAll_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
-          },
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this group of players belongs to."
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "schema" : {
-"description" : "",
-"type" : "number"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/playerGroup/{id}/rewards" : {
-      "get" : {
-        "tags" : [ "PlayerGroupApi" ],
-        "description" : "Returns a list of all already awarded rewards associated with the group of players of the\r\ngiven id.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the\r\ngroup id is a positive number otherwise a message for an invalid number is returned.",
-        "operationId" : "resource_PlayerGroupApi_getPlayerGroupRewards_GET",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link PlayerGroup}."
-          },
           {
             "name" : "apiKey",
             "in" : "query",
@@ -4024,7 +4141,7 @@
 "description" : "",
 "type" : "array",
 "items" : {
-  "$ref" : "#/definitions/json_permanentreward"
+  "$ref" : "#/definitions/json_playergroup"
 }
             },
             "headers" : {

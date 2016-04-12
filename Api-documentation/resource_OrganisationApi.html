@@ -81,7 +81,9 @@ organisation. The API key is uniquely in the whole application. It
 may be changed, for this reason it has no primary key.
 When an Organisation is created it has to be connected with an account. Each organisation
 may be managed by many people, but at least by one who is added to the list of the manager
-of the respective organisation and so also the Account.</p>
+of the respective organisation and so also the Account.
+In the response of all requests the account's password isn't returned because of security
+reasons.</p>
 
       <div id="resource_OrganisationApi_create_POST">
         <h3>POST <small>/organisation <!--<a href="./organisation" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
@@ -90,7 +92,8 @@ of the respective organisation and so also the Account.</p>
 to connect it with this organisation. So the email address and password are mandatory for
 authentication otherwise a warning with the hint for wrong credentials is returned.
 All further Accounts which should be associated to this organisation are added with the
-method addManager.</p>
+method addManager.
+In the response the account's password isn't returned because of security reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -103,17 +106,17 @@ method addManager.</p>
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7c49116c -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@150230bf -->
             <td>header</td>
-            <td>Required query param associated with the email address.</td>
+            <td>Required header parameter associated with the email address.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@51c5b2eb -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fb16947 -->
             <td>query</td>
             <td>The required valid email address.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3bdc46fa -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3f7541c3 -->
             <td>query</td>
             <td>The name of the developer or the manager of the account.</td>
           </tr>
@@ -146,7 +149,8 @@ method addManager.</p>
         <p>Adds a new developer to the organisation's list of manager. The email address and
 password are mandatory for authentication otherwise a warning with the hint for
 wrong credentials is returned. If the manager who should be added is already in the
-list, a message is given with the hint that she/he is already added.</p>
+list, a message is given with the hint that she/he is already added.
+In the response the account's password isn't returned because of security reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -159,27 +163,27 @@ list, a message is given with the hint that she/he is already added.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@efb167e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@76a56085 -->
             <td>query</td>
             <td>The API key of the organisation to which the manager belongs to.</td>
           </tr>
           <tr>
-            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3a0da4bc -->
+            <td>firstName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@72a63126 -->
             <td>query</td>
             <td>Optionally the first name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@46a31bfc -->
+            <td>lastName</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@16b99564 -->
             <td>query</td>
             <td>Optionally the last name of the Account's owner can be set.</td>
           </tr>
           <tr>
-            <td>manager</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1f917e44 -->
+            <td>manager</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3d7a529 -->
             <td>query</td>
             <td>The required valid email address for the new manager.</td>
           </tr>
           <tr>
-            <td>managerPW</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@490fd32e -->
+            <td>managerPW</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5eab5c9e -->
             <td>query</td>
             <td>The required new password of the new maanger.</td>
           </tr>
@@ -210,7 +214,8 @@ list, a message is given with the hint that she/he is already added.</p>
         <h3>GET <small>/organisation/* <!--<a href="./organisation/*" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>Returns all organisations which are associated with the combination of the two
-query parameters. Otherwise an exception is sent that the given credentials are wrong.</p>
+query parameters. Otherwise an exception is sent that the given credentials are wrong.
+In the response the account's password isn't returned because of security reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -223,13 +228,12 @@ query parameters. Otherwise an exception is sent that the given credentials are 
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1e70a6f7 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1dc7796c -->
             <td>header</td>
-            <td>Required query param to connect it with the given
-email address.</td>
+            <td>Required header parameter to connect it with the given email address.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40d2323e -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@478fdd05 -->
             <td>query</td>
             <td>A required valid email address.</td>
           </tr>
@@ -261,7 +265,8 @@ email address.</td>
 
         <p>Returns a specific organisation which id is equal to the transfered path parameter.
 Additionally the email address and the associated password are mandatory and have to be
-correct otherwise an exception is returned that the given credentials are wrong.</p>
+correct otherwise an exception is returned that the given credentials are wrong.
+In the response the account's password isn't returned because of security reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -274,18 +279,18 @@ correct otherwise an exception is returned that the given credentials are wrong.
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5425073e -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@794fc630 -->
             <td>header</td>
-            <td>Required query parameter to connect it with the given
+            <td>Required header parameter to connect it with the given
 email address.</td>
           </tr>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@63042837 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7d042a2b -->
             <td>path</td>
             <td>The path parameter of the organisation, that should be returned.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@78587dbe -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5b2e30fe -->
             <td>query</td>
             <td>The valid email address.</td>
           </tr>
@@ -306,7 +311,7 @@ email address.</td>
             <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
             <td><a href="json_organisation.html">Organisation</a>
  (JSON)</td>
-            <td rowspan="1">A Response of Organisation in JSON.</td>
+            <td rowspan="1">A response of Organisation in JSON.</td>
           </tr>
           </tbody>
         </table>
@@ -318,7 +323,8 @@ email address.</td>
         <p>Generates an API key for the given organisation which matches the id, email address and the
 associated password. Otherwise an exception is returned that the given credentials are wrong.
 If the API key field is already set the method resets it and replaced it with the new generated
-API key.</p>
+API key.
+In the response the account's password isn't returned because of security reasons.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -331,18 +337,17 @@ API key.</p>
           </thead>
           <tbody>
           <tr>
-            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@29caf349 -->
+            <td>password</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6270a96b -->
             <td>header</td>
-            <td>Required query parameter to connect it with the given
-email address.</td>
+            <td>Required header parameter to connect it with the given email address.</td>
           </tr>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@552a0db9 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@65099d53 -->
             <td>path</td>
             <td>The path parameter of the organisation, for which the API key should be generated.</td>
           </tr>
           <tr>
-            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@172dd2bb -->
+            <td>email</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3900b6ab -->
             <td>query</td>
             <td>The valid email address.</td>
           </tr>

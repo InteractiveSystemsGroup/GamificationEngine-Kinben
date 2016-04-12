@@ -24,7 +24,9 @@
         <wadl:doc><![CDATA[Creates a new account. For this an unique email address and a
 password are mandatory. By the creation of an organisation this
 email address is connected with it. Optionally the first and last
-name can also be set.]]></wadl:doc>
+name can also be set.
+In the response the password isn't returned because of security
+reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[A required valid email address.]]></wadl:doc>
@@ -53,10 +55,12 @@ email address.]]></wadl:doc>
 if the combination with password is correct. By the creation of an
 organisation this email address is connected with it.
 So the method requires valid credentials otherwise a warning with the
-hint for wrong credentials is returned.]]></wadl:doc>
+hint for wrong credentials is returned.
+In the response the password isn't returned because of security
+reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query parameter associated with the email address.]]></wadl:doc>
+            <wadl:doc><![CDATA[Required header parameter associated with the email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[A required valid unique email address.]]></wadl:doc>
@@ -73,10 +77,12 @@ hint for wrong credentials is returned.]]></wadl:doc>
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[Updates the first and last name of an existing account. For this the
 specific email address and associated password are mandatory.
-Otherwise a warning with the hint for wrong credentials is returned.]]></wadl:doc>
+Otherwise a warning with the hint for wrong credentials is returned.
+In the response the password isn't returned because of security
+reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query parameter to connect it with the given
+            <wadl:doc><![CDATA[Required header parameter to connect it with the given
 email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
@@ -183,10 +189,11 @@ who is allowed to fulfil the goal. This parameter is required.]]></wadl:doc>
 to connect it with this organisation. So the email address and password are mandatory for
 authentication otherwise a warning with the hint for wrong credentials is returned.
 All further Accounts which should be associated to this organisation are added with the
-method addManager.]]></wadl:doc>
+method addManager.
+In the response the account's password isn't returned because of security reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query param associated with the email address.]]></wadl:doc>
+            <wadl:doc><![CDATA[Required header parameter associated with the email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[The required valid email address.]]></wadl:doc>
@@ -209,7 +216,9 @@ is mandatory otherwise a warning with the hint for a non valid API key is return
 The player can choose a password for her/his account. By the creation some initial
 roles can be set which can also be changed at a later point of time. By default every
 created player is active until she/he is deactivated. It is checked, if the id of the
-roles are positive numbers otherwise a message for the invalid number is returned.]]></wadl:doc>
+roles are positive numbers otherwise a message for the invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -618,11 +627,11 @@ to which the player belongs to.]]></wadl:doc>
     <wadl:resource path="/organisation/*">
       <wadl:method name="GET">
         <wadl:doc><![CDATA[Returns all organisations which are associated with the combination of the two
-query parameters. Otherwise an exception is sent that the given credentials are wrong.]]></wadl:doc>
+query parameters. Otherwise an exception is sent that the given credentials are wrong.
+In the response the account's password isn't returned because of security reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query param to connect it with the given
-email address.]]></wadl:doc>
+            <wadl:doc><![CDATA[Required header parameter to connect it with the given email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[A required valid email address.]]></wadl:doc>
@@ -640,7 +649,8 @@ email address.]]></wadl:doc>
         <wadl:doc><![CDATA[Adds a new developer to the organisation's list of manager. The email address and
 password are mandatory for authentication otherwise a warning with the hint for
 wrong credentials is returned. If the manager who should be added is already in the
-list, a message is given with the hint that she/he is already added.]]></wadl:doc>
+list, a message is given with the hint that she/he is already added.
+In the response the account's password isn't returned because of security reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The API key of the organisation to which the manager belongs to.]]></wadl:doc>
@@ -669,10 +679,11 @@ list, a message is given with the hint that she/he is already added.]]></wadl:do
       <wadl:method name="GET">
         <wadl:doc><![CDATA[Returns a specific organisation which id is equal to the transfered path parameter.
 Additionally the email address and the associated password are mandatory and have to be
-correct otherwise an exception is returned that the given credentials are wrong.]]></wadl:doc>
+correct otherwise an exception is returned that the given credentials are wrong.
+In the response the account's password isn't returned because of security reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query parameter to connect it with the given
+            <wadl:doc><![CDATA[Required header parameter to connect it with the given
 email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
@@ -680,7 +691,7 @@ email address.]]></wadl:doc>
           </wadl:param>
         </wadl:request>
         <wadl:response>
-          <wadl:doc><![CDATA[A Response of Organisation in JSON.]]></wadl:doc>
+          <wadl:doc><![CDATA[A response of Organisation in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -690,7 +701,9 @@ email address.]]></wadl:doc>
       <wadl:method name="GET">
         <wadl:doc><![CDATA[This method collects all players associated with the given API key and so all players who
 belong to the associated organisation. If the API key is not valid an analogous message
-is returned.]]></wadl:doc>
+is returned.
+In the response the players' password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation.]]></wadl:doc>
@@ -707,7 +720,9 @@ is returned.]]></wadl:doc>
       <wadl:method name="GET">
         <wadl:doc><![CDATA[This method gets one specific player who is identified by the given id and the API key.
 If the API key is not valid an analogous message is returned. It is also checked, if the
-id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+id is a positive number otherwise a message for an invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -725,7 +740,9 @@ to which this player belongs to.]]></wadl:doc>
       <wadl:method name="DELETE">
         <wadl:doc><![CDATA[Removes a specific player from the data base who is identified by the given id and the
 API key. If the API key is not valid an analogous message is returned. It is also checked,
-if the id is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+if the id is a positive number otherwise a message for an invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -734,6 +751,24 @@ to which this role belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response as List of Players in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[Returns all group of players associated with the passed API key. If the API key is not
+valid an analogous message is returned. It is also checked, if the player id is a
+positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -1704,11 +1739,11 @@ to which the player belongs to.]]></wadl:doc>
         <wadl:doc><![CDATA[Generates an API key for the given organisation which matches the id, email address and the
 associated password. Otherwise an exception is returned that the given credentials are wrong.
 If the API key field is already set the method resets it and replaced it with the new generated
-API key.]]></wadl:doc>
+API key.
+In the response the account's password isn't returned because of security reasons.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="password" style="header">
-            <wadl:doc><![CDATA[Required query parameter to connect it with the given
-email address.]]></wadl:doc>
+            <wadl:doc><![CDATA[Required header parameter to connect it with the given email address.]]></wadl:doc>
           </wadl:param>
           <wadl:param name="email" style="query">
             <wadl:doc><![CDATA[The valid email address.]]></wadl:doc>
@@ -1745,7 +1780,9 @@ to which this player belongs to.]]></wadl:doc>
         <wadl:doc><![CDATA[Activates a player with the associated id and API key so this player is allowed to complete
 tasks.
 If the API key is not valid an analogous message is returned. It is also checked, if the id
-is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+is a positive number otherwise a message for an invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1771,7 +1808,9 @@ has to be .jpg or .png. A new list of roles and contacts can be transfered
 when their ids are separated by commas.
 If the API key is not valid an analogous message is returned. It is
 also checked, if the id is a positive number otherwise a message for
-an invalid number is returned.]]></wadl:doc>
+an invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1857,7 +1896,9 @@ to which this player belongs to.]]></wadl:doc>
         <wadl:doc><![CDATA[Adds one or more contacts to the current player's contact list. A contact represents another
 player in the gamification application. All ids are checked, if they are positive numbers
 otherwise a message for an invalid number is returned. If the API key is not valid an analogous
-message is returned.]]></wadl:doc>
+message is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1880,7 +1921,9 @@ separated by commas.]]></wadl:doc>
         <wadl:doc><![CDATA[Removes one or more contacts from the currents player's contact list. A contact represents another
 player in the gamification application. All ids are checked, if they are positive numbers
 otherwise a message for an invalid number is returned. If the API key is not valid an analogous
-message is returned.]]></wadl:doc>
+message is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1900,7 +1943,9 @@ separated by commas and must not be null.]]></wadl:doc>
 
     <wadl:resource path="/player/{id}/contacts">
       <wadl:method name="GET">
-        <wadl:doc><![CDATA[Gets a list of all contacts a player has.]]></wadl:doc>
+        <wadl:doc><![CDATA[Gets a list of all contacts a player has.
+In the response the players' password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1919,7 +1964,9 @@ to which this player belongs to.]]></wadl:doc>
         <wadl:doc><![CDATA[Deactivates a player with the associated id and API key. So this player cannot complete a task
 until she/he is set active again.
 If the API key is not valid an analogous message is returned. It is also checked, if the id
-is a positive number otherwise a message for an invalid number is returned.]]></wadl:doc>
+is a positive number otherwise a message for an invalid number is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -1992,7 +2039,9 @@ to which this player belongs to.]]></wadl:doc>
       <wadl:method name="PUT">
         <wadl:doc><![CDATA[Adds one or more roles to the current player's list of roles. All ids are checked, if they are
 positive numbers otherwise a message for an invalid number is returned. If the API key is not
-valid an analogous message is returned.]]></wadl:doc>
+valid an analogous message is returned.
+In the response the player's password and avatar isn't returned because of security
+reasons respectively overhead.]]></wadl:doc>
         <wadl:request>
           <wadl:param name="apiKey" style="query">
             <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
@@ -2192,6 +2241,28 @@ to which this group of players belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[Response of int in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/playerGroup/{id}/removePlayers">
+      <wadl:method name="PUT">
+        <wadl:doc><![CDATA[Removes one or more players from a group of players. All ids are checked, if they are positive numbers
+otherwise a message for an invalid number is returned. If the API key is not valid an analogous
+message is returned.]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[The valid query parameter API key affiliated to one specific organisation,
+to which this group of players belongs to.]]></wadl:doc>
+          </wadl:param>
+          <wadl:param name="playerIds" style="query">
+            <wadl:doc><![CDATA[The list of player ids which should be removed from the contact list. These ids are
+separated by commas.]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
+          <wadl:doc><![CDATA[Response of PlayerGroup in JSON.]]></wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -2644,6 +2715,20 @@ to which this call for donations belongs to.]]></wadl:doc>
         </wadl:request>
         <wadl:response>
           <wadl:doc><![CDATA[A Response of DonationCall in JSON.]]></wadl:doc>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+
+    <wadl:resource path="/marketPlace/offers/{taskId}/*">
+      <wadl:method name="GET">
+        <wadl:doc><![CDATA[]]></wadl:doc>
+        <wadl:request>
+          <wadl:param name="apiKey" style="query">
+            <wadl:doc><![CDATA[]]></wadl:doc>
+          </wadl:param>
+        </wadl:request>
+        <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>

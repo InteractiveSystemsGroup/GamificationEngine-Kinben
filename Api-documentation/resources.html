@@ -100,6 +100,8 @@ It is possible to change the password, the first name or last name
 at a later point of time. In addition to creating an account another
 possible request is to get the created account but only with the
 correct credentials.
+In the response of all requests the hashed password isn't returned because
+of security reasons.
 </td>
     </tr>
     <tr class="clickable-row" data-href="resource_Api.html">
@@ -182,6 +184,7 @@ possible to change the roles so different people can complete the goal.
 </samp></li><li><samp>  /marketPlace/recentOffers
 </samp></li><li><samp>  /marketPlace/{playerId}/getOfferRole
 </samp></li><li><samp>  /marketPlace/{playerId}/highestOffersRoleFiltered
+</samp></li><li><samp>  /marketPlace/offers/{taskId}/*
 </samp></li><li><samp>  /marketPlace/offers/market/{marketPlaceId}/*
 </samp></li><li><samp>  /marketPlace/{id}/offer
 </samp></li><li><samp>  /marketPlace/highestOffers
@@ -197,6 +200,7 @@ possible to change the roles so different people can complete the goal.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
@@ -251,6 +255,8 @@ may be changed, for this reason it has no primary key.
 When an Organisation is created it has to be connected with an account. Each organisation
 may be managed by many people, but at least by one who is added to the list of the manager
 of the respective organisation and so also the Account.
+In the response of all requests the account's password isn't returned because of security
+reasons.
 </td>
     </tr>
     <tr class="clickable-row" data-href="resource_PlayerApi.html">
@@ -305,31 +311,37 @@ Each player can also have a list of contacts which represent other players in th
 can send them little presents.
 At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a
 player has.
+In the responses the player's password and avatar isn't returned because of security reasons respectively overload.
+To get the avatar of a player the method getAvatar can be called.
 </td>
     </tr>
     <tr class="clickable-row" data-href="resource_PlayerGroupApi.html">
       <td>  PlayerGroupApi
 </td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /playerGroup
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /playerGroup/{id}/points
+</samp></li><li><samp>  /playerGroup/{id}/addPlayers
+</samp></li><li><samp>  /playerGroup/{id}/coins
+</samp></li><li><samp>  /playerGroup/{id}/rewards
+</samp></li><li><samp>  /playerGroup/{id}/removePlayers
+</samp></li><li><samp>  /playerGroup
 </samp></li><li><samp>  /playerGroup/{id}/attributes
 </samp></li><li><samp>  /playerGroup/{id}/goals
 </samp></li><li><samp>  /playerGroup/{id}/avatar
 </samp></li><li><samp>  /playerGroup/{id}/achievements
-</samp></li><li><samp>  /playerGroup/{id}/points
 </samp></li><li><samp>  /playerGroup/{id}/badges
-</samp></li><li><samp>  /playerGroup/{id}/addPlayers
-</samp></li><li><samp>  /playerGroup/{id}/coins
-</samp></li><li><samp>  /playerGroup/{id}/rewards
+</samp></li><li><samp>  /playerGroup/*
 </samp></li><li><samp>  /playerGroup/{id}
 </samp></li></ul></td>
-      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  POST
+      <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  GET
+</samp></li><li><samp>  PUT
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
+</samp></li><li><samp>  PUT
+</samp></li><li><samp>  POST
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
-</samp></li><li><samp>  GET
-</samp></li><li><samp>  GET
-</samp></li><li><samp>  PUT
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  DELETE, GET
