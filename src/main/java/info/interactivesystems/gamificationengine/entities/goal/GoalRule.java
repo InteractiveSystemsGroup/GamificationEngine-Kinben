@@ -142,7 +142,7 @@ public class GoalRule {
 	 */
 	public static void checkRulesForTask(List<TaskRule> rules){
 		List<Integer> ids = getRuleIds(rules);
-		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
+//		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
 	}
 	
 	/**
