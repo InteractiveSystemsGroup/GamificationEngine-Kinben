@@ -135,14 +135,14 @@ public class GoalRule {
 	/**
 	 * This method gets the ids of rules that have to be deleted before a specific
 	 * task can be deleted. These ids are then passed to create a message in the
-	 * response.
+	 * response to give the user a hint.
 	 * 
 	 * @param rules
 	 * 			List of rules that are associated with the task that should be deleted.
 	 */
 	public static void checkRulesForTask(List<TaskRule> rules){
 		List<Integer> ids = getRuleIds(rules);
-//		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
+		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
 	}
 	
 	/**
