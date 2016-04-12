@@ -36,6 +36,8 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * at a later point of time. In addition to creating an account another 
  * possible request is to get the created account but only with the 
  * correct credentials.
+ * In the response of all requests the hashed password isn't returned because
+ *  of security reasons.
  */
 @Path("/account")
 @Stateless
@@ -53,6 +55,8 @@ public class AccountApi {
 	 * password are mandatory. By the creation of an organisation this 
 	 * email address is connected with it. Optionally the first and last
 	 * name can also be set.
+	 * In the response the password isn't returned because of security 
+	 * reasons.
 	 *
 	 * @param email
 	 *            A required valid email address. 
@@ -94,11 +98,13 @@ public class AccountApi {
 	 * organisation this email address is connected with it. 
 	 * So the method requires valid credentials otherwise a warning with the 
 	 * hint for wrong credentials is returned.
+	 * In the response the password isn't returned because of security 
+	 * reasons.
 	 *
 	 * @param email
 	 *            A required valid unique email address.
 	 * @param password
-	 *            Required query parameter associated with the email address. 
+	 *            Required header parameter associated with the email address. 
 	 * @return A Response of Account in JSON.
 	 */
 	@GET
@@ -124,11 +130,13 @@ public class AccountApi {
 	 * Updates the first and last name of an existing account. For this the 
 	 * specific email address and associated password are mandatory.
 	 * Otherwise a warning with the hint for wrong credentials is returned.
+	 * In the response the password isn't returned because of security 
+	 * reasons.
 	 *
 	 * @param email
 	 *            A required valid email address. 
 	 * @param password
-	 *            Required query parameter to connect it with the given 
+	 *            Required header parameter to connect it with the given 
 	 *            email address.
 	 * @param firstName
 	 *            Optionally the first name of the Account's owner can be set.

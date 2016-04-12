@@ -43,6 +43,8 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * When an Organisation is created it has to be connected with an account. Each organisation 
  * may be managed by many people, but at least by one who is added to the list of the manager 
  * of the respective organisation and so also the Account.  
+ * In the response of all requests the account's password isn't returned because of security 
+ * reasons.
  */
 @Path("/organisation")
 @Stateless
@@ -62,13 +64,14 @@ public class OrganisationApi {
 	 * authentication otherwise a warning with the hint for wrong credentials is returned.
 	 * All further Accounts which should be associated to this organisation are added with the 
 	 * method addManager. 
+	 * In the response the account's password isn't returned because of security reasons.
 	 *
 	 * @param name 
 	 * 			The name of the developer or the manager of the account.
 	 * @param email
 	 *           The required valid email address.
 	 * @param password
-	 *           Required query param associated with the email address. 
+	 *           Required header parameter associated with the email address.
 	 * @return A Response of Organisation in JSON.
 	 */
 	@POST
@@ -99,6 +102,7 @@ public class OrganisationApi {
 	 * password are mandatory for authentication otherwise a warning with the hint for 
 	 * wrong credentials is returned. If the manager who should be added is already in the 
 	 * list, a message is given with the hint that she/he is already added. 
+	 * In the response the account's password isn't returned because of security reasons.
 	 *
 	 * @param manager
 	 *            The required valid email address for the new manager.
@@ -142,12 +146,12 @@ public class OrganisationApi {
 	/**
 	 * Returns all organisations which are associated with the combination of the two 
 	 * query parameters. Otherwise an exception is sent that the given credentials are wrong.
+	 * In the response the account's password isn't returned because of security reasons.
 	 * 
 	 * @param email
 	 *            A required valid email address. 
 	 * @param password
-	 *            Required query param to connect it with the given 
-	 *            email address.
+	 *            Required header parameter to connect it with the given email address.
 	 * @return A Response as List of Organisations in JSON.
 	 */
 	@GET
@@ -169,15 +173,16 @@ public class OrganisationApi {
 	 * Returns a specific organisation which id is equal to the transfered path parameter. 
 	 * Additionally the email address and the associated password are mandatory and have to be
 	 * correct otherwise an exception is returned that the given credentials are wrong.
+	 * In the response the account's password isn't returned because of security reasons.
 	 * 
 	 * @param id
 	 *            The path parameter of the organisation, that should be returned.
 	 * @param email
 	 *            The valid email address.
 	 * @param password
-	 *             Required query parameter to connect it with the given 
+	 *             Required header parameter to connect it with the given 
 	 *             email address.
-	 * @return A Response of Organisation in JSON.
+	 * @return A response of Organisation in JSON.
 	 */
 	@GET
 	@Path("/{id}")
@@ -201,13 +206,14 @@ public class OrganisationApi {
 	 * associated password. Otherwise an exception is returned that the given credentials are wrong.
 	 * If the API key field is already set the method resets it and replaced it with the new generated
 	 * API key.  
+	 * In the response the account's password isn't returned because of security reasons.
 	 * 
 	 * @param id
 	 *            The path parameter of the organisation, for which the API key should be generated.
 	 * @param email
 	 *           The valid email address. 
 	 * @param password
-	 *            Required query parameter to connect it with the given email address.
+	 *            Required header parameter to connect it with the given email address.
 	 * @return A Response of Organisation in JSON.
 	 */
 	@PUT

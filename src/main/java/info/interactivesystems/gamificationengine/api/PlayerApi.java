@@ -19,8 +19,6 @@ import info.interactivesystems.gamificationengine.utils.ImageUtils;
 import info.interactivesystems.gamificationengine.utils.SecurityTools;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +58,8 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * can send them little presents. 
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
  * player has.
+ * In the responses the player's password and avatar isn't returned because of security reasons respectively overload.
+ * To get the avatar of a player the method getAvatar can be called.
  */
 @Path("/player")
 @Stateless
@@ -81,6 +81,8 @@ public class PlayerApi {
 	 * roles can be set which can also be changed at a later point of time. By default every 
 	 * created player is active until she/he is deactivated. It is checked, if the id of the 
 	 * roles are positive numbers otherwise a message for the invalid number is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param nickname
 	 *            The query parameter of the player's nickname. This field must not be null.
@@ -143,6 +145,8 @@ public class PlayerApi {
 	 * This method collects all players associated with the given API key and so all players who 
 	 * belong to the associated organisation. If the API key is not valid an analogous message 
 	 * is returned.
+	 * In the response the players' password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation.
@@ -161,6 +165,8 @@ public class PlayerApi {
 	 * This method gets one specific player who is identified by the given id and the API key.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the 
 	 * id is a positive number otherwise a message for an invalid number is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 *
 	 * @param id
 	 *           Required integer as path parameter which uniquely identify the {@link Player}.
@@ -185,6 +191,8 @@ public class PlayerApi {
 	 * Removes a specific player from the data base who is identified by the given id and the 
 	 * API key. If the API key is not valid an analogous message is returned. It is also checked,
 	 * if the id is a positive number otherwise a message for an invalid number is returned. 
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *           Required integer as path parameter which uniquely identify the {@link Player}.
@@ -218,6 +226,8 @@ public class PlayerApi {
 	 * If the API key is not valid an analogous message is returned. It is 
 	 * also checked, if the id is a positive number otherwise a message for 
 	 * an invalid number is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *            Required integer which uniquely identify the {@link Player}.
@@ -333,6 +343,8 @@ public class PlayerApi {
 	 * player in the gamification application. All ids are checked, if they are positive numbers 
 	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous
 	 * message is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *           Required path parameter as integer which uniquely identify the {@link Player}.
@@ -369,6 +381,8 @@ public class PlayerApi {
 	 * Adds one or more roles to the current player's list of roles. All ids are checked, if they are 
 	 * positive numbers otherwise a message for an invalid number is returned. If the API key is not 
 	 * valid an analogous message is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *           Required path parameter as integer which uniquely identify the {@link Player}.
@@ -407,6 +421,8 @@ public class PlayerApi {
 	 * player in the gamification application. All ids are checked, if they are positive numbers 
 	 * otherwise a message for an invalid number is returned. If the API key is not valid an analogous
 	 * message is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *           Required path parameter as integer which uniquely identify the {@link Player}.
@@ -472,6 +488,8 @@ public class PlayerApi {
 	 * until she/he is set active again.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *         Required path parameter as integer which uniquely identify the {@link Player}.
@@ -501,6 +519,8 @@ public class PlayerApi {
 	 * tasks.
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
+	 * In the response the player's password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 *         Required path parameter as integer which uniquely identify the {@link Player}.
@@ -714,6 +734,8 @@ public class PlayerApi {
 	
 	/**
 	 * Gets a list of all contacts a player has.
+	 * In the response the players' password and avatar isn't returned because of security 
+	 * reasons respectively overhead.
 	 * 
 	 * @param id
 	 * 			Required path parameter as integer which uniquely identify the Player.
