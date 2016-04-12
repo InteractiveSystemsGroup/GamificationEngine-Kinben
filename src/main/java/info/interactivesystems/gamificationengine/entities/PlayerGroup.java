@@ -426,12 +426,15 @@ public class PlayerGroup {
 	}
 	
 	/**
-	 * This method 
+	 * This method returns a list of players associated with the passed ids
 	 * 
-	 * @param playerIds
+	 * @param playerIds 
+	 * 			The ids that should be converted to a list of players.
 	 * @param playerDao
+	 * 			The player DAO is required to access created players. 
 	 * @param apiKey
-	 * @return
+	 * 			The API key of the organisation is needed to access the created players. 
+	 * @return A list of Players that are associated with the passed ids.
 	 */
 	public List<Player> parseIdsToPlayer_List(String playerIds,PlayerDAO playerDao, String apiKey){
 		// Find all Players by Id

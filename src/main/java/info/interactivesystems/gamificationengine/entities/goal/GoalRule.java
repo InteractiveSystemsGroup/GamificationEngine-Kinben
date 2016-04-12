@@ -1,8 +1,5 @@
 package info.interactivesystems.gamificationengine.entities.goal;
 
-import info.interactivesystems.gamificationengine.entities.Organisation;
-import info.interactivesystems.gamificationengine.utils.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +14,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.utils.StringUtils;
+
 /**
- * With a Goalrule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and 
- * obtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished 
+ * With a GoalRule can be defined which tasks and if all or only one task have to be fulfilled to reach a goal and 
+ * to obtain the rewards for it. When a goal rule is fulfilled the goal is added to the player’s list of finished 
  * goals. If the goal can also be done by a group it is also added to its list of finished goals. There are two types
  * of rules that can be defined: a TaskRule or a PointsRule.
  */
@@ -135,11 +132,26 @@ public class GoalRule {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
+	/**
+	 * This method gets the ids of rules that have to be deleted before a specific
+	 * task can be deleted. These ids are then passed to create a message in the
+	 * response.
+	 * 
+	 * @param rules
+	 * 			List of rules that are associated with the task that should be deleted.
+	 */
 	public static void checkRulesForTask(List<TaskRule> rules){
 		List<Integer> ids = getRuleIds(rules);
 		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
 	}
 	
+	/**
+	 * Gets the id each rule that is in the passed List.
+	 * 
+	 * @param rules
+	 * 			List of rules of which the ids are returned.
+	 * @return A list of Integers of the passed rules. 
+	 */
 	public static List<Integer> getRuleIds(List<TaskRule> rules){
 		List<Integer> ids = new ArrayList<>();
 		for (TaskRule rule : rules) {

@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.api;
 
+import info.interactivesystems.gamificationengine.api.exeption.Notification;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
@@ -13,6 +14,8 @@ import info.interactivesystems.gamificationengine.dao.TaskDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.Role;
+import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
+import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
@@ -136,7 +139,9 @@ public class TaskApi {
 		task.setTradeable(Boolean.parseBoolean(tradeable));
 		taskDao.insertTask(task);
 
-		return ResponseSurrogate.created(task);
+//		Notification note = new Notification().of("New Task created.");
+//		note.addError("New Task created.");
+		return ResponseSurrogate.created(task, new Notification().of("New Task created."));
 	}
 
 	/**
@@ -352,8 +357,14 @@ public class TaskApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int taskId = ValidateUtils.requireGreaterThanZero(id);
-		Task task = taskDao.deleteTask(taskId, apiKey);
+		Task task = taskDao.getTask(taskId, apiKey);
 		ValidateUtils.requireNotNull(taskId, task);
+		
+ 		List<TaskRule> rules = ruleDao.getRulesByTask(task, apiKey);
+ 		if(!rules.isEmpty()){
+ 			GoalRule.checkRulesForTask(rules);
+ 		}
+		task = taskDao.deleteTask(taskId, apiKey);
 		
 		return ResponseSurrogate.deleted(task);
 	}
