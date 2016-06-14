@@ -127,41 +127,41 @@ module Net
   class URL 
 
     # (no documentation provided)
-    attr_accessor :defaultPort
-    # (no documentation provided)
-    attr_accessor :file
+    attr_accessor :port
     # (no documentation provided)
     attr_accessor :authority
     # (no documentation provided)
-    attr_accessor :path
-    # (no documentation provided)
-    attr_accessor :userInfo
-    # (no documentation provided)
-    attr_accessor :protocol
+    attr_accessor :ref
     # (no documentation provided)
     attr_accessor :query
     # (no documentation provided)
+    attr_accessor :path
+    # (no documentation provided)
+    attr_accessor :file
+    # (no documentation provided)
     attr_accessor :host
     # (no documentation provided)
-    attr_accessor :ref
+    attr_accessor :protocol
     # (no documentation provided)
-    attr_accessor :port
+    attr_accessor :userInfo
+    # (no documentation provided)
+    attr_accessor :defaultPort
     # (no documentation provided)
     attr_accessor :content
 
     # the json hash for this URL
     def to_jaxb_json_hash
       _h = {}
-      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
-      _h['file'] = file.to_jaxb_json_hash unless file.nil?
-      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
-      _h['path'] = path.to_jaxb_json_hash unless path.nil?
-      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
-      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
-      _h['query'] = query.to_jaxb_json_hash unless query.nil?
-      _h['host'] = host.to_jaxb_json_hash unless host.nil?
-      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
       _h['port'] = port.to_jaxb_json_hash unless port.nil?
+      _h['authority'] = authority.to_jaxb_json_hash unless authority.nil?
+      _h['ref'] = ref.to_jaxb_json_hash unless ref.nil?
+      _h['query'] = query.to_jaxb_json_hash unless query.nil?
+      _h['path'] = path.to_jaxb_json_hash unless path.nil?
+      _h['file'] = file.to_jaxb_json_hash unless file.nil?
+      _h['host'] = host.to_jaxb_json_hash unless host.nil?
+      _h['protocol'] = protocol.to_jaxb_json_hash unless protocol.nil?
+      _h['userInfo'] = userInfo.to_jaxb_json_hash unless userInfo.nil?
+      _h['defaultPort'] = defaultPort.to_jaxb_json_hash unless defaultPort.nil?
       _h['content'] = content.to_jaxb_json_hash unless content.nil?
       return _h
     end
@@ -173,16 +173,16 @@ module Net
 
     #initializes this URL with a json hash
     def init_jaxb_json_hash(_o)
-      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
-      @file = String.from_json(_o['file']) unless _o['file'].nil?
-      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
-      @path = String.from_json(_o['path']) unless _o['path'].nil?
-      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
-      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
-      @query = String.from_json(_o['query']) unless _o['query'].nil?
-      @host = String.from_json(_o['host']) unless _o['host'].nil?
-      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
       @port = Fixnum.from_json(_o['port']) unless _o['port'].nil?
+      @authority = String.from_json(_o['authority']) unless _o['authority'].nil?
+      @ref = String.from_json(_o['ref']) unless _o['ref'].nil?
+      @query = String.from_json(_o['query']) unless _o['query'].nil?
+      @path = String.from_json(_o['path']) unless _o['path'].nil?
+      @file = String.from_json(_o['file']) unless _o['file'].nil?
+      @host = String.from_json(_o['host']) unless _o['host'].nil?
+      @protocol = String.from_json(_o['protocol']) unless _o['protocol'].nil?
+      @userInfo = String.from_json(_o['userInfo']) unless _o['userInfo'].nil?
+      @defaultPort = Fixnum.from_json(_o['defaultPort']) unless _o['defaultPort'].nil?
       @content = Object.from_json(_o['content']) unless _o['content'].nil?
     end
 
@@ -912,8 +912,6 @@ module Entities
     attr_accessor :onlyBadges
     # A List of all obtained Achievements as List.
     attr_accessor :onlyAchievement
-    # A list of other players who are contacts of the player.
-    attr_accessor :contactList
     # True if the player is active and false if not.
     attr_accessor :active
 
@@ -956,11 +954,6 @@ module Entities
         _ha = Array.new
         onlyAchievement.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['onlyAchievement'] = _ha
-      end
-      if !contactList.nil?
-        _ha = Array.new
-        contactList.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['contactList'] = _ha
       end
       _h['active'] = active.to_jaxb_json_hash unless active.nil?
       return _h
@@ -1009,11 +1002,6 @@ module Entities
         @onlyAchievement = Array.new
         _oa = _o['onlyAchievement']
         _oa.each { | _item | @onlyAchievement.push Info::Interactivesystems::Gamificationengine::Entities::Rewards::Achievement.from_json(_item) }
-      end
-      if !_o['contactList'].nil?
-        @contactList = Array.new
-        _oa = _o['contactList']
-        _oa.each { | _item | @contactList.push Info::Interactivesystems::Gamificationengine::Entities::Player.from_json(_item) }
       end
       @active = Boolean.from_json(_o['active']) unless _o['active'].nil?
     end
@@ -1290,73 +1278,6 @@ module Gamificationengine
 
 module Entities
 
-module MarketPlace
-
-  # (no documentation provided)
-  class MarketPlace 
-
-    # The markeptlace&#39;s id as int.
-    attr_accessor :id
-    # A list of all existing offers a player can bid for.
-    attr_accessor :offers
-
-    # the json hash for this MarketPlace
-    def to_jaxb_json_hash
-      _h = {}
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      if !offers.nil?
-        _ha = Array.new
-        offers.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['offers'] = _ha
-      end
-      return _h
-    end
-
-    # the json (string form) for this MarketPlace
-    def to_json
-      to_jaxb_json_hash.to_json
-    end
-
-    #initializes this MarketPlace with a json hash
-    def init_jaxb_json_hash(_o)
-      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
-      if !_o['offers'].nil?
-        @offers = Array.new
-        _oa = _o['offers']
-        _oa.each { | _item | @offers.push Info::Interactivesystems::Gamificationengine::Entities::MarketPlace::Offer.from_json(_item) }
-      end
-    end
-
-    # constructs a MarketPlace from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Info
-
-module Interactivesystems
-
-module Gamificationengine
-
-module Entities
-
   # (no documentation provided)
   class PlayerGroup 
 
@@ -1471,6 +1392,73 @@ module Entities
       end
     end
   end
+
+end
+
+end
+
+end
+
+end
+
+module Info
+
+module Interactivesystems
+
+module Gamificationengine
+
+module Entities
+
+module MarketPlace
+
+  # (no documentation provided)
+  class MarketPlace 
+
+    # The markeptlace&#39;s id as int.
+    attr_accessor :id
+    # A list of all existing offers a player can bid for.
+    attr_accessor :offers
+
+    # the json hash for this MarketPlace
+    def to_jaxb_json_hash
+      _h = {}
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      if !offers.nil?
+        _ha = Array.new
+        offers.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['offers'] = _ha
+      end
+      return _h
+    end
+
+    # the json (string form) for this MarketPlace
+    def to_json
+      to_jaxb_json_hash.to_json
+    end
+
+    #initializes this MarketPlace with a json hash
+    def init_jaxb_json_hash(_o)
+      @id = Fixnum.from_json(_o['id']) unless _o['id'].nil?
+      if !_o['offers'].nil?
+        @offers = Array.new
+        _oa = _o['offers']
+        _oa.each { | _item | @offers.push Info::Interactivesystems::Gamificationengine::Entities::MarketPlace::Offer.from_json(_item) }
+      end
+    end
+
+    # constructs a MarketPlace from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
 
 end
 
@@ -1720,39 +1708,39 @@ module Time
   class LocalDateTime 
 
     # (no documentation provided)
+    attr_accessor :minute
+    # (no documentation provided)
+    attr_accessor :year
+    # (no documentation provided)
+    attr_accessor :dayOfWeek
+    # (no documentation provided)
+    attr_accessor :month
+    # (no documentation provided)
+    attr_accessor :nano
+    # (no documentation provided)
     attr_accessor :monthValue
     # (no documentation provided)
     attr_accessor :dayOfMonth
     # (no documentation provided)
-    attr_accessor :second
-    # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
-    attr_accessor :dayOfWeek
-    # (no documentation provided)
-    attr_accessor :nano
-    # (no documentation provided)
-    attr_accessor :month
-    # (no documentation provided)
-    attr_accessor :year
+    attr_accessor :hour
     # (no documentation provided)
     attr_accessor :dayOfYear
     # (no documentation provided)
-    attr_accessor :hour
+    attr_accessor :second
 
     # the json hash for this LocalDateTime
     def to_jaxb_json_hash
       _h = {}
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
+      _h['year'] = year.to_jaxb_json_hash unless year.nil?
+      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
+      _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
       _h['monthValue'] = monthValue.to_jaxb_json_hash unless monthValue.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
-      _h['second'] = second.to_jaxb_json_hash unless second.nil?
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
-      _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
-      _h['nano'] = nano.to_jaxb_json_hash unless nano.nil?
-      _h['month'] = month.to_jaxb_json_hash unless month.nil?
-      _h['year'] = year.to_jaxb_json_hash unless year.nil?
-      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
       _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
+      _h['dayOfYear'] = dayOfYear.to_jaxb_json_hash unless dayOfYear.nil?
+      _h['second'] = second.to_jaxb_json_hash unless second.nil?
       return _h
     end
 
@@ -1763,16 +1751,16 @@ module Time
 
     #initializes this LocalDateTime with a json hash
     def init_jaxb_json_hash(_o)
+      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
+      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
+      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
+      @month = String.from_json(_o['month']) unless _o['month'].nil?
+      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
       @monthValue = Fixnum.from_json(_o['monthValue']) unless _o['monthValue'].nil?
       @dayOfMonth = Fixnum.from_json(_o['dayOfMonth']) unless _o['dayOfMonth'].nil?
-      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
-      @minute = Fixnum.from_json(_o['minute']) unless _o['minute'].nil?
-      @dayOfWeek = String.from_json(_o['dayOfWeek']) unless _o['dayOfWeek'].nil?
-      @nano = Fixnum.from_json(_o['nano']) unless _o['nano'].nil?
-      @month = String.from_json(_o['month']) unless _o['month'].nil?
-      @year = Fixnum.from_json(_o['year']) unless _o['year'].nil?
-      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
       @hour = Fixnum.from_json(_o['hour']) unless _o['hour'].nil?
+      @dayOfYear = Fixnum.from_json(_o['dayOfYear']) unless _o['dayOfYear'].nil?
+      @second = Fixnum.from_json(_o['second']) unless _o['second'].nil?
     end
 
     # constructs a LocalDateTime from a (parsed) JSON hash
@@ -2348,19 +2336,19 @@ module Rewards
   class Badge < Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward 
 
     # The URL of the associated icon.
-    attr_accessor :icon
+    attr_accessor :iconURL
 
     # the json hash for this Badge
     def to_jaxb_json_hash
       _h = super
-      _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
+      _h['iconURL'] = iconURL.to_jaxb_json_hash unless iconURL.nil?
       return _h
     end
 
     #initializes this Badge with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-      @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
+      @iconURL = Java::Net::URL.from_json(_o['iconURL']) unless _o['iconURL'].nil?
     end
 
     # constructs a Badge from a (parsed) JSON hash
@@ -2505,19 +2493,19 @@ module Rewards
   class Achievement < Info::Interactivesystems::Gamificationengine::Entities::Rewards::PermanentReward 
 
     # The URL of the icon.
-    attr_accessor :icon
+    attr_accessor :iconURL
 
     # the json hash for this Achievement
     def to_jaxb_json_hash
       _h = super
-      _h['icon'] = icon.to_jaxb_json_hash unless icon.nil?
+      _h['iconURL'] = iconURL.to_jaxb_json_hash unless iconURL.nil?
       return _h
     end
 
     #initializes this Achievement with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-      @icon = Java::Net::URL.from_json(_o['icon']) unless _o['icon'].nil?
+      @iconURL = Java::Net::URL.from_json(_o['iconURL']) unless _o['iconURL'].nil?
     end
 
     # constructs a Achievement from a (parsed) JSON hash
