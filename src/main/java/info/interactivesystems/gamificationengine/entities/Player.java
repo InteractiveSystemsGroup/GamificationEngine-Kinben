@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * player has.
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo", "password", "avatar" })
+@JsonIgnoreProperties({ "belongsTo", "password", "avatar", "contactList" })
 public class Player {
 
 	@Id
@@ -53,8 +53,9 @@ public class Player {
 	private Organisation belongsTo;
 
 	@NotNull
+	@Column(unique=true, nullable=false) 
 	private String nickname;
-
+ 
 	@NotNull
 	private String password;
 
@@ -101,7 +102,6 @@ public class Player {
 		belongsToRoles = new ArrayList<>();
 		contactList = new ArrayList<>();
 		setActive(true);
-
 	}
 
 
@@ -635,5 +635,21 @@ public class Player {
 				belongsToRoles.add(role);
 			}
 		}
+	}
+	
+	/**
+	 * This method checks, if the passed nickname of the user is already used by another user.
+	 * 
+	 * @param nickname
+	 * 			Nickname that is checked.
+	 * @param players
+	 * 			All players of the same organisationation.
+	 * @return True if the nickname is already used, false if not.
+	 */
+	public boolean checkNickname(String nickname, List<Player> players){
+		for (Player player : players) {
+			if(player.getNickname().equals(nickname))return true;
+		}
+		return false;
 	}
 }

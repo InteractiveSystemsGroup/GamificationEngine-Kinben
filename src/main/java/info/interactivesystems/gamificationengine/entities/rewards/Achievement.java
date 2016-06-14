@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Achievement extends PermanentReward {
 
 
-	private URL icon;
+	private URL iconURL;
 	
 	@Lob
 //	@Basic(fetch = FetchType.LAZY)
@@ -60,8 +60,8 @@ public class Achievement extends PermanentReward {
 	 * 
 	 * @return The URL of the icon.
 	 */
-	public URL getIcon() {
-		return icon;
+	public URL getIconURL() {
+		return iconURL;
 	}
 
 	/**
@@ -70,8 +70,8 @@ public class Achievement extends PermanentReward {
 	 * @param icon 
 	 *            The URL of the icon that should be set.
 	 */
-	public void setIcon(URL icon) {
-		this.icon = icon;
+	public void setIconURL(URL icon) {
+		this.iconURL = icon;
 	}
 
 	/**

@@ -256,7 +256,7 @@ public class RewardApi {
 		if (url != null) {
 			try {
 				URL icon = new URL(url);
-				reward.setIcon(icon);
+				reward.setIconURL(icon);
 				reward.setImageIcon(ImageUtils.imageToByte(url));
 			} catch (MalformedURLException e) {
 				throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
@@ -303,7 +303,7 @@ public class RewardApi {
 		if (url != null) {
 			try {
 				URL icon = new URL(url);
-				reward.setIcon(icon);
+				reward.setIconURL(icon);
 				reward.setImageIcon(ImageUtils.imageToByte(url));
 			} catch (MalformedURLException e) {
 				throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
@@ -455,14 +455,10 @@ public class RewardApi {
 		if (!(reward instanceof Achievement)) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Achievement: " + reward);
 		}
-		byte[] image = ((Achievement) reward).getImageIcon();
-		// Image img;
-		// ImageIcon icon2 = new ImageIcon(image);
-		// img = icon2.getImage();
-
-		return ResponseSurrogate.of(new Object() {
-			public byte[] bits = image;
-		});
+		
+		//byte[] image = ((Achievement) reward).getImageIcon();
+		String b64 = ImageUtils.encodeByteArrayToBase64(((Achievement) reward).getImageIcon());
+		return ResponseSurrogate.of(b64);
 	}
 
 	/**
@@ -489,14 +485,11 @@ public class RewardApi {
 		if (!(reward instanceof Badge)) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Badge: " + reward);
 		}
-		byte[] image = ((Badge) reward).getImageIcon();
-		// Image img;
-		// ImageIcon icon2 = new ImageIcon(image);
-		// img = icon2.getImage();
-
-		return ResponseSurrogate.of(new Object() {
-			public byte[] bits = image;
-		});
+		
+//		byte[] image = ((Badge) reward).getImageIcon();
+		String b64 = ImageUtils.encodeByteArrayToBase64(((Badge) reward).getImageIcon());
+		
+		return ResponseSurrogate.of(b64);
 
 	}
 
@@ -553,7 +546,7 @@ public class RewardApi {
 			case "icon":
 				try {
 					URL icon = new URL(value);
-					((Achievement) reward).setIcon(icon);
+					((Achievement) reward).setIconURL(icon);
 					((Achievement) reward).setImageIcon(ImageUtils.imageToByte(value));
 				} catch (MalformedURLException e) {
 					throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");
@@ -620,7 +613,7 @@ public class RewardApi {
 			case "icon":
 				try {
 					URL icon = new URL(value);
-					((Badge) reward).setIcon(icon);
+					((Badge) reward).setIconURL(icon);
 					((Badge) reward).setImageIcon(ImageUtils.imageToByte(value));
 				} catch (MalformedURLException e) {
 					throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");

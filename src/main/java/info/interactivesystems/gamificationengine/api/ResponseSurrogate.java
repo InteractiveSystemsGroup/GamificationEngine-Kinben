@@ -2,7 +2,6 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.exeption.ErrorMessage;
 import info.interactivesystems.gamificationengine.api.exeption.Notification;
-import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.util.List;
 import java.util.Optional;

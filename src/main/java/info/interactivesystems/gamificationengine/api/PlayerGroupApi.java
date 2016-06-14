@@ -272,6 +272,8 @@ public class PlayerGroupApi {
 	/**
 	 * Returns the avatar which is associated with a group of players. To identify the group its id and 
 	 * the API key is needed to which the group belongs to. 
+	 * The byte array of the avatar image is Base64-encoded to ensure that the data is transmitted 
+	 * correctly as String. 
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -295,9 +297,10 @@ public class PlayerGroupApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
 		}
 		
-		byte[] bytes = group.getGroupLogo();
-
-		return ResponseSurrogate.of(bytes);
+//		byte[] bytes = group.getGroupLogo();
+		String b64 = ImageUtils.encodeByteArrayToBase64(group.getGroupLogo());
+		
+		return ResponseSurrogate.of(b64);
 	}
 	
 	/**
@@ -552,4 +555,5 @@ public class PlayerGroupApi {
 
 		return ResponseSurrogate.deleted(plGroup);
 	}
+	
 }

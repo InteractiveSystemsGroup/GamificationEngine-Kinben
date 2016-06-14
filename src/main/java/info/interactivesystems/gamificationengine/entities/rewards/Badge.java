@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Badge extends PermanentReward {
 
 
-	private URL icon;
+	private URL iconURL;
 
 	@Lob
 	@Column(columnDefinition = "BLOB")
@@ -39,8 +39,8 @@ public class Badge extends PermanentReward {
 	 * 
 	 * @return The URL of the associated icon.
 	 */
-	public URL getIcon() {
-		return icon;
+	public URL getIconURL() {
+		return iconURL;
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class Badge extends PermanentReward {
 	 * @param icon
 	 *            The URL of the associated icon.
 	 */
-	public void setIcon(URL icon) {
-		this.icon = icon;
+	public void setIconURL(URL icon) {
+		this.iconURL = icon;
 	}
 
 	/**

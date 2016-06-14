@@ -19,6 +19,7 @@ import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPla
 import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
+import info.interactivesystems.gamificationengine.utils.OfferMarketPlace;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -156,6 +157,29 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.deleted(market);
 	}
 
+	/**
+	 * Gets all marketplaces of an organisation with all current offers.
+	 * 
+	 * @param apiKey
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which this goal belongs to.
+	 * @return Return of all MarketPlaces as JSON.
+	 */
+	@GET
+	@Path("/markets/*")
+	@TypeHint(MarketPlace[].class)
+	public Response getAllMarketPlaces(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
+		
+		for (MarketPlace m : markets) {
+			log.debug("| MarketPlacee:" + m.getId());
+		}
+
+		return ResponseSurrogate.of(markets);
+	}
+	
+	
 	/**
 	 * Creates a new group of offer and so the method generates the offer-id. The organisation's API key is 
 	 * mandatory otherwise a warning with the hint for a non valid API key is returned. 
@@ -326,6 +350,33 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.created(bid);
 	}
 
+	
+	/**
+	 * With this method one specific offer can be requested. If the API key is not valid 
+	 * an analogous message is returned. It is also checked, if the id is a positive number otherwise a message 
+	 * for an invalid number is returned.
+	 * 
+	 * @param offerId
+	 * 			 The id of the offer that should be changed. This parameter is required.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return Response of Offer in JSON.
+	 */
+	@GET
+	@Path("/offer/{offerId}")
+	@TypeHint(Offer.class)
+	public Response getOffer(
+			@PathParam("offerId") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		int offId = ValidateUtils.requireGreaterThanZero(offerId);
+		Offer offer = marketPlDao.getOffer(offId, apiKey);
+		ValidateUtils.requireNotNull(offId, offer);
+
+		return ResponseSurrogate.of(offer);
+	}
+	
 	
 	/**
 	 * Gets all offers of an organisation (independent of the marketplace). If the API key is not valid 
@@ -833,6 +884,8 @@ public class MarketPlaceApi {
 			marketPlDao.insertMarketPlace(market);
 			log.debug("offer removed form marketplace");
 			
+			marketPlDao.deleteOffer(idOffer, apiKey);
+			
 			return ResponseSurrogate.created("Task " + task.getId() + "completed.");
 		}
 	
@@ -900,20 +953,30 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.updated(offer);
 	}
 
-	
+	/**
+	 * This method returns a list with all ids of offers that contain a specific task. This is irrespective 
+	 * of the marketplace. 
+	 *   
+	 * @param taskId
+	 * 			The id of the task, which all returned offers contain.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return A list of all offers' ids that contain the task with the passed id as a list. 
+	 */
 	@GET
 	@Path("/offers/{taskId}/*")
-	@TypeHint(Offer[].class)
+	@TypeHint(Integer[].class)
 	@JsonIgnoreProperties({ "player" })
 	public Response getAllOffersByTask(
-			@PathParam("taskId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String taskId,
+			@PathParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		int idTask = ValidateUtils.requireGreaterThanZero(taskId);
 		Task task = taskDao.getTask(idTask, apiKey);
 		
 		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
-		List<Integer> matchingOffers = new ArrayList();
+		List<Integer> matchingOffers = new ArrayList<>();
 		
 		for (Offer offer : offers) {
 			log.debug("| Offer:" + offer.getId());
@@ -922,4 +985,48 @@ public class MarketPlaceApi {
 
 		return ResponseSurrogate.of(matchingOffers);
 	}
+	
+	
+	/**
+	 * This method returns a list with all offers that contain a specific task and the offer's 
+	 * marketplace. 
+	 * 
+	 * @param taskId
+	 * 			The id of the task, which all returned offers contain.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *            to which the offer belongs to.
+	 * @return A list of all offers and their marketplaces which contain the task with the 
+	 * 			passed id as a list. 
+	 */
+	@GET
+	@Path("/offers/{taskId}/market/*")
+	@TypeHint(Offer[].class)
+	@JsonIgnoreProperties({ "player" })
+	public Response getAllMarketPlaceOffersByTask(
+			@PathParam("taskId") @NotNull @ValidPositiveDigit(message = "The task id must be a valid number") String taskId,
+			@QueryParam("apiKey") @ValidApiKey String apiKey) {
+		
+		int idTask = ValidateUtils.requireGreaterThanZero(taskId);
+		Task task = taskDao.getTask(idTask, apiKey);
+		
+		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
+		
+		ArrayList<OfferMarketPlace> offList = new ArrayList<OfferMarketPlace>();
+		
+		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
+		for (MarketPlace marketPlace : markets) {
+			List<Offer> marketOffers = marketPlace.getOffers();
+			for (Offer offer : offers) {
+				if(marketOffers.contains(offer)){
+					OfferMarketPlace offMarP = new OfferMarketPlace(offer, marketPlace.getId());
+					offList.add(offMarP);
+				}
+			}
+		}
+		
+		return ResponseSurrogate.of(offList);
+	}
+	
+	
 }

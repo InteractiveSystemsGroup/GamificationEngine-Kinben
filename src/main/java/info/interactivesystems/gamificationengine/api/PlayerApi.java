@@ -6,9 +6,11 @@ import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigi
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerDAO;
+import info.interactivesystems.gamificationengine.dao.PlayerGroupDAO;
 import info.interactivesystems.gamificationengine.dao.RoleDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.goal.FinishedGoal;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
@@ -59,7 +61,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
  * At a later point of time it is possible to change the password, nickname, avatar and the roles or contacts a 
  * player has.
  * In the responses the player's password and avatar isn't returned because of security reasons respectively overload.
- * To get the avatar of a player the method getAvatar can be called.
+ * To get the avatar of a player a specific get request can be sent ("/player/{id}/avatar").
  */
 @Path("/player")
 @Stateless
@@ -73,6 +75,9 @@ public class PlayerApi {
 	PlayerDAO playerDao;
 	@Inject
 	RoleDAO roleDao;
+	@Inject
+	PlayerGroupDAO groupDao;
+	
 
 	/**
 	 * Creates a new player and so the method generates the player-id. The organisation's API key 
@@ -117,12 +122,18 @@ public class PlayerApi {
 		List<Integer> roleIds1 = new ArrayList<>(roleIds);
 		roleIds1.removeAll(roles.stream().map(Role::getId).collect(Collectors.toList()));
 		if (!roleIds1.isEmpty()) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, role ids don't exists " + roleIds1);
+			throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, role ids don't exist " + roleIds1);
 		}
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
-
+		
 		Player player = new Player();
+		
+		List<Player> existingPlayers = playerDao.getPlayers(apiKey);
+		if(player.checkNickname(nickname, existingPlayers)){
+			throw new ApiError(Response.Status.FORBIDDEN, "The nickname is used by another player. Please choose another one.");
+		}
+		
 		player.setBelongsTo(organisation);
 		player.setPassword(SecurityTools.encryptWithSHA512(password));
 		player.setReference(reference);
@@ -457,7 +468,9 @@ public class PlayerApi {
 
 	/**
 	 * Returns the avatar which is associated with a player. To identify the player her/his id and 
-	 * the API key is needed to which the player belongs to. 
+	 * the API key is needed to which the player belongs to.
+	 * The byte array of the avatar image is Base64-encoded to ensure that the data is transmitted 
+	 * correctly as String.  
 	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
 	 * is a positive number otherwise a message for an invalid number is returned.
 	 * 
@@ -478,9 +491,9 @@ public class PlayerApi {
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
 		
-		byte[] bytes = player.getAvatar();
-
-		return ResponseSurrogate.of(bytes);
+		String b64= ImageUtils.encodeByteArrayToBase64(player.getAvatar());
+		
+		return ResponseSurrogate.of(b64);
 	}
 
 	/**
@@ -757,5 +770,37 @@ public class PlayerApi {
 		List<Player> contacts = player.getContactList();
 
 		return ResponseSurrogate.of(contacts);
+	}
+	
+	/**
+	 * Gets a list of all groups in which a player is a member. 
+	 * 
+	 * @param id 
+	 * 			Required path parameter as integer which uniquely identify the Player.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
+	 * @return Response of all groups of a player in JSON.
+	 */
+	@GET
+	@Path("/{id}/groups")
+	@TypeHint(Player[].class)
+	public Response playerGroups(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		log.debug("get groups of a player");
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+		ValidateUtils.requireNotNull(playerId, player);
+		
+		List<PlayerGroup> allGroups = groupDao.getAllGroups(apiKey);
+		List<PlayerGroup> groups = new ArrayList<>();
+
+		for (PlayerGroup g : allGroups) {
+			if (g.getPlayers().contains(player)) {
+				groups.add(g);
+			}
+		}
+
+		return ResponseSurrogate.of(groups);
 	}
 }

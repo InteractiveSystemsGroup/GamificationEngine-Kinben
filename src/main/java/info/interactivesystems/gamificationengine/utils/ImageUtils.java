@@ -10,8 +10,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ImageUtils {
 
+	private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
+	
 	/**
 	 * The passed String represents an URL. With this URL a byte[] is created from the image file that was passed as an Stings that
 	 * represents an URL. The format of the image has to be .jpg or .png. Otherwise 
@@ -34,7 +40,7 @@ public class ImageUtils {
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(originalImage, format, baos);
 				byteImage = baos.toByteArray();
-
+				 
 			} catch (IOException e) {
 				throw new ApiError(Response.Status.FORBIDDEN, "No valid url was transferred");
 			}
@@ -43,5 +49,17 @@ public class ImageUtils {
 		}
 		return byteImage;
 	}
-
+	
+	/**
+	 * The passed byte array is Base64-encoded to ensure that the data is transmitted 
+	 * correctly as String.  
+	 * 
+	 * @param bytes
+	 * 			The byte array that should be encoded.
+	 * @return The Base64 encoded String of the byte array.
+	 */
+	public static String encodeByteArrayToBase64(byte[] bytes){
+		String b64 = Base64.encodeBase64String(bytes);
+		return b64;
+	}
 }
