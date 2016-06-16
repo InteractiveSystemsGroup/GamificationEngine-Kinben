@@ -36,7 +36,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerLevelApi {
 
-	private static final Logger log = LoggerFactory.getLogger(PlayerLevelApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerLevelApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -66,7 +66,7 @@ public class PlayerLevelApi {
 	public Response createNewPlayerLevel(@QueryParam("levelName") @NotNull String name,
 			@QueryParam("levelIndex") @NotNull @ValidPositiveDigit String index, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNewPlayerLevelcalled");
+		LOGGER.debug("createNewPlayerLevelcalled");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -151,7 +151,7 @@ public class PlayerLevelApi {
 	public Response changePlayerLevelAttributes(@PathParam("id") @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("change Attribute of PlayerLevel");
+		LOGGER.debug("change Attribute of PlayerLevel");
 
 		int levelId = ValidateUtils.requireGreaterThanZero(id);
 		PlayerLevel playerLevel = playerLevelDao.getPlayerLevel(levelId, apiKey);

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 @DiscriminatorValue("TRULEANY")
 public class DoAnyTaskRule extends TaskRule {
 
-	private static final Logger log = LoggerFactory.getLogger(DoAllTasksRule.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DoAllTasksRule.class);
 	
 	/**
 	 * Gets the tasks of a DoAnyTaskRule that are already finished. So the user gets a status which tasks she/he 
@@ -102,7 +102,7 @@ public class DoAnyTaskRule extends TaskRule {
 
 		Map<String, Long> finishedTasks;
 
-		log.debug("DoAnyTaskRule! ");
+		LOGGER.debug("DoAnyTaskRule! ");
 		
 		if (lastDate != null) {
 

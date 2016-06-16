@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 // @MappedSuperclass
 public abstract class TaskRule extends GoalRule {
 
-	private static final Logger log = LoggerFactory.getLogger(TaskRule.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskRule.class);
 	
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	// @JoinTable(name = "GoalRule_Task", joinColumns = @JoinColumn(name =
@@ -112,11 +112,11 @@ public abstract class TaskRule extends GoalRule {
 	public abstract boolean checkRule(List<FinishedTask> finishedPlayerTasks, LocalDateTime lastDate);
 	
 	public static void logTaskRuleDetails(String type, String apiKey, String name, String description, String taskIds) {
-		log.debug("createNewTaskRule called");
-		log.debug("Type: " + type);
-		log.debug("ApiKey: " + apiKey);
-		log.debug("Name: " + name);
-		log.debug("Description: " + description);
-		log.debug("TaskIds: " + taskIds);
+		LOGGER.debug("createNewTaskRule called");
+		LOGGER.debug("Type: " + type);
+		LOGGER.debug("ApiKey: " + apiKey);
+		LOGGER.debug("Name: " + name);
+		LOGGER.debug("Description: " + description);
+		LOGGER.debug("TaskIds: " + taskIds);
 	}
 }

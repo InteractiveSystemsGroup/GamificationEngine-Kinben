@@ -40,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({ "belongsTo" })
 public class Goal {
 
-	private static final Logger log = LoggerFactory.getLogger(Goal.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Goal.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -282,22 +282,22 @@ public class Goal {
 		// checks if goal is already finished
 		if (oldFinishedGoals.size() > 0) {
 			// goal is already finished
-			log.debug("Goal: is on finishedGoals list");
+			LOGGER.debug("Goal: is on finishedGoals list");
 			// check if goal is repeatable
 			if (goal.isRepeatable()) {
 				// get finishedDate of last goal
-				log.debug("Goal: is repeatable");
+				LOGGER.debug("Goal: is repeatable");
 				lastDate = oldFinishedGoals.get(oldFinishedGoals.size() - 1).getFinishedDate();
-				log.debug("Goal: last finished: " + lastDate);
+				LOGGER.debug("Goal: last finished: " + lastDate);
 			} else {
-				log.debug("Goal: is not repeatable -> break");
+				LOGGER.debug("Goal: is not repeatable -> break");
 				return null;
 			}
 
 			// checks if goal/rule is completed after lastDate
 			if (rule.checkRule(finishedTasksList, lastDate)) {
 				// add goal to tempFinishedGoals list
-				log.debug("Goal: Rule is completed! -> add to fGoalsList (temp)");
+				LOGGER.debug("Goal: Rule is completed! -> add to fGoalsList (temp)");
 				FinishedGoal fGoal = new FinishedGoal();
 				fGoal.setGoal(goal);
 				fGoal.setFinishedDate(finishedDate);
@@ -305,11 +305,11 @@ public class Goal {
 			}
 		} else {
 			// goal has not yet been finished
-			log.debug("Goal: is NOT on finished Goals list");
+			LOGGER.debug("Goal: is NOT on finished Goals list");
 			// checks if goal/rule is completed after lastDate
 			if (rule.checkRule(finishedTasksList, lastDate)) {
 				// add goal to tempFinishedGoals list
-				log.debug("Goal: Rule is completed! -> add to fGoalsList (temp)");
+				LOGGER.debug("Goal: Rule is completed! -> add to fGoalsList (temp)");
 				FinishedGoal fGoal = new FinishedGoal();
 				fGoal.setGoal(goal);
 				fGoal.setFinishedDate(finishedDate);
@@ -321,12 +321,12 @@ public class Goal {
 	}
 
 	public static void logGoalDetails(String name, String repeatable, String ruleId, String rewardIds, String roleIds, String isGroupGoal, String apiKey) {
-		log.debug("createNewGoal apiKey");
-		log.debug("apiKey: " + apiKey);
-		log.debug("name: " + name);
-		log.debug("repeatable: " + repeatable);
-		log.debug("ruleId: " + ruleId);
-		log.debug("rewardIds: " + rewardIds);
-		log.debug("rewardIds: " + roleIds);
+		LOGGER.debug("createNewGoal apiKey");
+		LOGGER.debug("apiKey: " + apiKey);
+		LOGGER.debug("name: " + name);
+		LOGGER.debug("repeatable: " + repeatable);
+		LOGGER.debug("ruleId: " + ruleId);
+		LOGGER.debug("rewardIds: " + rewardIds);
+		LOGGER.debug("rewardIds: " + roleIds);
 	}
 }

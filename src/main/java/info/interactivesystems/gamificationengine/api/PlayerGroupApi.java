@@ -54,7 +54,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerGroupApi {
 
-	private static final Logger log = LoggerFactory.getLogger(PlayerGroupApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerGroupApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -95,7 +95,7 @@ public class PlayerGroupApi {
 		PlayerGroup group = new PlayerGroup();
 		group.setName(groupName);
 
-		List<Player> players = group.parseIdsToPlayer_List(playerIds, playerDao, apiKey);
+		List<Player> players = group.parseIdsToPlayerList(playerIds, playerDao, apiKey);
 		group.setPlayers(players);
 
 		group.setBelongsTo(organisation);
@@ -186,7 +186,7 @@ public class PlayerGroupApi {
 			@QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change Attribute of PlayerGroup");
+		LOGGER.debug("change Attribute of PlayerGroup");
 
 		int groupId = ValidateUtils.requireGreaterThanZero(id);
 		PlayerGroup plGroup = groupDao.getPlayerGroup(groupId, apiKey);
@@ -257,7 +257,7 @@ public class PlayerGroupApi {
 	@TypeHint(FinishedGoal[].class)
 	public Response getPlayerGroupFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getFinishedGoals of Group requested");
+		LOGGER.debug("getFinishedGoals of Group requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		
 		if (group == null) {
@@ -288,7 +288,7 @@ public class PlayerGroupApi {
 	@Path("{id}/avatar")
 	@TypeHint(byte[].class)
 	public Response getAvatar(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("get groups's avatar image");
+		LOGGER.debug("get groups's avatar image");
 
 		int groupId = ValidateUtils.requireGreaterThanZero(id);
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(groupId), apiKey);
@@ -321,7 +321,7 @@ public class PlayerGroupApi {
 	@TypeHint(int.class)
 	public Response getPlayerGroupPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned points from group requested");
+		LOGGER.debug("get earned points from group requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		
 		if (group == null) {
@@ -351,7 +351,7 @@ public class PlayerGroupApi {
 	@TypeHint(int.class)
 	public Response getPlayerGroupCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned coins from group of players requested");
+		LOGGER.debug("get earned coins from group of players requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		
 		if (group == null) {
@@ -381,7 +381,7 @@ public class PlayerGroupApi {
 	@TypeHint(PermanentReward[].class)
 	public Response getPlayerGroupRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getPlayerGroupPermanentRewards requested");
+		LOGGER.debug("getPlayerGroupPermanentRewards requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 				
 		if (group == null) {
@@ -410,7 +410,7 @@ public class PlayerGroupApi {
 	@TypeHint(Badge[].class)
 	public Response getPlayerGroupBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Badges from PlayerGroup requested");
+		LOGGER.debug("get earned Badges from PlayerGroup requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		
 		if (group == null) {
@@ -439,7 +439,7 @@ public class PlayerGroupApi {
 	@TypeHint(Achievement[].class)
 	public Response getPlayerGroupAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		LOGGER.debug("get earned Achievements from Player requested");
 		PlayerGroup group = groupDao.getPlayerGroup(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		
 		if (group == null) {
@@ -471,7 +471,7 @@ public class PlayerGroupApi {
 	public Response addPlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupId,
 			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("adding players to group called");
+		LOGGER.debug("adding players to group called");
 
 		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
 		List<Player> playersToAdd = playerDao.getPlayers(listplayIds, apiKey); 
@@ -512,7 +512,7 @@ public class PlayerGroupApi {
 	public Response removePlayers(@PathParam("id")@NotNull @ValidPositiveDigit String groupId,
 			@QueryParam("playerIds") @NotNull @ValidListOfDigits String playerIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("removing players of a group called");
+		LOGGER.debug("removing players of a group called");
 
 		List<Integer> listplayIds = StringUtils.stringArrayToIntegerList(playerIds);
 		List<Player> playersToRemove = playerDao.getPlayers(listplayIds, apiKey); 

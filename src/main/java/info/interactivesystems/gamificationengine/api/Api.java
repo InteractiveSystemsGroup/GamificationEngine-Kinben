@@ -13,9 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.webcohesion.enunciate.metadata.rs.TypeHint;
 
 
@@ -26,8 +23,6 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Stateless
 @Produces(MediaType.APPLICATION_JSON)
 public class Api {
-
-	private static final Logger log = LoggerFactory.getLogger(Api.class);
 
 	/**
 	 * A State is the default answer of the engine. It gives information about the current date 

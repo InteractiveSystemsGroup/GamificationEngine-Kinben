@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 // matching response type, image instead of jason
 public class QrApi {
 
-	private static final Logger log = LoggerFactory.getLogger(QrApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(QrApi.class);
 
 	/**
 	 * Creates a QR code from any content.
@@ -35,7 +35,7 @@ public class QrApi {
 	@GET
 	@Path("/{content}")
 	public Response getQrCode(@PathParam("content") String content) {
-		log.debug("GetQrCode called");
+		LOGGER.debug("GetQrCode called");
 
 		// create QRCode from "content"
 		ByteArrayOutputStream out = QRCode.from(content).to(ImageType.PNG).stream();

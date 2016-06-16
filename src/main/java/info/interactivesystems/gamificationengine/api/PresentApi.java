@@ -62,7 +62,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class PresentApi {
 
-	private static final Logger log = LoggerFactory.getLogger(PresentApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PresentApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -103,7 +103,7 @@ public class PresentApi {
 			@QueryParam("content") String content,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create New TestMessage called");
+		LOGGER.debug("create New TestMessage called");
 		
 		int sendId = ValidateUtils.requireGreaterThanZero(senderId);
 		
@@ -115,7 +115,7 @@ public class PresentApi {
 		receivers = receiverList(receiverIds, apiKey);
 		
 		for (Player player : receivers) {
-			log.debug("Receivers: " + player.getId());
+			LOGGER.debug("Receivers: " + player.getId());
 		} 
 		
 		TextMessage message = new TextMessage();
@@ -165,7 +165,7 @@ public class PresentApi {
 			@QueryParam("text") String textMessage,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNew ImageMessage called");
+		LOGGER.debug("createNew ImageMessage called");
 
 		int sendId = ValidateUtils.requireGreaterThanZero(senderId);
 		
@@ -177,7 +177,7 @@ public class PresentApi {
 		
 		receivers = receiverList(receiverIds, apiKey);
 		for (Player player : receivers) {
-			log.debug("Receivers: " + player.getId());
+			LOGGER.debug("Receivers: " + player.getId());
 		} 
 		
 		ImageMessage iMessage = new ImageMessage();
@@ -239,7 +239,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getboardMessages called");
+		LOGGER.debug("getboardMessages called");
 
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(playId, apiKey);
@@ -278,7 +278,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getMessages called");
+		LOGGER.debug("getMessages called");
 
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(playId, apiKey);
@@ -317,7 +317,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getImageMessages called");
+		LOGGER.debug("getImageMessages called");
 
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(playId, apiKey);
@@ -355,7 +355,7 @@ public class PresentApi {
 	public Response send(@PathParam("presentId") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("send a Present called");
+		LOGGER.debug("send a Present called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -363,7 +363,7 @@ public class PresentApi {
 		Present present = presentDao.getPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, present);
 		
-		log.debug("Receivers player: " + present.getId());
+		LOGGER.debug("Receivers player: " + present.getId());
 		
 		Set<Player> receiverSet = new HashSet<Player>(present.getReceiver());
 		List<Player> receivers = new ArrayList<>();
@@ -371,9 +371,9 @@ public class PresentApi {
 		
 		List<Board> boards = boardDao.getBoards(receivers, apiKey);
 
-		log.debug("List Boards Receivers: ");
+		LOGGER.debug("List Boards Receivers: ");
 		for (Board b : boards) {
-			log.debug("Copy Receivers: " + b.getOwner().getId());
+			LOGGER.debug("Copy Receivers: " + b.getOwner().getId());
 		} 
 		
 		List<Player> copyRecievers = new ArrayList<Player>(receivers);
@@ -388,17 +388,17 @@ public class PresentApi {
 			}
 		}
 
-		log.debug("present id: " + present.getId());
+		LOGGER.debug("present id: " + present.getId());
 		for (Player player : receivers) {
-			log.debug("receivers are: " + player.getId());
+			LOGGER.debug("receivers are: " + player.getId());
 		}
 
 		for (Player player : receivers) {
-			log.debug("receivers are: " + player.getId());
+			LOGGER.debug("receivers are: " + player.getId());
 		}
 
 		for (Board board : boards) {
-			log.debug("board: " + board.getId());
+			LOGGER.debug("board: " + board.getId());
 			board.add(present);
 		}
 
@@ -427,7 +427,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("receive a Present called");
+		LOGGER.debug("receive a Present called");
 
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
@@ -435,7 +435,7 @@ public class PresentApi {
 		Present present = presentDao.getPresent(presId, apiKey);
 		ValidateUtils.requireNotNull(presId, present);
 		
-		log.debug("present id: " + present.getId());
+		LOGGER.debug("present id: " + present.getId());
 
 		Player player = playerDao.getPlayer(playId, apiKey);
 		ValidateUtils.requireNotNull(playId, player);
@@ -443,7 +443,7 @@ public class PresentApi {
 		Board board = boardDao.getBoard(Integer.valueOf(playerId), apiKey);
 		board.checkBoardExists(board);
 		
-		log.debug("Board " + board.getId());
+		LOGGER.debug("Board " + board.getId());
 
 		board.acceptAndCreateAcceptedPresent(present);
 
@@ -472,14 +472,14 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("deny a Present called");
+		LOGGER.debug("deny a Present called");
 
 		Present present = presentDao.getPresent(ValidateUtils.requireGreaterThanZero(presentId), apiKey);
 		if (present == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to deny.");
 		}
 
-		log.debug("present id: " + present.getId());
+		LOGGER.debug("present id: " + present.getId());
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		if(player == null){
@@ -491,7 +491,7 @@ public class PresentApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "Player hasn't a board with presents that can be accepted.");
 		}
 		
-		log.debug("Board " + board.getId());
+		LOGGER.debug("Board " + board.getId());
 
 		board.denyPresent(present);
 
@@ -520,14 +520,14 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("archive a Present called");
+		LOGGER.debug("archive a Present called");
 
 		PresentAccepted accPresent = presentDao.getAcceptedPresent(ValidateUtils.requireGreaterThanZero(presentId), apiKey);
 		if (accPresent == null) {
 			throw new ApiError(Response.Status.NOT_FOUND, "No present to archive.");
 		}
 
-		log.debug("present id: " + accPresent.getId());
+		LOGGER.debug("present id: " + accPresent.getId());
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		if(player == null){
@@ -561,7 +561,7 @@ public class PresentApi {
 	public Response getInbox(@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get inbox");
+		LOGGER.debug("get inbox");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		if(player == null){
@@ -574,7 +574,7 @@ public class PresentApi {
 			board.setOwner(player);
 			board.setBelongsTo(player.getBelongsTo());
 		}
-		log.debug("Board " + board.getId());
+		LOGGER.debug("Board " + board.getId());
 
 		List<Present> presents = board.getInBox();
 		
@@ -601,7 +601,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get archived Messages called");
+		LOGGER.debug("get archived Messages called");
 
 		Player player = playerDao.getPlayer(Integer.valueOf(playerId), apiKey);
 		if(player == null){
@@ -640,7 +640,7 @@ public class PresentApi {
 	public Response deletePresent(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The present id must be a valid number") String presentId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("delete Present called");
+		LOGGER.debug("delete Present called");
 
 		int id = ValidateUtils.requireGreaterThanZero(presentId);
 		Present present = presentDao.getPresent(id, apiKey);
@@ -672,7 +672,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("delete Present called");
+		LOGGER.debug("delete Present called");
 
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);
@@ -715,7 +715,7 @@ public class PresentApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("delete Present called");
+		LOGGER.debug("delete Present called");
 
 		int presId = ValidateUtils.requireGreaterThanZero(presentId);
 		int playId = ValidateUtils.requireGreaterThanZero(playerId);

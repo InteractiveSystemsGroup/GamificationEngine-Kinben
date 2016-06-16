@@ -44,7 +44,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({ "belongsTo", "groupLogo" })
 public class PlayerGroup {
 
-	private static final Logger log = LoggerFactory.getLogger(GoalApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GoalApi.class);
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -436,16 +436,16 @@ public class PlayerGroup {
 	 * 			The API key of the organisation is needed to access the created players. 
 	 * @return A list of Players that are associated with the passed ids.
 	 */
-	public List<Player> parseIdsToPlayer_List(String playerIds,PlayerDAO playerDao, String apiKey){
+	public List<Player> parseIdsToPlayerList(String playerIds,PlayerDAO playerDao, String apiKey){
 		// Find all Players by Id
 		String[] playerIdList = playerIds.split(",");
 		List<Player> players = new ArrayList<>();
 
 		for (String playerIdString : playerIdList) {
-			log.debug("Player To Add: " + playerIdString);
+			LOGGER.debug("Player To Add: " + playerIdString);
 			Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(playerIdString), apiKey);
 			if (player != null) {
-				log.debug("Player added: " + player.getId());
+				LOGGER.debug("Player added: " + player.getId());
 				players.add(player);
 			}
 		}

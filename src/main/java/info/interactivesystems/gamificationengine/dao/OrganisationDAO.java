@@ -40,7 +40,7 @@ public class OrganisationDAO {
 	 */
 	public Organisation getOrganisation(int id) {
 		Query query = em.createQuery("select o from Organisation o where o.id=:id", Organisation.class);
-		query.setParameter("id", id);;
+		query.setParameter("id", id);
 		List list = query.getResultList();
 		if (list.isEmpty()) {
 			return null;

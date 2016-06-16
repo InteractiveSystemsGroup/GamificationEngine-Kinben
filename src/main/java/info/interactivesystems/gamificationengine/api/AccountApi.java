@@ -44,7 +44,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountApi {
 
-	private static final Logger log = LoggerFactory.getLogger(AccountApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountApi.class);
 
 	@Inject
 	AccountDAO accountDao;
@@ -75,7 +75,7 @@ public class AccountApi {
 	public Response create(@QueryParam("email") @NotNull @Email String email, @QueryParam("password") @NotNull String password,
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
 
-		log.debug("create account requested");
+		LOGGER.debug("create account requested");
 
 		if(accountDao.getAccount(email)!=null){
 			throw new ApiError(Response.Status.FORBIDDEN, "This mail address is already used.");
@@ -87,7 +87,7 @@ public class AccountApi {
 		account.setLastName(lastName);
 		accountDao.persist(account);
 
-		log.debug("Persisted account: %s", account);
+		LOGGER.debug("Persisted account: %s", account);
 		return ResponseSurrogate.created(account);
 	}
 
@@ -112,17 +112,17 @@ public class AccountApi {
 	@TypeHint(Account.class)
 	public Response get(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password) {
 
-		log.debug("get account requested");
+		LOGGER.debug("get account requested");
 
 		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
 		
 		if (!accountDao.checkCredentials(email, encryptedPassword)) {
-			log.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
+			LOGGER.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
 			throw new CredentialException(email);
 		}
 
 		Account account = accountDao.getAccount(email, encryptedPassword);
-		log.debug("Account requested: %s", account);
+		LOGGER.debug("Account requested: %s", account);
 		return ResponseSurrogate.of(account);
 	}
 	
@@ -151,11 +151,11 @@ public class AccountApi {
 	public Response update(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password,
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
 
-		log.debug("update account requested");
+		LOGGER.debug("update account requested");
 		
 		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
 		if (!accountDao.checkCredentials(email, encryptedPassword)) {
-			log.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
+			LOGGER.warn("Account with wrong credentials (email:\"%s\", pass:\"%s\") requested", email, password);
 			throw new CredentialException(email);
 		}
 
@@ -165,7 +165,7 @@ public class AccountApi {
 		Optional.ofNullable(lastName).ifPresent(account::setLastName);
 		accountDao.persist(account);
 
-		log.debug("Updated account: %s", account);
+		LOGGER.debug("Updated account: %s", account);
 		return ResponseSurrogate.updated(account);
 	}
 }

@@ -51,7 +51,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class RuleApi {
 
-	private static final Logger log = LoggerFactory.getLogger(RuleApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RuleApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -106,7 +106,7 @@ public class RuleApi {
 			}
 		}
 
-		log.debug("Tasks: " + tasks);
+		LOGGER.debug("Tasks: " + tasks);
 
 		switch (type) {
 		case "DoAllTasksRule":
@@ -160,7 +160,7 @@ public class RuleApi {
 	public Response createNewPointRule(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("points") @NotNull @ValidPositiveDigit String points, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNewPointRule called");
+		LOGGER.debug("createNewPointRule called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -270,7 +270,7 @@ public class RuleApi {
 	public Response changeRuleAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("change attribute of rule");
+		LOGGER.debug("change attribute of rule");
 
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
 		GoalRule rule = ruleDao.getRule(ruleId, apiKey);

@@ -75,7 +75,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class MarketPlaceApi {
 
-	private static final Logger log = LoggerFactory.getLogger(MarketPlaceApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MarketPlaceApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -110,7 +110,7 @@ public class MarketPlaceApi {
 	@TypeHint(MarketPlace.class)
 	public Response createMarketPlace(@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create new MarketPlace");
+		LOGGER.debug("create new MarketPlace");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -145,7 +145,7 @@ public class MarketPlaceApi {
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("delete Market");
+		LOGGER.debug("delete Market");
 //		if (marketId == null) {
 //			throw new ApiError(Response.Status.FORBIDDEN, "no marketPlaceId transferred");
 //		}
@@ -173,7 +173,7 @@ public class MarketPlaceApi {
 		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
 		
 		for (MarketPlace m : markets) {
-			log.debug("| MarketPlacee:" + m.getId());
+			LOGGER.debug("| MarketPlacee:" + m.getId());
 		}
 
 		return ResponseSurrogate.of(markets);
@@ -221,7 +221,7 @@ public class MarketPlaceApi {
 			@QueryParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create new Offer called");
+		LOGGER.debug("create new Offer called");
 
 		Task task = taskDao.getTask(ValidateUtils.requireGreaterThanZero(taskId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(taskId), task);
@@ -267,10 +267,10 @@ public class MarketPlaceApi {
 			offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(deadLine));
 		}
 
-		log.debug("Offer created  ");
+		LOGGER.debug("Offer created  ");
 		player.setCoins(player.getCoins() - ValidateUtils.requireGreaterThanZero(prize));
 
-		log.debug("Prize: " + player.getCoins());
+		LOGGER.debug("Prize: " + player.getCoins());
 		
 		marketPlace.addOffer(offer);
 		marketPlDao.insertOffer(offer);
@@ -303,7 +303,7 @@ public class MarketPlaceApi {
 			@QueryParam("prize") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String prize,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create new Bid called");
+		LOGGER.debug("create new Bid called");
 
 		if (ValidateUtils.requireGreaterThanZero(prize) <= 0) {
 			throw new ApiError(Response.Status.FORBIDDEN, "Please, give a bid greater than 0.");
@@ -320,9 +320,9 @@ public class MarketPlaceApi {
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
 		
-		log.debug("Bids:");
+		LOGGER.debug("Bids:");
 		for (Bid b : marketPlDao.getBidsForOffer(offer, apiKey)) {
-			log.debug("-" + b.getId());
+			LOGGER.debug("-" + b.getId());
 		}
 
 		Bid bid = new Bid();
@@ -334,17 +334,17 @@ public class MarketPlaceApi {
 		marketPlDao.insertBid(bid);
 		bid.setOffer(offer);
 
-		log.debug("Offerprize before: " + offer.getPrize());
+		LOGGER.debug("Offerprize before: " + offer.getPrize());
 		offer.addPrize(prize);
-		log.debug("Offerprize after: " + offer.getPrize());
+		LOGGER.debug("Offerprize after: " + offer.getPrize());
 
-		log.debug("Player coins before: " + player.getCoins());
+		LOGGER.debug("Player coins before: " + player.getCoins());
 		player.spent(Integer.valueOf(prize));
-		log.debug("Player coins after: " + player.getCoins());
+		LOGGER.debug("Player coins after: " + player.getCoins());
 		
-		log.debug("Bids:");
+		LOGGER.debug("Bids:");
 		for (Bid b : marketPlDao.getBidsForOffer(offer, apiKey)) {
-			log.debug("-" + b.getId());
+			LOGGER.debug("-" + b.getId());
 		}
 
 		return ResponseSurrogate.created(bid);
@@ -396,7 +396,7 @@ public class MarketPlaceApi {
 		List<Offer> offers = marketPlDao.getAllOffers(apiKey);
 		
 		for (Offer offer : offers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 		}
 
 		return ResponseSurrogate.of(offers);
@@ -438,7 +438,7 @@ public class MarketPlaceApi {
 		
 		
 		for (Offer offer : offers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 		}
 
 		return ResponseSurrogate.of(offers);
@@ -486,7 +486,7 @@ public class MarketPlaceApi {
 		}
 		
 		for (Offer offer : offers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 		}
 
 		return ResponseSurrogate.of(offers);
@@ -519,7 +519,7 @@ public class MarketPlaceApi {
 		offers = marketPlDao.getOffersByPlayer(player, apiKey);
 
 		for (Offer offer : offers) {
-			log.debug("Player: " + player.getId() + "| Offer:" + offer.getId());
+			LOGGER.debug("Player: " + player.getId() + "| Offer:" + offer.getId());
 		}
 
 		return ResponseSurrogate.of(offers);
@@ -560,7 +560,7 @@ public class MarketPlaceApi {
 		
 		List<Offer> matchingOffers = new ArrayList<Offer>();
 		if (market.getOffers().size() > 0) {
-			log.debug("Marketplace: " + market.getId());
+			LOGGER.debug("Marketplace: " + market.getId());
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
 			if(count != null){
@@ -568,7 +568,7 @@ public class MarketPlaceApi {
 			}
 			
 			for (Offer offer : matchingOffers) {
-				log.debug("Result Offer : " + offer.getId());
+				LOGGER.debug("Result Offer : " + offer.getId());
 			}
 			
 			return ResponseSurrogate.of(matchingOffers);
@@ -605,7 +605,7 @@ public class MarketPlaceApi {
 		List<Offer> recentOffers = market.filterOfferByDate(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
 
 		for (Offer offer : recentOffers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 		}
 		return ResponseSurrogate.of(recentOffers);
 	}
@@ -651,7 +651,7 @@ public class MarketPlaceApi {
 			List<Offer> recentOffers = market.filterOfferByDate(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
 			for (Offer offer : recentOffers) {
-				log.debug("| Offer:" + offer.getId());
+				LOGGER.debug("| Offer:" + offer.getId());
 			}
 			return ResponseSurrogate.of(recentOffers);
 	}
@@ -684,7 +684,7 @@ public class MarketPlaceApi {
 		List<Offer> highestOffers = market.filterOffersByPrize(market.getOffers(), ValidateUtils.requireGreaterThanZero(count));
 
 		for (Offer offer : highestOffers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 		}
 			
 		return ResponseSurrogate.of(highestOffers);
@@ -731,7 +731,7 @@ public class MarketPlaceApi {
 			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
 
 			for (Offer offer : highestOffers) {
-				log.debug("| Offer:" + offer.getId());
+				LOGGER.debug("| Offer:" + offer.getId());
 			}
 			
 			return ResponseSurrogate.of(highestOffers);
@@ -761,7 +761,7 @@ public class MarketPlaceApi {
 		List<Bid> bidsForOffer = marketPlDao.getBidsForOffer(offer, apiKey);
 
 		for (Bid bid : bidsForOffer) {
-			log.debug("Bid " + bid.getId() + " with "+ bid.getPrize() + "coins for Offer: " + offer.getId());
+			LOGGER.debug("Bid " + bid.getId() + " with "+ bid.getPrize() + "coins for Offer: " + offer.getId());
 		}
 
 		return ResponseSurrogate.of(bidsForOffer);
@@ -799,9 +799,9 @@ public class MarketPlaceApi {
 			for (Bid bid : bids) {
 				Player player = bid.getPlayer();
 				player.setCoins(player.getCoins() + bid.getPrize());
-				log.debug("give a bid" + player.getId());
+				LOGGER.debug("give a bid" + player.getId());
 				sum = sum + bid.getPrize();
-				log.debug(" Sum = " + sum);
+				LOGGER.debug(" Sum = " + sum);
 				marketPlDao.deleteBid(bid);
 			}
 		}
@@ -810,14 +810,14 @@ public class MarketPlaceApi {
 		if (!markets.isEmpty()) {
 			for (MarketPlace market : markets) {
 				market.removeOffer(offer);
-				log.debug("Removed from market place  " + market.getId());
+				LOGGER.debug("Removed from market place  " + market.getId());
 			}
 		}
 
 		Player owner = offer.getPlayer();
-		log.debug("Owners Coins " + owner.getCoins());
+		LOGGER.debug("Owners Coins " + owner.getCoins());
 		owner.setCoins(owner.getCoins() + (prize-sum));
-		log.debug("Owners Coins " + owner.getCoins());
+		LOGGER.debug("Owners Coins " + owner.getCoins());
 		
 		Offer deletedOffer = marketPlDao.deleteOffer(offId, apiKey);
 
@@ -861,7 +861,7 @@ public class MarketPlaceApi {
 		Offer offer = marketPlDao.getOffer(idOffer, apiKey);
 		ValidateUtils.requireNotNull(idOffer, offer);
 		
-		log.debug("get Offer");
+		LOGGER.debug("get Offer");
 		
 		MarketPlace market = marketPlDao.getMarketplace(idMarket, apiKey);
 		ValidateUtils.requireNotNull(idMarket, market);
@@ -870,19 +870,19 @@ public class MarketPlaceApi {
 		if(offers.contains(offer)){
 			Task task = offer.getTask();
 			ValidateUtils.requireNotNull(task.getId(), task);
-			log.debug("task" + task.getId());
+			LOGGER.debug("task" + task.getId());
 			task.completeTask(player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
-			log.debug("Task completed");
+			LOGGER.debug("Task completed");
 
 			int prizeReward = offer.getPrize();
 			player.setCoins(player.getCoins() + prizeReward);
 
-			log.debug("reward awarded");
+			LOGGER.debug("reward awarded");
 			playerDao.insert(player);
 			
 			offers.remove(offer);
 			marketPlDao.insertMarketPlace(market);
-			log.debug("offer removed form marketplace");
+			LOGGER.debug("offer removed form marketplace");
 			
 			marketPlDao.deleteOffer(idOffer, apiKey);
 			
@@ -922,7 +922,7 @@ public class MarketPlaceApi {
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("change Attribute of Offer");
+		LOGGER.debug("change Attribute of Offer");
 
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);
@@ -979,7 +979,7 @@ public class MarketPlaceApi {
 		List<Integer> matchingOffers = new ArrayList<>();
 		
 		for (Offer offer : offers) {
-			log.debug("| Offer:" + offer.getId());
+			LOGGER.debug("| Offer:" + offer.getId());
 			matchingOffers.add(offer.getId());
 		}
 

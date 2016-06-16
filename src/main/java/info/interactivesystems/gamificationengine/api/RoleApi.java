@@ -44,7 +44,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class RoleApi {
 
-	private static final Logger log = LoggerFactory.getLogger(RoleApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RoleApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -68,7 +68,7 @@ public class RoleApi {
 	@TypeHint(Role.class)
 	public Response create(@QueryParam("roleName") @NotNull String roleName, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create New Role ");
+		LOGGER.debug("create New Role ");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -147,7 +147,7 @@ public class RoleApi {
 	public Response changeAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change Attribute of Role");
+		LOGGER.debug("change Attribute of Role");
 
 		int roleId = ValidateUtils.requireGreaterThanZero(id);
 		Role role = roleDao.getRole(roleId, apiKey);

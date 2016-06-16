@@ -6,13 +6,13 @@ import java.util.stream.Stream;
 
 public class Notification {
 
+	private final List<ErrorMessage> errors = new ArrayList<>();
+	
 	public static Notification of(CharSequence... messages) {
 		Notification notification = new Notification();
 		Stream.of(messages).forEach(notification::addError);
 		return notification;
 	}
-
-	private final List<ErrorMessage> errors = new ArrayList<>();
 
 	public void addError(CharSequence message) {
 		errors.add(ErrorMessage.of(message));

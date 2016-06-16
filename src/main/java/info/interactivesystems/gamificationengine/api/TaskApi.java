@@ -68,7 +68,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class TaskApi {
 
-	private static final Logger log = LoggerFactory.getLogger(TaskApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -117,7 +117,7 @@ public class TaskApi {
 			@QueryParam("roleIds") @NotNull @ValidListOfDigits(message = "The role ids must be a valid list of numbers") String roleIds,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createNewTask called");
+		LOGGER.debug("createNewTask called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -222,11 +222,11 @@ public class TaskApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("finishedDate") String finishedDate, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("completeTask called");
-		log.debug("TaskId: " + id);
+		LOGGER.debug("completeTask called");
+		LOGGER.debug("TaskId: " + id);
 
 		// find player by id and organisation
-		log.debug("Get Player");
+		LOGGER.debug("Get Player");
 		int pId = ValidateUtils.requireGreaterThanZero(playerId);
 		Player player = playerDao.getPlayer(pId, apiKey);
 		ValidateUtils.requireNotNull(pId, player);
@@ -236,13 +236,13 @@ public class TaskApi {
 		Task task = taskDao.getTask(taskId, apiKey);
 		ValidateUtils.requireNotNull(taskId, task);
 		
-		log.debug("TaskName: " + task.getTaskName());
+		LOGGER.debug("TaskName: " + task.getTaskName());
 
 		if (finishedDate == null || "".equals(finishedDate)) {
-			log.debug("Kein Datum übergeben");
+			LOGGER.debug("Kein Datum übergeben");
 			task.completeTask(player, ruleDao, goalDao, groupDao, null, apiKey);
 		} else {
-			log.debug("Datum übergeben: " + finishedDate);
+			LOGGER.debug("Datum übergeben: " + finishedDate);
 			LocalDateTime dateTime = LocalDateTimeUtil.formatDateAndTime(finishedDate);
 			task.completeTask(player, ruleDao, goalDao, groupDao, dateTime, apiKey);
 		}
@@ -278,7 +278,7 @@ public class TaskApi {
 	@TypeHint(Task.class)
 	public Response changeTaskAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("change Attribute of Task");
+		LOGGER.debug("change Attribute of Task");
 
 		int taskId = ValidateUtils.requireGreaterThanZero(id);
 		Task task = taskDao.getTask(taskId, apiKey);

@@ -56,7 +56,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class RewardApi {
 
-	private static final Logger log = LoggerFactory.getLogger(RewardApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RewardApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -141,14 +141,14 @@ public class RewardApi {
 			@QueryParam("amount") @ValidPositiveDigit String amount, @QueryParam("icon") String url, @QueryParam("description") String description,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("createNewReward called");
+		LOGGER.debug("createNewReward called");
 
-		log.debug("apiKey: " + apiKey);
-		log.debug("type: " + type);
-		log.debug("name: " + name);
-		log.debug("amount: " + amount);
-		log.debug("icon: " + url);
-		log.debug("description: " + description);
+		LOGGER.debug("apiKey: " + apiKey);
+		LOGGER.debug("type: " + type);
+		LOGGER.debug("name: " + name);
+		LOGGER.debug("amount: " + amount);
+		LOGGER.debug("icon: " + url);
+		LOGGER.debug("description: " + description);
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -245,7 +245,7 @@ public class RewardApi {
 	public Response createAchievement(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("create Achievement called");
+		LOGGER.debug("create Achievement called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -292,7 +292,7 @@ public class RewardApi {
 	public Response createBadge(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("url") String url, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("create Badge called");
+		LOGGER.debug("create Badge called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -340,7 +340,7 @@ public class RewardApi {
 			@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("create Coins Reward called");
+		LOGGER.debug("create Coins Reward called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -378,7 +378,7 @@ public class RewardApi {
 			@QueryParam("description") String description,
 			@QueryParam("amount") @NotNull @ValidPositiveDigit String amount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("create Point Reward called");
+		LOGGER.debug("create Point Reward called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -416,12 +416,12 @@ public class RewardApi {
 	public Response createReceiveLevel(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("amount") @NotNull @ValidPositiveDigit String index,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("create ReceiveLevel Reward called");
+		LOGGER.debug("create ReceiveLevel Reward called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
 		ReceiveLevel reward = new ReceiveLevel();
-		reward.setLevelIndex((ValidateUtils.requireGreaterThanZero(index)));
+		reward.setLevelIndex(ValidateUtils.requireGreaterThanZero(index));
 		reward.setLevelLabel(name);
 		reward.setDescription(description);
 
@@ -448,7 +448,7 @@ public class RewardApi {
 	@Path("/achievement/{id}")
 	@TypeHint(byte[].class)
 	public Response getAchievementIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("getAchievement called");
+		LOGGER.debug("getAchievement called");
 
 		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId), apiKey);
 
@@ -456,7 +456,6 @@ public class RewardApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Achievement: " + reward);
 		}
 		
-		//byte[] image = ((Achievement) reward).getImageIcon();
 		String b64 = ImageUtils.encodeByteArrayToBase64(((Achievement) reward).getImageIcon());
 		return ResponseSurrogate.of(b64);
 	}
@@ -478,7 +477,7 @@ public class RewardApi {
 	@Path("/badge/{id}")
 	@TypeHint(byte[].class)
 	public Response getBadgeIcon(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("getBadge called");
+		LOGGER.debug("getBadge called");
 
 		Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardId), apiKey);
 
@@ -486,7 +485,6 @@ public class RewardApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such Badge: " + reward);
 		}
 		
-//		byte[] image = ((Badge) reward).getImageIcon();
 		String b64 = ImageUtils.encodeByteArrayToBase64(((Badge) reward).getImageIcon());
 		
 		return ResponseSurrogate.of(b64);
@@ -523,7 +521,7 @@ public class RewardApi {
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of Achivement in " + value);
+		LOGGER.debug("change " + attribute + "of Achivement in " + value);
 
 		int rId = ValidateUtils.requireGreaterThanZero(rewardId);
 		Reward reward = rewardDao.getReward(rId, apiKey);
@@ -591,7 +589,7 @@ public class RewardApi {
 	public Response changeBadge(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") @NotNull String attribute,
 			@QueryParam("value") @NotNull String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of Badge in " + value);
+		LOGGER.debug("change " + attribute + "of Badge in " + value);
 
 		int rId = ValidateUtils.requireGreaterThanZero(rewardId);
 		Reward reward = rewardDao.getReward(rId, apiKey);
@@ -656,7 +654,7 @@ public class RewardApi {
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of points in " + value);
+		LOGGER.debug("change " + attribute + "of points in " + value);
 
 		int rId = ValidateUtils.requireGreaterThanZero(rewardId);
 		Reward reward = rewardDao.getReward(rId, apiKey);
@@ -669,7 +667,7 @@ public class RewardApi {
 			switch (attribute) {
 			case "amount":
 				((Points) reward).setAmount(ValidateUtils.requireGreaterThanZero(value));
-
+				break;
 			}
 		} else {
 			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a point");
@@ -708,7 +706,7 @@ public class RewardApi {
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of coins in " + value);
+		LOGGER.debug("change " + attribute + "of coins in " + value);
 
 		int rId = ValidateUtils.requireGreaterThanZero(rewardId);
 		Reward reward = rewardDao.getReward(rId, apiKey);
@@ -721,7 +719,7 @@ public class RewardApi {
 			switch (attribute) {
 			case "amount":
 				((Coins) reward).setAmount(ValidateUtils.requireGreaterThanZero(value));
-
+				break;
 			}
 		} else {
 			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a coins reward");
@@ -759,7 +757,7 @@ public class RewardApi {
 	public Response changeLevel(@PathParam("id") @NotNull @ValidPositiveDigit String rewardId, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("change " + attribute + "of ReceiveLevel in " + value);
+		LOGGER.debug("change " + attribute + "of ReceiveLevel in " + value);
 
 		int rId = ValidateUtils.requireGreaterThanZero(rewardId);
 		Reward reward = rewardDao.getReward(rId, apiKey);
@@ -772,10 +770,10 @@ public class RewardApi {
 			switch (attribute) {
 			case "amount":
 				((ReceiveLevel) reward).setLevelIndex(ValidateUtils.requireGreaterThanZero(value));
-
+				break;
 			case "name":
 				((ReceiveLevel) reward).setLevelLabel(value);
-
+				break;
 			}
 		} else {
 			throw new ApiError(Response.Status.BAD_REQUEST, "The transfered id does not belong to a level");

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ImageUtils {
 
-	private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageUtils.class);
 	
 	/**
 	 * The passed String represents an URL. With this URL a byte[] is created from the image file that was passed as an Stings that

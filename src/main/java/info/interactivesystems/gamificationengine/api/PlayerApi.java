@@ -67,7 +67,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Stateless
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerApi {
-	private static final Logger log = LoggerFactory.getLogger(PlayerApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -114,7 +114,7 @@ public class PlayerApi {
 			@QueryParam("avatar") String avatar,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("createplayer requested (Params: apiKey = {}, nickname = {}, password = {}", apiKey, nickname, password);
+		LOGGER.debug("createplayer requested (Params: apiKey = {}, nickname = {}, password = {}", apiKey, nickname, password);
 
 		List<Integer> roleIds = StringUtils.stringArrayToIntegerList(playerRoleIds);
 		List<Role> roles = roleDao.getRoles(roleIds, apiKey);
@@ -260,7 +260,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response changeAttributes(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("change Attribute of Player");
+		LOGGER.debug("change Attribute of Player");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -372,7 +372,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response addContacts(@PathParam("id") @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("adding contacts to player");
+		LOGGER.debug("adding contacts to player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
 		List<Player> contactsToAdd = playerDao.getPlayers(list, apiKey);
@@ -410,7 +410,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response addRoles(@PathParam("id") @NotNull @ValidPositiveDigit String id,
 			@QueryParam("roleIds") @NotNull @ValidListOfDigits String roleIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("adding roles to player");
+		LOGGER.debug("adding roles to player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(roleIds);
 		List<Role> rolesToAdd = roleDao.getRoles(list, apiKey); 
@@ -451,7 +451,7 @@ public class PlayerApi {
 	public Response deleteContact(@PathParam("id") @NotNull @ValidPositiveDigit String id,
 			@QueryParam("contactIds") @NotNull @ValidListOfDigits String contactIds, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("deleting contacts for of a player");
+		LOGGER.debug("deleting contacts for of a player");
 
 		List<Integer> list = StringUtils.stringArrayToIntegerList(contactIds);
 		List<Player> contactsToDelete = playerDao.getPlayers(list, apiKey);
@@ -485,7 +485,7 @@ public class PlayerApi {
 	@Path("{id}/avatar")
 	@TypeHint(byte[].class)
 	public Response getAvatar(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-		log.debug("get player's avatar image");
+		LOGGER.debug("get player's avatar image");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -516,7 +516,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response deactivate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("deactivate player called");
+		LOGGER.debug("deactivate player called");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -547,7 +547,7 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response activate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("activate player called");
+		LOGGER.debug("activate player called");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -577,7 +577,7 @@ public class PlayerApi {
 	@TypeHint(FinishedGoal[].class)
 	public Response getPlayerFinishedGoals(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getFinishedGoals requested");
+		LOGGER.debug("getFinishedGoals requested");
 		List<FinishedGoal> goals = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getFinishedGoals();
 
 		return ResponseSurrogate.of(goals);
@@ -600,7 +600,7 @@ public class PlayerApi {
 	@TypeHint(PermanentReward[].class)
 	public Response getRewards(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getPlayerPermanentRewards requested");
+		LOGGER.debug("getPlayerPermanentRewards requested");
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
@@ -628,7 +628,7 @@ public class PlayerApi {
 	@TypeHint(FinishedTask[].class)
 	public Response getPlayerFinishedTasks(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("getFinishedTasks requested");
+		LOGGER.debug("getFinishedTasks requested");
 		List<FinishedTask> fTasks = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey).getFinishedTasks();
 
 		return ResponseSurrogate.of(fTasks);
@@ -652,7 +652,7 @@ public class PlayerApi {
 	@TypeHint(Badge[].class)
 	public Response getPlayerBadges(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Badges from Player requested");
+		LOGGER.debug("get earned Badges from Player requested");
 		
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -681,7 +681,7 @@ public class PlayerApi {
 	@TypeHint(Achievement[].class)
 	public Response getPlayerAchievements(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned Achievements from Player requested");
+		LOGGER.debug("get earned Achievements from Player requested");
 		Player player = playerDao.getPlayer(ValidateUtils.requireGreaterThanZero(id), apiKey);
 		List<Achievement> achievements = player.getOnlyAchievement();
 
@@ -706,7 +706,7 @@ public class PlayerApi {
 	@TypeHint(int.class)
 	public Response getPlayerPoints(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned points from Player requested");
+		LOGGER.debug("get earned points from Player requested");
 		
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -735,7 +735,7 @@ public class PlayerApi {
 	@TypeHint(int.class)
 	public Response getPlayerCoins(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get earned coins from Player requested");
+		LOGGER.debug("get earned coins from Player requested");
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
@@ -762,7 +762,7 @@ public class PlayerApi {
 	@TypeHint(Player[].class)
 	public Response contacts(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get contacts of a player");
+		LOGGER.debug("get contacts of a player");
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
@@ -787,7 +787,7 @@ public class PlayerApi {
 	@TypeHint(Player[].class)
 	public Response playerGroups(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get groups of a player");
+		LOGGER.debug("get groups of a player");
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);

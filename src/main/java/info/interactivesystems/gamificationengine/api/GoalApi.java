@@ -54,7 +54,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class GoalApi {
 
-	private static final Logger log = LoggerFactory.getLogger(GoalApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GoalApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -139,10 +139,10 @@ public class GoalApi {
 		String[] rewardIdList = rewardIds.split(",");
 
 		for (String rewardIdString : rewardIdList) {
-			log.debug("RewardToAdd: " + rewardIdString);
+			LOGGER.debug("RewardToAdd: " + rewardIdString);
 			Reward reward = rewardDao.getReward(ValidateUtils.requireGreaterThanZero(rewardIdString), apiKey);
 			if (reward != null) {
-				log.debug("RewardAdded: " + reward.getId());
+				LOGGER.debug("RewardAdded: " + reward.getId());
 				goal.addReward(reward);
 			}
 		}
@@ -239,7 +239,7 @@ public class GoalApi {
 			@QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("change Attribute of Goal");
+		LOGGER.debug("change Attribute of Goal");
 
 		Goal goal = goalDao.getGoal(ValidateUtils.requireGreaterThanZero(goalId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(goalId),goal);
@@ -248,7 +248,6 @@ public class GoalApi {
 			value = null;
 		}
 
-		// not changeable: id -> generated & belongsTo;
 		switch (attribute) {
 		case "goalName":
 			goal.setName(value);

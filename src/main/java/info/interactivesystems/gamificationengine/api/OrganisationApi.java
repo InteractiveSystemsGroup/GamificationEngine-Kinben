@@ -51,7 +51,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class OrganisationApi {
 
-	private static final Logger log = LoggerFactory.getLogger(OrganisationApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrganisationApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -80,7 +80,7 @@ public class OrganisationApi {
 	public Response create(@QueryParam("name") String name, @QueryParam("email") @NotNull @Email String email,
 			@HeaderParam("password") @NotNull String password) {
 
-		log.debug("create organisation requested");
+		LOGGER.debug("create organisation requested");
 
 		String encryptedPassword = SecurityTools.encryptWithSHA512(password);
 		if (!accountDao.checkCredentials(email, encryptedPassword)) {
@@ -91,7 +91,7 @@ public class OrganisationApi {
 		organisation.addManager(accountDao.getAccount(email, encryptedPassword));
 		organisation.setApiKey(SecurityTools.generateApiKey());
 
-		log.debug("Organisation created");
+		LOGGER.debug("Organisation created");
 		
 		organisationDao.insertOrganisation(organisation);
 		return ResponseSurrogate.created(organisation);
@@ -123,7 +123,7 @@ public class OrganisationApi {
 			@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("add organisation requested");
+		LOGGER.debug("add organisation requested");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		if(organisation == null){
@@ -159,7 +159,7 @@ public class OrganisationApi {
 	@TypeHint(Organisation[].class)
 	public Response get(@QueryParam("email") @NotNull @Email String email, @HeaderParam("password") @NotNull String password) {
 
-		log.debug("get organisation requested");
+		LOGGER.debug("get organisation requested");
 
 		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
@@ -190,7 +190,7 @@ public class OrganisationApi {
 	public Response get(@PathParam("id") @NotNull String id, @QueryParam("email") @NotNull @Email String email, 
 			@HeaderParam("password") @NotNull String password) {
 
-		log.debug("get organisation requested");
+		LOGGER.debug("get organisation requested");
 
 		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
@@ -224,7 +224,7 @@ public class OrganisationApi {
 		
 		Notification notification = new Notification();
 
-		log.debug("generate api key requested");
+		LOGGER.debug("generate api key requested");
 		if (!accountDao.checkCredentials(email, SecurityTools.encryptWithSHA512(password))) {
 			throw new CredentialException(email);
 		}

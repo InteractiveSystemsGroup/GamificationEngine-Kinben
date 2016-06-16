@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 @DiscriminatorValue("TRULEALL")
 public class DoAllTasksRule extends TaskRule {
 
-	private static final Logger log = LoggerFactory.getLogger(DoAllTasksRule.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DoAllTasksRule.class);
 
 	/**
 	 * Gets the tasks of a DoAllTasksRule that are already finished. So the user gets a status which tasks she/he 
@@ -46,8 +46,8 @@ public class DoAllTasksRule extends TaskRule {
 		List<Task> completedTasks = new ArrayList<>();
 		List<Task> finishedTasks;
 
-		log.debug("Last Date: " + lastDate);
-		log.debug("Temp Tasks List last item: " + finishedPlayerTasks.get((finishedPlayerTasks.size() - 1)).getFinishedDate());
+		LOGGER.debug("Last Date: " + lastDate);
+		LOGGER.debug("Temp Tasks List last item: " + finishedPlayerTasks.get((finishedPlayerTasks.size() - 1)).getFinishedDate());
 
 		if (lastDate != null) {
 			// grouping and counting finished tasks
@@ -61,7 +61,7 @@ public class DoAllTasksRule extends TaskRule {
 
 		for (Task task : tasks) {
 			if (finishedTasks.remove(task)) {
-				log.debug("Completed Task: " + task.getTaskName());
+				LOGGER.debug("Completed Task: " + task.getTaskName());
 				completedTasks.add(task);
 			}
 		}
@@ -111,9 +111,9 @@ public class DoAllTasksRule extends TaskRule {
 		// grouping and counting tasks by name
 		Map<String, Long> tasksToComplete = tasks.stream().collect(Collectors.groupingBy(Task::getTaskName, Collectors.counting()));
 
-		log.debug(" Rule = DoALLTasksRule! ");
-		log.debug("Last Date: " + lastDate);
-		log.debug("Temp Tasks List last item: " + finishedPlayerTasks.get((finishedPlayerTasks.size() - 1)).getFinishedDate());
+		LOGGER.debug(" Rule = DoALLTasksRule! ");
+		LOGGER.debug("Last Date: " + lastDate);
+		LOGGER.debug("Temp Tasks List last item: " + finishedPlayerTasks.get((finishedPlayerTasks.size() - 1)).getFinishedDate());
 
 		if (lastDate != null) {
 
@@ -134,13 +134,13 @@ public class DoAllTasksRule extends TaskRule {
 			if (finishedTasks.containsKey(stringLongEntry.getKey())) {
 				if (finishedTasks.get(stringLongEntry.getKey()) < stringLongEntry.getValue()) {
 					// not enough finished tasks of this type
-					log.debug("not enough finished tasks of this type: " + stringLongEntry.getKey() + " -> "
+					LOGGER.debug("not enough finished tasks of this type: " + stringLongEntry.getKey() + " -> "
 							+ finishedTasks.get(stringLongEntry.getKey()) + "/" + stringLongEntry.getValue());
 					return false;
 				}
 			} else {
 				// task is missing in finished tasks
-				log.debug("task is missing in finished tasks: " + stringLongEntry.getKey());
+				LOGGER.debug("task is missing in finished tasks: " + stringLongEntry.getKey());
 				return false;
 			}
 		}

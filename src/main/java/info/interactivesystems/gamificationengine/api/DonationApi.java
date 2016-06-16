@@ -47,7 +47,7 @@ import com.webcohesion.enunciate.metadata.rs.TypeHint;
 @Produces(MediaType.APPLICATION_JSON)
 public class DonationApi {
 
-	private static final Logger log = LoggerFactory.getLogger(DonationApi.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DonationApi.class);
 
 	@Inject
 	OrganisationDAO organisationDao;
@@ -68,7 +68,7 @@ public class DonationApi {
 	 * @param name
 	 *           The short name of the call for donation.
 	 * @param description
-	 *            The longer description of the call for donation. This can contain the its purpose.
+	 *            The longer description of the call for donation. This can contain its purpose.
 	 * @param goalAmount
 	 *            The amount of coins that should be reached to fulfil this donation.
 	 * @param apiKey
@@ -83,7 +83,7 @@ public class DonationApi {
 			@QueryParam("goalAmount") @NotNull @ValidPositiveDigit String goalAmount,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("create New Donation Call ");
+		LOGGER.debug("create New Donation Call ");
 		
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
@@ -217,7 +217,7 @@ public class DonationApi {
 	public Response getProgess(@PathParam("id") @NotNull @ValidPositiveDigit String dId, 
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		log.debug("get progress");
+		LOGGER.debug("get progress");
 		
 		int id = ValidateUtils.requireGreaterThanZero(dId);
 		DonationCall dCall = donationDao.getDonationCall(id, apiKey);
@@ -280,7 +280,7 @@ public class DonationApi {
 		List<Donation> donations = donationDao.getDonationsForDonationCall(dCall, apiKey); 
 
 		for (Donation donation : donations) {
-			log.debug("Donation " + donation.getId() + " with "+ donation.getAmount() + "coins for: " + dCall.getId());
+			LOGGER.debug("Donation " + donation.getId() + " with "+ donation.getAmount() + "coins for: " + dCall.getId());
 		}
 
 		return ResponseSurrogate.of(donations);
@@ -317,7 +317,7 @@ public class DonationApi {
 			@QueryParam("attribute") String attribute,
 			@QueryParam("value") String value, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		log.debug("change Attribute of Player");
+		LOGGER.debug("change Attribute of Player");
 
 		int dCallId = ValidateUtils.requireGreaterThanZero(id);
 		DonationCall dCall = donationDao.getDonationCall(dCallId, apiKey); 
