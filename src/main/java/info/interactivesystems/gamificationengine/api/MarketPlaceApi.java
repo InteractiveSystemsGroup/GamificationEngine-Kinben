@@ -470,7 +470,7 @@ public class MarketPlaceApi {
 			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		int id = Integer.valueOf(roleId);
+		int id = Integer.parseInt(roleId);
 		Role role = roleDao.getRole(id, apiKey);
 		ValidateUtils.requireNotNull(id, role);
 		
@@ -558,7 +558,7 @@ public class MarketPlaceApi {
 		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId),apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(marketPlId), market);
 		
-		List<Offer> matchingOffers = new ArrayList<Offer>();
+		List<Offer> matchingOffers = new ArrayList<>();
 		if (market.getOffers().size() > 0) {
 			LOGGER.debug("Marketplace: " + market.getId());
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
@@ -644,7 +644,7 @@ public class MarketPlaceApi {
 		List<Offer> matchingOffers;
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-			if (matchingOffers.size() <= 0) {
+			if (matchingOffers.isEmpty()) {
 				return ResponseSurrogate.of(matchingOffers);
 			}
 
@@ -725,7 +725,7 @@ public class MarketPlaceApi {
 		List<Offer> matchingOffers;
 			matchingOffers = market.filterOfferByRole(player.getBelongsToRoles());
 
-			if (matchingOffers.size() <= 0) {
+			if (matchingOffers.isEmpty()) {
 				return ResponseSurrogate.of(matchingOffers);
 			}
 			List<Offer> highestOffers = market.filterOffersByPrize(matchingOffers, ValidateUtils.requireGreaterThanZero(count));
@@ -1012,7 +1012,7 @@ public class MarketPlaceApi {
 		
 		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
 		
-		ArrayList<OfferMarketPlace> offList = new ArrayList<OfferMarketPlace>();
+		ArrayList<OfferMarketPlace> offList = new ArrayList<>();
 		
 		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
 		for (MarketPlace marketPlace : markets) {

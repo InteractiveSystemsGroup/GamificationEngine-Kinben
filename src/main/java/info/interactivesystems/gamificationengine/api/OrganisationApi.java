@@ -196,7 +196,7 @@ public class OrganisationApi {
 			throw new CredentialException(email);
 		}
 
-		int intId = Integer.valueOf(id);
+		int intId = Integer.parseInt(id);
 		Organisation organisation = organisationDao.getOrganisation(intId);
 		return ResponseSurrogate.of(organisation);
 	}
@@ -229,7 +229,7 @@ public class OrganisationApi {
 			throw new CredentialException(email);
 		}
 
-		int intId = Integer.valueOf(id);
+		int intId = Integer.parseInt(id);
 		Organisation organisation = organisationDao.getOrganisation(intId);
 		organisation.setApiKey(SecurityTools.generateApiKey());
 
