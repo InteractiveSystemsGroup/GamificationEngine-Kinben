@@ -67,7 +67,7 @@ public class Player {
 	private boolean isActive;
 
 	@Lob
-	@Column(columnDefinition = "BLOB")
+	@Column(columnDefinition = "MEDIUMBLOB", length = 3000000)
 	private byte[] avatar;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -214,14 +214,6 @@ public class Player {
 	}
 	
 	
-	// public PlayerLevel getLevel() {
-	// return level;
-	// }
-	//
-	// public void setLevel(PlayerLevel level) {
-	// this.level = level;
-	// }
-
 	/**
 	 * Gets the current level index of a player.
 	 * 

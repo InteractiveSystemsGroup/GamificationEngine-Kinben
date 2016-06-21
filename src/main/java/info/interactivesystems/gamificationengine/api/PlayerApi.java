@@ -100,7 +100,7 @@ public class PlayerApi {
 	 *            Optionally the player's reference as string map to a customers user
 	 *            identifier.
 	 * @param avatar           
-	 * 			  The url
+	 * 			  The url of the avatar. The image's size can be up to 3 MB.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which this player should belong to.

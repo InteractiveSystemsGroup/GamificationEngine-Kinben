@@ -78,7 +78,8 @@ public class PlayerGroupApi {
 	 * @param groupName
 	 *            The name of the group. This parameter is required.
 	 * @param logoPath
-	 *            Optionally a group logo as a HTTP reference can be passed.
+	 *            Optionally a group logo as a HTTP reference can be passed. 
+	 *            The image's size can be up to 3 MB.
 	 * @param apiKey
 	 *           The valid query parameter API key affiliated to one specific organisation, 
 	 *           to which this group of players belongs to.

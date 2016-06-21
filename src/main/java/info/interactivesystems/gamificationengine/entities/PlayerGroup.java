@@ -73,7 +73,7 @@ public class PlayerGroup {
 	private String levelLabel;
 
 	@Lob
-	@Column(columnDefinition = "BLOB")
+	@Column(columnDefinition = "MEDIUMBLOB", length = 3000000)
 	private byte[] groupLogo;
 
 	public PlayerGroup() {
