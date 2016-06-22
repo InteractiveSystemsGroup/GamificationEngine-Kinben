@@ -223,6 +223,25 @@ public class MarketPlaceDAO {
 		}
 		return offer;
 	}
+	
+	/**
+	 * Removes several offers from the data base.
+	 * 
+	 * @param offers
+	 * 			The list of offers that should be removes from the data base.
+	 * @param apiKey
+	 * 			The API key of the organisation to which the offer belongs to. 
+	 */
+	public void deleteOffers(List<Offer> offers, String apiKey) {
+		
+		for (Offer offer : offers) {
+			Offer offer2 = getOffer(offer.getId(), apiKey);
+			
+			if (offer2 != null) {
+				em.remove(offer2);
+			}
+		}
+	}
 
 	/**
 	 * Removes a specific bid from the data base.

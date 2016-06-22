@@ -824,73 +824,7 @@ public class MarketPlaceApi {
 		return ResponseSurrogate.deleted(deletedOffer);
 	}
 
-	/**
-	 * If an offer is fulfilled by a player, this request can be used to complete the offer. With this request 
-	 * the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a 
-	 * reward. 
-	 * It is checked, if all passed ids are a positive number otherwise a message for an invalid number is 
-	 * returned. If the API key is not valid an analogous message is returned.
-	 * 
-	 * @param offerId
-	 *            The offer id which was finished. This parameter is required. 
-	 * @param playerId
-	 *            The id of the player who has completed the task that was associated with the offer. So 
-	 *            she/he earns the prize as a reward.
-	 * @param marketId
-	 * 			  The marketplace whose offer is completed.		 
-	 * @param apiKey
-	 *            The valid query parameter API key affiliated to one specific organisation, 
-	 *            to which this player belongs to.
-	 * @return Response of Task in JSON.
-	 */
-	@POST
-	@Path("/{id}/compOffer/{playerId}")
-	@TypeHint(Task.class)
-	public Response completeOffer(@PathParam("id") @NotNull @ValidPositiveDigit(message = "The id must be a valid number") String offerId,
-			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
-			@QueryParam("marketId") @NotNull @ValidPositiveDigit String marketId,
-			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		int idOffer = ValidateUtils.requireGreaterThanZero(offerId);
-		int idPlayer = ValidateUtils.requireGreaterThanZero(playerId);
-		int idMarket = ValidateUtils.requireGreaterThanZero(marketId);
-		
-		Player player = playerDao.getPlayer(idPlayer, apiKey);
-		ValidateUtils.requireNotNull(idPlayer, player);
-		
-		Offer offer = marketPlDao.getOffer(idOffer, apiKey);
-		ValidateUtils.requireNotNull(idOffer, offer);
-		
-		LOGGER.debug("get Offer");
-		
-		MarketPlace market = marketPlDao.getMarketplace(idMarket, apiKey);
-		ValidateUtils.requireNotNull(idMarket, market);
-		
-		List<Offer> offers = market.getOffers();
-		if(offers.contains(offer)){
-			Task task = offer.getTask();
-			ValidateUtils.requireNotNull(task.getId(), task);
-			LOGGER.debug("task" + task.getId());
-			task.completeTask(player, ruleDao, goalDao, groupDao, LocalDateTime.now(), apiKey);
-			LOGGER.debug("Task completed");
-
-			int prizeReward = offer.getPrize();
-			player.setCoins(player.getCoins() + prizeReward);
-
-			LOGGER.debug("reward awarded");
-			playerDao.insert(player);
-			
-			offers.remove(offer);
-			marketPlDao.insertMarketPlace(market);
-			LOGGER.debug("offer removed form marketplace");
-			
-			marketPlDao.deleteOffer(idOffer, apiKey);
-			
-			return ResponseSurrogate.created("Task " + task.getId() + "completed.");
-		}
 	
-		return ResponseSurrogate.created("Offer " + offerId + " not completed.");
-	}
 
 	/**
 	 * With this method the fields of an Offer can be changed. For this the id of the offer, the API key of 
@@ -1010,20 +944,22 @@ public class MarketPlaceApi {
 		int idTask = ValidateUtils.requireGreaterThanZero(taskId);
 		Task task = taskDao.getTask(idTask, apiKey);
 		
-		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
+		ArrayList<OfferMarketPlace> offList = MarketPlace.getAllOfferMarketPlaces(marketPlDao, task, apiKey);
 		
-		ArrayList<OfferMarketPlace> offList = new ArrayList<>();
-		
-		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
-		for (MarketPlace marketPlace : markets) {
-			List<Offer> marketOffers = marketPlace.getOffers();
-			for (Offer offer : offers) {
-				if(marketOffers.contains(offer)){
-					OfferMarketPlace offMarP = new OfferMarketPlace(offer, marketPlace.getId());
-					offList.add(offMarP);
-				}
-			}
-		}
+//		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
+//		
+//		ArrayList<OfferMarketPlace> offList = new ArrayList<>();
+//		
+//		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
+//		for (MarketPlace marketPlace : markets) {
+//			List<Offer> marketOffers = marketPlace.getOffers();
+//			for (Offer offer : offers) {
+//				if(marketOffers.contains(offer)){
+//					OfferMarketPlace offMarP = new OfferMarketPlace(offer, marketPlace.getId());
+//					offList.add(offMarP);
+//				}
+//			}
+//		}
 		
 		return ResponseSurrogate.of(offList);
 	}

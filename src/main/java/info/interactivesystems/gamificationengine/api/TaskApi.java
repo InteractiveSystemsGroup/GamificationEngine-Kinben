@@ -5,6 +5,7 @@ import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.GoalDAO;
+import info.interactivesystems.gamificationengine.dao.MarketPlaceDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerGroupDAO;
@@ -16,8 +17,10 @@ import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
+import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
+import info.interactivesystems.gamificationengine.utils.OfferMarketPlace;
 import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.time.LocalDateTime;
@@ -84,6 +87,8 @@ public class TaskApi {
 	GoalDAO goalDao;
 	@Inject
 	RoleDAO roleDao;
+	@Inject
+	MarketPlaceDAO marketPlDao;
 
 	/**
 	 * Creates a new task and so the method generates the task-id. The organisation's API key 
@@ -201,7 +206,6 @@ public class TaskApi {
 	 * finished tasks of this player. Thereby the task becomes a finished task object and the 
 	 * time and date is also stored when the task was officially be done.
 	 * 
-	 * 
 	 * @param id
 	 *          Required integer which uniquely identify the {@link Task}.
 	 * @param playerId
@@ -222,9 +226,6 @@ public class TaskApi {
 			@PathParam("playerId") @NotNull @ValidPositiveDigit(message = "The player id must be a valid number") String playerId,
 			@QueryParam("finishedDate") String finishedDate, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
-		LOGGER.debug("completeTask called");
-		LOGGER.debug("TaskId: " + id);
-
 		// find player by id and organisation
 		LOGGER.debug("Get Player");
 		int pId = ValidateUtils.requireGreaterThanZero(playerId);
@@ -239,14 +240,19 @@ public class TaskApi {
 		LOGGER.debug("TaskName: " + task.getTaskName());
 
 		if (finishedDate == null || "".equals(finishedDate)) {
-			LOGGER.debug("Kein Datum übergeben");
+			LOGGER.debug("No Date passed.");
 			task.completeTask(player, ruleDao, goalDao, groupDao, null, apiKey);
 		} else {
-			LOGGER.debug("Datum übergeben: " + finishedDate);
+			LOGGER.debug("Date passed: " + finishedDate);
 			LocalDateTime dateTime = LocalDateTimeUtil.formatDateAndTime(finishedDate);
 			task.completeTask(player, ruleDao, goalDao, groupDao, dateTime, apiKey);
 		}
-
+		
+		List<OfferMarketPlace> taskOffers = MarketPlace.getAllOfferMarketPlaces(marketPlDao, task, apiKey);
+		if(!taskOffers.isEmpty()){
+			MarketPlace.completeAssociatedOffers(taskOffers, player, marketPlDao, playerDao, apiKey);
+		}
+		
 		return ResponseSurrogate.created(task);
 	}
 

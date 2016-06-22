@@ -1,11 +1,17 @@
 package info.interactivesystems.gamificationengine.entities.marketPlace;
 
+import info.interactivesystems.gamificationengine.dao.MarketPlaceDAO;
+import info.interactivesystems.gamificationengine.dao.PlayerDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.Role;
+import info.interactivesystems.gamificationengine.entities.task.Task;
+import info.interactivesystems.gamificationengine.utils.OfferMarketPlace;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +23,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,6 +39,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({ "belongsTo" })
 public class MarketPlace {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MarketPlace.class);
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -221,23 +232,106 @@ public class MarketPlace {
 
 		return matchingOffers.stream().limit(toIndex).collect(Collectors.toList());
 	}
-
-//	/**
-//	 * 
-//	 * @param task
-//	 * @return
-//	 */
-//	public List<Integer> getOfferIdsToTask(Task task){
-//		
-//		List<Integer> offerIds = new ArrayList<>();
-//		
-//			for(Offer offer : this.offers){
-//				if(offer.getTask().equals(task)){
-//					offerIds.add(offer.getId());
-//				}
-//			}
-//		return offerIds;
-//	}
 	
+	
+	/**
+	 * Every prize of every offer in the passed list is added and obtained to the
+	 * player who has finished the task. Then every offer in the passed list is 
+	 * removed from the appropriated marketplace and deleted from the database.
+	 * 
+	 * @param taskOffers
+	 * 			A list of offers that contain the same task. Additionally the list 
+	 * 			contains for each offer the id of the marketplace is  
+	 * @param player
+	 * 			The player that has fulfilled the task.
+	 * @param marketPlDao
+	 * 			DAO to get the marketplace of the database.
+	 * @param playerDao
+	 * 			DAO to update the player.
+	 * @param apiKey 
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this task belongs to.
+	 */
+	public static void completeAssociatedOffers(List<OfferMarketPlace> taskOffers, Player player, 
+			MarketPlaceDAO marketPlDao, PlayerDAO playerDao, String apiKey){
+		
+		int prizeReward = 0;
+		
+		HashSet<MarketPlace> mPls = new HashSet<>();
+		List<Offer> offersToComplete = new ArrayList<>();
+		List<Offer> offersToDelete = new ArrayList<>();
+		
+		for (OfferMarketPlace offerMarketPlace : taskOffers) {
+			offersToComplete.add(offerMarketPlace.getOffer());
+			mPls.add(marketPlDao.getMarketplace(offerMarketPlace.getMarketPlaceId(), apiKey));	
+		}	
+		
+		for (MarketPlace places : mPls) {
+			List<Offer> removeOffers = new ArrayList<>();
+			
+			for (Offer offer2 : offersToComplete) {
+				if(places.offers.contains(offer2)){
+					prizeReward += offer2.getPrize();
+					removeOffers.add(offer2);
+					LOGGER.debug("Offer removed and prize = " + prizeReward);
+					
+					List<Bid> bids = marketPlDao.getBidsForOffer(offer2, apiKey);
+					if (!bids.isEmpty()) {
+						for (Bid bid : bids) {
+							marketPlDao.deleteBid(bid);
+							LOGGER.debug("delete bids");
+						}
+					}
+				}
+			}
+			offersToComplete.removeAll(removeOffers);
+			offersToDelete.addAll(removeOffers);
+			places.offers.removeAll(removeOffers);
+			marketPlDao.insertMarketPlace(places);
+			LOGGER.debug("MarketPlace updated " + places.getId());
+		}
+			
+		marketPlDao.deleteOffers(offersToDelete, apiKey);
+		
+		player.setCoins(player.getCoins() + prizeReward);
+			
+		LOGGER.debug("reward awarded: " + prizeReward + " coins" );
+		playerDao.insert(player);
+				
+	}
+	
+	/**
+	 * This methods creates an ArrayList of all offers that contains a specific 
+	 * task. Additonally to every offer the id of the marektplace is added where 
+	 * the offer can be find.
+	 *   
+	 * @param marketPlDao
+	 * 			The DAO to get the marketplace of the database.
+	 * @param task
+	 * 			All offers of the marketplaces are returned in the list that 
+	 * 			contains this task.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the offer belongs to.
+	 * @return The List of all offers and their marketplace ids which contain the passed task.
+	 */
+	public static ArrayList<OfferMarketPlace> getAllOfferMarketPlaces(MarketPlaceDAO marketPlDao, Task task, String apiKey){
+		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
+		
+		ArrayList<OfferMarketPlace> offList = new ArrayList<>();
+		
+		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
+		for (MarketPlace marketPlace : markets) {
+			List<Offer> marketOffers = marketPlace.getOffers();
+			
+			for (Offer offer : offers) {
+				if(marketOffers.contains(offer)){
+					OfferMarketPlace offMarP = new OfferMarketPlace(offer, marketPlace.getId());
+					offList.add(offMarP);
+				}
+			}
+		}
+		return offList;
+	}
 	
 }
