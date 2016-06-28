@@ -946,21 +946,6 @@ public class MarketPlaceApi {
 		
 		ArrayList<OfferMarketPlace> offList = MarketPlace.getAllOfferMarketPlaces(marketPlDao, task, apiKey);
 		
-//		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey); 
-//		
-//		ArrayList<OfferMarketPlace> offList = new ArrayList<>();
-//		
-//		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
-//		for (MarketPlace marketPlace : markets) {
-//			List<Offer> marketOffers = marketPlace.getOffers();
-//			for (Offer offer : offers) {
-//				if(marketOffers.contains(offer)){
-//					OfferMarketPlace offMarP = new OfferMarketPlace(offer, marketPlace.getId());
-//					offList.add(offMarP);
-//				}
-//			}
-//		}
-		
 		return ResponseSurrogate.of(offList);
 	}
 	
