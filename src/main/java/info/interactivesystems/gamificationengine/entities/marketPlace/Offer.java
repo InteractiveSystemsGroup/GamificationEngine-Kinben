@@ -5,6 +5,8 @@ import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
@@ -28,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * The particular task is then also added to the player’s list of the finished tasks. 
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "bids" })
 public class Offer {
 
 	@Id
@@ -50,17 +53,17 @@ public class Offer {
 	@ManyToOne
 	private Task task;
 
-	// @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	// private List<Bid> bids;
+	//orphanRemoval = true,
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy="offer")
+	private List<Bid> bids;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	private Player player;
 
-//	public Offer() {
-////		allowedForRole = new ArrayList<>();
-//		// bids = new ArrayList<Bid>();
-//	}
+	public Offer() {
+		bids = new ArrayList<Bid>();
+	}
 
 	/**
 	 * Gets the id of an offer.
@@ -205,13 +208,13 @@ public class Offer {
 		this.task = task;
 	}
 
-	// public List<Bid> getBids() {
-	// return bids;
-	// }
-	//
-	// public void setBids(List<Bid> bids) {
-	// this.bids = bids;
-	// }
+	 public List<Bid> getBids() {
+	 return bids;
+	 }
+	
+	 public void setBids(List<Bid> bids) {
+	 this.bids = bids;
+	 }
 
 	/**
 	 * Gets the name of the offer, which can describe the task in a short way.

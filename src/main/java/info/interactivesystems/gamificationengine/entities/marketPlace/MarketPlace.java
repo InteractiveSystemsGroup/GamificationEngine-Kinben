@@ -269,19 +269,12 @@ public class MarketPlace {
 		for (MarketPlace places : mPls) {
 			List<Offer> removeOffers = new ArrayList<>();
 			
+			//Bids are deleted by cascading.
 			for (Offer offer2 : offersToComplete) {
 				if(places.offers.contains(offer2)){
 					prizeReward += offer2.getPrize();
 					removeOffers.add(offer2);
 					LOGGER.debug("Offer removed and prize = " + prizeReward);
-					
-					List<Bid> bids = marketPlDao.getBidsForOffer(offer2, apiKey);
-					if (!bids.isEmpty()) {
-						for (Bid bid : bids) {
-							marketPlDao.deleteBid(bid);
-							LOGGER.debug("delete bids");
-						}
-					}
 				}
 			}
 			offersToComplete.removeAll(removeOffers);
