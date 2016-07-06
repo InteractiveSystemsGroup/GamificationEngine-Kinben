@@ -3,6 +3,7 @@ package info.interactivesystems.gamificationengine.api;
 import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
+import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigitsOrNull;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.PlayerDAO;
@@ -29,6 +30,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -110,21 +112,25 @@ public class PlayerApi {
 	@Path("/")
 	@TypeHint(Player.class)
 	public Response create(@QueryParam("nickname") @NotNull String nickname, @QueryParam("password") @NotNull String password,
-			@QueryParam("reference") String reference, @QueryParam("roleIds") @NotNull @ValidListOfDigits String playerRoleIds,
+			@QueryParam("reference") String reference, 
+			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigitsOrNull String playerRoleIds,
 			@QueryParam("avatar") String avatar,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		LOGGER.debug("createplayer requested (Params: apiKey = {}, nickname = {}, password = {}", apiKey, nickname, password);
 
-		List<Integer> roleIds = StringUtils.stringArrayToIntegerList(playerRoleIds);
-		List<Role> roles = roleDao.getRoles(roleIds, apiKey);
-
-		List<Integer> roleIds1 = new ArrayList<>(roleIds);
-		roleIds1.removeAll(roles.stream().map(Role::getId).collect(Collectors.toList()));
-		if (!roleIds1.isEmpty()) {
-			throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, role ids don't exist " + roleIds1);
+		List<Role> roles = new ArrayList<>();
+		if(!playerRoleIds.equals("null")){
+			List<Integer> roleIds = StringUtils.stringArrayToIntegerList(playerRoleIds);
+			roles = roleDao.getRoles(roleIds, apiKey);
+	
+			List<Integer> roleIds1 = new ArrayList<>(roleIds);
+			roleIds1.removeAll(roles.stream().map(Role::getId).collect(Collectors.toList()));
+			if (!roleIds1.isEmpty()) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, role ids don't exist " + roleIds1);
+			}
 		}
-
+			
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 		
 		Player player = new Player();

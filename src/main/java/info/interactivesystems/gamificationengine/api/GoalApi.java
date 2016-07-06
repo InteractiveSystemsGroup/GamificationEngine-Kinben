@@ -2,6 +2,7 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
+import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigitsOrNull;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
@@ -111,7 +112,7 @@ public class GoalApi {
 	public Response createNewGoal(@QueryParam("name") @NotNull String name, @QueryParam("repeatable") @DefaultValue("true") String repeatable,
 			@QueryParam("ruleId") @NotNull @ValidPositiveDigit String ruleId, 
 			@QueryParam("rewardIds") @NotNull @ValidListOfDigits String rewardIds,
-			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigits String roleIds,
+			@QueryParam("roleIds") @DefaultValue("null") @ValidListOfDigitsOrNull String roleIds,
 			@QueryParam("groupGoal") @DefaultValue("false") String isGroupGoal, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		Goal.logGoalDetails(name, repeatable, ruleId, rewardIds, roleIds, isGroupGoal, apiKey);
@@ -148,17 +149,21 @@ public class GoalApi {
 		}
 
 		// Find all roles by Id and Organisation
-		String[] rolesList = roleIds.split(",");
 		List<Role> roles = new ArrayList<>();
-
-		for (String roleIdString : rolesList) {
-			Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
-			if (role != null) {
-				roles.add(role);
+		if(!roleIds.equals("null")){
+			String[] rolesList = roleIds.split(",");
+	
+			for (String roleIdString : rolesList) {
+				Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
+				if (role != null) {
+					roles.add(role);
+				}
 			}
+			
 		}
-		goal.setCanCompletedBy(roles);
 
+		goal.setCanCompletedBy(roles);
+		
 		goalDao.insertGoal(goal);
 
 		return ResponseSurrogate.created(goal);

@@ -2,7 +2,7 @@ package info.interactivesystems.gamificationengine.api;
 
 import info.interactivesystems.gamificationengine.api.exeption.Notification;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
-import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
+import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigitsOrNull;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
 import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.MarketPlaceDAO;
@@ -119,23 +119,25 @@ public class TaskApi {
 	@TypeHint(Task.class)
 	public Response createNewTask(@QueryParam("name") @NotNull String name, @QueryParam("description") String description,
 			@QueryParam("tradeable") @DefaultValue("false") String tradeable,
-			@QueryParam("roleIds") @NotNull @ValidListOfDigits(message = "The role ids must be a valid list of numbers") String roleIds,
+			@QueryParam("roleIds")@DefaultValue("null")@ValidListOfDigitsOrNull(message = "The role ids must be null or a valid list of numbers") String roleIds, 
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		LOGGER.debug("createNewTask called");
 
 		Organisation organisation = organisationDao.getOrganisationByApiKey(apiKey);
 
-		String[] roleIdList = roleIds.split(",");
 		List<Role> roles = new ArrayList<>();
+		if(!roleIds.equals("null")){
+			String[] roleIdList = roleIds.split(",");
 
-		for (String roleIdString : roleIdList) {
-			Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
-			if (role != null) {
-				roles.add(role);
+			for (String roleIdString : roleIdList) {
+				Role role = roleDao.getRole(ValidateUtils.requireGreaterThanZero(roleIdString), apiKey);
+				if (role != null) {
+					roles.add(role);
+				}
 			}
 		}
-
+		
 		Task task = new Task();
 		task.setTaskName(name);
 		task.setDescription(description);
