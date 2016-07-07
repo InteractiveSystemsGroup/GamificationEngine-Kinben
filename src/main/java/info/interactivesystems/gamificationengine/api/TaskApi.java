@@ -26,6 +26,7 @@ import info.interactivesystems.gamificationengine.utils.StringUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -168,13 +169,32 @@ public class TaskApi {
 		List<Task> tasks = taskDao.getTasks(apiKey);
 
 		for (Task t : tasks) {
-			System.out.println("Task: " + t.getTaskName());
+			LOGGER.debug("Task: " + t.getTaskName());
 			for (Role r : t.getAllowedFor()) {
-				System.out.println("Role: " + r.getId());
+				LOGGER.debug("Role: " + r.getId());
 			}
 		}
 		return ResponseSurrogate.of(tasks);
 	}
+	
+	/**
+	 * Returns a list of all tasks which are tradeable and associated with the passed API key. If the key is not 
+	 * valid an analogous message is returned.
+	 * 
+	 * @param apiKey
+	 * 		 	The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which these tasks belong to.
+	 * @return Response of all tradeable tasks in JSON.
+	 */
+	@GET
+	@Path("/tradeable/*")
+	@TypeHint(Task[].class)
+	public Response getTradeableTasks(@QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		List<Task> tasks = taskDao.getTasks(apiKey).stream().filter(t -> t.isTradeable()==true).collect(Collectors.toList());
+		return ResponseSurrogate.of(tasks);
+	}
+	
 
 	/**
 	 * Returns the task associated with the passed id and API key. If the API key is not 
@@ -182,7 +202,7 @@ public class TaskApi {
 	 * positive number otherwise a message for an invalid number is returned.
 	 * 
 	 * @param id
-	 *          Required path parameter as integer which uniquely identify the {@link Task}.
+	 *          Required path parameter as integer which uniquely identify the Task.
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this task belongs to.
@@ -209,7 +229,7 @@ public class TaskApi {
 	 * time and date is also stored when the task was officially be done.
 	 * 
 	 * @param id
-	 *          Required integer which uniquely identify the {@link Task}.
+	 *          Required integer which uniquely identify the Task.
 	 * @param playerId
 	 *           The if ot the player who has completed the task. This parameter is required.
 	 * @param finishedDate
