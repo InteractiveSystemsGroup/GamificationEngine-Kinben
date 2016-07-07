@@ -1482,7 +1482,7 @@
             "name" : "description",
             "in" : "query",
             "type" : "string",
-            "description" : "The longer description of the call for donation. This can contain the its purpose."
+            "description" : "The longer description of the call for donation. This can contain its purpose."
           },
           {
             "name" : "goalAmount",
@@ -1949,55 +1949,6 @@
 "items" : {
   "$ref" : "#/definitions/json_offer"
 }
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/marketPlace/{id}/compOffer/{playerId}" : {
-      "post" : {
-        "tags" : [ "MarketPlaceApi" ],
-        "description" : "If an offer is fulfilled by a player, this request can be used to complete the offer. With this request\r\nthe player with the passed id represents the player who fulfilled the task so she/he gets the prize as a\r\nreward.\r\nIt is checked, if all passed ids are a positive number otherwise a message for an invalid number is\r\nreturned. If the API key is not valid an analogous message is returned.",
-        "operationId" : "resource_MarketPlaceApi_completeOffer_POST",
-        "produces" : [ "application/json" ],
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "type" : "string",
-            "description" : "The offer id which was finished. This parameter is required."
-          },
-          {
-            "name" : "playerId",
-            "in" : "path",
-            "type" : "string",
-            "description" : "The id of the player who has completed the task that was associated with the offer. So\r\nshe/he earns the prize as a reward."
-          },
-          {
-            "name" : "apiKey",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
-          },
-          {
-            "name" : "marketId",
-            "in" : "query",
-            "type" : "string",
-            "description" : "The marketplace whose offer is completed."
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-"description" : "",
-"$ref" : "#/definitions/json_task"
             },
             "headers" : {
             },
@@ -3215,7 +3166,7 @@
             "name" : "avatar",
             "in" : "query",
             "type" : "string",
-            "description" : "The url"
+            "description" : "The url of the avatar. The image's size can be up to 3 MB."
           },
           {
             "name" : "nickname",
@@ -3238,6 +3189,7 @@
           {
             "name" : "roleIds",
             "in" : "query",
+            "default" : "null",
             "type" : "string",
             "description" : "Optionally a list of role ids can be passed that a player has. These ids are\r\nseparated by commas."
           }
@@ -4027,7 +3979,7 @@
             "name" : "logoPath",
             "in" : "query",
             "type" : "string",
-            "description" : "Optionally a group logo as a HTTP reference can be passed."
+            "description" : "Optionally a group logo as a HTTP reference can be passed.\r\nThe image's size can be up to 3 MB."
           },
           {
             "name" : "name",
@@ -6389,7 +6341,7 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "Required path parameter as integer which uniquely identify the {@link Task}."
+            "description" : "Required path parameter as integer which uniquely identify the Task."
           },
           {
             "name" : "apiKey",
@@ -6438,6 +6390,40 @@
             "schema" : {
 "description" : "",
 "$ref" : "#/definitions/json_task"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/task/tradeable/*" : {
+      "get" : {
+        "tags" : [ "TaskApi" ],
+        "description" : "Returns a list of all tasks which are tradeable and associated with the passed API key. If the key is not\r\nvalid an analogous message is returned.",
+        "operationId" : "resource_TaskApi_getTradeableTasks_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which these tasks belong to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_task"
+}
             },
             "headers" : {
             },
@@ -6527,6 +6513,7 @@
           {
             "name" : "roleIds",
             "in" : "query",
+            "default" : "null",
             "type" : "string",
             "description" : "Optionally a list of role ids separated by commas who are allowed to fulfil the\r\ntask."
           },
@@ -6566,7 +6553,7 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Task}."
+            "description" : "Required integer which uniquely identify the Task."
           },
           {
             "name" : "playerId",

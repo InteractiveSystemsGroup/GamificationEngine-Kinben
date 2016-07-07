@@ -70,7 +70,6 @@
           <li><a href="#resource_MarketPlaceApi_getHighestOffersRoleFiltered_GET"><abbr title="GET /marketPlace/{playerId}/highestOffersRoleFiltered">GET /marketPlace/{playerId}/hi...</abbr></a></li>
           <li><a href="#resource_MarketPlaceApi_getBids_GET">GET /marketPlace/{id}/bids</a></li>
           <li><a href="#resource_MarketPlaceApi_deleteOffer_DELETE">DELETE /marketPlace/{id}/offer</a></li>
-          <li><a href="#resource_MarketPlaceApi_completeOffer_POST"><abbr title="POST /marketPlace/{id}/compOffer/{playerId}">POST /marketPlace/{id}/compOff...</abbr></a></li>
           <li><a href="#resource_MarketPlaceApi_changeOfferAttributes_PUT"><abbr title="PUT /marketPlace/{id}/attributes">PUT /marketPlace/{id}/attribut...</abbr></a></li>
           <li><a href="#resource_MarketPlaceApi_getAllOffersByTask_GET"><abbr title="GET /marketPlace/offers/{taskId}/*">GET /marketPlace/offers/{taskI...</abbr></a></li>
           <li><a href="#resource_MarketPlaceApi_getAllMarketPlaceOffersByTask_GET"><abbr title="GET /marketPlace/offers/{taskId}/market/*">GET /marketPlace/offers/{taskI...</abbr></a></li>
@@ -128,7 +127,7 @@ returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3871a09f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@16f45c06 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this marketplace belongs to.</td>
@@ -174,12 +173,12 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e66b4a0 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5bd396ac -->
             <td>path</td>
             <td>Required path parameter as integer which uniquely identify the {@link MarketPlace}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7734f7d7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40b71848 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
@@ -223,7 +222,7 @@ to which this goal belongs to.</td>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@31f3b9f9 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@55017f62 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
@@ -272,45 +271,45 @@ Optionally it can be defined when the offer ends and until the task should be do
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b39200 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@61a11da8 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this offer belongs to.</td>
           </tr>
           <tr>
-            <td>deadLine</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1febe582 -->
+            <td>deadLine</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@268081c6 -->
             <td>query</td>
             <td>The point of time until the offer is valid. The format of the values is
 yyyy-MM-dd HH:mm.</td>
           </tr>
           <tr>
-            <td>endDate</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4f3133e7 -->
+            <td>endDate</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5e8da806 -->
             <td>query</td>
             <td>The date and time how long the offer is available on the market. The format of the values is
 yyyy-MM-dd HH:mm.</td>
           </tr>
           <tr>
-            <td>marketId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@63a16789 -->
+            <td>marketId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@a936da -->
             <td>query</td>
             <td>The id of the marketplace where the offer should be available.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7b1ada6f -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@698c373a -->
             <td>query</td>
             <td>The name of the offer. This parameter is required.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b1df77b -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b20157c -->
             <td>query</td>
             <td>The id of the player who created the offer. This parameter is required.</td>
           </tr>
           <tr>
-            <td>prize</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7df555f4 -->
+            <td>prize</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@78de5986 -->
             <td>query</td>
             <td>The initial bid of the offer. This is the prize a player can earn.</td>
           </tr>
           <tr>
-            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1500e8ec -->
+            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3108bfa1 -->
             <td>query</td>
             <td>The id of the task the offer is associated with. This parameter is required.</td>
           </tr>
@@ -356,23 +355,23 @@ the offer's prize is raised.</p>
           </thead>
           <tbody>
           <tr>
-            <td>offerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@38e48181 -->
+            <td>offerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@39b56b5d -->
             <td>path</td>
             <td>The offer the player has bidden for. This parameter is required.</td>
           </tr>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6c960fc9 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@72f502e2 -->
             <td>path</td>
             <td>The player who has done the bid. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b1bbd5a -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@78ed7753 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
           </tr>
           <tr>
-            <td>prize</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@294e755d -->
+            <td>prize</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c6c3a58 -->
             <td>query</td>
             <td>The amount of the bid. This is added to the current prize. This parameter is required.</td>
           </tr>
@@ -417,12 +416,12 @@ for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>offerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@35ba117c -->
+            <td>offerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1e91570b -->
             <td>path</td>
             <td>The id of the offer that should be changed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@690eb845 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@44a9a429 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>
@@ -468,7 +467,7 @@ for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@f192953 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@57ed0400 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offers belongs to.</td>
@@ -515,20 +514,20 @@ for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@55a74170 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3a3e5a5f -->
             <td>path</td>
             <td>The marketplace whose offers should be considered.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@30739b49 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e836b1c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offers belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2ca3c192 -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@27820a09 -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed.</td>
             <td>10</td>
@@ -575,26 +574,26 @@ for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6ab626e4 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@18f0d7fd -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offers belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5f54603 -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@50549a1e -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@29f02c27 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@65bac083 -->
             <td>query</td>
             <td>The marketplace whose offers should be considered.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>roleId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b6dd7da -->
+            <td>roleId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@52df5c7f -->
             <td>query</td>
             <td>The roles id for which the offers are searched.</td>
             <td>&nbsp;</td>
@@ -640,12 +639,12 @@ for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40375355 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4c0e36e6 -->
             <td>path</td>
             <td>The player whose created offers are returned.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6fddd00e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@387ed113 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
@@ -694,26 +693,26 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47e448c6 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@b73a047 -->
             <td>path</td>
             <td>The player whose roles are checked. This parameter is required.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@324294e7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@236739f2 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this player belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@49c930bd -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@505b3ef8 -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2c0ee33a -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@46bcdd2c -->
             <td>query</td>
             <td>The marketplace whose offers are filtered.</td>
             <td>&nbsp;</td>
@@ -760,20 +759,20 @@ a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@acdaff0 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5c0ec4a0 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6c9ed764 -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5efc5d2d -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed. The default value is 10.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6cd25e92 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@57d914f4 -->
             <td>query</td>
             <td>The marketplace whose offers are filtered.</td>
             <td>&nbsp;</td>
@@ -821,26 +820,26 @@ a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@379e6701 -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@77acf69e -->
             <td>path</td>
             <td>The player whose roles are checked. This parameter is required.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@504bec2d -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5d2d170f -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4a7424b7 -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@61042cb2 -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed. The default value is 10.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@342cd5a5 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7ee5fad2 -->
             <td>query</td>
             <td>The marketplace whose offers are filtered.</td>
             <td>&nbsp;</td>
@@ -887,20 +886,20 @@ a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@70ce0a4e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6eedeb96 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7f6bbafe -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5bcd1c2b -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed. The default value is 10.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@14517838 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1b6cda5c -->
             <td>query</td>
             <td>The marketplace whose offers are filtered.</td>
             <td>&nbsp;</td>
@@ -948,26 +947,26 @@ a positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@460206ea -->
+            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4a0e8089 -->
             <td>path</td>
             <td>The player whose roles are checked. This parameter is required.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@461ef81e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4bbe6305 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the player belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@64800669 -->
+            <td>count</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7821021d -->
             <td>query</td>
             <td>Optionally the count of offers that should be returned can be passed. The default value is 10.</td>
             <td>10</td>
           </tr>
           <tr>
-            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7b8f2279 -->
+            <td>marketPlaceId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5e2997f -->
             <td>query</td>
             <td>The marketplace whose offers are filtered.</td>
             <td>&nbsp;</td>
@@ -1013,12 +1012,12 @@ positive number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d6c5eb4 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3bd64b82 -->
             <td>path</td>
             <td>The offer whose bids are returned. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c038d0f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3c8b1b6 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>
@@ -1066,12 +1065,12 @@ valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@78d463a8 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@73096a38 -->
             <td>path</td>
             <td>The offer which should be removed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7aca0a21 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@62b13c47 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>
@@ -1094,70 +1093,6 @@ to which the offer belongs to.</td>
             <td><a href="json_offer.html">Offer</a>
  (JSON)</td>
             <td rowspan="1">Response of Offer in JSON.</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div id="resource_MarketPlaceApi_completeOffer_POST">
-        <h3>POST <small>/marketPlace/{id}/compOffer/{playerId} <!--<a href="./marketPlace/{id}/compOffer/{playerId}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
-
-        <p>If an offer is fulfilled by a player, this request can be used to complete the offer. With this request
-the player with the passed id represents the player who fulfilled the task so she/he gets the prize as a
-reward.
-It is checked, if all passed ids are a positive number otherwise a message for an invalid number is
-returned. If the API key is not valid an analogous message is returned.</p>
-
-        <table class="table">
-          <caption>Request Parameters</caption>
-          <thead>
-          <tr>
-            <th>name</th>
-            <th>type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@351c6232 -->
-            <td>path</td>
-            <td>The offer id which was finished. This parameter is required.</td>
-          </tr>
-          <tr>
-            <td>playerId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@35f7fa6b -->
-            <td>path</td>
-            <td>The id of the player who has completed the task that was associated with the offer. So
-she/he earns the prize as a reward.</td>
-          </tr>
-          <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6e65065e -->
-            <td>query</td>
-            <td>The valid query parameter API key affiliated to one specific organisation,
-to which this player belongs to.</td>
-          </tr>
-          <tr>
-            <td>marketId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@44d482b1 -->
-            <td>query</td>
-            <td>The marketplace whose offer is completed.</td>
-          </tr>
-          </tbody>
-        </table>
-
-        <table class="table">
-          <caption>Response Body</caption>
-          <thead>
-          <tr>
-            <th>media type</th>
-            <th>data type</th>
-            <th>description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td><abbr data-toggle="tooltip" data-placement="top" title="Use the &quot;Accept: application/json&quot; HTTP header to request that this media type be provided by the server.">application/json</abbr></td>
-            <td><a href="json_task.html">Task</a>
- (JSON)</td>
-            <td rowspan="1">Response of Task in JSON.</td>
           </tr>
           </tbody>
         </table>
@@ -1186,25 +1121,25 @@ the ids are a positive number otherwise a message for an invalid number is retur
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@120f65eb -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6b32e1c8 -->
             <td>path</td>
             <td>The id of the offer that should be changed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1821e163 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d31a819 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5eb043cf -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@15d15f2d -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "name", "deadline" and "enddate".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3e1193a2 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7e691ad4 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
@@ -1248,12 +1183,12 @@ of the marketplace.</p>
           </thead>
           <tbody>
           <tr>
-            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@575899b6 -->
+            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2a98870 -->
             <td>path</td>
             <td>The id of the task, which all returned offers contain.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@406550c7 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2278895c -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>
@@ -1298,12 +1233,12 @@ marketplace.</p>
           </thead>
           <tbody>
           <tr>
-            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c97dd3f -->
+            <td>taskId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3d4f9209 -->
             <td>path</td>
             <td>The id of the task, which all returned offers contain.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2e29c18c -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@bc690ce -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which the offer belongs to.</td>

@@ -113,48 +113,48 @@ only once. So a points rule can be fulfilled once only although the associated g
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@42850c6 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4aa773d7 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>groupGoal</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@788e3707 -->
+            <td>groupGoal</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5390ec99 -->
             <td>query</td>
             <td>Optionally a goal can also be done by a group. Possible values are "1" or "0", "true" or
 "false". The default value is "false".</td>
             <td>false</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@c3c9f9f -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@48d65e98 -->
             <td>query</td>
             <td>The name of the goal. This parameter is required.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>repeatable</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@62654304 -->
+            <td>repeatable</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6eeb4624 -->
             <td>query</td>
             <td>Optionally a goal can be set as repeatable by "1" or "0", "true" or
 "false". The default value is "true".</td>
             <td>true</td>
           </tr>
           <tr>
-            <td>rewardIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@240d81ee -->
+            <td>rewardIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1f23a9e5 -->
             <td>query</td>
             <td>All rewards that are awarded to the player who completes the goal. These ids are
 separated by commas.</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2d32ac67 -->
+            <td>roleIds</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4b837abc -->
             <td>query</td>
             <td>Optionally a list of role-ids can be passed which are separated by commas. These ids indicate
 who is allowed to fulfil the goal. This parameter is required.</td>
             <td>null</td>
           </tr>
           <tr>
-            <td>ruleId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@451a1e39 -->
+            <td>ruleId</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@315bcfca -->
             <td>query</td>
             <td>The rule which define when a goal is completed. This parameter is required.</td>
             <td>&nbsp;</td>
@@ -200,7 +200,7 @@ If the API key is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@d2f08fd -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@53565a3 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
@@ -246,12 +246,12 @@ id is a positive number otherwise a message for an invalid number is returned..<
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@133adb64 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@779784bd -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Goal}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@72b60c7e -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6d1a7b67 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
@@ -303,25 +303,25 @@ If the API key is not valid an analogous message is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@40150936 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2bcb7df0 -->
             <td>path</td>
             <td>Required id of the goal which should be modified.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@302c0ab1 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1d7aeb0a -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this role belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@51f86add -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6a49fb9d -->
             <td>query</td>
             <td>The attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
 "goalName", "isRepeateable", "isGroupGoal", "rewardId" and "roles".</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@12d09a33 -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@9789256 -->
             <td>query</td>
             <td>The new value of the attribute.</td>
           </tr>
@@ -366,12 +366,12 @@ if the id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7a646de6 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@792c4a74 -->
             <td>path</td>
             <td>Required integer which uniquely identify the {@link Goal}.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2acd9999 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3344dce0 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal belongs to.</td>
