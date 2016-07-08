@@ -60,7 +60,7 @@ public class PlayerGroup {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Player> players;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	private List<FinishedGoal> finishedGoals;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
