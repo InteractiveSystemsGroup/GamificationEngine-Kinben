@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * The super class of all rewards. Here are general information of the reward
@@ -39,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "REWARD_TYPE", discriminatorType = DiscriminatorType.STRING)
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "goals" })
 public abstract class Reward {
 
 	@Id
@@ -56,8 +58,9 @@ public abstract class Reward {
 	
 	private int timeToLive;
 
-	@ManyToMany(mappedBy = "rewards")
-	List<Goal> goals;
+	@ManyToMany(mappedBy = "rewards", fetch = FetchType.EAGER)
+	@JsonManagedReference
+	private List<Goal> goals;
 
 	public abstract void addReward(Player player, GoalDAO goalDao, RuleDAO ruleDao);
 	public abstract void addReward(PlayerGroup group, GoalDAO goalDao, RuleDAO ruleDao);
@@ -136,8 +139,6 @@ public abstract class Reward {
 		return getBelongsTo().getApiKey().equals(organisation.getApiKey());
 	}
 
-	
-	//----
 	/**
 	 * Gets the description of an achievement. This could contains for example the 
 	 * different tasks which have to be completed to get this achievement.
@@ -181,4 +182,22 @@ public abstract class Reward {
 		this.name = name;
 	}
 	
+	/**
+	 * Gets the list of goals to which this reward is assigned.
+	 * 
+	 * @return All goals with this reward as List of Goals.
+	 */
+	public List<Goal> getGoals() {
+		return goals;
+	}
+	
+	/**
+	 * Sets the list of goals to which this reward is assigned.
+	 * 
+	 * @param goals
+	 * 			The goals to which this reward should be assigned.
+	 */
+	public void setGoals(List<Goal> goals) {
+		this.goals = goals;
+	}
 }

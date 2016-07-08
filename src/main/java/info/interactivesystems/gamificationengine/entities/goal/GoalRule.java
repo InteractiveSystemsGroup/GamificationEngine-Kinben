@@ -141,7 +141,7 @@ public class GoalRule {
 	 * 			List of rules that are associated with the task that should be deleted.
 	 */
 	public static void checkRulesForTask(List<TaskRule> rules){
-		List<Integer> ids = getRuleIds(rules);
+		List<String> ids = getRuleIds(rules);
 		StringUtils.printIdsForDeletion(ids, "task" , "goalrule");
 	}
 	
@@ -152,10 +152,10 @@ public class GoalRule {
 	 * 			List of rules of which the ids are returned.
 	 * @return A list of Integers of the passed rules. 
 	 */
-	public static List<Integer> getRuleIds(List<TaskRule> rules){
-		List<Integer> ids = new ArrayList<>();
+	public static List<String> getRuleIds(List<TaskRule> rules){
+		List<String> ids = new ArrayList<>();
 		for (TaskRule rule : rules) {
-			ids.add(rule.getId());
+			ids.add(Integer.toString(rule.getId()));
 		}
 		return ids;
 	}

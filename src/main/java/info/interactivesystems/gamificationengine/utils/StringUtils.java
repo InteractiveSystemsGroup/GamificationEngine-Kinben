@@ -66,11 +66,9 @@ public class StringUtils {
 	 * 			The type of the object that use the object, that should be deleted. This is only given 
 	 * 			by a String.
 	 */
-	public static void printIdsForDeletion(List<Integer> ids, String objectToDelete, String type){
+	public static void printIdsForDeletion(List<String> ids, String objectToDelete, String type){
 			String message = "This " +objectToDelete + " is still used. Please delete first " +  type + " with id: ";
-			for (int id : ids) {
-				message += id;
-			}
+			message += String.join(",", ids);
 			throw new ApiError(Response.Status.FORBIDDEN, message);
 	}
 }

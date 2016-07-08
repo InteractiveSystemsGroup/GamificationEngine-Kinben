@@ -3,6 +3,7 @@ package info.interactivesystems.gamificationengine.entities.marketPlace;
 import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Player;
 import info.interactivesystems.gamificationengine.entities.task.Task;
+import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -286,6 +287,35 @@ public class Offer {
 	public int addPrize(String addPrize) {
 		this.prize = this.getPrize() + Integer.valueOf(addPrize);
 		return prize;
+	}
+	
+	/**
+	 * This method gets the ids of all offers which have to be deleted before a specific
+	 * task can be deleted. These ids are then passed to create a message in the
+	 * response to give the user a hint.
+	 * 
+	 * @param offers
+	 * 			List of offers that are associated with the task that should be deleted.
+	 */
+	public static void checkOffersForTask(List<Offer> offers){
+		List<String> ids = getOfferIds(offers);
+		StringUtils.printIdsForDeletion(ids, "task" , "offer");
+	}
+	
+	/**
+	 * Gets the id of each offer that is in the passed List and collects them in a 
+	 * new list with ids.
+	 * 
+	 * @param offers
+	 * 			List of offers of which the ids are returned.
+	 * @return A list of Integers of the passed offers. 
+	 */
+	public static List<String> getOfferIds(List<Offer> offers){
+		List<String> ids = new ArrayList<>();
+		for (Offer offer : offers) {
+			ids.add(Integer.toString(offer.getId()));
+		}
+		return ids;
 	}
 }
 

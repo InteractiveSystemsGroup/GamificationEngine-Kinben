@@ -80,6 +80,8 @@ public class GoalDAO {
 
 		return query.getResultList();
 	}
+	
+
 
 	/**
 	 * Gets all goals which belong to the specific passed API key.

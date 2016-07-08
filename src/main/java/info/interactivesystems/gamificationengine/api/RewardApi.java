@@ -3,9 +3,11 @@ package info.interactivesystems.gamificationengine.api;
 import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
+import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RewardDAO;
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.goal.Goal;
 import info.interactivesystems.gamificationengine.entities.rewards.Achievement;
 import info.interactivesystems.gamificationengine.entities.rewards.Badge;
 import info.interactivesystems.gamificationengine.entities.rewards.Coins;
@@ -62,6 +64,8 @@ public class RewardApi {
 	OrganisationDAO organisationDao;
 	@Inject
 	RewardDAO rewardDao;
+	@Inject 
+	GoalDAO goalDao;
 
 	/**
 	 * Returns a list of all rewards associated with the passed API key and so all rewards 
@@ -177,31 +181,6 @@ public class RewardApi {
 		return ResponseSurrogate.created(reward);
 	}
 
-	/**
-	 * Removes a specific reward from the data base which is identified by the passed id and 
-	 * the API key. If the API key is not valid an analogous message is returned. It is also 
-	 * checked, if the id is a positive number otherwise a message for an invalid number is 
-	 * returned. 
-	 * 
-	 * @param id
-	 *          Required integer which uniquely identify the {@link Reward} which sould be
-	 *          deleted.
-	 * @param apiKey
-	 *           The valid query parameter API key affiliated to one specific organisation, 
-	 *           to which this reward belongs to.
-	 * @return Response of Reward with 200 OK and JSON as response type.
-	 */
-	@DELETE
-	@Path("/{id}")
-	@TypeHint(Reward.class)
-	public Response deleteReward(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		int rewardId = ValidateUtils.requireGreaterThanZero(id);
-		Reward reward = rewardDao.deleteReward(rewardId, apiKey);
-		ValidateUtils.requireNotNull(rewardId, reward);
-	
-		return ResponseSurrogate.deleted(reward);
-	}
 
 	/**
 	 * Returns a list of all available reward types associated with an API key that can
@@ -780,6 +759,39 @@ public class RewardApi {
 		}
 
 		return ResponseSurrogate.updated(reward);
+	}
+	
+	/**
+	 * Removes a specific reward from the data base which is identified by the passed id and 
+	 * the API key. But only if it is not associated to a goal. Then first the goal has to deleted.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if 
+	 * the id is a positive number otherwise a message for an invalid number is returned. 
+	 * 
+	 * @param id
+	 *          Required integer which uniquely identify the {@link Reward} which should be
+	 *          deleted.
+	 * @param apiKey
+	 *           The valid query parameter API key affiliated to one specific organisation, 
+	 *           to which this reward belongs to.
+	 * @return Response of Reward with 200 OK and JSON as response type.
+	 */
+	@DELETE
+	@Path("/{id}")
+	@TypeHint(Reward.class)
+	public Response deleteReward(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		int rewardId = ValidateUtils.requireGreaterThanZero(id);
+		Reward reward = rewardDao.getReward(rewardId, apiKey);
+		ValidateUtils.requireNotNull(rewardId, reward);
+	
+		List<Goal> goals = reward.getGoals();
+		if(!goals.isEmpty()){
+			Goal.checkGoalsForDeletion(goals, "reward" , "goal");
+		}
+		
+		reward = rewardDao.deleteReward(rewardId, apiKey);
+		
+		return ResponseSurrogate.deleted(reward);
 	}
 
 }

@@ -4,6 +4,7 @@ import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.rewards.Reward;
 import info.interactivesystems.gamificationengine.entities.task.FinishedTask;
+import info.interactivesystems.gamificationengine.utils.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * A Goal comprises one or more tasks and is associated with a goal rule. If the player wants to earn the 
@@ -62,6 +64,7 @@ public class Goal {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	// @JoinTable(name = "Goal_Reward", joinColumns = @JoinColumn(name =
 	// "Goal_id"), inverseJoinColumns = @JoinColumn(name = "rewars_id"))
+	@JsonBackReference
 	private List<Reward> rewards;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -328,5 +331,35 @@ public class Goal {
 		LOGGER.debug("ruleId: " + ruleId);
 		LOGGER.debug("rewardIds: " + rewardIds);
 		LOGGER.debug("rewardIds: " + roleIds);
+	}
+
+	
+	/**
+	 * This method gets the ids of goals that have to be deleted before a specific
+	 * object like a rule or reward can be deleted. These ids are then passed to create 
+	 * a message in the response to give the user a hint.
+	 * 
+	 * @param goals
+	 * 			List of goals that are associated with an object that should be deleted.
+	 */
+	public static void checkGoalsForDeletion(List<Goal> goals, String objectToDelete, String type) {
+		List<String> ids = getGoalIds(goals);
+		StringUtils.printIdsForDeletion(ids, objectToDelete , type);
+	}
+	
+	
+	/**
+	 * Gets the id each goal that is in the passed List.
+	 * 
+	 * @param goals
+	 * 			List of goals of which the ids are returned.
+	 * @return A list of Integers of the passed goals. 
+	 */
+	public static List<String> getGoalIds(List<Goal> goals){
+		List<String> ids = new ArrayList<>();
+		for (Goal goal : goals) {
+			ids.add(Integer.toString(goal.getId()));
+		}
+		return ids;
 	}
 }

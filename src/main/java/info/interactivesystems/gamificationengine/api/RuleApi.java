@@ -3,6 +3,7 @@ package info.interactivesystems.gamificationengine.api;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigits;
 import info.interactivesystems.gamificationengine.api.validation.ValidPositiveDigit;
+import info.interactivesystems.gamificationengine.dao.GoalDAO;
 import info.interactivesystems.gamificationengine.dao.OrganisationDAO;
 import info.interactivesystems.gamificationengine.dao.RuleDAO;
 import info.interactivesystems.gamificationengine.dao.TaskDAO;
@@ -10,6 +11,7 @@ import info.interactivesystems.gamificationengine.entities.Organisation;
 import info.interactivesystems.gamificationengine.entities.goal.DoAllTasksRule;
 import info.interactivesystems.gamificationengine.entities.goal.DoAnyTaskRule;
 import info.interactivesystems.gamificationengine.entities.goal.GetPointsRule;
+import info.interactivesystems.gamificationengine.entities.goal.Goal;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
 import info.interactivesystems.gamificationengine.entities.task.Task;
@@ -59,6 +61,8 @@ public class RuleApi {
 	RuleDAO ruleDao;
 	@Inject
 	TaskDAO taskDao;
+	@Inject
+	GoalDAO goalDao;
 
 	/**
 	 * Creates a new task rule. By the creation the type of rule (DoAllTasksRule or DoAnyTaskRule) has to be defined, the rule's name, 
@@ -219,8 +223,9 @@ public class RuleApi {
 
 	/**
 	 * Removes a specific goal rule from the data base which is identified by the given id and the 
-	 * API key. If the API key is not valid an analogous message is returned. It is also checked,
-	 * if the id is a positive number otherwise a message for an invalid number is returned. 
+	 * API key. But only if the goal rule is not associated to a goal. Then first the goal has to deleted.
+	 * If the API key is not valid an analogous message is returned. It is also checked, if the id 
+	 * is a positive number otherwise a message for an invalid number is returned. 
 	 * 
 	 * @param id
 	 *           Required integer as path parameter which uniquely identify the goal rule.
@@ -235,9 +240,16 @@ public class RuleApi {
 	public Response deleteRule(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int ruleId = ValidateUtils.requireGreaterThanZero(id);
-		GoalRule rule = ruleDao.deleteRule(ruleId, apiKey);
+		GoalRule rule = ruleDao.getRule(ruleId, apiKey);
 		ValidateUtils.requireNotNull(ruleId, rule);
 
+		List<Goal> goals = goalDao.getGoalsByRule(rule, apiKey);
+		if(!goals.isEmpty()){
+ 			Goal.checkGoalsForDeletion(goals, "goal rule" , "goal");
+ 		}
+		
+		rule = ruleDao.deleteRule(ruleId, apiKey);
+		
 		return ResponseSurrogate.deleted(rule);
 	}
 

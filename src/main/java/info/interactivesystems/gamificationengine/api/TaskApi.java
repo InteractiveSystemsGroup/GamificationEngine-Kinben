@@ -18,6 +18,7 @@ import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.goal.GoalRule;
 import info.interactivesystems.gamificationengine.entities.goal.TaskRule;
 import info.interactivesystems.gamificationengine.entities.marketPlace.MarketPlace;
+import info.interactivesystems.gamificationengine.entities.marketPlace.Offer;
 import info.interactivesystems.gamificationengine.entities.task.Task;
 import info.interactivesystems.gamificationengine.utils.LocalDateTimeUtil;
 import info.interactivesystems.gamificationengine.utils.OfferMarketPlace;
@@ -367,9 +368,11 @@ public class TaskApi {
 
 	
 	/**
-	 * Removes the task with the assigned id and associated API key from data base. It is checked, 
-	 * if the passed id is a positive number otherwise a message for an invalid number is returned. 
-	 * If the API key is not valid an analogous message is returned.
+	 * Removes the task with the assigned id and associated API key from data base. But only if 
+	 * the task is not associated to a goal rule or is an offer on the marketplace. Then first these
+	 * elements have to deleted. 
+	 * It is checked, if the passed id is a positive number otherwise a message for an invalid number 
+	 * is returned. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param id
 	 *          Required integer which uniquely identify the {@link Task}.
@@ -392,6 +395,11 @@ public class TaskApi {
  		if(!rules.isEmpty()){
  			GoalRule.checkRulesForTask(rules);
  		}
+ 		List<Offer> offers = marketPlDao.getOffersByTask(task, apiKey);
+ 		if(!offers.isEmpty()){
+ 			Offer.checkOffersForTask(offers);
+ 		}
+ 		
 		task = taskDao.deleteTask(taskId, apiKey);
 		
 		return ResponseSurrogate.deleted(task);
