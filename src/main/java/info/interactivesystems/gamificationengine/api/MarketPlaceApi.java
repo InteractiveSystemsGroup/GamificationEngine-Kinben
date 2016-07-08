@@ -922,8 +922,8 @@ public class MarketPlaceApi {
 	
 	
 	/**
-	 * This method returns a list with all offers that contain a specific task and the offer's 
-	 * marketplace. 
+	 * This method returns a list with all offers which contain a specific task and the id of the 
+	 * offer's marketplace. 
 	 * 
 	 * @param taskId
 	 * 			The id of the task, which all returned offers contain.

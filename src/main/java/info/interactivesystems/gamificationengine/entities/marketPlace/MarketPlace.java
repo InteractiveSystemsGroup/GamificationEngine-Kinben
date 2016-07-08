@@ -295,7 +295,7 @@ public class MarketPlace {
 	
 	/**
 	 * This methods creates an ArrayList of all offers that contains a specific 
-	 * task. Additonally to every offer the id of the marektplace is added where 
+	 * task. Additionally to every offer the id of the marketplace is added where 
 	 * the offer can be find.
 	 *   
 	 * @param marketPlDao

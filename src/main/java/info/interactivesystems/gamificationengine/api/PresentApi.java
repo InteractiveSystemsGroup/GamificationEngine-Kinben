@@ -186,7 +186,7 @@ public class PresentApi {
 		iMessage.setSender(sender);
 		iMessage.setMessage(textMessage);
 		try {
-			URL icon = new URL(imagePath);
+			new URL(imagePath);
 			iMessage.setImageIcon(ImageUtils.imageToByte(imagePath));
 		} catch (MalformedURLException e) {
 			throw new ApiError(Response.Status.FORBIDDEN, "no valid url was transferred");

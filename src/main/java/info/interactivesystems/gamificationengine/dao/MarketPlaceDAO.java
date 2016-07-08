@@ -61,24 +61,6 @@ public class MarketPlaceDAO {
 	}
 
 
-//	/**
-//	 * Gets a list of bids for a specific player and offer.
-//	 * 
-//	 * @param player
-//	 *            The player who has made the bids on the offer.
-//	 * @param offer
-//	 *            The offer that is associated with the bids.
-//	 * @return A {@link List} of all {@link Bid}s that are associated to a specific player and offer. 
-//	 */
-//	public List<Bid> getBidsForPlayerAndOffer(Player player, Offer offer) {
-//		Query query = em.createQuery("select b from Bid b where b.player=:player and b.offer=:offer");
-//		query.setParameter("player", player);
-//		query.setParameter("offer", offer);
-//		// List<Bid> result = new ArrayList<Bid>();
-//		// return result = (List<Bid>)query.getResultList();
-//		return query.getResultList();
-//	}
-
 	/**
 	 * Gets a list of bids for a specific offer.
 	 * 
@@ -112,7 +94,16 @@ public class MarketPlaceDAO {
 		return (List<Offer>)query.getResultList();
 	}
 
-	// TODO test
+	/**
+	 * Gets a list all offers which contain a specific task in an organisation. 
+	 * 
+	 * @param task
+	 * 			The id of the task, which all returned offers contain.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the offer belongs to.
+	 * @return A List of Offers with a specific task.
+	 */
 	public List<Offer> getOffersByTask(Task task, String apiKey) {
 		Query query = em.createQuery("select o from Offer o where o.task=:task and o.belongsTo.apiKey=:apiKey");
 		query.setParameter("task", task);

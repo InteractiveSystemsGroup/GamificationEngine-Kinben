@@ -7,7 +7,11 @@ import java.time.format.DateTimeFormatter;
 public class LocalDateTimeUtil {
 
 	/**
-	 * Parse String to a LocalDateTime object -> for example to "2015-12-15 12:30";
+	 * Parses a String to a LocalDateTime object like for example to '2015-12-15 12:30';
+	 * 
+	 * @param dateAndTime
+	 * 			The String that should be formatted and parsed to a LocalDateTime object.
+	 * @return The formatted LocalDateTime Object of the passed String.
 	 */
 	public static LocalDateTime formatDateAndTime(String dateAndTime) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

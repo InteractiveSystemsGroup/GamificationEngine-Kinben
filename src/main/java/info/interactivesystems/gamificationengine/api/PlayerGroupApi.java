@@ -298,7 +298,6 @@ public class PlayerGroupApi {
 			throw new ApiError(Response.Status.NOT_FOUND, "No such PlayerGroup: " + id);
 		}
 		
-//		byte[] bytes = group.getGroupLogo();
 		String b64 = ImageUtils.encodeByteArrayToBase64(group.getGroupLogo());
 		
 		return ResponseSurrogate.of(b64);
