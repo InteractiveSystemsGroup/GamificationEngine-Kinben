@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +26,7 @@ import info.interactivesystems.gamificationengine.entities.Player;
  * implemented by the responsible manager.
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "donations" })
 public class DonationCall {
 
 	@Id
@@ -49,14 +50,17 @@ public class DonationCall {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Player> donors;
 
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy="donationCall")
+	private List<Donation> donations;
+	
 	private boolean goalReached;
 
 	public DonationCall() {
 		goalReached = false;
 		currentAmount = 0;
 		
+		donations = new ArrayList<>();
 		donors = new ArrayList<>();
-		
 	}
 
 	/**
