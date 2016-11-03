@@ -128,10 +128,9 @@ public class RuleApi {
 		rule.setName(name);
 		rule.setDescription(description);
 		rule.setBelongsTo(organisation);
-
-		ruleDao.insertRule(rule);
-
 		rule.setTasks(tasks);
+		
+		ruleDao.insertRule(rule);
 
 		return ResponseSurrogate.created(rule);
 	}

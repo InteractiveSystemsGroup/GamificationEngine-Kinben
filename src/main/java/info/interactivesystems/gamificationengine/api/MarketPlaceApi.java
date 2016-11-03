@@ -173,7 +173,7 @@ public class MarketPlaceApi {
 		List<MarketPlace> markets = marketPlDao.getAllMarketPlaces(apiKey);
 		
 		for (MarketPlace m : markets) {
-			LOGGER.debug("| MarketPlacee:" + m.getId());
+			LOGGER.debug("| MarketPlace:" + m.getId());
 		}
 
 		return ResponseSurrogate.of(markets);
@@ -411,7 +411,8 @@ public class MarketPlaceApi {
 	 * @param marketPlId
 	 * 			The marketplace whose offers should be considered.
 	 * @param count
-	 *           Optionally the count of offers that should be returned can be passed. 
+	 *           Optionally the count of offers that should be returned can be passed. If no value is passed
+	 *           all offers of the marketplace are returned.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
 	 *            to which the offers belongs to.
@@ -422,7 +423,7 @@ public class MarketPlaceApi {
 	@TypeHint(Offer[].class)
 	public Response getAllOffersOfMarketPlace(
 			@PathParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
-			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
+			@QueryParam("count") @ValidPositiveDigit(message = "Count must be a valid number") String count,  
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		MarketPlace market = marketPlDao.getMarketplace(ValidateUtils.requireGreaterThanZero(marketPlId),apiKey);
@@ -455,7 +456,8 @@ public class MarketPlaceApi {
 	 * @param marketPlId
 	 * 			The marketplace whose offers should be considered.
 	 * @param count
-	 * 			 Optionally the count of offers that should be returned can be passed. 
+	 * 			 Optionally the count of offers that should be returned can be passed. If no value is passed
+	 *           all offers of the marketplace are returned.
 	 * @param apiKey
 	 * 			The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which the offers belongs to.
@@ -467,7 +469,7 @@ public class MarketPlaceApi {
 	public Response getAllOffersForRole(
 			@QueryParam("roleId") @NotNull @ValidPositiveDigit(message = "The role id must be a valid number") String roleId,
 			@QueryParam("marketPlaceId") @NotNull @ValidPositiveDigit(message = "The market id must be a valid number") String marketPlId,
-			@QueryParam("count") @ValidPositiveDigit(message = "The count must be a valid number") @DefaultValue("10") String count,
+			@QueryParam("count") @ValidPositiveDigit(message = "Count must be a valid number") String count,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 		
 		int id = Integer.parseInt(roleId);
@@ -856,7 +858,6 @@ public class MarketPlaceApi {
 			@PathParam("id") @NotNull @ValidPositiveDigit(message = "The offer id must be a valid number") String offerId,
 			@QueryParam("attribute") @NotNull String attribute, @QueryParam("value") @NotNull String value,
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
-		LOGGER.debug("change Attribute of Offer");
 
 		Offer offer = marketPlDao.getOffer(ValidateUtils.requireGreaterThanZero(offerId), apiKey);
 		ValidateUtils.requireNotNull(Integer.valueOf(offerId), offer);

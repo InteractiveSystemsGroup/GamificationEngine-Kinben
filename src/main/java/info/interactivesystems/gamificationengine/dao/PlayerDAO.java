@@ -62,6 +62,29 @@ public class PlayerDAO {
 		return ((Player) list.get(0));
 	}
 
+	
+	/**
+	 * Gets a player by her/his reference field and API key.
+	 * 
+	 * @param reference
+	 *          The reference of the requested player.
+	 * @param apiKey
+	 *            The API key of the organisation to which the player belongs to.
+	 * @return The {@link Player} that is associated with the passed id and API key.
+	 */
+	public Player getPlayerByReference(String reference, String apiKey) {
+		Query query = em.createQuery("select p from Player p where p.belongsTo.apiKey=:apiKey and p.reference=:reference", Player.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("reference", reference);
+		
+		List list = query.setMaxResults(1).getResultList();
+		
+		if (list.isEmpty()) {
+			return null;
+		}
+		return ((Player) list.get(0));
+	}
+	
 	/**
 	 * Gets a list of players by their ids and the API key.
 	 * 

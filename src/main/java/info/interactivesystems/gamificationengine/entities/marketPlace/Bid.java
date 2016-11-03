@@ -76,7 +76,7 @@ public class Bid {
 	 * Sets the organisation a bid belongs to.
 	 * 
 	 * @param belongsTo
-	 *            The organisation a task belongs to.
+	 *            The organisation a bid belongs to.
 	 */
 	public void setBelongsTo(Organisation belongsTo) {
 		this.belongsTo = belongsTo;

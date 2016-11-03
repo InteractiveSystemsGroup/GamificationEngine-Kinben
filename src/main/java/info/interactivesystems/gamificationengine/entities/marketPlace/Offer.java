@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * The particular task is then also added to the player’s list of the finished tasks. 
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo", "bids" })
+@JsonIgnoreProperties({ "belongsTo", "bids", "player" })
 public class Offer {
 
 	@Id
@@ -236,10 +236,6 @@ public class Offer {
 		this.name = name;
 	}
 
-	
-	// public void addBid(Bid bid) {
-	// bids.add(bid);
-	// }
 
 	/**
 	 * Gets the player who has created the offer.

@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
 public class StringUtils {
-
 	
 	/**
 	 * Converts a string of digits to list of integers.
