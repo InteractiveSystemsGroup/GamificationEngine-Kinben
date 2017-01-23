@@ -2,13 +2,17 @@ package info.interactivesystems.gamificationengine.entities.task;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import info.interactivesystems.gamificationengine.entities.Player;
 
 /**
  * When a player has completed a Task, it will be added to the player’s list of finished tasks. 
@@ -18,6 +22,7 @@ import javax.validation.constraints.NotNull;
  * rewards.
  */
 @Entity
+@JsonIgnoreProperties({ "player" })
 public class FinishedTask {
 
 	@Id
@@ -30,6 +35,21 @@ public class FinishedTask {
 	@NotNull
 	@ManyToOne
 	private Task task;
+	
+	@ManyToOne
+	private Player player;
+
+	/**
+	 * Before a finishedTask is removed from the dataBase it should have to be removed from the player's 
+	 * list of finished tasks.
+	 */
+ 	@PreRemove
+    private void removeFTaskFromPlayer() {
+ 		if(player!=null){
+           player.removeFinishedTask(this);
+ 		}
+    }
+	
 
 	/**
 	 * Gets the id of the finished task.
@@ -88,4 +108,24 @@ public class FinishedTask {
 		this.task = task;
 	}
 
+	/**
+	 * Gets the player who owns the finished task.
+	 * 
+	 * @return The Player who own the finished task.
+	 * 		
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
+	/**
+	 * Sets the player as an owner of the finished task.
+	 *  
+	 * @param player
+	 * 			The player who has earned the finished task by completing the task 
+	 * 			which belongs to this finished task.
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 }

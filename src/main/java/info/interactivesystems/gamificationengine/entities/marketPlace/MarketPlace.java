@@ -257,16 +257,16 @@ public class MarketPlace {
 		
 		int prizeReward = 0;
 		
-		HashSet<MarketPlace> mPls = new HashSet<>();
+		HashSet<MarketPlace> marketPls = new HashSet<>();
 		List<Offer> offersToComplete = new ArrayList<>();
 		List<Offer> offersToDelete = new ArrayList<>();
 		
 		for (OfferMarketPlace offerMarketPlace : taskOffers) {
 			offersToComplete.add(offerMarketPlace.getOffer());
-			mPls.add(marketPlDao.getMarketplace(offerMarketPlace.getMarketPlaceId(), apiKey));	
+			marketPls.add(marketPlDao.getMarketplace(offerMarketPlace.getMarketPlaceId(), apiKey));	
 		}	
 		
-		for (MarketPlace places : mPls) {
+		for (MarketPlace places : marketPls) {
 			List<Offer> removeOffers = new ArrayList<>();
 			
 			//Bids are deleted by cascading.

@@ -108,6 +108,7 @@ public class MarketPlaceDAO {
 		Query query = em.createQuery("select o from Offer o where o.task=:task and o.belongsTo.apiKey=:apiKey");
 		query.setParameter("task", task);
 		query.setParameter("apiKey", apiKey);
+		
 		return (List<Offer>)query.getResultList();
 	}
 	

@@ -58,7 +58,7 @@ public abstract class Reward {
 	
 	private int timeToLive;
 
-	@ManyToMany(mappedBy = "rewards", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "rewards")
 	@JsonManagedReference
 	private List<Goal> goals;
 

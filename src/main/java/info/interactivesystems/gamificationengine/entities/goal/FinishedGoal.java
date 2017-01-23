@@ -2,14 +2,17 @@ package info.interactivesystems.gamificationengine.entities.goal;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import info.interactivesystems.gamificationengine.entities.Player;
 
 /**
  * When a player has completed a Goal, it will be added to the player’s list of finished goals. If the goal is
@@ -17,6 +20,7 @@ import javax.validation.constraints.NotNull;
  * stored when this request was sent and the goal was officially be done.
  */
 @Entity
+@JsonIgnoreProperties({ "player" })
 public class FinishedGoal {
 
 	@Id
@@ -27,9 +31,31 @@ public class FinishedGoal {
 	private LocalDateTime finishedDate;
 
 	@NotNull
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToOne
 	private Goal goal;
 
+	
+	@ManyToOne
+	private Player player;
+
+	@PreRemove
+	private void removeFGoal() {
+		if(player !=null){
+           player.removeFinishedGoal(this);
+		}
+    }
+	
+    
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	
+	
 	/**
 	 * Gets the id of the finished goal.
 	 * 

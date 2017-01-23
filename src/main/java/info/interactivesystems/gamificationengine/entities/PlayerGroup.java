@@ -76,10 +76,12 @@ public class PlayerGroup {
 	@Column(columnDefinition = "MEDIUMBLOB", length = 3000000)
 	private byte[] groupLogo;
 
+	
 	public PlayerGroup() {
 		players = new ArrayList<>();
 		finishedGoals = new ArrayList<>();
 	}
+	
 
 	/**
 	 * Gets the name of the group.

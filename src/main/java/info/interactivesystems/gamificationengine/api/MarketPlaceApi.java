@@ -261,10 +261,20 @@ public class MarketPlaceApi {
 		offer.setTask(task);
 		offer.setPlayer(player);
 		if(endDate!=null){
-			offer.setEndDate(LocalDateTimeUtil.formatDateAndTime(endDate));
+			LocalDateTime endTime = LocalDateTimeUtil.formatDateAndTime(endDate);
+			if(endTime.isAfter(LocalDateTime.now())){
+				offer.setEndDate(endTime);
+			}else {
+				throw new ApiError(Response.Status.FORBIDDEN, "The endTime has to be in the future.");
+			}
 		}
 		if(deadLine!=null){
-			offer.setDeadLine(LocalDateTimeUtil.formatDateAndTime(deadLine));
+			LocalDateTime deadLineTime = LocalDateTimeUtil.formatDateAndTime(deadLine);
+			if(deadLineTime.isAfter(LocalDateTime.now())){
+				offer.setDeadLine(deadLineTime);
+			} else {
+				throw new ApiError(Response.Status.FORBIDDEN, "The deadline has to be in the future.");
+			}
 		}
 
 		LOGGER.debug("Offer created  ");

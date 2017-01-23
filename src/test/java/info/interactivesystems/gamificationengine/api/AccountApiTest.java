@@ -50,7 +50,7 @@ public class AccountApiTest {
 //	@Test
 //	public void testGetAccountCredentialsOk() {
 //		String email = "test@example.com";
-//		String password = SecurityTools.encryptWithSHA512("123456");
+//		String password = "123456";  //SecurityTools.encryptWithSHA512()
 //
 //		when(accountDao.checkCredentials(anyString(), anyString())).then(invocation -> true);
 //		mockGetAccount(email, password);
@@ -62,7 +62,7 @@ public class AccountApiTest {
 //		assertThat(Response.Status.OK.getStatusCode()).isEqualTo(response.getStatus());
 //
 //		assertThat(entity.content.getEmail()).isEqualTo(email);
-//		assertThat(entity.content.getPassword()).isEqualTo(password);
+//		assertThat(entity.content.getPassword()).isEqualTo(SecurityTools.encryptWithSHA512(password));
 //	}
 
 	private void mockGetAccount(String email, String password) {

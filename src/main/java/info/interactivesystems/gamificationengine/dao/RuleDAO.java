@@ -13,11 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Named
 @Stateless
 public class RuleDAO {
 	@PersistenceContext(unitName = PersistenceUnit.PROJECT)
 	private EntityManager em;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RuleDAO.class);
 
 	/**
 	 * Stores a new rule in the data base.
@@ -87,9 +92,11 @@ public class RuleDAO {
 				result.add(rule);
 			}
 		}
+		
 		return result;
 	}
-
+	
+	
 	/**
 	 * Gets all rules of the type PointsRule of an specific organisation.
 	 * 

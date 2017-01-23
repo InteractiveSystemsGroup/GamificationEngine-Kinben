@@ -13,6 +13,7 @@ import javax.persistence.Query;
 @Named
 @Stateless
 public class TaskDAO {
+	
 	@PersistenceContext(unitName = PersistenceUnit.PROJECT)
 	private EntityManager em;
 
@@ -63,6 +64,22 @@ public class TaskDAO {
 	}
 	
 	/**
+	 * Get all tasks whose ids are passed. 
+	 * 
+	 * @param ids
+	 * 			The ids of the tasks that should be returned.  
+	 * @param apiKey
+	 * 			The API key of the organisation to which the tasks belong to. 
+	 * @return A List of Tasks with all tasks that are associated with the passed ids and API key.
+	 */
+	public List<Task> getTasksWithId(List<Integer> ids, String apiKey) {
+		Query query = em.createQuery("select t from Task t where t.belongsTo.apiKey=:apiKey and t.id in (:ids)", Task.class);
+		query.setParameter("apiKey", apiKey);
+		query.setParameter("ids", ids);
+		return query.getResultList();
+	}
+	
+	/**
 	 * Removes a task from the data base.
 	 * 
 	 * @param id
@@ -80,4 +97,29 @@ public class TaskDAO {
 		return task;
 	}
 
+	/**
+	 * Returns all tasks that haven't been done for at least one time, yet.
+	 * 
+	 * @param apiKey
+	 * 			The API key of the organisation to which these tasks belong to.
+	 * @return A List of Tasks which are not done and associated with the passed API key.
+	 */
+	public List<Task> getTasksToDo(String apiKey) {
+		Query query = em.createQuery("select t from Task t where t.belongsTo.apiKey=:apiKey and not exists (select fT from FinishedTask fT where t.id=fT.task.id)", Task.class);
+		query.setParameter("apiKey", apiKey);
+		return query.getResultList();
+	}
+	
+	/**
+	 * Returns all tasks that are tradeable and haven't been done for at least one time, yet.
+	 * 
+	 * @param apiKey
+	 * 			The API key of the organisation to which these tasks belong to.
+	 * @return A List of Tasks which are tradeable, not done and associated with the passed API key.
+	 */
+	public List<Task> getTradeableTasksToDo(String apiKey) {
+		Query query = em.createQuery("select t from Task t where t.belongsTo.apiKey=:apiKey and t.tradeable=true and not exists (select fT from FinishedTask fT where t.id=fT.task.id)", Task.class);
+		query.setParameter("apiKey", apiKey);
+		return query.getResultList();
+	}
 }

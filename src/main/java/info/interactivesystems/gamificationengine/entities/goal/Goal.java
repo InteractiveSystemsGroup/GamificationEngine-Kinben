@@ -1,6 +1,8 @@
 package info.interactivesystems.gamificationengine.entities.goal;
 
 import info.interactivesystems.gamificationengine.entities.Organisation;
+import info.interactivesystems.gamificationengine.entities.Player;
+import info.interactivesystems.gamificationengine.entities.PlayerGroup;
 import info.interactivesystems.gamificationengine.entities.Role;
 import info.interactivesystems.gamificationengine.entities.rewards.Reward;
 import info.interactivesystems.gamificationengine.entities.task.FinishedTask;
@@ -18,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -39,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "finishedGoals" })
 public class Goal {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Goal.class);
@@ -61,15 +64,20 @@ public class Goal {
 	private boolean repeatable;
 	private boolean playerGroupGoal;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	// @JoinTable(name = "Goal_Reward", joinColumns = @JoinColumn(name =
-	// "Goal_id"), inverseJoinColumns = @JoinColumn(name = "rewars_id"))
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonBackReference
 	private List<Reward> rewards;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Role> canCompletedBy;
 
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy="goal")
+	private List<FinishedGoal> finishedGoals;
+	
+	public List<FinishedGoal> getFinishedGoals() {
+		return finishedGoals;
+	}
+	
 	public Goal() {
 		rewards = new ArrayList<>();
 	}
@@ -274,7 +282,7 @@ public class Goal {
 	 * @return The just finished goal when the player hasn't finished it yet or if the goal can be finished one 
 	 * 		more time otherwise null is returned. 
 	 */
-	public FinishedGoal checkGoal(List<FinishedGoal> oldFinishedGoals, List<FinishedTask> finishedTasksList, 
+	public FinishedGoal checkGoal(Player player, PlayerGroup group, List<FinishedGoal> oldFinishedGoals, List<FinishedTask> finishedTasksList, 
 			TaskRule rule) {
 
 		Goal goal = this;

@@ -1,5 +1,6 @@
 package info.interactivesystems.gamificationengine.api;
 
+import info.interactivesystems.gamificationengine.api.exeption.ApiError;
 import info.interactivesystems.gamificationengine.api.exeption.Notification;
 import info.interactivesystems.gamificationengine.api.validation.ValidApiKey;
 import info.interactivesystems.gamificationengine.api.validation.ValidListOfDigitsOrNull;
@@ -360,10 +361,12 @@ public class TaskApi {
 	 *          to which this task belongs to.
 	 */
 	private void changeRoles(@NotNull String value, Task task, String apiKey) {
-		String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
-		List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
-		List<Role> roles = roleDao.getRoles(ids, apiKey);
-		task.setAllowedFor(roles);
+		if(value != null){
+			String commaSeparatedList = StringUtils.validateAsListOfDigits(value);
+			List<Integer> ids = StringUtils.stringArrayToIntegerList(commaSeparatedList);
+			List<Role> roles = roleDao.getRoles(ids, apiKey);
+			task.setAllowedFor(roles);
+		}else task.setAllowedFor(null);
 	}
 
 	
@@ -371,11 +374,14 @@ public class TaskApi {
 	 * Removes the task with the assigned id and associated API key from data base. But only if 
 	 * the task is not associated to a goal rule or is an offer on the marketplace. Then first these
 	 * elements have to deleted. 
+	 * 
+	 * Consider that if a task is deleted all finished tasks that contains this task are also deleted!
+	 * So these finished tasks are also removed of the player's list who has completed it.
 	 * It is checked, if the passed id is a positive number otherwise a message for an invalid number 
 	 * is returned. If the API key is not valid an analogous message is returned.
 	 * 
 	 * @param id
-	 *          Required integer which uniquely identify the {@link Task}.
+	 *          Required integer which uniquely identify the Task.
 	 * @param apiKey
 	 *          The valid query parameter API key affiliated to one specific organisation, 
 	 *          to which this task belongs to.
@@ -404,4 +410,72 @@ public class TaskApi {
 		
 		return ResponseSurrogate.deleted(task);
 	}
+	
+	/**
+	 * This method returns only the requested tasks. This can be used, when more than one task is needed but not
+	 * all tasks.
+	 * 
+	 * @param idsOfTask
+	 * 			The ids of the requestes tasks. These are passed as a comma separated list.
+	 * @param apiKey
+	 * 			 The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which these tasks belong to.
+	 * @return Response of specific tasks in JSON.
+	 */
+	@GET
+	@Path("/specificTasks")
+	@TypeHint(Task[].class)
+	public Response getSpecificTasks(
+			@QueryParam("taskIds") @DefaultValue("null") @ValidListOfDigitsOrNull String idsOfTask,
+			@QueryParam("apiKey") @ValidApiKey String apiKey){
+		
+		List<Task> tasks = new ArrayList<>();
+		if(!idsOfTask.equals("null")){
+			List<Integer> taskIds = StringUtils.stringArrayToIntegerList(idsOfTask);
+			tasks = taskDao.getTasksWithId(taskIds, apiKey);
+	
+			List<Integer> taskIds1 = new ArrayList<>(taskIds);
+			taskIds1.removeAll(tasks.stream().map(Task::getId).collect(Collectors.toList()));
+			if (!taskIds1.isEmpty()) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Creation failed, task ids don't exist " + taskIds1);
+			}
+		}
+		return ResponseSurrogate.of(tasks);
+	}
+	
+	/**
+	 * Gets all tasks that are not done for at least one time.
+	 * 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to the specific organisation, 
+	 *          to which these task belong to.
+	 * @return Response of the requested tasks in JSON.
+	 */
+	@GET
+	@Path("/notDone")
+	@TypeHint(Task[].class)
+	public Response getTasksNotDone(@QueryParam("apiKey") @ValidApiKey String apiKey){
+		
+		List<Task> tasks = taskDao.getTasksToDo(apiKey);
+		return ResponseSurrogate.of(tasks);
+	}
+	
+	/**
+	 * Gets all tradeable tasks that are not done for at least one time.
+	 * 
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to the specific organisation, 
+	 *          to which these task belong to.
+	 * @return Response of the requested tasks in JSON.
+	 */
+	@GET
+	@Path("/tradeableNotDone")
+	@TypeHint(Task[].class)
+	public Response getTradeableTasksNotDone(@QueryParam("apiKey") @ValidApiKey String apiKey){
+		
+		List<Task> tasks = taskDao.getTradeableTasksToDo(apiKey);
+		return ResponseSurrogate.of(tasks);
+	}
+	
+	
 }

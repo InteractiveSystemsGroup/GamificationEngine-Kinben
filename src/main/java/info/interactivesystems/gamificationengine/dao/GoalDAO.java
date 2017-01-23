@@ -106,8 +106,7 @@ public class GoalDAO {
 	 *           The API key of the organisation to which the goal belongs to. 
 	 * @return The {@link Goal} that should be deleted.
 	 */
-	public Goal deleteGoal(int id, String apiKey) {
-		Goal goal = getGoal(id, apiKey);
+	public Goal deleteGoal(Goal goal, String apiKey) {
 		
 		if(goal!= null){
 			em.remove(goal);

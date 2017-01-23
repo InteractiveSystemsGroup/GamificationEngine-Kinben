@@ -150,7 +150,7 @@ public class GoalApi {
 
 		// Find all roles by Id and Organisation
 		List<Role> roles = new ArrayList<>();
-		if(!roleIds.equals("null")){
+		if(!"null".equals(roleIds)){
 			String[] rolesList = roleIds.split(",");
 	
 			for (String roleIdString : rolesList) {
@@ -273,6 +273,8 @@ public class GoalApi {
 		case "roles":
 			changeRoles(value, goal, apiKey);
 			break;
+		default:
+			break;
 		}
 
 		goalDao.insertGoal(goal);
@@ -341,8 +343,10 @@ public class GoalApi {
 			@QueryParam("apiKey") @ValidApiKey String apiKey) {
 
 		int goalId = ValidateUtils.requireGreaterThanZero(id);
-		Goal goal = goalDao.deleteGoal(goalId, apiKey);
+		Goal goal = goalDao.getGoal(goalId, apiKey);
 		ValidateUtils.requireNotNull(goalId, goal);
+		
+		goal = goalDao.deleteGoal(goal, apiKey);		
 
 		return ResponseSurrogate.deleted(goal);
 	}

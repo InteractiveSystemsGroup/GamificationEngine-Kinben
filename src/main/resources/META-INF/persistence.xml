@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-    <persistence-unit name="gamificationengine-pu" transaction-type="JTA">
-        <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
-        <jta-data-source>java:jboss/datasources/GamificationEngineDS</jta-data-source>
+	<persistence-unit name="gamificationengine-pu"
+		transaction-type="JTA">
+		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+		<jta-data-source>java:jboss/datasources/GamificationEngineDS</jta-data-source>
 
-        <!-- Classes in our project with @Entity annotation are scanned automatically. -->
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<!-- Classes in our project with @Entity annotation are scanned automatically. -->
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
-        <!-- For caching: http://stackoverflow.com/questions/3663979/how-to-use-jpa2s-cacheable-instead-of-hibernates-cache -->
-        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
-        <properties>
+		<!-- For caching: http://stackoverflow.com/questions/3663979/how-to-use-jpa2s-cacheable-instead-of-hibernates-cache -->
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<properties>
 
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.generate_statistics" value="false"/>
-            <property name="hibernate.transaction.flush_before_completion" value="true"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
-            
-            <!-- An improved naming strategy that prefers embedded underscores to mixed case names -->
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.generate_statistics" value="false" />
+			<property name="hibernate.transaction.flush_before_completion"
+				value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 
-        </properties>
-    </persistence-unit>
+			<!-- An improved naming strategy that prefers embedded underscores to 
+				mixed case names -->
+			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
+
+		</properties>
+	</persistence-unit>
 </persistence>

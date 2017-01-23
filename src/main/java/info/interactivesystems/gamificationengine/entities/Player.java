@@ -62,6 +62,7 @@ public class Player {
 	/**
 	 * Location for business Objects;
 	 */
+	@Column(unique = true)
 	private String reference;
 
 	private boolean isActive;
@@ -83,10 +84,10 @@ public class Player {
 	private int levelIndex;
 	private String levelLabel;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "player")
 	private List<FinishedGoal> finishedGoals;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "player")
 	private List<FinishedTask> finishedTasks;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -95,6 +96,37 @@ public class Player {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Player> contactList;
 
+	/**
+	* Removes a finished Task from the list of player's all finished task. 
+	* 
+	* @param fTask
+	* 			The finished task which should be removed from the player's 
+	* 			list of finished tasks.
+	*/
+	public void removeFinishedTask(FinishedTask fTask) {
+	        if (fTask != null) {
+	            fTask.setPlayer(null);
+	            finishedTasks.remove(fTask);  
+	        }
+	    }
+	
+	/**
+	* Removes a finished Goal from the list of player's all finished goals. 
+	* 
+	* @param fGoal
+	* 			The finished Goal which should be removed from the player's 
+	* 			list of finished goals.
+	*/
+	public void removeFinishedGoal(FinishedGoal fGoal) {
+	      if (fGoal != null) {
+	    	  fGoal.setPlayer(null);
+	    	  finishedGoals.remove(fGoal);
+	      }
+	   }
+	  
+	/**
+	 * Constructor
+	 */
 	public Player() {
 		rewards = new ArrayList<>();
 		finishedTasks = new ArrayList<>();

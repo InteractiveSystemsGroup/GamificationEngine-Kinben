@@ -28,6 +28,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
@@ -48,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * of it.
  */
 @Entity
-@JsonIgnoreProperties({ "belongsTo" })
+@JsonIgnoreProperties({ "belongsTo", "finishedTasks" })
 public class Task implements Serializable {
 
 	private static final long serialVersionUID = 8925734998433033594L;
@@ -70,6 +71,9 @@ public class Task implements Serializable {
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Role> allowedFor;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy="task")
+	private List<FinishedTask> finishedTasks;
 
 	private boolean tradeable;
 
@@ -251,6 +255,7 @@ public class Task implements Serializable {
 		FinishedTask fTask = new FinishedTask();
 		fTask.setTask(task);
 		fTask.setFinishedDate(finishedDate);
+		fTask.setPlayer(player);
 
 		logPlayerDetails(player);
 
@@ -306,7 +311,7 @@ public class Task implements Serializable {
 					oldFinishedGoals.addAll(player.getFinishedGoalsByGoal(goal));
 
 					// check if goal is completed
-					FinishedGoal tempFinishedGoal = goal.checkGoal(oldFinishedGoals, playerFinishedTasksList, rule);
+					FinishedGoal tempFinishedGoal = goal.checkGoal(player, null, oldFinishedGoals, playerFinishedTasksList, rule);
 					if (tempFinishedGoal != null) {
 						finishedPlayerGoalsList.add(tempFinishedGoal);
 					}
@@ -361,11 +366,11 @@ public class Task implements Serializable {
 						
 						
 						// check if goal is completed and add it to finishedGoals of group
-						FinishedGoal tempFinishedGoal = goal.checkGoal(groupFinishedGoals, groupFinishedTasksList, rule);
+						FinishedGoal tempFinishedGoal = goal.checkGoal(null, group, groupFinishedGoals, groupFinishedTasksList, rule);
 						if (tempFinishedGoal != null) {
 							// add goal to finishedGoals list
 							groupFinishedGoals.add(tempFinishedGoal);
-
+							
 							// add rewards to group
 							for (Reward r : goal.getRewards()) {
 								LOGGER.debug("Add Reward to group");
@@ -393,6 +398,10 @@ public class Task implements Serializable {
 		LOGGER.debug("proceed with fGoalsList");
 		for (FinishedGoal fGoal : finishedPlayerGoalsList) {
 
+			if(!fGoal.getGoal().isPlayerGroupGoal()){
+				fGoal.setPlayer(player);
+			}
+			
 			// for each reward -> addReward
 			for (Reward reward : fGoal.getGoal().getRewards()) {
 

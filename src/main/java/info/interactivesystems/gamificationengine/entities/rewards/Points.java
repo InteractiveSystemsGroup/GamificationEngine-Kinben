@@ -136,6 +136,22 @@ public class Points extends VolatileReward {
 								recievedRewards.add(reward);
 							}
 						}
+						//TODO: Check, if PointsGoal is awarded again
+					} else if(goal.isRepeatable()){
+						// goal has been finished but it is repeatable
+						// check if points are reached
+						if (rule.checkRule(player)) {
+							// add goal to tempFinishedGoals list
+							LOGGER.debug("Again: Points Goal: Rule is completed! -> add to fGoalsList (temp)");
+							FinishedGoal fGoal = new FinishedGoal();
+							fGoal.setGoal(goal);
+							fGoal.setFinishedDate(finishedDate);
+							fGoalsList.add(fGoal);
+							// for each reward -> addReward
+							for (Reward reward : goal.getRewards()) {
+								recievedRewards.add(reward);
+							}
+						}
 					}
 				}
 			

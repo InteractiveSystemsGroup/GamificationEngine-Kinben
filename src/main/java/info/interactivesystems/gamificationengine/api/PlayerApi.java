@@ -522,8 +522,6 @@ public class PlayerApi {
 	@TypeHint(Player.class)
 	public Response deactivate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
 
-		LOGGER.debug("deactivate player called");
-
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
 		ValidateUtils.requireNotNull(playerId, player);
@@ -552,8 +550,6 @@ public class PlayerApi {
 	@Path("{id}/activate")
 	@TypeHint(Player.class)
 	public Response activate(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
-
-		LOGGER.debug("activate player called");
 
 		int playerId = ValidateUtils.requireGreaterThanZero(id);
 		Player player = playerDao.getPlayer(playerId, apiKey);
@@ -750,6 +746,67 @@ public class PlayerApi {
 
 		return ResponseSurrogate.of(coins);
 	}
+	
+	/**
+	 * Returns the field of the reference attribute of the player. 
+	 * This can be used, when the player's id is known and the player should be 
+	 * matched with a user of the application.
+	 * If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the player id is a positive number otherwise a message for an invalid number 
+	 * is returned.
+	 * 
+	 * @param id
+	 * 			The id of the player, whose reference field is returned.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which this player belongs to.
+	 * @return Response of String in JSON.
+	 */
+	@GET
+	@Path("/{id}/reference")
+	@TypeHint(String.class)
+	public Response getPlayerReference(@PathParam("id") @NotNull @ValidPositiveDigit String id, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		int playerId = ValidateUtils.requireGreaterThanZero(id);
+		Player player = playerDao.getPlayer(playerId, apiKey);
+		ValidateUtils.requireNotNull(playerId, player);
+		
+		String reference = player.getReference();
+		
+		return ResponseSurrogate.of(reference);
+	}
+	
+	/**
+	 * Returns the player that matched to a specific reference field in a specific organisation.
+	 * If the reference field dosen't match to a player an API Error is returned with the
+	 * message that such a player dosen't exist
+	 * If the API key is not valid an analogous message is returned.
+	 * 
+	 * @param reference
+	 * 			The reference to which the player should be returned.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the player belongs to.
+	 * @return Response of the player as JSON.
+	 */
+	@GET
+	@Path("/reference")
+	@TypeHint(Player.class)
+	public Response getPlayerByReference(@QueryParam("reference") @NotNull String reference, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		if(!reference.equals("null")){
+			try {
+				Player player = playerDao.getPlayerByReference(reference, apiKey);
+				return ResponseSurrogate.of(player);
+			} catch (Exception e) {
+				throw new ApiError(Response.Status.FORBIDDEN, "No Player with this reference exist.");
+			}
+		}
+		throw new ApiError(Response.Status.FORBIDDEN, "No Player with this reference exist.");
+	}
+	
+	
+	
 	
 	/**
 	 * Gets a list of all contacts a player has.

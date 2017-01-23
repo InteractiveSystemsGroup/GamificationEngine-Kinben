@@ -247,6 +247,24 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.2.Final</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<hostname>${wildfly-host}</hostname>
+					<password>${wildfly-pass}</password>
+					<port>${wildfly-port}</port>
+				</configuration>
+			</plugin>
 	   </plugins> 
 		<pluginManagement>
 			<plugins>
