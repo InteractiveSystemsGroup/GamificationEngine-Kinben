@@ -67,14 +67,16 @@
 
   <div class="jumbotron">
     <div class="container">
-      In this API all methods and if applicable their default values are described which the gamification engine 
-				Kinben provides. 
-				Visit the 
+      In
+		this API all methods and if applicable their default values are
+		described which the gamification engine
+		Kinben provides.
+		Visit the 
 				 <a href="https://github.com/InteractiveSystemsGroup/GamificationEngine-Kinben/wiki">Kinben wiki</a>
 				 
-				for more information or examples.
-				
-				For the gamification engine exists also a 
+		for more information or examples.
+
+		For the gamification engine exists also a 
 				 <a href="http://interactivesystemsgroup.github.io/GamificationEngine-Kinben/Javadoc/">Javadoc documentation</a>
 				 .
     </div>
@@ -287,6 +289,7 @@ reasons.
       <td>  PlayerApi
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /player/{id}/tasks
+</samp></li><li><samp>  /player/reference
 </samp></li><li><samp>  /player/{id}/coins
 </samp></li><li><samp>  /player/{id}/goals
 </samp></li><li><samp>  /player/{id}/rewards
@@ -300,11 +303,13 @@ reasons.
 </samp></li><li><samp>  /player/*
 </samp></li><li><samp>  /player/{id}/roles
 </samp></li><li><samp>  /player/{id}/points
+</samp></li><li><samp>  /player/{id}/reference
 </samp></li><li><samp>  /player/{id}/groups
 </samp></li><li><samp>  /player/{id}/avatar
 </samp></li><li><samp>  /player/{id}/deactivate
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
@@ -317,6 +322,7 @@ reasons.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
@@ -548,16 +554,22 @@ reached.
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /task/{id}
 </samp></li><li><samp>  /task/tradeable/*
+</samp></li><li><samp>  /task/notDone
 </samp></li><li><samp>  /task/{id}/attributes
 </samp></li><li><samp>  /task
+</samp></li><li><samp>  /task/tradeableNotDone
 </samp></li><li><samp>  /task/{id}/complete/{playerId}
 </samp></li><li><samp>  /task/*
+</samp></li><li><samp>  /task/specificTasks
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  DELETE, GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li></ul></td>
       <td>  A Task is the basic module and represents for example a specific activity. For a creation

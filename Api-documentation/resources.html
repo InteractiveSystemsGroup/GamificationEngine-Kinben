@@ -267,6 +267,7 @@ reasons.
       <td>  PlayerApi
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /player/{id}/tasks
+</samp></li><li><samp>  /player/reference
 </samp></li><li><samp>  /player/{id}/coins
 </samp></li><li><samp>  /player/{id}/goals
 </samp></li><li><samp>  /player/{id}/rewards
@@ -280,11 +281,13 @@ reasons.
 </samp></li><li><samp>  /player/*
 </samp></li><li><samp>  /player/{id}/roles
 </samp></li><li><samp>  /player/{id}/points
+</samp></li><li><samp>  /player/{id}/reference
 </samp></li><li><samp>  /player/{id}/groups
 </samp></li><li><samp>  /player/{id}/avatar
 </samp></li><li><samp>  /player/{id}/deactivate
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
@@ -297,6 +300,7 @@ reasons.
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
@@ -528,16 +532,22 @@ reached.
 </td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  /task/{id}
 </samp></li><li><samp>  /task/tradeable/*
+</samp></li><li><samp>  /task/notDone
 </samp></li><li><samp>  /task/{id}/attributes
 </samp></li><li><samp>  /task
+</samp></li><li><samp>  /task/tradeableNotDone
 </samp></li><li><samp>  /task/{id}/complete/{playerId}
 </samp></li><li><samp>  /task/*
+</samp></li><li><samp>  /task/specificTasks
 </samp></li></ul></td>
       <td class="text-nowrap"><ul class="list-unstyled"><li><samp>  DELETE, GET
 </samp></li><li><samp>  GET
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  PUT
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  POST
+</samp></li><li><samp>  GET
 </samp></li><li><samp>  GET
 </samp></li></ul></td>
       <td>  A Task is the basic module and represents for example a specific activity. For a creation

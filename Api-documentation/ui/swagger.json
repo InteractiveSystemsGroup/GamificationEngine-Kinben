@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info" : {
-    "description" : "In this API all methods and if applicable their default values are described which the gamification engine \n\t\t\t\tKinben provides. \n\t\t\t\tVisit the \n\t\t\t\t <a href=\"https://github.com/InteractiveSystemsGroup/GamificationEngine-Kinben/wiki\">Kinben wiki<\/a>\n\t\t\t\t \n\t\t\t\tfor more information or examples.\n\t\t\t\t\n\t\t\t\tFor the gamification engine exists also a \n\t\t\t\t <a href=\"http://interactivesystemsgroup.github.io/GamificationEngine-Kinben/Javadoc/\">Javadoc documentation<\/a>\n\t\t\t\t .",
+    "description" : "In\n\t\tthis API all methods and if applicable their default values are\n\t\tdescribed which the gamification engine\n\t\tKinben provides.\n\t\tVisit the \n\t\t\t\t <a href=\"https://github.com/InteractiveSystemsGroup/GamificationEngine-Kinben/wiki\">Kinben wiki<\/a>\n\t\t\t\t \n\t\tfor more information or examples.\n\n\t\tFor the gamification engine exists also a \n\t\t\t\t <a href=\"http://interactivesystemsgroup.github.io/GamificationEngine-Kinben/Javadoc/\">Javadoc documentation<\/a>\n\t\t\t\t .",
     "version" : "1.0.0-SNAPSHOT",
     "title" : "Kinben API"
   },
@@ -523,10 +523,6 @@
             "offerDate" : {
 "description" : "Gets the exact LocalDateTime when the offer was created.",
 "$ref" : "#/definitions/json_localdatetime"
-            },
-            "player" : {
-"description" : "Gets the player who has created the offer.",
-"$ref" : "#/definitions/json_player"
             },
             "prize" : {
 "description" : "Gets the current prize of an offer, which can be awarded by fulfilling the\r\ntask.",
@@ -1964,7 +1960,7 @@
     "/marketPlace/offers/{taskId}/market/*" : {
       "get" : {
         "tags" : [ "MarketPlaceApi" ],
-        "description" : "This method returns a list with all offers that contain a specific task and the offer's\r\nmarketplace.",
+        "description" : "This method returns a list with all offers which contain a specific task and the id of the\r\noffer's marketplace.",
         "operationId" : "resource_MarketPlaceApi_getAllMarketPlaceOffersByTask_GET",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -2250,9 +2246,8 @@
           {
             "name" : "count",
             "in" : "query",
-            "default" : "10",
             "type" : "string",
-            "description" : "Optionally the count of offers that should be returned can be passed."
+            "description" : "Optionally the count of offers that should be returned can be passed. If no value is passed\r\nall offers of the marketplace are returned."
           },
           {
             "name" : "marketPlaceId",
@@ -2622,9 +2617,8 @@
           {
             "name" : "count",
             "in" : "query",
-            "default" : "10",
             "type" : "string",
-            "description" : "Optionally the count of offers that should be returned can be passed."
+            "description" : "Optionally the count of offers that should be returned can be passed. If no value is passed\r\nall offers of the marketplace are returned."
           }
         ],
         "responses" : {
@@ -2983,6 +2977,43 @@
 "items" : {
   "$ref" : "#/definitions/json_finishedtask"
 }
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/player/reference" : {
+      "get" : {
+        "tags" : [ "PlayerApi" ],
+        "description" : "Returns the player that matched to a specific reference field in a specific organisation.\r\nIf the reference field dosen't match to a player an API Error is returned with the\r\nmessage that such a player dosen't exist\r\nIf the API key is not valid an analogous message is returned.",
+        "operationId" : "resource_PlayerApi_getPlayerByReference_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which the player belongs to."
+          },
+          {
+            "name" : "reference",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The reference to which the player should be returned."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"$ref" : "#/definitions/json_player"
             },
             "headers" : {
             },
@@ -3636,6 +3667,43 @@
             "schema" : {
 "description" : "",
 "type" : "number"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/player/{id}/reference" : {
+      "get" : {
+        "tags" : [ "PlayerApi" ],
+        "description" : "Returns the field of the reference attribute of the player.\r\nThis can be used, when the player's id is known and the player should be\r\nmatched with a user of the application.\r\nIf the API key is not valid an analogous message is returned. It is also checked,\r\nif the player id is a positive number otherwise a message for an invalid number\r\nis returned.",
+        "operationId" : "resource_PlayerApi_getPlayerReference_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "type" : "string",
+            "description" : "The id of the player, whose reference field is returned."
+          },
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this player belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "string"
             },
             "headers" : {
             },
@@ -5551,7 +5619,7 @@
       ,
       "delete" : {
         "tags" : [ "RewardApi" ],
-        "description" : "Removes a specific reward from the data base which is identified by the passed id and\r\nthe API key. If the API key is not valid an analogous message is returned. It is also\r\nchecked, if the id is a positive number otherwise a message for an invalid number is\r\nreturned.",
+        "description" : "Removes a specific reward from the data base which is identified by the passed id and\r\nthe API key. But only if it is not associated to a goal. Then first the goal has to deleted.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if\r\nthe id is a positive number otherwise a message for an invalid number is returned.",
         "operationId" : "resource_RewardApi_deleteReward_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -5559,7 +5627,7 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Reward} which sould be\r\ndeleted."
+            "description" : "Required integer which uniquely identify the {@link Reward} which should be\r\ndeleted."
           },
           {
             "name" : "apiKey",
@@ -6158,7 +6226,7 @@
       ,
       "delete" : {
         "tags" : [ "RuleApi" ],
-        "description" : "Removes a specific goal rule from the data base which is identified by the given id and the\r\nAPI key. If the API key is not valid an analogous message is returned. It is also checked,\r\nif the id is a positive number otherwise a message for an invalid number is returned.",
+        "description" : "Removes a specific goal rule from the data base which is identified by the given id and the\r\nAPI key. But only if the goal rule is not associated to a goal. Then first the goal has to deleted.\r\nIf the API key is not valid an analogous message is returned. It is also checked, if the id\r\nis a positive number otherwise a message for an invalid number is returned.",
         "operationId" : "resource_RuleApi_deleteRule_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -6368,7 +6436,7 @@
       ,
       "delete" : {
         "tags" : [ "TaskApi" ],
-        "description" : "Removes the task with the assigned id and associated API key from data base. It is checked,\r\nif the passed id is a positive number otherwise a message for an invalid number is returned.\r\nIf the API key is not valid an analogous message is returned.",
+        "description" : "Removes the task with the assigned id and associated API key from data base. But only if\r\nthe task is not associated to a goal rule or is an offer on the marketplace. Then first these\r\nelements have to deleted.\r\n\r\nConsider that if a task is deleted all finished tasks that contains this task are also deleted!\r\nSo these finished tasks are also removed of the player's list who has completed it.\r\nIt is checked, if the passed id is a positive number otherwise a message for an invalid number\r\nis returned. If the API key is not valid an analogous message is returned.",
         "operationId" : "resource_TaskApi_deleteTask_DELETE",
         "produces" : [ "application/json" ],
         "parameters" : [
@@ -6376,7 +6444,7 @@
             "name" : "id",
             "in" : "path",
             "type" : "string",
-            "description" : "Required integer which uniquely identify the {@link Task}."
+            "description" : "Required integer which uniquely identify the Task."
           },
           {
             "name" : "apiKey",
@@ -6414,6 +6482,40 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which these tasks belong to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_task"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/task/notDone" : {
+      "get" : {
+        "tags" : [ "TaskApi" ],
+        "description" : "Gets all tasks that are not done for at least one time.",
+        "operationId" : "resource_TaskApi_getTasksNotDone_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to the specific organisation,\r\nto which these task belong to."
           }
         ],
         "responses" : {
@@ -6515,7 +6617,7 @@
             "in" : "query",
             "default" : "null",
             "type" : "string",
-            "description" : "Optionally a list of role ids separated by commas who are allowed to fulfil the\r\ntask."
+            "description" : "Optionally a list of role ids separated by commas which are allowed to fulfil the\r\ntask."
           },
           {
             "name" : "tradeable",
@@ -6530,6 +6632,40 @@
             "schema" : {
 "description" : "",
 "$ref" : "#/definitions/json_task"
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/task/tradeableNotDone" : {
+      "get" : {
+        "tags" : [ "TaskApi" ],
+        "description" : "Gets all tradeable tasks that are not done for at least one time.",
+        "operationId" : "resource_TaskApi_getTradeableTasksNotDone_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to the specific organisation,\r\nto which these task belong to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_task"
+}
             },
             "headers" : {
             },
@@ -6603,6 +6739,47 @@
             "in" : "query",
             "type" : "string",
             "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which this task belongs to."
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/json_task"
+}
+            },
+            "headers" : {
+            },
+            "description" : "Success"
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    }
+    ,
+    "/task/specificTasks" : {
+      "get" : {
+        "tags" : [ "TaskApi" ],
+        "description" : "This method returns only the requested tasks. This can be used, when more than one task is needed but not\r\nall tasks.",
+        "operationId" : "resource_TaskApi_getSpecificTasks_GET",
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "name" : "apiKey",
+            "in" : "query",
+            "type" : "string",
+            "description" : "The valid query parameter API key affiliated to one specific organisation,\r\nto which these tasks belong to."
+          },
+          {
+            "name" : "taskIds",
+            "in" : "query",
+            "default" : "null",
+            "type" : "string",
+            "description" : "The ids of the requestes tasks. These are passed as a comma separated list."
           }
         ],
         "responses" : {

@@ -101,30 +101,30 @@ number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@145af038 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@6d2231cd -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this rule belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@359fae31 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4cebcd5b -->
             <td>query</td>
             <td>Optionally the description of the rule can be passed. This can help the player to understand
 which tasks she/he to fulfil.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@309b25e4 -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@748b27e6 -->
             <td>query</td>
             <td>The name of the task rule. This parameter is required.</td>
           </tr>
           <tr>
-            <td>tasks</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7a2273b7 -->
+            <td>tasks</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@47030e2b -->
             <td>query</td>
             <td>The list of task ids that are have to be respective can be fulfilled to complete the goal.
 These ids are separated by commas.</td>
           </tr>
           <tr>
-            <td>type</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@39ba87fb -->
+            <td>type</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@3b53f35f -->
             <td>query</td>
             <td>The type of the task rule, this can be "DoAllTasksRule" or "DoAnyTaskRule".
 This field must not be null.</td>
@@ -174,24 +174,24 @@ number otherwise a message for an invalid number is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@711c58db -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2940707b -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this rule belongs to.</td>
           </tr>
           <tr>
-            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@18c1f719 -->
+            <td>description</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@4d9d6a2 -->
             <td>query</td>
             <td>Optionally the description of the rule can be passed. This can help the player to understand
 which tasks she/he to fulfil.</td>
           </tr>
           <tr>
-            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7197907d -->
+            <td>name</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@5bf4f244 -->
             <td>query</td>
             <td>The name of the task rule. This parameter is required.</td>
           </tr>
           <tr>
-            <td>points</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1c7f44eb -->
+            <td>points</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@7f193b6e -->
             <td>query</td>
             <td>The amount of points which should be reached.</td>
           </tr>
@@ -236,7 +236,7 @@ is returned.</p>
           </thead>
           <tbody>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@fb61d3f -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@55f05f5e -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this rule belongs to.</td>
@@ -282,12 +282,12 @@ id is a positive number otherwise a message for an invalid number is returned.</
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@18585aef -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@1f56ff84 -->
             <td>path</td>
             <td>Required integer as path parameter which uniquely identify the goal rule.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@558125e1 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@63cc58f8 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this rule belongs to.</td>
@@ -319,8 +319,9 @@ to which this rule belongs to.</td>
         <h3>DELETE <small>/rule/{id} <!--<a href="./rule/{id}" class="glyphicon glyphicon-new-window" target="_blank"></a>--></small> </h3>
 
         <p>Removes a specific goal rule from the data base which is identified by the given id and the
-API key. If the API key is not valid an analogous message is returned. It is also checked,
-if the id is a positive number otherwise a message for an invalid number is returned.</p>
+API key. But only if the goal rule is not associated to a goal. Then first the goal has to deleted.
+If the API key is not valid an analogous message is returned. It is also checked, if the id
+is a positive number otherwise a message for an invalid number is returned.</p>
 
         <table class="table">
           <caption>Request Parameters</caption>
@@ -333,12 +334,12 @@ if the id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@333f6ba6 -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@55b8dda4 -->
             <td>path</td>
             <td>Required integer as path parameter which uniquely identify the goal rule.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@cdfc71b -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@26562e2 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this rule belongs to.</td>
@@ -388,18 +389,18 @@ if the id is a positive number otherwise a message for an invalid number is retu
           </thead>
           <tbody>
           <tr>
-            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@560a6b4d -->
+            <td>id</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2ae717f5 -->
             <td>path</td>
             <td>The id of the goal rule that should be changed. This parameter is required.</td>
           </tr>
           <tr>
-            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@af8e240 -->
+            <td>apiKey</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@2bed81c9 -->
             <td>query</td>
             <td>The valid query parameter API key affiliated to one specific organisation,
 to which this goal rule belongs to.</td>
           </tr>
           <tr>
-            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@42d2dae2 -->
+            <td>attribute</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@38ab2ced -->
             <td>query</td>
             <td>The name of the attribute which should be modified. This parameter is required.
 The following names of attributes can be used to change the associated field:
@@ -407,7 +408,7 @@ The following names of attributes can be used to change the associated field:
 points that have to be reached, can't be changed later.</td>
           </tr>
           <tr>
-            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@30c72abc -->
+            <td>value</td> <!-- , com.webcohesion.enunciate.modules.jaxrs.api.impl.ParameterImpl@11f02b68 -->
             <td>query</td>
             <td>The new value of the attribute. This parameter is required.</td>
           </tr>
