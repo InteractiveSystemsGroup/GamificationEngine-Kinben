@@ -32,6 +32,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -805,6 +806,41 @@ public class PlayerApi {
 		throw new ApiError(Response.Status.FORBIDDEN, "No Player with this reference exist.");
 	}
 	
+	
+	/**
+	 * This method can be used to get a player by reference, but only if the hashed password matches.
+	 * 
+	 * @param reference
+	 * 			he reference to which the player should be returned.
+	 * @param password
+	 * 			The hashed password which can be compared with the player's one.
+	 * @param apiKey
+	 * 			The valid query parameter API key affiliated to one specific organisation, 
+	 *          to which the player belongs to.
+	 * @return Response of the player as JSON.
+	 */
+	@GET
+	@Path("/referencePW")
+	@TypeHint(Player.class)
+	public Response getPlayerByReferencePW(@QueryParam("reference") @NotNull String reference, 
+			@HeaderParam("pw") @NotNull String password, @QueryParam("apiKey") @ValidApiKey String apiKey) {
+
+		if(!reference.equals("null") && !password.equals("null")){
+			try {
+				Player player = playerDao.getPlayerByReference(reference, apiKey);
+				if(player.getPassword().equals(password)){
+					return ResponseSurrogate.of(player);
+				}else{
+					throw new ApiError(Response.Status.FORBIDDEN, "Credentials are wrong.");
+				}
+				
+				
+			} catch (Exception e) {
+				throw new ApiError(Response.Status.FORBIDDEN, "Credentials are wrong.");
+			}
+		}
+		throw new ApiError(Response.Status.FORBIDDEN, "Credentials are wrong.");
+	}
 	
 	
 	
