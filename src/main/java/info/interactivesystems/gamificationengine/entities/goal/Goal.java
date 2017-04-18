@@ -343,12 +343,17 @@ public class Goal {
 
 	
 	/**
-	 * This method gets the ids of goals that have to be deleted before a specific
+	 * * This method gets the ids of goals that have to be deleted before a specific
 	 * object like a rule or reward can be deleted. These ids are then passed to create 
 	 * a message in the response to give the user a hint.
 	 * 
 	 * @param goals
 	 * 			List of goals that are associated with an object that should be deleted.
+	 * @param objectToDelete
+	 * 			The type of the object that should be deleted. This is only given by a String.
+	 * @param type
+	 * 			The type of the object that use the object, so it should be deleted before. This is only given 
+	 * 			by a String.
 	 */
 	public static void checkGoalsForDeletion(List<Goal> goals, String objectToDelete, String type) {
 		List<String> ids = getGoalIds(goals);

@@ -100,8 +100,8 @@ public class GoalDAO {
 	/**
 	 * Deletes a goal by its id and checks if it belongs to the passed organisation.
 	 * 
-	 * @param id
-	 *            The id of the requested goal.
+	 * @param goal
+	 *            The goal that should be deleted.
 	 * @param apiKey
 	 *           The API key of the organisation to which the goal belongs to. 
 	 * @return The {@link Goal} that should be deleted.

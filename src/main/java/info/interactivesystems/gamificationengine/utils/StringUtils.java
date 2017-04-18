@@ -62,7 +62,7 @@ public class StringUtils {
 	 * @param objectToDelete
 	 * 			The type of the object that should be deleted. This is only given by a String.
 	 * @param type
-	 * 			The type of the object that use the object, that should be deleted. This is only given 
+	 * 			The type of the object that use the object, so it should be deleted before. This is only given 
 	 * 			by a String.
 	 */
 	public static void printIdsForDeletion(List<String> ids, String objectToDelete, String type){

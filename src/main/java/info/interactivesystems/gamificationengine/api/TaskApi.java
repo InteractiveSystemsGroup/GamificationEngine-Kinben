@@ -110,7 +110,7 @@ public class TaskApi {
 	 *            This field specifies whether the task is tradeable or not. The default value is
 	 *            set to not tradeable (false).
 	 * @param roleIds
-	 *            Optionally a list of role ids separated by commas who are allowed to fulfil the 
+	 *            Optionally a list of role ids separated by commas which are allowed to fulfil the 
 	 *            task.
 	 * @param apiKey
 	 *            The valid query parameter API key affiliated to one specific organisation, 
