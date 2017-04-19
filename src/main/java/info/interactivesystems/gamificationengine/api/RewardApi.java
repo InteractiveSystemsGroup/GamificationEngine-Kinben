@@ -412,9 +412,10 @@ public class RewardApi {
 
 	/**
 	 * This method returns the icon of an specific achievement for example to show it the
-	 * player who has just earned it. If the API key is not valid an analogous message is 
-	 * returned. It is also checked, if the id is a positive number otherwise a message for 
-	 * an invalid number is returned. 
+	 * player who has just earned it. The byte array of the icon is Base64-encoded to ensure 
+	 * that the data is transmitted correctly as String.  
+	 * If the API key is not valid an analogous message is returned. It is also checked, 
+	 * if the id is a positive number otherwise a message for an invalid number is returned. 
 	 * 
 	 * @param rewardId
 	 *            The required reward id.
@@ -441,7 +442,9 @@ public class RewardApi {
 
 	/**
 	 * This method returns the icon of an specific badge for example to show it the player 
-	 * who has just earned it. If the API key is not valid an analogous message is returned. 
+	 * who has just earned it. The byte array of the icon is Base64-encoded to ensure that 
+	 * the data is transmitted correctly as String. 
+	 * If the API key is not valid an analogous message is returned. 
 	 * It is also checked, if the id is a positive number otherwise a message for an invalid
 	 * number is returned. 
 	 * 

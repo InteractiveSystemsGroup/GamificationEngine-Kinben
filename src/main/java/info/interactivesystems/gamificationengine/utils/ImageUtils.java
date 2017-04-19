@@ -19,7 +19,7 @@ public class ImageUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageUtils.class);
 	
 	/**
-	 * The passed String represents an URL. With this URL a byte[] is created from the image file that was passed as an Stings that
+	 * The passed String represents an URL. With this URL a byte[] is created from the image file that was passed as a String that
 	 * represents an URL. The format of the image has to be .jpg or .png. Otherwise 
 	 * an exception is thrown with the hint, that the URL was not valid.
 	 * 
