@@ -28,6 +28,17 @@
 			<url>http://maven-plugins.sourceforge.net/repository</url>
 		</repository>
 	</repositories>
+	
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>${release-repo}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>${snapshot-repo}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>
